@@ -1,0 +1,15 @@
+﻿@model BusinessExcel.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Welcome";
+}
+
+@Html.Partial("_RegisterPartial", Model)
+
+@section Scripts {
+    <script type="text/javascript">
+        function login_result(result) {
+            alert("Login..." + result[0].ReturnUrl)
+        }
+    </script>
+}

@@ -1,0 +1,69 @@
+﻿@using BootstrapHtmlHelper
+@model BusinessExcel.Models.LoginModel
+
+
+<!-- Messages: style can be found in dropdown.less-->                <!-- User Account Menu -->
+<li class="dropdown user user-menu">
+    <!-- Menu Toggle Button -->
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <!-- The user image in the navbar-->
+        <i class="fa fa-sign-in" aria-hidden="true"></i>
+
+        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+        <span class="hidden-xs">Login</span>
+    </a>
+
+    <ul class="dropdown-menu">
+        <li>
+            @using (Ajax.BeginForm("Login", new AjaxOptions()
+            {
+                HttpMethod = "Post",
+                InsertionMode = InsertionMode.Replace,
+                OnComplete = "login_result",
+                
+            }
+            ))
+            {
+                <div class="dropdown-form">
+                    @Html.AdminLTETextBoxFor(
+                        m => m.Email,
+                        null,
+                        new Dictionary<string, object>() { { "class", "form-control" } },
+                        null,
+                        null,
+                         "fa-user-secret",
+                        false,
+                        true,
+                        true)
+
+                    @*<div class="form-group has-feedback">
+                            <input type="email" class="form-control" placeholder="Email">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                        </div>*@
+                    @Html.AdminLTEPasswordFor(
+                        m => m.Password,
+                        null,
+                        new Dictionary<string, object>() { { "class", "form-control" } },
+                        null,
+                        null,
+                         "fa-key",
+                        false,
+                        true,
+                        true)
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="checkbox icheck">
+                                <label>
+                                    <input type="checkbox"> Remember Me
+                                </label>
+                            </div>
+                        </div><!-- /.col -->
+                        <div class="col-xs-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        </div><!-- /.col -->
+                    </div>
+                </div>
+            }
+        </li>
+    </ul>
+</li>

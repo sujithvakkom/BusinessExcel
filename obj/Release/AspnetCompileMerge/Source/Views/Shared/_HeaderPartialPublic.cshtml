@@ -1,0 +1,24 @@
+﻿@model BusinessExcel.Models.LoginModel
+
+<header class="main-header">
+    <a href="../../index2.html" class="logo">
+        <!-- LOGO -->
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        @*<span class="logo-mini">
+                <img src="~/Images/business-excel-logo-light-50X50.png" />
+            </span>*@
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg">
+            <img src="~/Images/business-excel-light-185X27.png" />
+        </span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                @Html.Partial("_LoginPartial", Model)
+            </ul>
+        </div>
+    </nav>
+</header>
