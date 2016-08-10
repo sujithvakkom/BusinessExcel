@@ -53,14 +53,18 @@
     }
 
     function onError(error, inputElement) {  // 'this' is the form element
-        var container = $(this).find("[data-valmsg-for='" + escapeAttributeValue(inputElement[0].name) + "']"),
+        var identifier = "[data-valmsg-for='" + escapeAttributeValue(inputElement[0].name) + "']"
+        var container = $(this).find(identifier),
             replaceAttrValue = container.attr("data-valmsg-replace"),
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
         //name="form-group-Email"
-        //var formContainer = $(this).find("[name=form-group-" + escapeAttributeValue(inputElement[0].name)+ "']")
+        try {
+            identifier = "[name='form-group-" + escapeAttributeValue(inputElement[0].name) + "']"
+            var formContainer = $(this).find(identifier)
 
-        formContainer.addClass("has-error")
-
+            formContainer.addClass("has-error")
+        } catch (e)
+        { }
         container.removeClass("field-validation-valid").addClass("field-validation-error").addClass("help-block");
         error.data("unobtrusiveContainer", container);
 
@@ -92,8 +96,17 @@
             replaceAttrValue = container.attr("data-valmsg-replace"),
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
 
+        //name="form-group-Email"
+        try {
+            identifier = "[name='form-group-" + escapeAttributeValue(inputElement[0].name) + "']"
+            var formContainer = $(this).find(identifier)
+
+            formContainer.removeClass("has-error")
+        } catch (e)
+        { }
+
         if (container) {
-            container.addClass("field-validation-valid").removeClass("field-validation-error");
+            container.addClass("field-validation-valid").removeClass("field-validation-error").removeClass("help-block");
             error.removeData("unobtrusiveContainer");
 
             if (replace) {
