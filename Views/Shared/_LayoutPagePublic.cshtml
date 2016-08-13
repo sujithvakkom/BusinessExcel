@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-@model BusinessExcel.Models.RegisterModel
+@model BusinessExcel.Models.LoginModel
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -14,9 +14,8 @@
     @Styles.Render("~/Content/themes/base/css")
     @Styles.Render("~/Content/css")
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition  login-page">
     @RenderSection("dialogs", false)
-    @Html.Partial("_HeaderPartialPublic", new BusinessExcel.Models.LoginModel())
     @RenderBody()
     @System.Web.Optimization.Scripts.Render("~/bundles/bootstrap")
     @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")

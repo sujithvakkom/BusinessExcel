@@ -12,8 +12,10 @@ namespace BusinessExcel.Controllers
     [AllowAnonymous]
     public class PublicController : Controller
     {
+        public const string PUBLIC = "Public";
         //
-        // GET: /Public/
+        // GET: /Public/Welcome
+        public const string WELCOME = "Welcome";
         [HttpGet]
         public ActionResult Welcome()
         {
@@ -23,47 +25,38 @@ namespace BusinessExcel.Controllers
             }
             else
             {
-                return View(new RegisterModel());
+                return View(new LoginModel());
             }
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel Login)
+        public ActionResult Welcome(LoginModel Model)
         {
-            if (ModelState.IsValid)
-            {
-                FormsAuthentication.SetAuthCookie(Login.Email, true);
-                return RedirectToAction("Home", "Accounts");
-                //return View("Welcome", new RegisterModel() { RegEmail = Login.Email, RegPassword = Login.Password });
-            }
-            else
-            {
-                ModelState.AddModelError("Email", new Exception("Email is Required Field"));
-                return View("Welcome", new RegisterModel() { RegEmail = Login.Email, RegPassword = Login.Password });
-            }
+            return RedirectToAction("Home", "Accounts");
         }
 
+        //GET: /Public/Register
+        public const string REGISTER = "Register";
+        [HttpGet]
+        public ActionResult Register()
+        {
+            WebSecurity.CreateAccount()
+            return View();
+        }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public JsonResult Register(RegisterModel Login)
+        public ActionResult Register(RegisterModel Model)
         {
-            var result = new List<object>();
-            if (ModelState.IsValid)
-                WebSecurity.CreateUserAndAccount(Login.RegEmail, Login.RegPassword, false, false);
-            result.Add(
-                new
-                {
-                    IsAuthenticated = true,
-                    ReturnUrl = "~/Accounts/Home"
-                }
-                );
-            return Json(result);
+            return Welcome();
         }
 
-        public PartialViewResult _LodinPartial(LoginModel Login)
+        //GET: /Public/ForgotPassword
+        public const string FORGOT_PASSWORD= "ForgotPassword";
+        [HttpGet]
+        public ActionResult ForgotPassword()
         {
-            return PartialView(Login);
+            return View();
         }
+
+
     }
 }

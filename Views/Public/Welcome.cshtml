@@ -1,10 +1,77 @@
-﻿@model BusinessExcel.Models.RegisterModel
+﻿@model BusinessExcel.Models.LoginModel
+@using BootstrapHtmlHelper
+@using BusinessExcel.Controllers
 
-@{
-    ViewBag.Title = "Welcome";
-}
+    @{
+        ViewBag.Title = "Welcome";
+    }
 
-@Html.Partial("_RegisterPartial", Model)
 
-@section Scripts {
-}
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html">
+                <img src="../../Images/business-excel-dark-185X27.png" />
+            </a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+
+
+                @Html.AdminLTETextBoxFor(
+                        m => m.Email,
+                        null,
+                        new Dictionary<string, object>() { { "class", "form-control" } },
+                        null,
+                        null,
+                        "fa-user-secret",
+                        false,
+                        true,
+                        true)
+
+                @Html.AdminLTEPasswordFor(
+                        m => m.Password,
+                        null,
+                        new Dictionary<string, object>() { { "class", "form-control" } },
+                        null,
+                        null,
+                        "fa-key",
+                        false,
+                        true,
+                        true)
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                Remember Me
+                                @*<input type="checkbox"> *@
+                            </label>
+                        </div>
+                    </div><!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat" id="button-login"
+                                onclick="this.disabled=true;">
+                            Sign In
+                        </button>
+                    </div><!-- /.col -->
+                </div>
+
+
+            }
+
+            @Html.ActionLink("I forgot my password", PublicController.FORGOT_PASSWORD)
+            <br />
+            @Html.ActionLink("Register a new membership", PublicController.REGISTER, null, new { @class = "text - center" })
+
+
+        </div>
+    </div>
+
+    @section Scripts {
+    }

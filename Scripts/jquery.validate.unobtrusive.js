@@ -1,17 +1,3 @@
-/* NUGET: BEGIN LICENSE TEXT
- *
- * Microsoft grants you the right to use these script files for the sole
- * purpose of either: (i) interacting through your browser with the Microsoft
- * website or online service, subject to the applicable licensing or use
- * terms; or (ii) using the files as included with a Microsoft product subject
- * to that product's license terms. Microsoft reserves all other rights to the
- * files not expressly granted by Microsoft, whether by implication, estoppel
- * or otherwise. Insofar as a script file is dual licensed under GPL,
- * Microsoft neither took the code under GPL nor distributes it thereunder but
- * under the terms set out in this paragraph. All notices and licenses
- * below are for informational purposes only.
- *
- * NUGET: END LICENSE TEXT */
 /*!
 ** Unobtrusive validation support library for jQuery and jQuery Validate
 ** Copyright (C) Microsoft Corporation. All rights reserved.
@@ -53,19 +39,11 @@
     }
 
     function onError(error, inputElement) {  // 'this' is the form element
-        var identifier = "[data-valmsg-for='" + escapeAttributeValue(inputElement[0].name) + "']"
-        var container = $(this).find(identifier),
+        var container = $(this).find("[data-valmsg-for='" + escapeAttributeValue(inputElement[0].name) + "']"),
             replaceAttrValue = container.attr("data-valmsg-replace"),
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
-        //name="form-group-Email"
-        try {
-            identifier = "[name='form-group-" + escapeAttributeValue(inputElement[0].name) + "']"
-            var formContainer = $(this).find(identifier)
 
-            formContainer.addClass("has-error")
-        } catch (e)
-        { }
-        container.removeClass("field-validation-valid").addClass("field-validation-error").addClass("help-block");
+        container.removeClass("field-validation-valid").addClass("field-validation-error");
         error.data("unobtrusiveContainer", container);
 
         if (replace) {
@@ -92,21 +70,13 @@
     }
 
     function onSuccess(error) {  // 'this' is the form element
-        var container = error.data("unobtrusiveContainer"),
-            replaceAttrValue = container.attr("data-valmsg-replace"),
-            replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
-
-        //name="form-group-Email"
-        try {
-            identifier = "[name='form-group-" + escapeAttributeValue(inputElement[0].name) + "']"
-            var formContainer = $(this).find(identifier)
-
-            formContainer.removeClass("has-error")
-        } catch (e)
-        { }
+        var container = error.data("unobtrusiveContainer");
 
         if (container) {
-            container.addClass("field-validation-valid").removeClass("field-validation-error").removeClass("help-block");
+            var replaceAttrValue = container.attr("data-valmsg-replace"),
+                replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
+
+            container.addClass("field-validation-valid").removeClass("field-validation-error");
             error.removeData("unobtrusiveContainer");
 
             if (replace) {
