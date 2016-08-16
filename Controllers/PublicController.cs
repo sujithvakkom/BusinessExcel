@@ -11,15 +11,17 @@ using WebMatrix.WebData;
 namespace BusinessExcel.Controllers
 {
     [AllowAnonymous]
+    [InitializeSimpleMembership]
     public class PublicController : Controller
     {
         public const string PUBLIC = "Public";
-        //
-        // GET: /Public/Welcome
+
         public const string WELCOME = "Welcome";
+        // GET: /Public/Welcome
         [HttpGet]
         public ActionResult Welcome()
         {
+            ViewBag.Title = WELCOME;
             if (Request.IsAuthenticated)
             {
                 return RedirectToAction("Home", "Accounts");
@@ -32,9 +34,9 @@ namespace BusinessExcel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [InitializeSimpleMembership]
         public ActionResult Welcome(LoginModel Model)
         {
+            ViewBag.Title = WELCOME;
             if (ModelState.IsValid && WebSecurity.Login(Model.Email, Model.Password, Model.RememberMe))
                 return RedirectToAction("Home", "Accounts");
             else
@@ -42,25 +44,32 @@ namespace BusinessExcel.Controllers
             return View(Model);
         }
 
-        //GET: /Public/Register
         public const string REGISTER = "Register";
+        //GET: /Public/Register
         [HttpGet]
         public ActionResult Register()
         {
+            ViewBag.Title = REGISTER;
             return View();
         }
 
-        [InitializeSimpleMembership]
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel Model)
         {
+            ViewBag.Title = REGISTER;
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 try
                 {
                     WebSecurity.CreateUserAndAccount(Model.Email, Model.Password);
+                    using (var db = new UsersContext())
+                    {
+                        UserProfile user = db.UserProfiles.SingleOrDefault(x => x.UserName == Model.Email);
+                        user.UserFullName = Model.RegFullName;
+                        db.SaveChanges();
+                    }
                     WebSecurity.Login(Model.Email, Model.Password);
                     return RedirectToAction("Home", "Accounts");
                 }
@@ -73,11 +82,21 @@ namespace BusinessExcel.Controllers
         }
 
         //GET: /Public/ForgotPassword
-        public const string FORGOT_PASSWORD= "ForgotPassword";
+        public const string FORGOT_PASSWORD= "Forgot Password";
         [HttpGet]
         public ActionResult ForgotPassword()
         {
+            ViewBag.Title = FORGOT_PASSWORD;
             return View();
+        }
+
+        public const string LOGOFF = "Logoff";
+        // GET: /Accounts/Logoff
+        [HttpGet]
+        public ActionResult Logoff()
+        {
+            WebSecurity.Logout();
+            return Welcome();
         }
         
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)

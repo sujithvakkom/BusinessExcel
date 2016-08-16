@@ -161,6 +161,11 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\AdminLteController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="Extentions\BESessionStateStore.cs" />
+    <Compile Include="Extentions\BESessionStateStore.MyFunctions.cs" />
+    <Compile Include="Extentions\OdbcSessionStateStore.cs" />
+    <Compile Include="Extentions\OdbcSessionStateStore.MyFunctions.cs" />
+    <Compile Include="Extentions\SessionExtensions.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -186,6 +191,7 @@
     <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
+    <Content Include="Views\Accounts\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -840,7 +846,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BootstrapHtmlHelper\BootstrapHtmlHelper.csproj">
+    <ProjectReference Include="..\..\BootstrapHtmlHelper\BootstrapHtmlHelper.csproj">
       <Project>{e5193a9c-62fb-4969-9ec5-c6ed10a035eb}</Project>
       <Name>BootstrapHtmlHelper</Name>
     </ProjectReference>

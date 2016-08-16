@@ -1,10 +1,12 @@
 ﻿using BusinessExcel.Filters;
+using BusinessExcel.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace BusinessExcel.Controllers
 {
@@ -12,19 +14,23 @@ namespace BusinessExcel.Controllers
     //[InitializeSimpleMembership]
     public class AccountsController : Controller
     {
-        //
-        // GET: /Accounts/
+        public const string ACCOUNTS = "Accounts";
 
+        public const string WELCOME = "Home";
+        // GET: /Accounts/Home
         public ActionResult Home()
         {
+            using(var db = new UsersContext()){
+                ViewBag.UserProfile = db.UserProfiles.SingleOrDefault(x => x.UserName == User.Identity.Name);
+            }
             return View();
         }
 
-        public ActionResult Logoff()
+        public const string PROFILE = "Profile";
+        //GET: /Account/Profile
+        public ActionResult Profile()
         {
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Welcome","Public");
+            return View();
         }
-
     }
 }

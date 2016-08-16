@@ -14,5 +14,6 @@ namespace BusinessExcel.Models
         }
 
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<SessionKeeper> SessionKeepers { get; set; }
     }
 }

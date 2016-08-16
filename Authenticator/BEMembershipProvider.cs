@@ -9,20 +9,5 @@ namespace BusinessExcel.Authenticator
         {
             return base.ValidateUser(username, password);
         }
-
-        internal static string MembershipTableName
-        {
-            get { return "webpages_Membership_test"; }
-        }
-
-        internal static string OAuthMembershipTableName
-        {
-            get { return "webpages_OAuthMembership"; }
-        }
-
-        internal static string OAuthTokenTableName
-        {
-            get { return "webpages_OAuthToken"; }
-        }
     }
 }
