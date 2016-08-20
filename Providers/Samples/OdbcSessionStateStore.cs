@@ -45,24 +45,22 @@ for the session state store provider):
 
 */
 
-namespace BusinessExcel.Extentions
+namespace BusinessExcel.Providers.Samples
 {
 
     public sealed partial class OdbcSessionStateStore : SessionStateStoreProviderBase
     {
-        private SessionStateSection pConfig = null;
-        private string connectionString;
-        private ConnectionStringSettings pConnectionStringSettings;
-        private string eventSource = "OdbcSessionStateStore";
-        private string eventLog = "Application";
-        private string exceptionMessage =
-          "An exception occurred. Please contact your administrator.";
-        private string pApplicationName;
-
         private const string SESSION_STORE_NAME = "OdbcSessionStateStore";
 
         private const string SESSION_STORE_DESC = "Sample ODBC Session State Store provider";
 
+        private SessionStateSection pConfig = null;
+        private string connectionString;
+        private ConnectionStringSettings pConnectionStringSettings;
+        private string eventLog = "Application";
+        private string exceptionMessage =
+          "An exception occurred. Please contact your administrator.";
+        private string pApplicationName;
 
         // 
         // If false, exceptions are thrown to the caller. If true, 
@@ -737,7 +735,7 @@ namespace BusinessExcel.Extentions
         private void WriteToEventLog(Exception e, string action)
         {
             EventLog log = new EventLog();
-            log.Source = eventSource;
+            log.Source = SESSION_STORE_NAME;
             log.Log = eventLog;
 
             string message =

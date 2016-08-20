@@ -18,8 +18,9 @@ using WebMatrix.Data;
 using WebMatrix.WebData.Resources;
 using BusinessExcel.Models;
 using System.Data.Entity;
+using WebMatrix.WebData;
 
-namespace WebMatrix.WebData
+namespace BusinessExcel.WebMatrix.WebData
 {
     public class TestMembershipProvider : SimpleMembershipProvider
     {

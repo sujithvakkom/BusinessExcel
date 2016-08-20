@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.SessionState;
 
-namespace BusinessExcel.Extentions
+namespace BusinessExcel.Providers.Samples
 {
     public partial class OdbcSessionStateStore 
     {

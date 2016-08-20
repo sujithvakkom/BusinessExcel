@@ -1,6 +1,6 @@
 ﻿using WebMatrix.WebData;
 
-namespace BusinessExcel.Authenticator
+namespace BusinessExcel.Providers
 {
 
     public sealed class BEMembershipProvider : SimpleMembershipProvider

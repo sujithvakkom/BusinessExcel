@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity;
 
 namespace BusinessExcel.Models
 {
@@ -14,6 +10,5 @@ namespace BusinessExcel.Models
         }
 
         public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<SessionKeeper> SessionKeepers { get; set; }
     }
 }

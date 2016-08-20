@@ -10,6 +10,7 @@ namespace BusinessExcel.Extentions
 {
     public static class SessionExtensions
     {
+        /*
         /// <summary> 
         /// Get value. 
         /// </summary> 
@@ -86,5 +87,6 @@ namespace BusinessExcel.Extentions
             stream.Position = 0;
             return stream;
         }
+        */
     }
 }

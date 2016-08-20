@@ -12,7 +12,6 @@ namespace BusinessExcel
         {
         }
 
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

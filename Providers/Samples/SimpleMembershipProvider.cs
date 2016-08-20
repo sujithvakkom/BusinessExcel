@@ -18,7 +18,7 @@ using Microsoft.Internal.Web.Utils;
 using WebMatrix.Data;
 using WebMatrix.WebData.Resources;
 
-namespace WebMatrix.WebData
+namespace BusinessExcel.WebMatrix.WebData
 {
     public class SimpleMembershipProvider : ExtendedMembershipProvider
     {
