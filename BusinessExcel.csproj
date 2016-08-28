@@ -153,9 +153,13 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Providers\Entity\IJob.cs" />
+    <Compile Include="Providers\Entity\JobList.cs" />
     <Compile Include="Models\Index.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\BEDataProvider.cs" />
+    <Compile Include="Providers\Interfaces\IBEDataProvider.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Sessions.cs" />
     <Compile Include="Providers\ProviderContext\SessionContext.cs" />
     <None Include="Providers\Samples\SimpleMembershipProvider.cs" />

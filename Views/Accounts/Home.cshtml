@@ -7,7 +7,7 @@
     @Html.Partial("_MainHeaderAccount", new UserProfile() { UserFullName = ViewBag.UserProfile } )
 </header>
 <aside class="main-sidebar">
-    @Html.Partial("_MainSideBarAccount")
+    @Html.Partial("_MainSideBarAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
 </aside>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
