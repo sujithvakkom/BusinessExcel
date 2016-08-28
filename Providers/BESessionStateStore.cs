@@ -199,7 +199,6 @@ for the session state store provider):
             { return false; }
         }
 
-
         internal void CreateTablesIfNeeded()
         {
             using (var db = (SessionContext)ConnectToDatabase())
@@ -233,22 +232,6 @@ for the session state store provider):
                 {
                     ((SessionContext)db).Sessions.Add(sessions);
                     db.SaveChanges();
-                    /*
-                    int result =
-                    db.Database.ExecuteSqlCommand(
-                        InsertSession,
-                        new object[] { id
-                        ,ApplicationName
-                        ,DateTime.Now
-                        ,DateTime.Now.AddMinutes((double) timeout)
-                        ,DateTime.Now
-                        ,0
-                        ,timeout
-                        ,false
-                        ,""
-                        ,1}
-                        );
-                     */
                 }
                 catch (Exception e)
                 {

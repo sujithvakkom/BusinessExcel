@@ -43,7 +43,6 @@ namespace BusinessExcel.Filters
 
                     WebSecurity.InitializeDatabaseConnection("BusinessExcelData", "UserProfile", "UserId", "UserName", autoCreateTables: true);
                     
-                    
                 }
                 catch (Exception ex)
                 {
