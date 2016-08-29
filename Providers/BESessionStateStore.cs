@@ -295,15 +295,19 @@ for the session state store provider):
                 {
                     if (lockRecord)
                     {
-                        var session =
-                           db.Sessions.Where(x => x.SessionId == id &&
-                           x.ApplicationName == ApplicationName &&
-                           x.Locked == false &&
-                           x.Expires > DateTime.Now
-                           ).ToArray()[0];
-                        session.Locked = true;
-                        session.LockDate = DateTime.Now;
-                        db.SaveChanges();
+                        try
+                        {
+                            var session =
+                               db.Sessions.Where(x => x.SessionId == id &&
+                               x.ApplicationName == ApplicationName &&
+                               x.Locked == false &&
+                               x.Expires > DateTime.Now
+                               ).ToArray()[0];
+                            session.Locked = true;
+                            session.LockDate = DateTime.Now;
+                            db.SaveChanges();
+                        }
+                        catch (IndexOutOfRangeException) { }
                     }
                     var sessions =
                         db.Sessions.Where(x => x.SessionId == id &&
@@ -379,8 +383,12 @@ for the session state store provider):
             out object lockId,
             out SessionStateActions actionFlags)
         {
-            return GetSessionStoreItem(true, context, id, out locked,
-              out lockAge, out lockId, out actionFlags);
+            try
+            {
+                return GetSessionStoreItem(true, context, id, out locked,
+                  out lockAge, out lockId, out actionFlags);
+            }
+            catch (Exception ex) { throw ex; }
         }
 
         public override void InitializeRequest(HttpContext context)

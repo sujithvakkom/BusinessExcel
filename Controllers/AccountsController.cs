@@ -22,8 +22,17 @@ namespace BusinessExcel.Controllers
         {
             using (var db = new UsersContext())
             {
-                Session[Index.USER_PROFILE_INDEX] = db.UserProfiles.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
+                try
+                {
+                    Session[Index.USER_PROFILE_INDEX] = db.UserProfiles.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
+                }
+                catch (Exception)
+                {
+                    WebSecurity.Logout();
+                    RedirectToAction(PublicController.WELCOME, PublicController.PUBLIC);
+                }
             }
+            
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             return View();
         }

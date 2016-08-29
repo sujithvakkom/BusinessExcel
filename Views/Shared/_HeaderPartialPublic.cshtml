@@ -1,7 +1,9 @@
-﻿@model BusinessExcel.Models.LoginModel
+﻿@using BusinessExcel.Controllers
+@model BusinessExcel.Models.LoginModel
 
 <header class="main-header">
-    <a href="../../index2.html" class="logo">
+    @Html.ActionLink("BusinessExcel",PublicController.WELCOME, PublicController.PUBLIC, null,new { @class = "logo"})
+    @*<a href="../../index2.html" class="logo">*@
         <!-- LOGO -->
         <!-- mini logo for sidebar mini 50x50 pixels -->
         @*<span class="logo-mini">
@@ -9,7 +11,7 @@
             </span>*@
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">
-            <img src="../../Images/business-excel-light-185X27.png" />
+            <img src="../../Images/business-excel-light-185X27.svg" style="height: 27px;" />
         </span>
     </a>
     <nav class="navbar navbar-static-top" role="navigation">

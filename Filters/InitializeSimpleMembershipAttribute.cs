@@ -42,7 +42,20 @@ namespace BusinessExcel.Filters
                     }
 
                     WebSecurity.InitializeDatabaseConnection("BusinessExcelData", "UserProfile", "UserId", "UserName", autoCreateTables: true);
-                    
+
+                    WebSecurity.CreateUserAndAccount("srkrishnan@grandstores.ae", "pass");
+
+                    using (var db = new UsersContext())
+                    {
+                        UserProfile user = db.UserProfiles.SingleOrDefault(x => x.UserName == "srkrishnan@grandstores.ae");
+                        user.UserFullName = "Sujith Radhakrishnan";
+                        db.SaveChanges();
+                    }
+
+                    System.Web.Security.Roles.CreateRole("System Administrator");
+
+                    System.Web.Security.Roles.AddUserToRole("srkrishnan@grandstores.ae", "System Administrator");
+
                 }
                 catch (Exception ex)
                 {
