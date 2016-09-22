@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using WebMatrix.WebData;
 
 namespace BusinessExcel.Filters
@@ -42,19 +43,23 @@ namespace BusinessExcel.Filters
                     }
 
                     WebSecurity.InitializeDatabaseConnection("BusinessExcelData", "UserProfile", "UserId", "UserName", autoCreateTables: true);
-
-                    WebSecurity.CreateUserAndAccount("srkrishnan@grandstores.ae", "pass");
-
-                    using (var db = new UsersContext())
+                    if (!WebSecurity.UserExists("srkrishnan@grandstores.ae"))
                     {
-                        UserProfile user = db.UserProfiles.SingleOrDefault(x => x.UserName == "srkrishnan@grandstores.ae");
-                        user.UserFullName = "Sujith Radhakrishnan";
-                        db.SaveChanges();
+                        WebSecurity.CreateUserAndAccount("srkrishnan@grandstores.ae", "pass");
+
+                        using (var db = new UsersContext())
+                        {
+                            UserProfile user = db.UserProfiles.SingleOrDefault(x => x.UserName == "srkrishnan@grandstores.ae");
+                            user.UserFullName = "Sujith Radhakrishnan";
+                            db.SaveChanges();
+                        }
                     }
 
-                    System.Web.Security.Roles.CreateRole("System Administrator");
+                    if (!Roles.RoleExists("System Administrator"))
+                        Roles.CreateRole("System Administrator");
 
-                    System.Web.Security.Roles.AddUserToRole("srkrishnan@grandstores.ae", "System Administrator");
+                    if (!Roles.IsUserInRole("srkrishnan@grandstores.ae", "System Administrator"))
+                        System.Web.Security.Roles.AddUserToRole("srkrishnan@grandstores.ae", "System Administrator");
 
                 }
                 catch (Exception ex)

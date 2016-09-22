@@ -11,9 +11,11 @@ namespace BusinessExcel.Models
         public int UserId { get; set; }
 
         //[Column(TypeName = "nvarchar(50)")]
+        [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         //[Column(TypeName = "nvarchar(50)")]
+        [Display(Name="Full Name")]
         public string UserFullName { get; set; }
     }
 }

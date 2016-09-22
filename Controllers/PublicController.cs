@@ -96,7 +96,7 @@ namespace BusinessExcel.Controllers
         public ActionResult Logoff()
         {
             WebSecurity.Logout();
-            return Welcome();
+            return RedirectToAction("Welcome");
         }
         
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)

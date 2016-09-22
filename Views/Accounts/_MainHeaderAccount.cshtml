@@ -110,7 +110,7 @@
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="../../Images/avatar-160X160.png" class="img-circle user-image" />
-                    <span class="hidden-xs">@Model.UserFullName</span>
+                    <span class="hidden-xs">@((Model.UserFullName!=null)?@Model.UserFullName:"Hi")</span>
                 </a>
                 <ul class="dropdown-menu">
                     <!-- User image -->
@@ -136,7 +136,7 @@
                     <!-- Menu Footer-->
                     <li class="user-footer">
                         <div class="pull-left">                          
-                             @Html.ActionLink(AccountsController.PROFILE, AccountsController.PROFILE, AccountsController.ACCOUNTS, null,
+                             @Html.ActionLink(AccountsController.PROFILE, AccountsController.MYPROFILE, AccountsController.ACCOUNTS, null,
                                      new { @class = "btn btn-default btn-flat" })
                         </div>
                         <div class="pull-right">
