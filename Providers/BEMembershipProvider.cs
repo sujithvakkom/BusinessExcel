@@ -9,5 +9,10 @@ namespace BusinessExcel.Providers
         {
             return base.ValidateUser(username, password);
         }
+
+        public override string GetUserNameFromId(int userId)
+        {
+            return base.GetUserNameFromId(userId);
+        }
     }
 }

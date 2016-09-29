@@ -28,7 +28,8 @@ namespace BusinessExcel
 
             bundles.Add(new ScriptBundle("~/bundles/adminlte").Include(
                 "~/Scripts/AdminLTE/plugins/iCheck/icheck.min.js",
-                "~/Scripts/AdminLTE/app.min.js"));
+                "~/Scripts/AdminLTE/app.min.js",
+                "~/Scripts/BE/be-base.js"));
 
             //Styles
 

@@ -230,8 +230,22 @@ for the session state store provider):
             {
                 try
                 {
-                    ((SessionContext)db).Sessions.Add(sessions);
-                    db.SaveChanges();
+                    var ifExists = ((SessionContext)db).Sessions.Any(
+                        x => x.ApplicationName == sessions.ApplicationName &&
+                            x.SessionId == sessions.SessionId);
+                    if (ifExists)
+                    {
+                        var exists = ((SessionContext)db).Sessions.Single(
+                        x => x.ApplicationName == sessions.ApplicationName &&
+                            x.SessionId == sessions.SessionId);
+                        exists.SessionItems = sessions.SessionItems;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        ((SessionContext)db).Sessions.Add(sessions);
+                        db.SaveChanges();
+                    }
                 }
                 catch (Exception e)
                 {

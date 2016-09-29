@@ -29,5 +29,9 @@ namespace BusinessExcel.Providers
     */ 
     public class BERoleProvider:SimpleRoleProvider
     {
+        public override bool IsUserInRole(string username, string roleName)
+        {
+            return base.IsUserInRole(username, roleName);
+        }
     }
 }

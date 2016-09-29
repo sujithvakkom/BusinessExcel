@@ -43,6 +43,8 @@
             replaceAttrValue = container.attr("data-valmsg-replace"),
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
 
+        var formGroup = $(this).find("[name='form-group-" + escapeAttributeValue(inputElement[0].name) + "']")
+
         container.removeClass("field-validation-valid").addClass("field-validation-error");
         error.data("unobtrusiveContainer", container);
 
@@ -53,6 +55,12 @@
         else {
             error.hide();
         }
+
+        /*
+        need to add has-error to form-group
+        */
+        formGroup.addClass("has-error")
+
     }
 
     function onErrors(event, validator) {  // 'this' is the form element
@@ -72,12 +80,18 @@
     function onSuccess(error) {  // 'this' is the form element
         var container = error.data("unobtrusiveContainer");
 
+
         if (container) {
             var replaceAttrValue = container.attr("data-valmsg-replace"),
                 replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
 
+            var name = container.attr("data-valmsg-for");
+
             container.addClass("field-validation-valid").removeClass("field-validation-error");
             error.removeData("unobtrusiveContainer");
+
+            var formGroup = $(this).find("[name='form-group-" + name + "']")
+            formGroup.removeClass("has-error")
 
             if (replace) {
                 container.empty();
@@ -108,6 +122,8 @@
             .removeData("unobtrusiveContainer")
             .find(">*")  // If we were using valmsg-replace, get the underlying error
                 .removeData("unobtrusiveContainer");
+
+         $form.find(".form-group").removeClass("has-error")
     }
 
     function validationInfo(form) {

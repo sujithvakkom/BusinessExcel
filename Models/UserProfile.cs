@@ -15,7 +15,7 @@ namespace BusinessExcel.Models
         public string UserName { get; set; }
 
         //[Column(TypeName = "nvarchar(50)")]
-        [Display(Name="Full Name")]
+        [Display(Name = "Full Name")]
         public string UserFullName { get; set; }
     }
 }

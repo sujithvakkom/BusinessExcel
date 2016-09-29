@@ -2,28 +2,21 @@
 @using BootstrapHtmlHelper
 @using BusinessExcel.Controllers
 
-    @{
-        ViewBag.Title = "Welcome";
-    }
+<div class="login-box">
+    <div class="login-logo">
+        <a href="../../index2.html">
+            <img src="../../Images/business-excel-dark-185X27.svg" style="height: 27px;" />
+        </a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start your session</p>
 
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    <div class="login-box">
-        <div class="login-logo">
-            <a href="../../index2.html">
-                <img src="../../Images/business-excel-dark-185X27.svg" style="height: 27px;" />
-            </a>
-        </div>
-        <!-- /.login-logo -->
-        <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
-
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-                
-                @Html.ValidationSummary(true)
-                
-                @Html.AdminLTETextBoxFor(
+            @Html.AdminLTETextBoxFor(
                         m => m.Email,
                         null,
                         new Dictionary<string, object>() { { "class", "form-control" } },
@@ -34,7 +27,7 @@
                         true,
                         true)
 
-                @Html.AdminLTEPasswordFor(
+            @Html.AdminLTEPasswordFor(
                         m => m.Password,
                         null,
                         new Dictionary<string, object>() { { "class", "form-control" } },
@@ -44,41 +37,52 @@
                         false,
                         true,
                         true)
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div class="checkbox icheck">
-                            <label>
-                                @Html.CheckBoxFor(m=>m.RememberMe) Remember Me
-                            </label>
-                        </div>
-                    </div><!-- /.col -->
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat" id="button-login"
-                                onclick="this.disabled=true;">
-                            Sign In
-                        </button>
-                    </div><!-- /.col -->
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <label>
+                            @Html.CheckBoxFor(m => m.RememberMe) Remember Me
+                        </label>
+                    </div>
+                </div><!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat" id="button-login"
+                            @*onclick="this.disabled=true;"*@>
+                        Sign In
+                    </button>
+                </div><!-- /.col -->
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group has-error">
+                        @Html.ValidationSummary(true, "", new { @class = "help-block" })
+                    </div>
                 </div>
+            </div>
+
+        }
+
+        @Html.ActionLink("I forgot my password", PublicController.FORGOTPASSWORD)
+        <br />
+        @Html.ActionLink("Register a new membership", PublicController.REGISTER, null, new { @class = "text - center" })
 
 
-            }
-
-            @Html.ActionLink("I forgot my password", PublicController.FORGOT_PASSWORD)
-            <br />
-            @Html.ActionLink("Register a new membership", PublicController.REGISTER, null, new { @class = "text - center" })
-
-
-        </div>
     </div>
+</div>
 
-    @section Scripts {
-        <script>
-            $(function () {
-                $('input').iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue',
-                    increaseArea: '20%' // optional
-                });
+@section Scripts {
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
             });
-        </script>
-    }
+
+            $('form').addTriggersToJqueryValidate();
+            $('form').bind("elementValidation", function (event, element, result) {
+                console.log("Something is invalid");
+            });
+        });
+    </script>
+}

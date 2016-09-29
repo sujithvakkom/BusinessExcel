@@ -2,6 +2,7 @@
 using BusinessExcel.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,11 +18,12 @@ namespace BusinessExcel.Controllers
         public const string PUBLIC = "Public";
 
         public const string WELCOME = "Welcome";
+        public const string WELCOME_TITLE = " | Welcome";
         // GET: /Public/Welcome
         [HttpGet]
         public ActionResult Welcome()
         {
-            ViewBag.Title = WELCOME;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"]+ WELCOME_TITLE;
             if (Request.IsAuthenticated)
             {
                 return RedirectToAction("Home", "Accounts");
@@ -36,20 +38,24 @@ namespace BusinessExcel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Welcome(LoginModel Model)
         {
-            ViewBag.Title = WELCOME;
-            if (ModelState.IsValid && WebSecurity.Login(Model.Email, Model.Password, Model.RememberMe))
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"]+ WELCOME_TITLE;
+            if (ModelState.IsValid && WebSecurity.Login(Model.Email, Model.Password, persistCookie: Model.RememberMe))
+            {
+
                 return RedirectToAction("Home", "Accounts");
+            }
             else
-                ModelState.AddModelError("Invalid Login", "User Name or Password are wrong, Please try again Or Register.");
+                ModelState.AddModelError(string.Empty, "The username or password you entered is incorrect.");
             return View(Model);
         }
 
         public const string REGISTER = "Register";
+        public const string REGISTER_TITLE = " | Register";
         //GET: /Public/Register
         [HttpGet]
         public ActionResult Register()
         {
-            ViewBag.Title = REGISTER;
+            ViewBag.Title = REGISTER_TITLE;
             return View();
         }
 
@@ -57,7 +63,7 @@ namespace BusinessExcel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel Model)
         {
-            ViewBag.Title = REGISTER;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + REGISTER_TITLE;
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
@@ -82,11 +88,12 @@ namespace BusinessExcel.Controllers
         }
 
         //GET: /Public/ForgotPassword
-        public const string FORGOT_PASSWORD= "Forgot Password";
+        public const string FORGOTPASSWORD = "ForgotPassword";
+        public const string FORGOT_PASSWORD_TITLE = " | Forgot Password";
         [HttpGet]
         public ActionResult ForgotPassword()
         {
-            ViewBag.Title = FORGOT_PASSWORD;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + FORGOT_PASSWORD_TITLE;
             return View();
         }
 

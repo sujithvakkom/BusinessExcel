@@ -153,7 +153,10 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Models\EditUserProfile.cs" />
     <Compile Include="Models\Index.cs" />
+    <Compile Include="Models\RoleDefine.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Sessions.cs" />
@@ -176,6 +179,7 @@
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\UsersContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\BE\be-base.js" />
     <Content Include="Views\Public\Register.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
@@ -195,6 +199,7 @@
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\Accounts\Profile.cshtml" />
     <Content Include="Views\Accounts\MyProfile.cshtml" />
+    <Content Include="Views\Accounts\_ResultMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
