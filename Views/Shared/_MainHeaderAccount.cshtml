@@ -110,7 +110,7 @@
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="../../Images/avatar-160X160.png" class="img-circle user-image" />
-                    <span class="hidden-xs" name ="user-full-name-display">@((Model.UserFullName!=null)?@Model.UserFullName:"Hi")</span>
+                    <span class="hidden-xs" name ="user-full-name-display">@((ViewBag.UserProfile != null) ? ViewBag.UserProfile : "Hi")</span>
                 </a>
                 <ul class="dropdown-menu">
                     <!-- User image -->

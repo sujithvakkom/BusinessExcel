@@ -11,6 +11,7 @@
     <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">*@
+    @RenderSection("extraStyles", false)
     @Styles.Render("~/Content/themes/base/css")
     @Styles.Render("~/Content/themes/adminlte/css")
     @Styles.Render("~/Content/css")
@@ -24,5 +25,6 @@
     @System.Web.Optimization.Scripts.Render("~/bundles/bootstrap")
     @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
     @System.Web.Optimization.Scripts.Render("~/bundles/adminlte")
+    @RenderSection("extraScripts",false)
 </body>
 </html>

@@ -31,6 +31,9 @@ namespace BusinessExcel
                 "~/Scripts/AdminLTE/app.min.js",
                 "~/Scripts/BE/be-base.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/select2").Include(
+                "~/Scripts/AdminLTE/plugins/select2/select2.full.min.js"));
+
             //Styles
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
@@ -49,6 +52,10 @@ namespace BusinessExcel
                 "~/Content/AdminLTE/AdminLTE.min.css",
                 "~/Content/AdminLTE/skins/_all-skins.min.css",
                 "~/Scripts/AdminLTE/plugins/iCheck/all.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/themes/select2").Include(
+                "~/Scripts/AdminLTE/plugins/select2/select2.min.css"
                 ));
         }
     }

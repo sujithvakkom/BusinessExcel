@@ -7,14 +7,12 @@ namespace BusinessExcel.Models
 {
     public enum BERoles
     {
-        SystemAdministrator,
-        Administrator
+        SystemAdministrator = 0,
+        Administrator = 1
     }
     public static class BERoleDetails
     {
-        public static Dictionary<BERoles, String> RoleName = new Dictionary<BERoles, string>() { 
-        {BERoles.SystemAdministrator,"System Administrator"},
-        {BERoles.Administrator,"Administrator"}
-        };
+        public const string SYSTEM_ADMINISTRATOR = "System Administrator";
+        public const string ADMINISTRATOR =  "Administrator" ;
     }
 }

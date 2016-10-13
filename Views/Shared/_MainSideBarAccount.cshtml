@@ -1,4 +1,5 @@
-﻿@using BusinessExcel.Models
+﻿@using BootstrapHtmlHelper
+@using BusinessExcel.Models
 @model BusinessExcel.Models.UserProfile
 
 <!-- Inner sidebar -->
@@ -38,22 +39,25 @@
             </li>
         </ul><!-- /.sidebar-menu -->*@
     <!-- Sidebar Menu -->
-    @if (User.IsInRole(BERoleDetails.RoleName[BERoles.SystemAdministrator]))
+    @if (User.IsInRole(BERoleDetails.SYSTEM_ADMINISTRATOR))
     {
-    <ul class="sidebar-menu">
-        <li>@Ht</li>
-        <li class="header">Admin</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><span>User Management</span></a><</li>
-        <li><a href="#"><span>Another Link</span></a></li>
-        <li class="treeview">
-            <a href="#"><span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
-            <ul class="treeview-menu">
-                <li><a href="#">Link in level 2</a></li>
-                <li><a href="#">Link in level 2</a></li>
-            </ul>
-        </li>
-    </ul>
+        <ul class="sidebar-menu">
+            <li class="header">Admin Control</li>
+            <!-- Optionally, you can add icons to the links -->
+            <li class="active">
+                    @Html.AdminLTEActionLink(BusinessExcel.Controllers.AdminController.USERMANAGEMENT_TITLE,
+            BusinessExcel.Controllers.AdminController.USERMANAGEMENT, BusinessExcel.Controllers.AdminController.ADMIN
+            )
+            </li>
+            <li><a href="#"><span>Another Link</span></a></li>
+            <li class="treeview">
+                <a href="#"><span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="#">Link in level 2</a></li>
+                    <li><a href="#">Link in level 2</a></li>
+                </ul>
+            </li>
+        </ul>
     }
 
 </div><!-- /.sidebar -->

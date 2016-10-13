@@ -19,11 +19,11 @@ namespace BusinessExcel.Controllers
 
         public const string WELCOME = "Home";
 
-        public const string WELCOME_TITLE = " | Home";
+        public const string WELCOME_TITLE = "Home";
         // GET: /Accounts/Home
         public ActionResult Home()
         {
-            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + WELCOME_TITLE;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] +" | "+ WELCOME_TITLE;
             using (var db = new UsersContext())
             {
                 try
@@ -42,12 +42,12 @@ namespace BusinessExcel.Controllers
 
         public const string PROFILE = "Profile";
         public const string MYPROFILE = "MyProfile";
-        public const string MYPROFILE_TITLE = " | Profile";
+        public const string MYPROFILE_TITLE = "Profile";
         //GET: /Account/MyProfile
         [HttpGet]
         public ActionResult MyProfile()
         {
-            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + MYPROFILE_TITLE;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] +" | "+ MYPROFILE_TITLE;
             EditUserProfile profile = null;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             using (var db = new UsersContext())
@@ -74,7 +74,7 @@ namespace BusinessExcel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult MyProfile(EditUserProfile EditUserProfile)
         {
-            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + MYPROFILE_TITLE;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + MYPROFILE_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (ModelState.IsValid)
             {
