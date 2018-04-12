@@ -10,7 +10,7 @@ namespace BusinessExcel.Models
     public class RolesNameModel
     {
         [Required]
-        [DisplayName("Role name")]
+        [Display(Name = "Role name")]
         public String RolesName { get; set; }
     }
 }

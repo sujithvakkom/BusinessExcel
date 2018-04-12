@@ -18,6 +18,8 @@ namespace BusinessExcel.Controllers
 
         public static string USERMANAGEMENT = "UserManagement";
         public static string USERMANAGEMENT_TITLE = "User Management";
+        public static string AJAXCREATEROLE = "AjaxCreateRole";
+        public static string ROLECREATIONMESSAGE = "RoleCreationMessage";
         //
         // GET: /Admin/UserManagement
 
@@ -35,12 +37,20 @@ namespace BusinessExcel.Controllers
         [HttpPost]
         public PartialViewResult AjaxCreateRole(RolesNameModel RoleName)
         {
+            ViewData.Add(ROLECREATIONMESSAGE, "");
             if (ModelState.IsValid)
             {
                 if (!Roles.RoleExists(RoleName.RolesName))
+                {
                     Roles.CreateRole(RoleName.RolesName);
+                    ViewData[ROLECREATIONMESSAGE]= "Role Created.";
+                    RoleName.RolesName = "";
+                }
                 else
+                { 
                     ModelState.AddModelError("RoleName", "Role existing.");
+                    ViewData[ROLECREATIONMESSAGE]= "Role existing.";
+                }
             }
             return PartialView(RoleName);
         }

@@ -1,5 +1,4 @@
 ﻿@using BusinessExcel.Models
-@using BootstrapHtmlHelper
 
 @section Dialogs{
 }
@@ -50,24 +49,10 @@
 
                         }</table>
 
-                        @using (Ajax.BeginForm("AjaxCreateRole",
-                            ajaxOptions:
-                            new AjaxOptions()
-                            {
-                                
-                            }))
-                        {
-                            @Html.AdminLTETextBox("RoleName",
-                       null,
-                       new Dictionary<string, object>() { { "class", "form-control" }, { "required" ,""} },
-                       null,
-                       null,
-                       "",
-                       true,
-                       true,
-                       true)
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        }
+                        <div id="role-creation-form">
+                            @Html.Partial(BusinessExcel.Controllers.AdminController.AJAXCREATEROLE,
+                        new BusinessExcel.Models.RolesNameModel())
+                        </div>
 
                         @*
     @{
