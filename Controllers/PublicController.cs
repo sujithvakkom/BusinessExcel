@@ -45,7 +45,7 @@ namespace BusinessExcel.Controllers
                 return RedirectToAction("Home", "Accounts");
             }
             else
-                ModelState.AddModelError(string.Empty, "The username or password you entered is incorrect.");
+                ModelState.AddModelError(string.Empty, "The user name or password you entered is incorrect.");
             return View(Model);
         }
 

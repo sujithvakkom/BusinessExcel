@@ -157,10 +157,12 @@
     <Compile Include="Models\EditUserProfile.cs" />
     <Compile Include="Models\Index.cs" />
     <Compile Include="Models\RoleDefine.cs" />
+    <Compile Include="Models\RolesName.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Sessions.cs" />
     <Compile Include="Providers\ProviderContext\SessionContext.cs" />
+    <Content Include="Views\PLRegister\photography_live.html" />
     <None Include="Providers\Samples\SimpleMembershipProvider.cs" />
     <Compile Include="Providers\Samples\TestMembershipProvider.cs" />
     <Compile Include="BusinessExcelDataModel.cs" />
@@ -255,6 +257,7 @@
     <Content Include="Views\Accounts\_ResultMessage.cshtml" />
     <Content Include="Views\Admin\UserManagement.cshtml" />
     <Content Include="Views\Admin\_ViewStart.cshtml" />
+    <Content Include="Views\Admin\AjaxCreateRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

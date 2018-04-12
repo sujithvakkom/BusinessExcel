@@ -42,7 +42,8 @@ namespace BusinessExcel.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("BusinessExcelData", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    if (!WebSecurity.Initialized)
+                        WebSecurity.InitializeDatabaseConnection("BusinessExcelData", "UserProfile", "UserId", "UserName", autoCreateTables: true);
                     if (!WebSecurity.UserExists("srkrishnan@grandstores.ae"))
                     {
                         WebSecurity.CreateUserAndAccount("srkrishnan@grandstores.ae", "pass");
