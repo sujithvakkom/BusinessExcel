@@ -6,10 +6,10 @@
 
 <header class="main-header">
     @Html.Partial("_MainHeaderAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
-</header>
-<aside class="main-sidebar">
+</header><!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
     @Html.Partial("_MainSideBarAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
-</aside>
+</section>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -35,24 +35,29 @@
                     </div>
 
                     <div class="box-body">
-                        @{
-                            var selectList = new List<SelectListItem>();
-                            SelectListItem item = new SelectListItem() { Text = "Text1", Value = "Value1" };
-                            selectList.Add(item);
-                            item = new SelectListItem() { Text = "Text2", Value = "Value2" };
-                            selectList.Add(item);
-                            item = new SelectListItem() { Text = "Text3", Value = "Value3" };
-                            selectList.Add(item);
-                            item = new SelectListItem() { Text = "Text4", Value = "Value4" };
-                            selectList.Add(item);
+                        @*
+    @{
+        var selectList = new List<SelectListItem>();
+        SelectListItem item = new SelectListItem() { Text = "Text1", Value = "Value1" };
+        selectList.Add(item);
+        item = new SelectListItem() { Text = "Text2", Value = "Value2" };
+        selectList.Add(item);
+        item = new SelectListItem() { Text = "Text3", Value = "Value3" };
+        selectList.Add(item);
+        item = new SelectListItem() { Text = "Text4", Value = "Value4" };
+        selectList.Add(item);
 
-                        }   
-                        @Html.DropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
-                        @Html.AdminLTEDropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
+    }
+    @Html.DropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
+    @Html.AdminLTEDropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })*@
+                        @{ 
+                            WebGrid grid = new WebGrid(source : ViewBag.Roles);
+                            @grid.GetHtml();
+                        }
                     </div>
                 </div>
             </div>
-
+        </div>
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <footer class="main-footer">
