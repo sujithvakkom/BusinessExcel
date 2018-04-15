@@ -1,10 +1,13 @@
 ﻿using BusinessExcel.Models;
+using BusinessExcel.Providers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace BusinessExcel.Controllers
 {
@@ -15,19 +18,83 @@ namespace BusinessExcel.Controllers
 
         public static string USERMANAGEMENT = "UserManagement";
         public static string USERMANAGEMENT_TITLE = "User Management";
+        public static string AJAXCREATEROLE = "AjaxCreateRole";
+        public static string ROLETABLEPARTIAL = "RoleTablePartial";
+        public static string ROLECREATIONMESSAGE = "RoleCreationMessage";
+        public static string AJAXREMOVEROLE = "AjaxRemoveRole";
         //
         // GET: /Admin/UserManagement
 
+        [Authorize(Roles = "System Administrator")]
+        [HttpGet]
         public ActionResult UserManagement()
         {
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERMANAGEMENT_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = USERMANAGEMENT_TITLE;
+<<<<<<< HEAD
             RoleContext db =new RoleContext();
 
             ViewBag.Roles = db.Roles;
+=======
+
+>>>>>>> ac5a515d0f9008baea8846b8b2fb5b7faa135684
             return View();
         }
 
+        [HttpPost]
+        [Authorize(Roles = "System Administrator")]
+        public PartialViewResult AjaxCreateRole(RolesNameModel RoleName)
+        {
+            ViewData.Add(ROLECREATIONMESSAGE, "");
+            if (ModelState.IsValid)
+            {
+                if (!Roles.RoleExists(RoleName.RolesName))
+                {
+                    Roles.CreateRole(RoleName.RolesName);
+                    ViewData[ROLECREATIONMESSAGE] = "Role Created.";
+                    RoleName.RolesName = "";
+                }
+                else
+                {
+                    ModelState.AddModelError("RoleName", "Role existing.");
+                    ViewData[ROLECREATIONMESSAGE] = "Role existing.";
+                }
+            }
+            return PartialView(RoleName);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "System Administrator")]
+        public String AjaxRemoveRole(RolesNameModel RoleName)
+        {
+            ViewData.Add(ROLECREATIONMESSAGE, "");
+            if (ModelState.IsValid)
+            {
+                if (Roles.RoleExists(RoleName.RolesName))
+                {
+                    var users = Roles.GetUsersInRole(RoleName.RolesName);
+                    if (users != null && users.Count() > 0)
+                        Roles.RemoveUsersFromRole(
+                            Roles.GetUsersInRole(RoleName.RolesName),
+                            RoleName.RolesName);
+                    Roles.DeleteRole(RoleName.RolesName);
+                    ViewData[ROLECREATIONMESSAGE] = "Role Removed.";
+                    RoleName.RolesName = "";
+                }
+                else
+                {
+                    ModelState.AddModelError("RoleName", "Role existing.");
+                    ViewData[ROLECREATIONMESSAGE] = "Role existing.";
+                }
+            }
+            return ViewData[ROLECREATIONMESSAGE].ToString();
+        }
+
+        [Authorize(Roles = "System Administrator")]
+        public PartialViewResult RoleTablePartial()
+        {
+            return PartialView();
+        }
     }
 }

@@ -33,5 +33,9 @@ namespace BusinessExcel.Providers
         {
             return base.IsUserInRole(username, roleName);
         }
+        public override string[] GetAllRoles()
+        {
+            return base.GetAllRoles();
+        }
     }
 }

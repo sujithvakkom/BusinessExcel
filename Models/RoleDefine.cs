@@ -14,5 +14,6 @@ namespace BusinessExcel.Models
     {
         public const string SYSTEM_ADMINISTRATOR = "System Administrator";
         public const string ADMINISTRATOR =  "Administrator" ;
+        
     }
 }
