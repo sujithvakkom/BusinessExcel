@@ -154,6 +154,7 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Models\EditUserProfile.cs" />
     <Compile Include="Models\Index.cs" />
     <Compile Include="Models\RoleDefine.cs" />
