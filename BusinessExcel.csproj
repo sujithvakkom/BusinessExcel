@@ -912,7 +912,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BootstrapHtmlHelper\BootstrapHtmlHelper.csproj">
+    <ProjectReference Include="..\BootstrapHtmlHelper\BootstrapHtmlHelper.csproj">
       <Project>{e5193a9c-62fb-4969-9ec5-c6ed10a035eb}</Project>
       <Name>BootstrapHtmlHelper</Name>
     </ProjectReference>
