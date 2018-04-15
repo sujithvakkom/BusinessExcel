@@ -5,6 +5,39 @@
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
 
+<<<<<<< HEAD
+        </div>
+    </div>
+    <section class="sidebar">
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            @if (User.IsInRole(BERoleDetails.SYSTEM_ADMINISTRATOR))
+            {
+
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">ADMIN CONTROLS</li>
+                    <!-- Optionally, you can add icons to the links -->
+                    <li class="treeview">
+                        <a href="#"><i class="fa fa-user-secret"></i><span>Security</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li class="active">
+                                @Html.AdminLTEActionLink(
+                   linkText: BusinessExcel.Controllers.AdminController.USERMANAGEMENT_TITLE,
+                   actionName: BusinessExcel.Controllers.AdminController.USERMANAGEMENT,
+                   controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
+                   cssClass:"",
+                   carrot: "fa-user-secret")
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            }
+
+        </ul>
+    </section>
+</div>
+=======
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <div class="user-panel">
@@ -67,3 +100,4 @@
         </section>
 
         </aside><!-- /.sidebar -->
+>>>>>>> ac5a515d0f9008baea8846b8b2fb5b7faa135684

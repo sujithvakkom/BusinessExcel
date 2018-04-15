@@ -7,7 +7,7 @@ using System.Web;
 
 namespace BusinessExcel.Providers.ProviderContext.Entities
 {
-    [Table("Sessions")]
+    //[Table("Sessions")]
     public class Session
     {
         [Required]
