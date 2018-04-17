@@ -32,13 +32,6 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERMANAGEMENT_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = USERMANAGEMENT_TITLE;
-<<<<<<< HEAD
-            RoleContext db =new RoleContext();
-
-            ViewBag.Roles = db.Roles;
-=======
-
->>>>>>> ac5a515d0f9008baea8846b8b2fb5b7faa135684
             return View();
         }
 
