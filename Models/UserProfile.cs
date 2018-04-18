@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BusinessExcel.Models
 {
-    [Table("UserProfile")]
+    //[Table("UserProfile")]
     public class UserProfile
     {
         [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
 
         //[Column(TypeName = "nvarchar(50)")]

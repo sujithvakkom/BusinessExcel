@@ -20,11 +20,8 @@ namespace BusinessExcel.Controllers
         public static string USERMANAGEMENT_TITLE = "User Management";
         public static string AJAXCREATEROLE = "AjaxCreateRole";
         public static string ROLETABLEPARTIAL = "RoleTablePartial";
-        public static string USERREQUESTTABLEPARTIAL = "UserRequestTablePartial";
         public static string ROLECREATIONMESSAGE = "RoleCreationMessage";
-        public static string USERENABLEMESSAGE = "UserEnableMessage";
         public static string AJAXREMOVEROLE = "AjaxRemoveRole";
-        public static string AJAXENABLEUSER = "AjaxEnableUser";
         //
         // GET: /Admin/UserManagement
 
@@ -91,35 +88,6 @@ namespace BusinessExcel.Controllers
         public PartialViewResult RoleTablePartial()
         {
             return PartialView();
-        }
-
-        [Authorize(Roles = "System Administrator")]
-        public PartialViewResult UserRequestTablePartial()
-        {
-            return PartialView();
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "System Administrator")]
-        public String AjaxEnableUser(UserProfile UserProfile)
-        {
-            ViewData.Add(ROLECREATIONMESSAGE, "");
-            if (ModelState.IsValid)
-            {
-                MembershipUser user = Membership.GetUser(UserProfile.UserName);
-                if (user != null)
-                {
-                    user.IsApproved = true;
-                    Membership.UpdateUser(user);
-                    ViewData[USERENABLEMESSAGE] = "User Enabled.";
-                }
-                else
-                {
-                    ModelState.AddModelError("UserName", "User not exits.");
-                    ViewData[ROLECREATIONMESSAGE] = "User not exist.";
-                }
-            }
-            return ViewData[ROLECREATIONMESSAGE].ToString();
         }
     }
 }
