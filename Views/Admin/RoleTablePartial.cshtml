@@ -79,3 +79,24 @@ htmlAttributes: new { @style = "display:inline;", @id = "form-remove-" + role.Re
     @*<button id='remove-@{@role}' type="button" class="btn btn-link" onclick='confirmRemoveRole("form-remove@{@role}")'>Remove</button>*@
     @*<button id='remove-@{@role}' type="button" class="btn btn-link" onclick='confirmRemoveRole("form-remove@{@role}")'></button>*@
     @*//Setting id and type*@
+    <script>
+
+        function refreshRoleTable() {
+            $.ajax({
+                // edit to add steve's suggestion.
+                //url: "/ControllerName/ActionName",
+                url: '@Url.Action(BusinessExcel.Controllers.AdminController.ROLETABLEPARTIAL,BusinessExcel.Controllers.AdminController.ADMIN)',
+                success: function (data) {
+                    // your data could be a View or Json or what ever you returned in your action method
+                    // parse your data here
+                    //alert(data);
+                    $('#role-table-display').modal('hide')
+                    $('#role-table-display').html(data)
+                }
+            });
+        }
+
+        function confirmRemoveRole(formid) {
+            $("#" + formid).submit();
+        }
+    </script>
