@@ -33,38 +33,6 @@
                         <h3 class="box-title">User Roles</h3>
                     </div>
                     <div class="box-body">
-<<<<<<< HEAD
-                        @*
-    @{
-        var selectList = new List<SelectListItem>();
-        SelectListItem item = new SelectListItem() { Text = "Text1", Value = "Value1" };
-        selectList.Add(item);
-        item = new SelectListItem() { Text = "Text2", Value = "Value2" };
-        selectList.Add(item);
-        item = new SelectListItem() { Text = "Text3", Value = "Value3" };
-        selectList.Add(item);
-        item = new SelectListItem() { Text = "Text4", Value = "Value4" };
-        selectList.Add(item);
-
-    }
-    @Html.DropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
-    @Html.AdminLTEDropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })*@
-                        @{ 
-                            WebGrid grid = new WebGrid(source : ViewBag.Roles);
-                            @grid.GetHtml();
-                        }
-                    </div>
-                </div>
-            </div>
-=======
-
-                        <div id="role-table-display">
-                            @Html.Partial(BusinessExcel.Controllers.AdminController.ROLETABLEPARTIAL)
-                        </div>
-                        <div id="role-creation-form">
-                            @Html.Partial(BusinessExcel.Controllers.AdminController.AJAXCREATEROLE,
-                        new BusinessExcel.Models.RolesNameModel())
-                        </div>
 
                         @*
                             @{
@@ -81,11 +49,39 @@
                             }
                             @Html.DropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
                             @Html.AdminLTEDropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
-                        *@
+                                                @{
+                                                    WebGrid grid = new WebGrid(source : ViewBag.Roles);
+                                                    @grid.GetHtml();
+                                                }*@
 
+
+                        <div id="role-table-display">
+                            @Html.Partial(BusinessExcel.Controllers.AdminController.ROLETABLEPARTIAL)
+                        </div>
+                        <div id="role-creation-form">
+                            @Html.Partial(BusinessExcel.Controllers.AdminController.AJAXCREATEROLE,
+                        new BusinessExcel.Models.RolesNameModel())
+                        </div>
                     </div>
                 </div>
             </div>
+
+            @*
+                @{
+                    var selectList = new List<SelectListItem>();
+                    SelectListItem item = new SelectListItem() { Text = "Text1", Value = "Value1" };
+                    selectList.Add(item);
+                    item = new SelectListItem() { Text = "Text2", Value = "Value2" };
+                    selectList.Add(item);
+                    item = new SelectListItem() { Text = "Text3", Value = "Value3" };
+                    selectList.Add(item);
+                    item = new SelectListItem() { Text = "Text4", Value = "Value4" };
+                    selectList.Add(item);
+
+                }
+                @Html.DropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
+                @Html.AdminLTEDropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
+            *@
 
             <div class="col-md-6">
                 <div class="box box-primary" id="change-user-name-form">
@@ -93,18 +89,34 @@
                         <h3 class="box-title">User Requests</h3>
                     </div>
                     <div class="box-body">
+                        <div id="user-approval-table-display">
+                            @Html.Partial(BusinessExcel.Controllers.AdminController.USERREQUESTTABLEPARTIAL)
+                        </div>
                     </div>
                 </div>
             </div>
->>>>>>> ac5a515d0f9008baea8846b8b2fb5b7faa135684
         </div>
-    </section><!-- /.content -->
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="box box-primary" id="change-user-name-form">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Users</h3>
+                    </div>
+                    <div class="box-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+</section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <footer class="main-footer">
     @Html.Partial("_MainFooterAccount")
 </footer>
 
 @section Scripts {
+
     <script>
         var AdminLTEOptions = {
             //Add slimscroll to navbar menus
@@ -216,24 +228,6 @@
             $('#example').DataTable();
 
         });
-        function refreshRoleTable() {
-            $.ajax({
-                // edit to add steve's suggestion.
-                //url: "/ControllerName/ActionName",
-                url: '@Url.Action(BusinessExcel.Controllers.AdminController.ROLETABLEPARTIAL,BusinessExcel.Controllers.AdminController.ADMIN)',
-                success: function (data) {
-                    // your data could be a View or Json or what ever you returned in your action method
-                    // parse your data here
-                    //alert(data);
-                    $('#role-table-display').modal('hide')
-                    $('#role-table-display').html(data)
-                }
-            });
-        }
-
-        function confirmRemoveRole(formid) {
-            $("#" + formid).submit();
-        }
     </script>
 }
 
