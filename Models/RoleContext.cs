@@ -1,5 +1,4 @@
 ﻿
-using BusinessExcelDataContext;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,7 +14,6 @@ namespace BusinessExcel.Models
             : base("BusinessExcelData")
         {
         }
-
-        public DbSet<webpages_Roles> Roles { get; set; }
+        
     }
 }
