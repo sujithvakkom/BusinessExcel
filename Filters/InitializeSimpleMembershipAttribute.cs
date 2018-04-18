@@ -35,11 +35,7 @@ namespace BusinessExcel.Filters
                 {
                     using (var context = new UsersContext())
                     {
-                        if (!context.Database.Exists())
-                        {
-                            // Create the SimpleMembership database without Entity Framework migration schema
-                            ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
-                        }
+                        context.Database.CreateIfNotExists();
                     }
 
                     if (!WebSecurity.Initialized)

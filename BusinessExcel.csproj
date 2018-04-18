@@ -920,10 +920,6 @@
       <Project>{e5193a9c-62fb-4969-9ec5-c6ed10a035eb}</Project>
       <Name>BootstrapHtmlHelper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BusinessExcelDataContext\BusinessExcelDataContext.csproj">
-      <Project>{140F77A9-218B-4584-87AF-E4DFC3DEDAB1}</Project>
-      <Name>BusinessExcelDataContext</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
