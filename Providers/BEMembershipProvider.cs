@@ -4,13 +4,18 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Web.Security;
 using WebMatrix.WebData;
+using System.Collections.Specialized;
 
 namespace BusinessExcel.Providers
 {
 
     public sealed class BEMembershipProvider : SimpleMembershipProvider
     {
-        
+        public override void Initialize(string name, NameValueCollection config)
+        {
+            base.Initialize(name, config);
+        }
+
         public override bool ValidateUser(string username, string password)
         {
             return base.ValidateUser(username, password);

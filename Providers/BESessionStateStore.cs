@@ -73,7 +73,7 @@ for the session state store provider):
     LockDate        DateTime  NOT NULL,
     LockId          Integer   NOT NULL,
     Timeout         Integer   NOT NULL,
-    Locked          YesNo     NOT NULL,
+    Locked          YesNo     NOT NULL,                                                                     
     SessionItems    Memo,
     Flags           Integer   NOT NULL,
       CONSTRAINT PKSessions PRIMARY KEY (SessionId, ApplicationName)
@@ -130,13 +130,13 @@ for the session state store provider):
 
             // Initialize the abstract base class. 
             base.Initialize(name, config);
-            
+
             // 
             // Initialize the ApplicationName property. 
             //
 
-            pApplicationName =
-              System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
+            pApplicationName = ConfigurationManager.AppSettings["ApplicationName"];
+              //System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
 
 
             // 
