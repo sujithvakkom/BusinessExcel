@@ -23,6 +23,7 @@ namespace BusinessExcel.Controllers
         public static string ROLECREATIONMESSAGE = "RoleCreationMessage";
         public static string AJAXREMOVEROLE = "AjaxRemoveRole";
         //
+        public static string USERREQUESTTABLEPARTIAL = "UserRequestTablePartial";
         // GET: /Admin/UserManagement
 
         [Authorize(Roles = "System Administrator")]
@@ -86,6 +87,12 @@ namespace BusinessExcel.Controllers
 
         [Authorize(Roles = "System Administrator")]
         public PartialViewResult RoleTablePartial()
+        {
+            return PartialView();
+        }
+
+        [Authorize(Roles = "System Administrator")]
+        public PartialViewResult UserRequestTablePartial()
         {
             return PartialView();
         }

@@ -153,6 +153,7 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Models\ConstantUsages.cs" />
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Models\EditUserProfile.cs" />
@@ -262,6 +263,7 @@
     <Content Include="Views\Admin\_ViewStart.cshtml" />
     <Content Include="Views\Admin\AjaxCreateRole.cshtml" />
     <Content Include="Views\Admin\RoleTablePartial.cshtml" />
+    <Content Include="Views\Admin\UserRequestTablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

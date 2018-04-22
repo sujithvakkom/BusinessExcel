@@ -1,6 +1,7 @@
 ﻿@using BootstrapHtmlHelper
 @using BusinessExcel.Models
-@model BusinessExcel.Models.UserProfile
+@using BusinessExcel.Providers.ProviderContext.Entities
+@model UserProfile
 
 <!-- Inner sidebar -->
 <div class="main-sidebar">
@@ -21,25 +22,42 @@
         <ul class="sidebar-menu">
             @if (User.IsInRole(BERoleDetails.SYSTEM_ADMINISTRATOR))
             {
-
-                <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">ADMIN CONTROLS</li>
-                    <!-- Optionally, you can add icons to the links -->
-                    <li class="treeview">
-                        <a href="#"><i class="fa fa-user-secret"></i><span>Security</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li class="active">
-                                @Html.AdminLTEActionLink(
+                <li class="header">USER CONTROLS</li>
+                <li class="active">
+                    @Html.AdminLTEActionLink(
+                   linkText: BusinessExcel.Controllers.AccountsController.WELCOME_TITLE,
+                   actionName: BusinessExcel.Controllers.AccountsController.WELCOME,
+                   controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
+                   cssClass: "",
+                   carrot: "fa-user-secret")
+                </li>
+                <li class="active">
+                    @Html.AdminLTEActionLink(
+                   linkText: BusinessExcel.Controllers.AccountsController.MYPROFILE_TITLE,
+                   actionName: BusinessExcel.Controllers.AccountsController.MYPROFILE,
+                   controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
+                   cssClass: "",
+                   carrot: "fa-user-secret")
+                </li>
+                <li>
+                    <ul class="sidebar-menu" data-widget="tree">
+                        <li class="header">ADMIN CONTROLS</li>
+                        <!-- Optionally, you can add icons to the links -->
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-user-secret"></i><span>Security</span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li class="active">
+                                    @Html.AdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AdminController.USERMANAGEMENT_TITLE,
                    actionName: BusinessExcel.Controllers.AdminController.USERMANAGEMENT,
                    controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
                    cssClass: "",
                    carrot: "fa-user-secret")
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             }
 
         </ul>
