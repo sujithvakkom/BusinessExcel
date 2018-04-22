@@ -11,6 +11,7 @@ namespace BusinessExcel.Providers.ProviderContext
     {
         public SessionContext(String nameOrConnectionString) : base(nameOrConnectionString)
         {
+            Database.SetInitializer<SessionContext>(null);
         }
 
         public DbSet<Session> Sessions { get; set; }

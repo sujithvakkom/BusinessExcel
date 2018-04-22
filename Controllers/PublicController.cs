@@ -1,5 +1,7 @@
 ﻿using BusinessExcel.Filters;
 using BusinessExcel.Models;
+using BusinessExcel.Providers.ProviderContext;
+using BusinessExcel.Providers.ProviderContext.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -72,7 +74,7 @@ namespace BusinessExcel.Controllers
                     WebSecurity.CreateUserAndAccount(Model.Email, Model.Password);
                     using (var db = new UsersContext())
                     {
-                        UserProfile user = db.UserProfiles.SingleOrDefault(x => x.UserName == Model.Email);
+                        UserProfile user = db.UserProfile.SingleOrDefault(x => x.UserName == Model.Email);
                         user.UserFullName = Model.RegFullName;
                         db.SaveChanges();
                     }

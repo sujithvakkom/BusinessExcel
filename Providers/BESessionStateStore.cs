@@ -135,8 +135,8 @@ for the session state store provider):
             // Initialize the ApplicationName property. 
             //
 
-            pApplicationName = ConfigurationManager.AppSettings["ApplicationName"];
-              //System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
+            pApplicationName = //ConfigurationManager.AppSettings["ApplicationName"];
+              System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
 
 
             // 
@@ -201,7 +201,7 @@ for the session state store provider):
 
         internal void CreateTablesIfNeeded()
         {
-            using (var db = (SessionContext)ConnectToDatabase())
+            using (var db = new UsersContext())
             {
                 if (!CheckTableExists(db, "Sessions"))
                 {

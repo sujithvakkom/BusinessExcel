@@ -5,6 +5,8 @@ using System.Data.Entity;
 using System.Web.Security;
 using WebMatrix.WebData;
 using System.Collections.Specialized;
+using BusinessExcel.Providers.ProviderContext.Entities;
+using BusinessExcel.Providers.ProviderContext;
 
 namespace BusinessExcel.Providers
 {
@@ -13,7 +15,10 @@ namespace BusinessExcel.Providers
     {
         public override void Initialize(string name, NameValueCollection config)
         {
+            using (UsersContext db = new UsersContext())
+                db.UserProfile.Create();
             base.Initialize(name, config);
+
         }
 
         public override bool ValidateUser(string username, string password)
@@ -32,10 +37,10 @@ namespace BusinessExcel.Providers
             using (var db = new UsersContext())
             {
                 var users =
-                db.UserProfiles;
+                db.UserProfile;
                 foreach (var x in users)
                 {
-                    collection.Add(new MembershipUser(this.Name, x.UserFullName, null, x.UserName,
+                    collection.Add(new MembershipUser(this.Name, x.UserName, null, x.UserName,
                         null, null, false, false, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue));
                 }
             }
@@ -46,7 +51,7 @@ namespace BusinessExcel.Providers
         {
             using (var db = new UsersContext())
             {
-                return db.UserProfiles;
+                return db.UserProfile;
             }
         }
         public override MembershipUser GetUser(string username, bool userIsOnline)

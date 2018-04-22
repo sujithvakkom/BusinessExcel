@@ -1,4 +1,6 @@
 ﻿using BusinessExcel.Models;
+using BusinessExcel.Providers.ProviderContext;
+using BusinessExcel.Providers.ProviderContext.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -63,7 +65,7 @@ namespace BusinessExcel
                         if (!context.Database.Exists())
                             context.Database.Create();
                         if (!CheckTableExists(context, "UserProfile"))
-                            context.UserProfiles.Create();
+                            context.UserProfile.Create();
                     }
 
                     if (!WebSecurity.Initialized)
@@ -73,8 +75,8 @@ namespace BusinessExcel
                         WebSecurity.CreateUserAndAccount("srkrishnan@grandstores.ae", "pass");
 
                         using (var db = new UsersContext())
-                        {
-                            UserProfile user = db.UserProfiles.SingleOrDefault(x => x.UserName == "srkrishnan@grandstores.ae");
+                        { 
+                            UserProfile user = db.UserProfile.SingleOrDefault(x => x.UserName == "srkrishnan@grandstores.ae");
                             if (user == null) user = new UserProfile() { UserName = "srkrishnan@grandstores.ae", UserFullName = "Sujith Radhakrishnan" };
                             db.SaveChanges();
                         }

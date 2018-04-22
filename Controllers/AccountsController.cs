@@ -1,5 +1,6 @@
 ﻿using BusinessExcel.Filters;
 using BusinessExcel.Models;
+using BusinessExcel.Providers.ProviderContext;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -28,7 +29,7 @@ namespace BusinessExcel.Controllers
             {
                 try
                 {
-                    Session[Index.USER_PROFILE_INDEX] = db.UserProfiles.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
+                    Session[Index.USER_PROFILE_INDEX] = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
                 }
                 catch (Exception)
                 {
@@ -54,7 +55,7 @@ namespace BusinessExcel.Controllers
             {
                 try
                 {
-                    var userProfile = db.UserProfiles.SingleOrDefault(x => x.UserName == User.Identity.Name);
+                    var userProfile = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name);
                     profile = new EditUserProfile()
                     {
                         UserName = userProfile.UserName,
@@ -82,10 +83,10 @@ namespace BusinessExcel.Controllers
                 {
                     try
                     {
-                        var profile = db.UserProfiles.SingleOrDefault(x => x.UserName == User.Identity.Name);
+                        var profile = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name);
                         profile.UserFullName = EditUserProfile.UserFullName;
                         db.SaveChanges();
-                        Session[Index.USER_PROFILE_INDEX] = db.UserProfiles.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
+                        Session[Index.USER_PROFILE_INDEX] = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
                     }
                     catch (Exception)
                     {
@@ -111,10 +112,10 @@ namespace BusinessExcel.Controllers
                     {
                         try
                         {
-                            var profile = db.UserProfiles.SingleOrDefault(x => x.UserName == User.Identity.Name);
+                            var profile = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name);
                             profile.UserFullName = EditUserProfile.UserFullName;
                             db.SaveChanges();
-                            Session[Index.USER_PROFILE_INDEX] = db.UserProfiles.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
+                            Session[Index.USER_PROFILE_INDEX] = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
 
                             message = "Profile Name Change Success.";
                             successFlag = true;
