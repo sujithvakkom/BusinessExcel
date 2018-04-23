@@ -15,12 +15,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            @BusinessExcel.Controllers.AdminController.USERMANAGEMENT_TITLE
+            @BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE
             <small>Control panel</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Account</a></li>
-            <li class="active">System Admin Panel</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.AdminController.ADMIN</a></li>
+            <li class="active">@BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE</li>
         </ol>
     </section>
     <!-- Main content -->
@@ -28,61 +28,6 @@
         <!-- Your Page Content Here -->
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="box box-primary" id="change-user-name-form">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">User Roles</h3>
-                    </div>
-                    <div class="box-body">
-
-                        @*
-                            @{
-                                var selectList = new List<SelectListItem>();
-                                SelectListItem item = new SelectListItem() { Text = "Text1", Value = "Value1" };
-                                selectList.Add(item);
-                                item = new SelectListItem() { Text = "Text2", Value = "Value2" };
-                                selectList.Add(item);
-                                item = new SelectListItem() { Text = "Text3", Value = "Value3" };
-                                selectList.Add(item);
-                                item = new SelectListItem() { Text = "Text4", Value = "Value4" };
-                                selectList.Add(item);
-
-                            }
-                            @Html.DropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
-                            @Html.AdminLTEDropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
-                                                @{
-                                                    WebGrid grid = new WebGrid(source : ViewBag.Roles);
-                                                    @grid.GetHtml();
-                                                }*@
-
-
-                        <div id="role-table-display">
-                            @Html.Partial(BusinessExcel.Controllers.AdminController.ROLETABLEPARTIAL)
-                        </div>
-                        <div id="role-creation-form">
-                            @Html.Partial(BusinessExcel.Controllers.AdminController.AJAXCREATEROLE,
-                        new BusinessExcel.Models.RolesNameModel())
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            @*
-                @{
-                    var selectList = new List<SelectListItem>();
-                    SelectListItem item = new SelectListItem() { Text = "Text1", Value = "Value1" };
-                    selectList.Add(item);
-                    item = new SelectListItem() { Text = "Text2", Value = "Value2" };
-                    selectList.Add(item);
-                    item = new SelectListItem() { Text = "Text3", Value = "Value3" };
-                    selectList.Add(item);
-                    item = new SelectListItem() { Text = "Text4", Value = "Value4" };
-                    selectList.Add(item);
-
-                }
-                @Html.DropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
-                @Html.AdminLTEDropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
-            *@
 
             <div class="col-md-6">
                 <div class="box box-primary" id="change-user-name-form">
@@ -98,21 +43,7 @@
             </div>
         </div>
 
-        <div class="row">
-
-            <div class="col-md-6">
-                <div class="box box-primary" id="change-user-name-form">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">User Requests</h3>
-                    </div>
-                    <div class="box-body">
-                        <div id="user-approval-table-display">
-                        </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-</section><!-- /.content -->
+    </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <footer class="main-footer">
     @Html.Partial("_MainFooterAccount")

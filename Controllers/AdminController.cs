@@ -18,6 +18,9 @@ namespace BusinessExcel.Controllers
 
         public static string USERMANAGEMENT = "UserManagement";
         public static string USERMANAGEMENT_TITLE = "User Management";
+
+        public static string VIEWMANAGEMENT = "ViewManagement";
+        public static string VIEWMANAGER_TITLE = "View Management";
         public static string AJAXCREATEROLE = "AjaxCreateRole";
         public static string ROLETABLEPARTIAL = "RoleTablePartial";
         public static string ROLECREATIONMESSAGE = "RoleCreationMessage";
@@ -36,6 +39,14 @@ namespace BusinessExcel.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult ViewManagement()
+        {
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + VIEWMANAGER_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = VIEWMANAGER_TITLE;
+            return View();
+        }
         [HttpPost]
         [Authorize(Roles = "System Administrator")]
         public PartialViewResult AjaxCreateRole(RolesNameModel RoleName)

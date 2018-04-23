@@ -2,7 +2,12 @@
 @using BusinessExcel.Models
 @using BusinessExcel.Providers.ProviderContext.Entities
 @model UserProfile
-
+@{ 
+    ViewContext viewContext = Html.ViewContext;
+    RouteValueDictionary routeValues = viewContext.RouteData.Values;
+    string currentAction = routeValues["action"].ToString();
+    string currentController = routeValues["controller"].ToString();
+}
 <!-- Inner sidebar -->
 <div class="main-sidebar">
     <!-- user panel (Optional) -->
@@ -20,40 +25,41 @@
     <section class="sidebar">
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-            @if (User.IsInRole(BERoleDetails.SYSTEM_ADMINISTRATOR))
-            {
-                <li class="header">USER CONTROLS</li>
-                <li class="active">
-                    @Html.AdminLTEActionLink(
+            <li class="header">USER CONTROLS</li>
+
+            @Html.AdminLTEMenuActionLinkBlock(
                    linkText: BusinessExcel.Controllers.AccountsController.WELCOME_TITLE,
                    actionName: BusinessExcel.Controllers.AccountsController.WELCOME,
                    controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
                    cssClass: "",
                    carrot: "fa-user-secret")
-                </li>
-                <li class="active">
-                    @Html.AdminLTEActionLink(
+                        @Html.AdminLTEMenuActionLinkBlock(
                    linkText: BusinessExcel.Controllers.AccountsController.MYPROFILE_TITLE,
                    actionName: BusinessExcel.Controllers.AccountsController.MYPROFILE,
                    controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
                    cssClass: "",
                    carrot: "fa-user-secret")
-                </li>
+            @if (User.IsInRole(BERoleDetails.SYSTEM_ADMINISTRATOR))
+            {
                 <li>
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">ADMIN CONTROLS</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li class="treeview">
+                        <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.AdminController.ADMIN,actions:currentAction,cssClass:"active")">
                             <a href="#"><i class="fa fa-user-secret"></i><span>Security</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
-                                <li class="active">
-                                    @Html.AdminLTEActionLink(
+                                                                @Html.AdminLTEMenuActionLinkBlock(
                    linkText: BusinessExcel.Controllers.AdminController.USERMANAGEMENT_TITLE,
                    actionName: BusinessExcel.Controllers.AdminController.USERMANAGEMENT,
                    controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
                    cssClass: "",
                    carrot: "fa-user-secret")
-                                </li>
+                                                                @Html.AdminLTEMenuActionLinkBlock(
+                   linkText: BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE,
+                   actionName: BusinessExcel.Controllers.AdminController.VIEWMANAGEMENT,
+                   controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
+                   cssClass: "",
+                   carrot: "fa-user-secret")
                             </ul>
                         </li>
                     </ul>
