@@ -1,5 +1,6 @@
 ﻿using BusinessExcel.Models;
 using BusinessExcel.Providers;
+using BusinessExcel.Providers.ProviderContext.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -27,6 +28,7 @@ namespace BusinessExcel.Controllers
         public static string AJAXREMOVEROLE = "AjaxRemoveRole";
         //
         public static string USERREQUESTTABLEPARTIAL = "UserRequestTablePartial";
+        public static string USERSTABLEPARTIAL = "UsersTablePartial";
         // GET: /Admin/UserManagement
 
         [Authorize(Roles = "System Administrator")]
@@ -106,6 +108,11 @@ namespace BusinessExcel.Controllers
         public PartialViewResult UserRequestTablePartial()
         {
             return PartialView();
+        }
+        [Authorize(Roles = "System Administrator")]
+        public PartialViewResult UsersTablePartial(UserProfile UserProfile)
+        {
+            return PartialView(UserProfile);
         }
     }
 }

@@ -265,6 +265,7 @@
     <Content Include="Views\Admin\RoleTablePartial.cshtml" />
     <Content Include="Views\Admin\UserRequestTablePartial.cshtml" />
     <Content Include="Views\Admin\ViewManagement.cshtml" />
+    <Content Include="Views\Admin\UsersTablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
