@@ -1,6 +1,6 @@
 ﻿@using BusinessExcel.Models
 @using BusinessExcel.Providers.ProviderContext.Entities
-@model UserProfile
+
 @section Dialogs{
 }
 
@@ -15,12 +15,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            @BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE
+            @BusinessExcel.Controllers.AdminController.USERMANAGEMENT_TITLE
             <small>Control panel</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.AdminController.ADMIN</a></li>
-            <li class="active">@BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> Account</a></li>
+            <li class="active">System Admin Panel</li>
         </ol>
     </section>
     <!-- Main content -->
@@ -28,51 +28,91 @@
         <!-- Your Page Content Here -->
 
         <div class="row">
+            <div class="col-md-6">
+                <div class="box box-primary" id="change-user-name-form">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">User Roles</h3>
+                    </div>
+                    <div class="box-body">
+
+                        @*
+                            @{
+                                var selectList = new List<SelectListItem>();
+                                SelectListItem item = new SelectListItem() { Text = "Text1", Value = "Value1" };
+                                selectList.Add(item);
+                                item = new SelectListItem() { Text = "Text2", Value = "Value2" };
+                                selectList.Add(item);
+                                item = new SelectListItem() { Text = "Text3", Value = "Value3" };
+                                selectList.Add(item);
+                                item = new SelectListItem() { Text = "Text4", Value = "Value4" };
+                                selectList.Add(item);
+
+                            }
+                            @Html.DropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
+                            @Html.AdminLTEDropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
+                                                @{
+                                                    WebGrid grid = new WebGrid(source : ViewBag.Roles);
+                                                    @grid.GetHtml();
+                                                }*@
+
+
+                        <div id="role-table-display">
+                            @Html.Partial(BusinessExcel.Controllers.AdminController.ROLETABLEPARTIAL)
+                        </div>
+                        <div id="role-creation-form">
+                            @Html.Partial(BusinessExcel.Controllers.AdminController.AJAXCREATEROLE,
+                        new BusinessExcel.Models.RolesNameModel())
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*
+                @{
+                    var selectList = new List<SelectListItem>();
+                    SelectListItem item = new SelectListItem() { Text = "Text1", Value = "Value1" };
+                    selectList.Add(item);
+                    item = new SelectListItem() { Text = "Text2", Value = "Value2" };
+                    selectList.Add(item);
+                    item = new SelectListItem() { Text = "Text3", Value = "Value3" };
+                    selectList.Add(item);
+                    item = new SelectListItem() { Text = "Text4", Value = "Value4" };
+                    selectList.Add(item);
+
+                }
+                @Html.DropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
+                @Html.AdminLTEDropDownList("Test", selectList, new { @class = "form-control select2", @style = "width: 100%;" })
+            *@
 
             <div class="col-md-6">
-                @if (Model == null ? true : Model.UserId == 0)
-                {
-                    <div class="box box-primary" id="change-user-name-form">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Users</h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="user-table-display">
-                                @Html.Partial(BusinessExcel.Controllers.AdminController.USERSTABLEPARTIAL, Model)
-                            </div>
+                <div class="box box-primary" id="change-user-name-form">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Users</h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="user-table-display">
+                            @Html.Partial(BusinessExcel.Controllers.AdminController.USERSTABLEPARTIAL)
                         </div>
                     </div>
-                }
-                else
-                {
-                    <div class="col-md-6">
-                        <!-- Widget: user widget style 1 -->
-                        <div class="box box-widget widget-user-2">
-                            <!-- Add the bg color to the header using any of the bg-* classes -->
-                            <div class="widget-user-header bg-yellow">
-                                <div class="widget-user-image">
-                                    <img class="img-circle" src="../../Images/avatar-160X160.png" alt="User Avatar">
-                                </div>
-                                <!-- /.widget-user-image -->
-                                <h3 class="widget-user-username">@Model.UserFullName</h3>
-                                <h5 class="widget-user-desc">@Model.UserName</h5>
-                            </div>
-                            <div class="box-footer no-padding">
-                                <ul class="nav nav-stacked">
-                                    <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
-                                    <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-                                    <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
-                                    <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.widget-user -->
-                    </div>
-                }
+                </div>
             </div>
         </div>
 
-    </section><!-- /.content -->
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="box box-primary" id="change-user-name-form">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">User Requests</h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="user-approval-table-display">
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+</section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <footer class="main-footer">
     @Html.Partial("_MainFooterAccount")

@@ -1,5 +1,6 @@
 ﻿using BusinessExcel.Models;
 using BusinessExcel.Providers;
+using BusinessExcel.Providers.ProviderContext;
 using BusinessExcel.Providers.ProviderContext.Entities;
 using System;
 using System.Collections.Generic;
@@ -42,12 +43,14 @@ namespace BusinessExcel.Controllers
         }
 
         [HttpGet]
-        public ActionResult ViewManagement()
+        public ActionResult ViewManagement(UserProfile UserProfile)
         {
+            using (UsersContext db = new UsersContext())
+                UserProfile = db.GetUserProfile(UserProfile.UserName);
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + VIEWMANAGER_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = VIEWMANAGER_TITLE;
-            return View();
+            return View(UserProfile);
         }
         [HttpPost]
         [Authorize(Roles = "System Administrator")]

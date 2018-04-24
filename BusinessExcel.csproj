@@ -153,6 +153,7 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Models\ConstantUsages.cs" />
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
@@ -164,12 +165,16 @@
     <Compile Include="Models\RolesName.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\DailyUpateView.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.DailyUpateView.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Sessions.cs" />
     <Compile Include="Providers\ProviderContext\SessionContext.cs" />
+    <Content Include="Content\Custom\site.css" />
     <Content Include="Views\PLRegister\photography_live.html" />
+    <Content Include="Providers\ProviderContext\Entities\UserManagement.cshtml" />
     <None Include="Providers\Samples\SimpleMembershipProvider.cs" />
     <Compile Include="Providers\Samples\TestMembershipProvider.cs" />
-    <Compile Include="BusinessExcelDataModel.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\AdminLteController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
@@ -266,6 +271,8 @@
     <Content Include="Views\Admin\UserRequestTablePartial.cshtml" />
     <Content Include="Views\Admin\ViewManagement.cshtml" />
     <Content Include="Views\Admin\UsersTablePartial.cshtml" />
+    <Content Include="Views\Report\Actions.cshtml" />
+    <Content Include="Views\Report\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

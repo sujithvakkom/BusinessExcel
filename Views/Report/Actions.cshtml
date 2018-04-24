@@ -1,6 +1,6 @@
 ﻿@using BusinessExcel.Models
 @using BusinessExcel.Providers.ProviderContext.Entities
-@model UserProfile
+@using BusinessExcel.Providers.ProviderContext
 @section Dialogs{
 }
 
@@ -15,63 +15,58 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            @BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE
-            <small>Control panel</small>
+            @BusinessExcel.Controllers.ReportController.ACTIONS_TITLE
+            <small>Report</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.AdminController.ADMIN</a></li>
-            <li class="active">@BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.ReportController.REPORTCONTROLLER</a></li>
+            <li class="active">@BusinessExcel.Controllers.ReportController.ACTIONS_TITLE</li>
         </ol>
     </section>
     <!-- Main content -->
     <section class="content">
         <!-- Your Page Content Here -->
 
-        <div class="row">
-
-            <div class="col-md-6">
-                @if (Model == null ? true : Model.UserId == 0)
-                {
-                    <div class="box box-primary" id="change-user-name-form">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Users</h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="user-table-display">
-                                @Html.Partial(BusinessExcel.Controllers.AdminController.USERSTABLEPARTIAL, Model)
-                            </div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-md-6">
-                        <!-- Widget: user widget style 1 -->
-                        <div class="box box-widget widget-user-2">
-                            <!-- Add the bg color to the header using any of the bg-* classes -->
-                            <div class="widget-user-header bg-yellow">
-                                <div class="widget-user-image">
-                                    <img class="img-circle" src="../../Images/avatar-160X160.png" alt="User Avatar">
-                                </div>
-                                <!-- /.widget-user-image -->
-                                <h3 class="widget-user-username">@Model.UserFullName</h3>
-                                <h5 class="widget-user-desc">@Model.UserName</h5>
-                            </div>
-                            <div class="box-footer no-padding">
-                                <ul class="nav nav-stacked">
-                                    <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
-                                    <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-                                    <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
-                                    <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.widget-user -->
-                    </div>
-                }
+        <div class="box box-primary" id="change-user-name-form">
+            <div class="box-header with-border">
+                <h3 class="box-title">Merchant Actions</h3>
             </div>
-        </div>
+            <div class="box-body">
+                @{
 
+                    using (var db = new SalesManageDataContext())
+                    {
+                        int count = 0;
+                        var data = db.DailyUpateViewPaging( pageNumber: ViewBag.DailyUpateViewPage,
+                            pageSize:10,
+                            sort: ViewBag.DailyUpateViewSort,
+                            sortdir:ViewBag.DailyUpateViewDir,
+                            count:out count);
+                        var grid = new WebGrid();
+                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                        grid.Pager()
+                        <div id="table-daily-upate-view" class="table-responsive">
+                            @grid.GetHtml(
+                           tableStyle: "table table-striped table-bordered",
+                           htmlAttributes: new { @id = "example" },
+                           columns:new[] {
+                               grid.Column(columnName:"Name",header:"Name",format:null,style:null,canSort:false),
+                               grid.Column(columnName:"UserName",header:"User Name",format:null,style:null,canSort:false),
+                               grid.Column(columnName:"Location",header:"Location",format:null,style:null,canSort:false),
+                               grid.Column(columnName:"Brand",header:"Brand",format:null,style:null,canSort:false),
+                               grid.Column(columnName:"Category",header:"Category",format:null,style:null,canSort:false),
+                               grid.Column(columnName:"CreateTime",header:"Create Time",format:x=>string.Format("{0:dd-MMM-yyyy}",x.CreateTime),style:null,canSort:true),
+                               grid.Column(columnName:"Item",header:"Item",format:null,style:null,canSort:false),
+                               grid.Column(columnName:"Description",header:"Description",format:null,style:null,canSort:false),
+                               grid.Column(columnName:"Quantity",header:"Quantity",format:null,style:null,canSort:false),
+                               grid.Column(columnName:"Value",header:"Value",format:null,style:null,canSort:false)
+                           })
+                        </div>
+                    }
+                }
+                </div>
+            </div>
+    
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <footer class="main-footer">
@@ -187,8 +182,7 @@
         $(function () {
             //Initialize Select2 Elements
             $(".select2").select2();
-
-            //$('#example').DataTable();
+            $('#example').DataTable();
 
         });
     </script>

@@ -55,7 +55,8 @@ namespace BusinessExcel
                 ));
 
             bundles.Add(new StyleBundle("~/Content/themes/select2").Include(
-                "~/Scripts/AdminLTE/plugins/select2/select2.min.css"
+                "~/Scripts/AdminLTE/plugins/select2/select2.min.css",
+                "~/Content/Custom/site.css"
                 ));
         }
     }
