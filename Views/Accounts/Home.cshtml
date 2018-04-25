@@ -5,13 +5,14 @@
 @section Dialogs{
 }
 
+
+
 <header class="main-header">
     @Html.Partial("_MainHeaderAccount", new UserProfile() { UserFullName = ViewBag.UserProfile } )
-</header>
-<aside class="main-sidebar">
-    @Html.Partial("_MainSideBarAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
-</aside>
-<!-- Content Wrapper. Contains page content -->
+</header><!-- Content Wrapper. Contains page content -->
+    <aside class="main-sidebar">
+        @Html.Partial("_MainSideBarAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
+    </aside>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">

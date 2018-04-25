@@ -4,6 +4,7 @@ using BusinessExcel.Providers.ProviderContext.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,22 +32,6 @@ namespace BusinessExcel.Controllers
 
         //
         // GET: /Report/
-        public static string ACTIONSAJAX_TITLE = "Actions Ajax";
-        public static string ACTIONSAJAX = "ActionsAjax";
-        ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
-        public ActionResult ActionsAjax(string sort, string sortdir, int page = 1)
-        {
-            ViewBag.DailyUpateViewSort = sort;
-            ViewBag.DailyUpateViewDir = sortdir;
-            ViewBag.DailyUpateViewPage = page;
-            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
-            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-            ViewBag.Title = ACTIONS_TITLE;
-            return View();
-        }
-
-        //
-        // GET: /Report/
         public static string TABLEDAILYUPATEVIEW = "TableDailyUpateView";
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
         [HttpGet]
@@ -60,5 +45,30 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ACTIONS_TITLE;
             return PartialView();
         }
+
+        public static string EXPORTEXCEL="ExportExcel";
+        public static string EXPORTEXCEL_TITLE = "Export Excel";
+        public ActionResult ExportExcel()
+        {
+
+            using (var db = new SalesManageDataContext())
+            {
+                var gv = new System.Web.UI.WebControls.GridView();
+                gv.DataSource = db.GetDailyUpateViewPagingExport();
+                gv.DataBind();
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Charset = "";
+                StringWriter objStringWriter = new StringWriter();
+                System.Web.UI.HtmlTextWriter objHtmlTextWriter = new System.Web.UI.HtmlTextWriter(objStringWriter);
+                gv.RenderControl(objHtmlTextWriter);
+                Response.Output.Write(objStringWriter.ToString());
+                Response.Flush();
+                Response.End();
+            }
+            return View("Index");
     }
+}
 }

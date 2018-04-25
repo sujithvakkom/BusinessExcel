@@ -56,10 +56,16 @@
     float:left
 }
 
+tfoot tr td{
+}
 
-.navbar {
-    position: relative;
-    min-height: 50px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-	}
+  tfoot tr td a {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px 10px;
+  }
+
+  tfoot tr td a:hover {
+    background-color: #f0f0f0;
+  }

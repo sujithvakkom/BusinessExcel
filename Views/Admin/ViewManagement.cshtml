@@ -7,11 +7,10 @@
 <header class="main-header">
     @Html.Partial("_MainHeaderAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
 </header><!-- sidebar: style can be found in sidebar.less -->
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <section class="sidebar">
+    <aside class="sidebar">
         @Html.Partial("_MainSideBarAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
-    </section>
+    </aside><!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>

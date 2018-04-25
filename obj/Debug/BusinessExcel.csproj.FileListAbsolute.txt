@@ -174,3 +174,11 @@ C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.pdb
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\EntityFramework.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\EntityFramework.xml
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\ClosedXML.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\DocumentFormat.OpenXml.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\ExcelNumberFormat.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\FastMember.Signed.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\ClosedXML.pdb
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\ClosedXML.xml
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\DocumentFormat.OpenXml.xml
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\ExcelNumberFormat.xml
