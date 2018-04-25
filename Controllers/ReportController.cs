@@ -29,5 +29,36 @@ namespace BusinessExcel.Controllers
             return View();
         }
 
+        //
+        // GET: /Report/
+        public static string ACTIONSAJAX_TITLE = "Actions Ajax";
+        public static string ACTIONSAJAX = "ActionsAjax";
+        ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
+        public ActionResult ActionsAjax(string sort, string sortdir, int page = 1)
+        {
+            ViewBag.DailyUpateViewSort = sort;
+            ViewBag.DailyUpateViewDir = sortdir;
+            ViewBag.DailyUpateViewPage = page;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = ACTIONS_TITLE;
+            return View();
+        }
+
+        //
+        // GET: /Report/
+        public static string TABLEDAILYUPATEVIEW = "TableDailyUpateView";
+        ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
+        [HttpGet]
+        public PartialViewResult TableDailyUpateView(string sort, string sortdir, int page = 1)
+        {
+            ViewBag.DailyUpateViewSort = sort;
+            ViewBag.DailyUpateViewDir = sortdir;
+            ViewBag.DailyUpateViewPage = page;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = ACTIONS_TITLE;
+            return PartialView();
+        }
     }
 }
