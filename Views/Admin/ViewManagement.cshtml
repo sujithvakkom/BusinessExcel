@@ -1,6 +1,6 @@
 ﻿@using BusinessExcel.Models
 @using BusinessExcel.Providers.ProviderContext.Entities
-
+@model UserProfile
 @section Dialogs{
 }
 
@@ -30,16 +30,45 @@
         <div class="row">
 
             <div class="col-md-6">
-                <div class="box box-primary" id="change-user-name-form">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Users</h3>
-                    </div>
-                    <div class="box-body">
-                        <div id="user-table-display">
-                            @Html.Partial(BusinessExcel.Controllers.AdminController.USERSTABLEPARTIAL, new UserProfile() { UserName= "srkrishnan@grandstores.ae"})
+                @if (Model == null ? true : Model.UserId == 0)
+                {
+                    <div class="box box-primary" id="change-user-name-form">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Users</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="user-table-display">
+                                @Html.Partial(BusinessExcel.Controllers.AdminController.USERSTABLEPARTIAL, Model)
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div class="col-md-6">
+                        <!-- Widget: user widget style 1 -->
+                        <div class="box box-widget widget-user-2">
+                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                            <div class="widget-user-header bg-yellow">
+                                <div class="widget-user-image">
+                                    <img class="img-circle" src="../../Images/avatar-160X160.png" alt="User Avatar">
+                                </div>
+                                <!-- /.widget-user-image -->
+                                <h3 class="widget-user-username">@Model.UserFullName</h3>
+                                <h5 class="widget-user-desc">@Model.UserName</h5>
+                            </div>
+                            <div class="box-footer no-padding">
+                                <ul class="nav nav-stacked">
+                                    <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
+                                    <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
+                                    <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
+                                    <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /.widget-user -->
+                    </div>
+                }
             </div>
         </div>
 

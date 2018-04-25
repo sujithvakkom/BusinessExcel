@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAATTDwl5mm7UiEBLoljzSW4QAAAAACAAAAAAADZgAAwAAAABAAAACsCFgtUXwAJvG6x0QbPgrhAAAAAASAAACgAAAAEAAAAFyedLuRB47cs0rtQvVxVBoYAAAA7Bzq2V4WY0srXycwXs7dETg0MWs6fahJFAAAAC7CE9WMYIYicu0j0rTLjmsBu8ol</EncryptedPassword>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA0Ew+r7ERvUKzpYCkyC5z/AAAAAACAAAAAAADZgAAwAAAABAAAAD3qohucZx9cGafVQHJh9QJAAAAAASAAACgAAAAEAAAAIXVMg9rX20el0fMHAqUQsMYAAAAzlsp6hnHVwMAaL+yV/KftI65smyHuJy7FAAAAABNIaAuZCJMNFKJmw/BypegAA4S</EncryptedPassword>
     <_PublishTargetUrl>ftp://ftp.gsmobileapps.com</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>

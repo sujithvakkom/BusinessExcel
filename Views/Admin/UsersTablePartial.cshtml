@@ -1,5 +1,6 @@
 ﻿@using BootstrapHtmlHelper
 @using BusinessExcel.Models
+@using BusinessExcel.Controllers
 @using BusinessExcel.Providers.ProviderContext
 @using BusinessExcel.Providers.ProviderContext.Entities
 
@@ -11,8 +12,8 @@
     using (var db = new UsersContext())
     {
         var result = db.UserProfile;
-        users = (from x in result.ToList()
-                 where Model == null ? true : x.UserName == Model.UserName
+        users = Model==null?result.ToList():(from x in result.ToList()
+                 where Model.UserName == null ? true : x.UserName == Model.UserName
                  select x).ToList();
     }
 
@@ -51,7 +52,9 @@ htmlAttributes: new { @style = "display:inline;", @id = "form-remove-" + user.Us
                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#remove-role-confirm-@user.UserName.Replace(' ', '-')">
                         Remove
                     </button>
-
+                    @Html.AdminLTEActionLink(AdminController.VIEWMANAGER_TITLE,AdminController.VIEWMANAGEMENT,AdminController.ADMIN,
+                   routeValues:new  { UserName = user.UserName} )
+                    
                         <!-- Modal -->
                     <div class="modal fade" id="remove-role-confirm-@user.UserName" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">

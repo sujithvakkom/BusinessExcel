@@ -66,6 +66,30 @@
                 </li>
             }
 
+            <li>
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">REPORTS</li>
+                    <!-- Optionally, you can add icons to the links -->
+                    <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.ReportController.ACTIONS,actions:currentAction,cssClass:"active")">
+                        <a href="#"><i class="fa fa-rss"></i><span>Action Reports</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                                                        @Html.AdminLTEMenuActionLinkBlock(
+                   linkText: BusinessExcel.Controllers.ReportController.ACTIONS_TITLE,
+                   actionName: BusinessExcel.Controllers.ReportController.ACTIONS,
+                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   cssClass: "",
+                   carrot: "fa-user-secret")
+                                                        @Html.AdminLTEMenuActionLinkBlock(
+                   linkText: BusinessExcel.Controllers.ReportController.ACTIONSAJAX_TITLE,
+                   actionName: BusinessExcel.Controllers.ReportController.ACTIONSAJAX,
+                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   cssClass: "",
+                   carrot: "fa-user-secret")
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
     </section>
 

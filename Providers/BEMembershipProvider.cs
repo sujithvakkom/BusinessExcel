@@ -58,5 +58,11 @@ namespace BusinessExcel.Providers
         {
             return base.GetUser(username, userIsOnline);
         }
+
+
+        public static UserProfile GetUser(string username) {
+            using (var db = new UsersContext())
+                return db.GetUserProfile(username);
+        }
     }
 }
