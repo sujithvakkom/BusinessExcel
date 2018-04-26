@@ -466,6 +466,12 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Shared\_LayoutPageAccountAjaxLoad.cshtml" />
+    <Content Include="Views\Report\ActionsBackup.cshtml" />
+    <Content Include="Views\Accounts\HomeBackup.cshtml" />
+    <Content Include="Views\Accounts\MyProfileBackup.cshtml" />
+    <Content Include="Views\Accounts\_ChangeUsernameBlock.cshtml" />
+    <Content Include="Views\Accounts\_ChangeUserPasswordBlock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

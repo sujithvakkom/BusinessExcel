@@ -1,83 +1,50 @@
 ﻿@using BusinessExcel.Models
+@using BootstrapHtmlHelper
 @using BusinessExcel.Providers.ProviderContext.Entities
-@model UserProfile
-@section Dialogs{
-}
+@using BusinessExcel.Providers.ProviderContext
 
-<header class="main-header">
-    @Html.Partial("_MainHeaderAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
-</header><!-- sidebar: style can be found in sidebar.less -->
-<aside class="sidebar">
-    @Html.Partial("_MainSideBarAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
-</aside><!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            @BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE
-            <small>Control panel</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.AdminController.ADMIN</a></li>
-            <li class="active">@BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE</li>
-        </ol>
-    </section>
-    <!-- Main content -->
-    <section class="content">
-        <!-- Your Page Content Here -->
+<!DOCTYPE html>
 
-        <div class="row">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="../../Images/business-excel-logo-dark.ico" />
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    @*<!-- Ionicons -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">*@
 
-            <div class="col-md-6">
-                @if (Model == null ? true : Model.UserId == 0)
-                {
-                    <div class="box box-primary" id="change-user-name-form">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Users</h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="user-table-display">
-                                @Html.Partial(BusinessExcel.Controllers.AdminController.USERSTABLEPARTIAL, Model)
-                            </div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-md-6">
-                        <!-- Widget: user widget style 1 -->
-                        <div class="box box-widget widget-user-2">
-                            <!-- Add the bg color to the header using any of the bg-* classes -->
-                            <div class="widget-user-header bg-yellow">
-                                <div class="widget-user-image">
-                                    <img class="img-circle" src="../../Images/avatar-160X160.png" alt="User Avatar">
-                                </div>
-                                <!-- /.widget-user-image -->
-                                <h3 class="widget-user-username">@Model.UserFullName</h3>
-                                <h5 class="widget-user-desc">@Model.UserName</h5>
-                            </div>
-                            <div class="box-footer no-padding">
-                                <ul class="nav nav-stacked">
-                                    <li><a href="#">Projects <span class="pull-right badge bg-blue">31</span></a></li>
-                                    <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-                                    <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
-                                    <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.widget-user -->
-                    </div>
-                }
-            </div>
+        @System.Web.Optimization.Scripts.Render("~/bundles/all")
+
+    @Styles.Render("~/Content/themes/select2")
+    @Styles.Render("~/Content/themes/table-daily-upate-view")
+
+
+    @RenderSection("extraStyles", false)
+    @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/Content/themes/adminlte/css")
+    @Styles.Render("~/Content/css")
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    @RenderSection("dialogs",false)
+    <div class="wrapper">
+
+        <header class="main-header">
+            @Html.Partial("_MainHeaderAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
+        </header><!-- sidebar: style can be found in sidebar.less -->
+        <aside class="main-sidebar">
+            @Html.Partial("_MainSideBarAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
+        </aside>
+        <div id="main-body">
+            @RenderBody()
         </div>
-
-    </section><!-- /.content -->
-</div><!-- /.content-wrapper -->
-<footer class="main-footer">
-    @Html.Partial("_MainFooterAccount")
-</footer>
-
-@section Scripts {
+        <footer class="main-footer">
+            @Html.Partial("_MainFooterAccount")
+        </footer>
+    </div>
 
     <script>
         var AdminLTEOptions = {
@@ -90,7 +57,7 @@
             //General animation speed for JS animated elements such as box collapse/expand and
             //sidebar treeview slide up/down. This options accepts an integer as milliseconds,
             //'fast', 'normal', or 'slow'
-            animationSpeed: slow,
+            animationSpeed: 500,
             //Sidebar push menu toggle button selector
             sidebarToggleSelector: "[data-toggle='push-menu']",
             //Activate sidebar push menu
@@ -178,22 +145,31 @@
             }
         }
     </script>
-}
-@section ExtraScripts
-{
+    @RenderSection("scripts", required: false)
+
     @System.Web.Optimization.Scripts.Render("~/bundles/select2")
+    @Scripts.Render("~/bundles/inputmask")
     <script>
         $(function () {
             //Initialize Select2 Elements
-            $(".select2").select2();
-
-            //$('#example').DataTable();
-
+            $(":input").inputmask();
         });
+        function TableDailyUpateViewCallback(data) {
+        }
+        function ajax_call_load_complete(data) {
+            viewInit()
+        }
+        function viewInit() {
+            $('.box').boxWidget();
+            $(":input").inputmask();
+            return $(window).trigger('resize');
+            var i;
+            for (i = 0; i < 100; i++) {
+                $("#page-load").css("width", i.toString() + "%");
+            }
+        }
     </script>
-}
 
-@section ExtraStyles
-{
-    @Styles.Render("~/Content/themes/select2")
-}
+    @RenderSection("extraScripts",false)
+</body>
+</html>

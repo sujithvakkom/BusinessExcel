@@ -26,18 +26,18 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">USER CONTROLS</li>
-
-            @Html.AdminLTEMenuActionLinkBlock(
+            
+                        @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AccountsController.WELCOME_TITLE,
                    actionName: BusinessExcel.Controllers.AccountsController.WELCOME,
                    controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
-                   cssClass: "",
+                   ajaxOptions: new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "main-body", OnComplete = "ajax_call_load_complete" },
                    carrot: "fa fa-home")
-                        @Html.AdminLTEMenuActionLinkBlock(
+                                    @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AccountsController.MYPROFILE_TITLE,
                    actionName: BusinessExcel.Controllers.AccountsController.MYPROFILE,
                    controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
-                   cssClass: "",
+                   ajaxOptions: new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "main-body", OnComplete = "ajax_call_load_complete" },
                    carrot: "fa fa-user")
             @if (User.IsInRole(BERoleDetails.SYSTEM_ADMINISTRATOR))
             {
@@ -73,11 +73,11 @@
                     <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,actions:currentAction,cssClass:"active")">
                         <a href="#"><i class="fa fa-rss"></i><span>Action Reports</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                                                        @Html.AdminLTEMenuActionLinkBlock(
+                                                        @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.ReportController.ACTIONS_TITLE,
                    actionName: BusinessExcel.Controllers.ReportController.ACTIONS,
-                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
-                   cssClass: "",
+                   controllerName:BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   ajaxOptions:new AjaxOptions() { InsertionMode =InsertionMode.Replace,UpdateTargetId= "main-body",OnComplete="ajax_call_load_complete" },
                    carrot: "fa fa-tasks")
                         </ul>
                     </li>

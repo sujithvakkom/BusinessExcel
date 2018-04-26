@@ -38,6 +38,8 @@ namespace BusinessExcel.Controllers
                 }
             }
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            if (Request.IsAjaxRequest())
+                return PartialView(WELCOME);
             return View();
         }
 
@@ -68,6 +70,8 @@ namespace BusinessExcel.Controllers
                     RedirectToAction(PublicController.WELCOME, PublicController.PUBLIC);
                 }
             }
+            if (Request.IsAjaxRequest())
+                return PartialView(MYPROFILE,profile);
             return View(profile);
         }
 
@@ -96,7 +100,7 @@ namespace BusinessExcel.Controllers
                 }
                 return RedirectToAction(WELCOME, ACCOUNTS);
             }
-            return View(EditUserProfile);
+            return PartialView(EditUserProfile);
         }
 
         [HttpPost]
@@ -139,7 +143,7 @@ namespace BusinessExcel.Controllers
             ViewBag.Message = message;
             ViewBag.Errors = errors;
             ViewBag.SuccessFlag = successFlag;
-            return PartialView("_ResultMessage");
+            return PartialView("_ChangeUsernameBlock", EditUserProfile);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -191,7 +195,7 @@ namespace BusinessExcel.Controllers
             ViewBag.Message = message;
             ViewBag.Errors = errors;
             ViewBag.SuccessFlag = successFlag;
-            return PartialView("_ResultMessage");
+            return PartialView("_ChangeUserPasswordBlock",EditUserProfile);
         }
 
         [HttpPost]

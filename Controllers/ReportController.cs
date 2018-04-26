@@ -27,6 +27,10 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = ACTIONS_TITLE;
+            if (Request.IsAjaxRequest())
+            {
+                return TableDailyUpateView(sort, sortdir, page);
+            }
             return View();
         }
 
@@ -43,7 +47,7 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = ACTIONS_TITLE;
-            return PartialView();
+            return PartialView(TABLEDAILYUPATEVIEW);
         }
 
         public static string EXPORTEXCEL="ExportExcel";

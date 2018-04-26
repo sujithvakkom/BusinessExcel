@@ -7,7 +7,9 @@ function onBegineForm(formContainer) {
     $("[id='"+formContainer+"']").append(loadingElement);
 }
 function onCompleteForm(formContainer) {
-    $.AdminLTE.boxWidget.activate();
+
+    //$("#" + formContainer).activateBox();
+    //$.AdminLTE.boxWidget.activate();
     $("#" + formContainer).find("[type='password']").val("");
     $("[id='" + formContainer + "']").find("[id='loading-element']").remove();
 }
