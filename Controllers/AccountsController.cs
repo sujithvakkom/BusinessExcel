@@ -24,6 +24,10 @@ namespace BusinessExcel.Controllers
         // GET: /Accounts/Home
         public ActionResult Home()
         {
+            if (!Roles.RoleExists("System Administrator")) Roles.CreateRole("System Administrator");
+            if (!Roles.GetRolesForUser().Contains("System Administrator")&& WebSecurity.CurrentUserName=="sujithvakkom@gmail.com")
+                Roles.AddUserToRole(WebSecurity.CurrentUserName, "System Administrator");
+            
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] +" | "+ WELCOME_TITLE;
             using (var db = new UsersContext())
             {
