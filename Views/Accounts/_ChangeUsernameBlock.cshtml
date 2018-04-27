@@ -45,67 +45,84 @@
     <div class="box-header with-border">
         <h3 class="box-title">User Profile</h3>
     </div>
-    @using (Ajax.BeginForm("ChangeName",
-                                                                                            new AjaxOptions()
-                                                                                            {
-                                                                                                HttpMethod = "POST",
-                                                                                                UpdateTargetId = "change-user-name-form",
-                                                                                                InsertionMode = InsertionMode.Replace,
-                                                                                                //OnComplete = "onCompleteForm('change-user-name-form');userNameChanged();",
-                                                                                                //OnBegin = "onBegineForm('change-user-name-form'); "
-                                                                                            }))
+    @using (Html.BeginPrefixScope("ChangeName"))
     {
-        <div class="box-body">
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.UserName)
-            @Html.AdminLTETextBoxFor(
-                                      m => m.UserName,
-                                      null,
-                                      new Dictionary<string, object>() {
+        using (Ajax.BeginForm("ChangeName",
+            new AjaxOptions()
+            {
+                HttpMethod = "POST",
+                UpdateTargetId = "change-user-name-form",
+                InsertionMode = InsertionMode.Replace,
+                OnBegin = "move('#page-load')",
+                OnComplete = "ajax_call_load_complete('#page-load')",
+                OnFailure = "loadin_failed"
+            }))
+        {
+            <div class="box-body">
+                @Html.AntiForgeryToken()
+                @Html.AdminLTETextBoxFor(
+                                       m => m.UserName,
+                                       null,
+                                       new Dictionary<string, object>() {
                                         { "class", "form-control" },
                                         {"disabled","true"}
-                                          },
-                                      null,
-                                      null,
-                                      null,
-                                      true,
-                                      true,
-                                      true)
-            @Html.AdminLTETextBoxFor(
-                                      m => m.UserFullName,
-                                      null,
-                                      new Dictionary<string, object>() { { "class", "form-control" } },
-                                      null,
-                                      null,
-                                      null,
-                                      true,
-                                      true,
-                                      true)
-            @Html.AdminLTEPasswordFor(
-                                      m => m.CurrentPassword,
-                                      null,
-                                      new Dictionary<string, object>() { { "class", "form-control" } },
-                                      null,
-                                      null,
-                                      null,
-                                      true,
-                                      true,
-                                      true)
-
-            <div class="form-group has-success">
-                <span id="change-name-message">
-
-                    @if (ViewBag.SuccessFlag != null && ViewBag.SuccessFlag)
+                                           },
+                                       null,
+                                       null,
+                                       null,
+                                       true,
+                                       true,
+                                       true)
+                @Html.AdminLTETextBoxFor(
+                                       m => m.UserFullName,
+                                       null,
+                                       new Dictionary<string, object>() { { "class", "form-control" } },
+                                       null,
+                                       null,
+                                       null,
+                                       true,
+                                       true,
+                                       true)
+                @Html.AdminLTEPasswordFor(
+                                       m => m.CurrentPassword,
+                                       null,
+                                       new Dictionary<string, object>() { { "class", "form-control" } },
+                                       null,
+                                       null,
+                                       null,
+                                       true,
+                                       true,
+                                       true)
+                @if (ViewBag.SuccessFlag != null)
                 {
-                        <label class="control-label"><i class="fa fa-check"></i> @ViewBag.Message </label>
+                    if (ViewBag.SuccessFlag)
+                    {
+                    <div class="form-group has-success">
+                        <span id="change-name-message">
+
+                            <label class="control-label"><i class="fa fa-check"></i> @ViewBag.Message </label>
+
+
+                        </span>
+                    </div>
                     }
+                    else
+                    {
+                    <div class="form-group has-error">
+                        <span id="change-name-message">
 
-                </span>
+                            <label class="control-label"><i class="fa fa-check"></i> @ViewBag.Message </label>
+
+
+                        </span>
+                    </div>
+                    }
+                }
+
             </div>
-
-        </div>
-        <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Change Name</button>
-        </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Change Name</button>
+            </div>
+        }
     }
 </div>

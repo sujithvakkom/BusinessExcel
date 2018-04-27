@@ -109,19 +109,19 @@ namespace BusinessExcel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public PartialViewResult ChangeName(EditUserProfile EditUserProfile)
+        public PartialViewResult ChangeName(EditUserProfile ChangeName)
         {
             string message = "";
             bool successFlag = false;
             List<string> errors = new List<string>();
-            if (EditUserProfile.CurrentPassword != null && EditUserProfile.CurrentPassword.Length > 0)
-                if (Membership.ValidateUser(HttpContext.User.Identity.Name, EditUserProfile.CurrentPassword))
+            if (ChangeName.CurrentPassword != null && ChangeName.CurrentPassword.Length > 0)
+                if (Membership.ValidateUser(HttpContext.User.Identity.Name, ChangeName.CurrentPassword))
                     using (var db = new UsersContext())
                     {
                         try
                         {
                             var profile = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name);
-                            profile.UserFullName = EditUserProfile.UserFullName;
+                            profile.UserFullName = ChangeName.UserFullName;
                             db.SaveChanges();
                             Session[Index.USER_PROFILE_INDEX] = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
 
@@ -143,31 +143,31 @@ namespace BusinessExcel.Controllers
             {
                 errors.Add("Password field cannot be blank.");
             }
-            EditUserProfile.CurrentPassword = "";
+            ChangeName.CurrentPassword = "";
             ViewBag.Message = message;
             ViewBag.Errors = errors;
             ViewBag.SuccessFlag = successFlag;
-            return PartialView("_ChangeUsernameBlock", EditUserProfile);
+            return PartialView("_ChangeUsernameBlock", ChangeName);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public PartialViewResult ChangePassword(EditUserProfile EditUserProfile)
+        public PartialViewResult ChangePassword(EditUserProfile ChangePassword)
         {
             string message = "";
             bool successFlag = false;
             List<string> errors = new List<string>();
-            if (EditUserProfile.CurrentPassword != null &&
-                EditUserProfile.NewPassword != null &&
-                EditUserProfile.ConfirmPassword != null &&
-                EditUserProfile.NewPassword == EditUserProfile.ConfirmPassword &&
-                EditUserProfile.CurrentPassword.Length > 0 &&
-                EditUserProfile.NewPassword.Length > 0 &&
-                EditUserProfile.ConfirmPassword.Length > 0)
+            if (ChangePassword.CurrentPassword != null &&
+                ChangePassword.NewPassword != null &&
+                ChangePassword.ConfirmPassword != null &&
+                ChangePassword.NewPassword == ChangePassword.ConfirmPassword &&
+                ChangePassword.CurrentPassword.Length > 0 &&
+                ChangePassword.NewPassword.Length > 0 &&
+                ChangePassword.ConfirmPassword.Length > 0)
             {
-                if (Membership.ValidateUser(HttpContext.User.Identity.Name, EditUserProfile.CurrentPassword))
+                if (Membership.ValidateUser(HttpContext.User.Identity.Name, ChangePassword.CurrentPassword))
                 {
                     if(
-                    WebSecurity.ChangePassword(User.Identity.Name, EditUserProfile.CurrentPassword, EditUserProfile.NewPassword))
+                    WebSecurity.ChangePassword(User.Identity.Name, ChangePassword.CurrentPassword, ChangePassword.NewPassword))
                     {
                         successFlag=true;
                         message = "Password changed successfully.";
@@ -183,23 +183,23 @@ namespace BusinessExcel.Controllers
             }
             else
             {
-                if (EditUserProfile.CurrentPassword != null ||
-                    EditUserProfile.CurrentPassword.Length > 0)
+                if (ChangePassword.CurrentPassword == null ||
+                    ChangePassword.CurrentPassword.Length > 0)
                     errors.Add("Current password field cannot be blank.");
-                if (EditUserProfile.NewPassword != null ||
-                    EditUserProfile.NewPassword.Length > 0)
+                if (ChangePassword.NewPassword == null ||
+                    ChangePassword.NewPassword.Length > 0)
                     errors.Add("New password field cannot be blank.");
-                if (EditUserProfile.ConfirmPassword != null ||
-                    EditUserProfile.ConfirmPassword.Length > 0)
+                if (ChangePassword.ConfirmPassword == null ||
+                    ChangePassword.ConfirmPassword.Length > 0)
                     errors.Add("Confirm password field cannot be blank.");
-                if( EditUserProfile.NewPassword == EditUserProfile.ConfirmPassword)
+                if( ChangePassword.NewPassword == ChangePassword.ConfirmPassword)
                     errors.Add("New and confirm passwords should be same");
             }
-            EditUserProfile.CurrentPassword = "";
+            ChangePassword.CurrentPassword = "";
             ViewBag.Message = message;
             ViewBag.Errors = errors;
             ViewBag.SuccessFlag = successFlag;
-            return PartialView("_ChangeUserPasswordBlock",EditUserProfile);
+            return PartialView("_ChangeUserPasswordBlock",ChangePassword);
         }
 
         [HttpPost]
