@@ -174,11 +174,6 @@ C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.pdb
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\EntityFramework.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\EntityFramework.xml
-C:\WORKS\BusinessExcel\bin\fonts\glyphicons-halflings-regular.svg
-C:\WORKS\BusinessExcel\bin\fonts\glyphicons-halflings-regular.woff2
-C:\WORKS\BusinessExcel\bin\fonts\glyphicons-halflings-regular.woff
-C:\WORKS\BusinessExcel\bin\fonts\glyphicons-halflings-regular.ttf
-C:\WORKS\BusinessExcel\bin\fonts\glyphicons-halflings-regular.eot
 C:\WORKS\BusinessExcel\bin\BusinessExcel.dll.config
 C:\WORKS\BusinessExcel\bin\BusinessExcel.dll
 C:\WORKS\BusinessExcel\bin\BusinessExcel.pdb
