@@ -32,13 +32,13 @@
                    actionName: BusinessExcel.Controllers.AccountsController.WELCOME,
                    controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
                    cssClass: "",
-                   carrot: "fa-user-secret")
+                   carrot: "fa fa-home")
                         @Html.AdminLTEMenuActionLinkBlock(
                    linkText: BusinessExcel.Controllers.AccountsController.MYPROFILE_TITLE,
                    actionName: BusinessExcel.Controllers.AccountsController.MYPROFILE,
                    controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
                    cssClass: "",
-                   carrot: "fa-user-secret")
+                   carrot: "fa fa-user")
             @if (User.IsInRole(BERoleDetails.SYSTEM_ADMINISTRATOR))
             {
                 <li>
@@ -53,13 +53,13 @@
                    actionName: BusinessExcel.Controllers.AdminController.USERMANAGEMENT,
                    controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
                    cssClass: "",
-                   carrot: "fa-user-secret")
+                   carrot: "fa fa-user-md")
                                                                 @Html.AdminLTEMenuActionLinkBlock(
                    linkText: BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE,
                    actionName: BusinessExcel.Controllers.AdminController.VIEWMANAGEMENT,
                    controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
                    cssClass: "",
-                   carrot: "fa-user-secret")
+                   carrot: "fa fa-puzzle-piece")
                             </ul>
                         </li>
                     </ul>
@@ -78,13 +78,13 @@
                    actionName: BusinessExcel.Controllers.ReportController.ACTIONS,
                    controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
                    cssClass: "",
-                   carrot: "fa-user-secret")
+                   carrot: "fa fa-tasks")
                                                         @Html.AdminLTEMenuActionLinkBlock(
                    linkText: BusinessExcel.Controllers.ReportController.ACTIONSAJAX_TITLE,
                    actionName: BusinessExcel.Controllers.ReportController.ACTIONSAJAX,
                    controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
                    cssClass: "",
-                   carrot: "fa-user-secret")
+                   carrot: "fa fa-tasks")
                         </ul>
                     </li>
                 </ul>

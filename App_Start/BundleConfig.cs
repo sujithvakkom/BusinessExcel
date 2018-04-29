@@ -13,9 +13,21 @@ namespace BusinessExcel
             //Scripts
 
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            bundles.Add(new ScriptBundle("~/bundles/all").Include(
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/bootstrap.min.js",
+                        "~/Scripts/jquery.unobtrusive*",
+                        "~/Scripts/jquery.validate*",
+                        "~/admin-lte/js/adminlte.js",
+                        "~/Scripts/BE/be-base.js",
+                        "~/Scripts/AdminLTE/plugins/select2/select2.full.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/bootstrap.min.js"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/smenu").Include(
                 //"~/Scripts/ie10-viewport-bug-workaround.js"
@@ -27,8 +39,7 @@ namespace BusinessExcel
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/adminlte").Include(
-                "~/Scripts/AdminLTE/plugins/iCheck/icheck.min.js",
-                "~/Scripts/AdminLTE/app.min.js",
+                "~/admin-lte/js/adminlte.js",
                 "~/Scripts/BE/be-base.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/select2").Include(
@@ -40,7 +51,8 @@ namespace BusinessExcel
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                 //"~/Content/bootstrap-theme.min.css"
-                "~/Content/bootstrap.min.css"
+                "~/Content/bootstrap.min.css",
+                "~/Content/bootstrap-grid.min"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/themes/smenu/css").Include(
@@ -49,9 +61,8 @@ namespace BusinessExcel
 
             bundles.Add(new StyleBundle("~/Content/themes/adminlte/css").Include(
                 //"~/Scripts/AdminLTE/plugins/morris/morris.css",
-                "~/Content/AdminLTE/AdminLTE.min.css",
-                "~/Content/AdminLTE/skins/_all-skins.min.css",
-                "~/Scripts/AdminLTE/plugins/iCheck/all.css"
+                "~/admin-lte/css/AdminLTE.css",
+                "~/admin-lte/css/skins/_all-skins.min.css"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/themes/select2").Include(

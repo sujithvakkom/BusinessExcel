@@ -152,11 +152,6 @@ C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\BusinessExcel\bin\WebMatrix.W
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\BusinessExcel\obj\Debug\BusinessExcel.pdb
-C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\fonts\glyphicons-halflings-regular.svg
-C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\fonts\glyphicons-halflings-regular.woff2
-C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\fonts\glyphicons-halflings-regular.woff
-C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\fonts\glyphicons-halflings-regular.ttf
-C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\fonts\glyphicons-halflings-regular.eot
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\BusinessExcel.dll.config
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\BusinessExcel.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\BusinessExcel.pdb

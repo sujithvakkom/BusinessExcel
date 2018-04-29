@@ -44,7 +44,6 @@
                             count:out count);
                         var grid = new WebGrid();
                         grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
-                        grid.Pager()
                         <div id="table-daily-upate-view" class="table-responsive">
                             @grid.GetHtml(
                            tableStyle: "table table-striped table-bordered",
@@ -88,7 +87,7 @@
             //'fast', 'normal', or 'slow'
             animationSpeed: slow,
             //Sidebar push menu toggle button selector
-            sidebarToggleSelector: "[data-toggle='offcanvas']",
+            sidebarToggleSelector: "[data-toggle='push-menu']",
             //Activate sidebar push menu
             sidebarPushMenu: true,
             //Activate sidebar slimscroll if the fixed layout is set (requires SlimScroll Plugin)

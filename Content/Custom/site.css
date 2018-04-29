@@ -56,13 +56,10 @@
     float:left
 }
 
-.table tfoot tr td{
-    /*padding:10px;*/
-    display:block;
-    /*color:rgba(0, 0, 0, 0.00)*/
-}
-.table tfoot tr td a{
-    padding:5px 10px 5px 10px;
-    margin:0;
-    border:1px solid #8b8b8b;
-}
+
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+	}
