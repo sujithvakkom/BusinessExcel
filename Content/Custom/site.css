@@ -69,3 +69,7 @@ tfoot tr td{
   tfoot tr td a:hover {
     background-color: #f0f0f0;
   }
+
+ tfoot .extra-table-pager{display:none;}
+
+ .pagination{margin:0px;}
