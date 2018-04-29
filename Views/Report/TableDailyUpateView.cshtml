@@ -1,17 +1,11 @@
-﻿@{
-    Layout = null;
-}
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
 @using BootstrapHtmlHelper
 @using BusinessExcel.Providers.ProviderContext
 
-@section Scripts {
-    <script>
-        $(function () {
-            //Initialize Select2 Elements
-            alert("test")
-        });
-    </script>
-}
+@model ActionViewFilters
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -25,6 +19,18 @@
     </section>
     <!-- Main content -->
     <section class="content">
+    <!-- Your Page Content Here -->
+    @using (Ajax.BeginForm(ReportController.ACTIONS,
+        ReportController.REPORTCONTROLLER,
+        new AjaxOptions()
+        {
+            UpdateTargetId = "main-body",
+            OnBegin = "move('#page-load')",
+            OnComplete = "ajax_call_load_complete('#page-load')",
+            OnFailure = "loadin_failed"
+        }))
+
+    {
         <!-- Your Page Content Here -->
         <div class="box box-default collapsed-box">
             <div class="box-header with-border">
@@ -34,43 +40,50 @@
                 </div><!-- /.box-tools -->
             </div><!-- /.box-header -->
             <div class="box-body">
-                The body of the box<br />
-
-                @Html.AdminLTETextBox(
-                        "ItemCode",
-                        null,
-                        new Dictionary<string, object>() { { "class", "form-control" }, { "data-inputmask", "'mask': '999-9999-999999'" } },
-                        null,
-                        null,
-                        "fa-user-secret",
-                        false,
-                        true,
-                        true)
-            </div><!-- /.box-body -->
-        </div><!-- /.box -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Merchant Actions</h3>
+                @Html.AntiForgeryToken()
+                @Html.AdminLTETextBoxFor(
+                 m => m.ItemCode,
+                 null,
+                 new Dictionary<string, object>() {
+                                        { "class", "form-control" },
+                                        { "data-inputmask" , "'mask': '999-9999-999999'" }
+                     },
+                 null,
+                 null,
+                 null,
+                 true,
+                 true,
+                 true)
+            </div>            <!-- /.box-body -->
+            <div class="box-footer">
+                <input type="submit" value="Filter" />
             </div>
-            <div class="box-body">
+        </div><!-- /.box -->
+    }
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Merchant Actions</h3>
+        </div>
+        <div class="box-body">
 
-                <div id="table-daily-upate-view" class="table-responsive">
-                    @{
+            <div id="table-daily-upate-view" class="table-responsive">
+                @{
 
-                        using (var db = new SalesManageDataContext())
-                        {
-                            int count = 0;
-                            var data = db.DailyUpateViewPaging(pageNumber: ViewBag.DailyUpateViewPage,
-                                pageSize: 20,
-                                sort: ViewBag.DailyUpateViewSort,
-                                sortdir: ViewBag.DailyUpateViewDir,
-                                count: out count
-                                );
-                            var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
-                                ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 20
-                                );
-                            grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
-                            @grid.GetHtml(
+                    using (var db = new SalesManageDataContext())
+                    {
+                        int count = 0;
+                        var data = db.DailyUpateViewPaging(pageNumber: ViewBag.DailyUpateViewPage,
+                            pageSize: 20,
+                            sort: ViewBag.DailyUpateViewSort,
+                            sortdir: ViewBag.DailyUpateViewDir,
+                            count: out count,Filters:Model
+                            );
+                        var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
+                            ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 20,
+                            canPage:false
+                            );
+                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                        @grid.GetHtml(
                            tableStyle: "table table-striped table-bordered",
                            htmlAttributes: new { @id = "example" },
                            columns: new[] {
@@ -84,23 +97,24 @@
                                grid.Column(columnName:"Description",header:"Description",format:null,style:"description",canSort:false),
                                grid.Column(columnName:"Quantity",header:"Quantity",format:x=>string.Format("{0:0.00}",x.Quantity),style:"quantity",canSort:false),
                                grid.Column(columnName:"TotalValue",header:"Value",      format:x=>string.Format("{0:0.00}",x.TotalValue),   style:"values",canSort:false)
-                           },
-                           mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
-                           footerStyle: "",
+                           }
+                           )
+                          
+                       @grid.PagerList(mode:WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
                            nextText: "NEXT",
                            firstText: "FIRST",
                            previousText: "PREV.",
                            lastText: "LAST")
-                        }
                     }
-                    @Html.AdminLTEActionLink(
+                }
+                @Html.AdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.ReportController.EXPORTEXCEL_TITLE,
                    actionName: BusinessExcel.Controllers.ReportController.EXPORTEXCEL,
                    controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
                    cssClass: "",
                    carrot: "fa fa-download")
-                </div>
             </div>
         </div>
+    </div>
 
-    </section><!-- /.content -->
+</section><!-- /.content -->

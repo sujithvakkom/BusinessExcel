@@ -54,6 +54,7 @@
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
 
         container.removeClass("field-validation-valid").addClass("field-validation-error");
+        $(container).closest('.form-group').addClass('has-error');
         error.data("unobtrusiveContainer", container);
 
         if (replace) {
@@ -71,7 +72,8 @@
 
         if (list && list.length && validator.errorList.length) {
             list.empty();
-            container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
+            container.addClass("validation-summary-errors").addClass("validation-summary-valid");
+            $(container).closest('.form-group').addClass('has-error');
 
             $.each(validator.errorList, function () {
                 $("<li />").html(this.message).appendTo(list);
@@ -85,8 +87,9 @@
         if (container) {
             var replaceAttrValue = container.attr("data-valmsg-replace"),
                 replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
-
             container.addClass("field-validation-valid").removeClass("field-validation-error");
+
+            $(container).closest('.form-group').removeClass('has-error')
             error.removeData("unobtrusiveContainer");
 
             if (replace) {

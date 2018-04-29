@@ -16,8 +16,10 @@ namespace BusinessExcel
             bundles.Add(new ScriptBundle("~/bundles/all").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/bootstrap.min.js",
-                        "~/Scripts/jquery.unobtrusive*",
-                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/jquery.validate.min.js",
+                        //"~/Scripts/jquery.validate.unobtrusive.min.js",
+                        "~/Scripts/jquery.validate.unobtrusive.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.min.js",
                         "~/admin-lte/js/adminlte.js",
                         "~/Scripts/BE/be-base.js",
                         "~/Scripts/AdminLTE/plugins/select2/select2.full.min.js"));

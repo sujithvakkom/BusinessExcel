@@ -167,7 +167,6 @@
         function TableDailyUpateViewCallback(data) {
         }
         function ajax_call_load_complete(myBar,data) {
-            viewInit();
             var id = setInterval(frame, 10);
             function frame() {
                 var eml = $(myBar);
@@ -175,6 +174,8 @@
                 eml.hide();
                 clearInterval(id);
             }
+            viewInit();
+            $.validator.unobtrusive.parse('form');
         }
         function viewInit() {
             $(window).trigger('resize');

@@ -169,6 +169,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Extentions\LinqExtensions.cs" />
+    <Compile Include="Models\ActionViewFilters.cs" />
     <Compile Include="Models\ConstantUsages.cs" />
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
@@ -467,7 +469,6 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_LayoutPageAccountAjaxLoad.cshtml" />
-    <Content Include="Views\Report\ActionsBackup.cshtml" />
     <Content Include="Views\Accounts\_ChangeUsernameBlock.cshtml" />
     <Content Include="Views\Accounts\_ChangeUserPasswordBlock.cshtml" />
     <Content Include="Views\Shared\_LoadingFailed.cshtml" />

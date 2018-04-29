@@ -19,7 +19,7 @@ namespace BusinessExcel.Controllers
         public static string REPORTCONTROLLER = "Report";
         public static string ACTIONS = "Actions";
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
-        public ActionResult Actions(string sort,string sortdir, int page = 1)
+        public ActionResult Actions(string sort,string sortdir, int page = 1,ActionViewFilters Filters=null)
         {
             ViewBag.DailyUpateViewSort = sort;
             ViewBag.DailyUpateViewDir = sortdir;
@@ -29,7 +29,7 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ACTIONS_TITLE;
             if (Request.IsAjaxRequest())
             {
-                return TableDailyUpateView(sort, sortdir, page);
+                return TableDailyUpateView(sort, sortdir, page,Filters);
             }
             return View();
         }
@@ -39,7 +39,7 @@ namespace BusinessExcel.Controllers
         public static string TABLEDAILYUPATEVIEW = "TableDailyUpateView";
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
         [HttpGet]
-        public PartialViewResult TableDailyUpateView(string sort, string sortdir, int page = 1)
+        public PartialViewResult TableDailyUpateView(string sort, string sortdir, int page = 1, ActionViewFilters Filters=null)
         {
             ViewBag.DailyUpateViewSort = sort;
             ViewBag.DailyUpateViewDir = sortdir;
@@ -47,7 +47,7 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = ACTIONS_TITLE;
-            return PartialView(TABLEDAILYUPATEVIEW);
+            return PartialView(TABLEDAILYUPATEVIEW,Filters);
         }
 
         public static string EXPORTEXCEL="ExportExcel";

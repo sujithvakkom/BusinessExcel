@@ -96,7 +96,7 @@
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
                        OnBegin = "move('#page-load')",
-                       OnComplete = "( function(data) { ajax_call_load_complete('#page-load', data); } ) ",
+                       OnComplete = "ajax_call_load_complete('#page-load')",
                        OnFailure = "loadin_failed"
                    },
                    carrot: "fa fa-tasks")
