@@ -1,0 +1,232 @@
+﻿@using BusinessExcel.Models
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@section Dialogs{
+}
+
+<header class="main-header">
+    @Html.Partial("_MainHeaderAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
+</header><!-- sidebar: style can be found in sidebar.less -->
+<aside class="main-sidebar">
+    @Html.Partial("_MainSideBarAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
+</aside><!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            @BusinessExcel.Controllers.ReportController.ACTIONS_TITLE
+            <small>Report</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.ReportController.REPORTCONTROLLER</a></li>
+            <li class="active">@BusinessExcel.Controllers.ReportController.ACTIONS_TITLE</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">        <!-- Your Page Content Here -->
+        <div class="box box-default collapsed-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Filters</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                The body of the box<br />
+
+                @Html.AdminLTETextBox(
+                        "ItemCode",
+                        null,
+                        new Dictionary<string, object>() { { "class", "form-control" }, { "data-inputmask" , "'mask': '999-9999-999999'" } },
+                        null,
+                        null,
+                        "fa-user-secret",
+                        false,
+                        true,
+                        true)
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Merchant Actions</h3>
+            </div>
+            <div class="box-body">
+               
+                <div id="table-daily-upate-view" class="table-responsive">
+                    @{
+
+                        using (var db = new SalesManageDataContext())
+                        {
+                            int count = 0;
+                            var data = db.DailyUpateViewPaging(pageNumber: ViewBag.DailyUpateViewPage,
+                                pageSize: 20,
+                                sort: ViewBag.DailyUpateViewSort,
+                                sortdir: ViewBag.DailyUpateViewDir,
+                                count: out count
+                                );
+                            var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
+                                ajaxUpdateCallback: "TableDailyUpateViewCallback",rowsPerPage:20
+                                );
+                            grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                            @grid.GetHtml(
+                           tableStyle: "table table-striped table-bordered",
+                           htmlAttributes: new { @id = "example" },
+                           columns: new[] {
+                               grid.Column(columnName:"Name",header:"Name",format:null,style:"name",canSort:false),
+                               grid.Column(columnName:"UserName",header:"User Name",format:null,style:"user-name",canSort:false),
+                               grid.Column(columnName:"Location",header:"Location",format:null,style:"location",canSort:false),
+                               grid.Column(columnName:"Brand",header:"Brand",format:null,style:"brand",canSort:false),
+                               grid.Column(columnName:"Category",header:"Category",format:null,style:"category",canSort:false),
+                               grid.Column(columnName:"CreateTime",header:"Create Date",format:x=>string.Format("{0:dd-MMM-yyyy}",x.CreateTime),style:"create-time",canSort:true),
+                               grid.Column(columnName:"Item",header:"Item",format:null,style:"item",canSort:false),
+                               grid.Column(columnName:"Description",header:"Description",format:null,style:"description",canSort:false),
+                               grid.Column(columnName:"Quantity",header:"Quantity",format:x=>string.Format("{0:0.00}",x.Quantity),style:"quantity",canSort:false),
+                               grid.Column(columnName:"TotalValue",header:"Value",      format:x=>string.Format("{0:0.00}",x.TotalValue),   style:"values",canSort:false)
+                           },
+                           mode:WebGridPagerModes.FirstLast|WebGridPagerModes.NextPrevious|WebGridPagerModes.Numeric,
+                           footerStyle: "",
+                           nextText:"NEXT",
+                           firstText:"FIRST",
+                           previousText:"PREV.",
+                           lastText:"LAST")
+                        }
+                    }
+                    @Html.AdminLTEActionLink(
+                   linkText: BusinessExcel.Controllers.ReportController.EXPORTEXCEL_TITLE,
+                   actionName: BusinessExcel.Controllers.ReportController.EXPORTEXCEL,
+                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   cssClass: "",
+                   carrot: "fa fa-download")
+                </div>
+            </div>
+        </div>
+
+    </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+<footer class="main-footer">
+    @Html.Partial("_MainFooterAccount")
+</footer>
+
+@section Scripts {
+
+    <script>
+        var AdminLTEOptions = {
+            //Add slimscroll to navbar menus
+            //This requires you to load the slimscroll plugin
+            //in every page before app.js
+            navbarMenuSlimscroll: false,
+            navbarMenuSlimscrollWidth: "3px", //The width of the scroll bar
+            navbarMenuHeight: "200px", //The height of the inner menu
+            //General animation speed for JS animated elements such as box collapse/expand and
+            //sidebar treeview slide up/down. This options accepts an integer as milliseconds,
+            //'fast', 'normal', or 'slow'
+            animationSpeed: slow,
+            //Sidebar push menu toggle button selector
+            sidebarToggleSelector: "[data-toggle='push-menu']",
+            //Activate sidebar push menu
+            sidebarPushMenu: true,
+            //Activate sidebar slimscroll if the fixed layout is set (requires SlimScroll Plugin)
+            sidebarSlimScroll: true,
+            //Enable sidebar expand on hover effect for sidebar mini
+            //This option is forced to true if both the fixed layout and sidebar mini
+            //are used together
+            sidebarExpandOnHover: false,
+            //BoxRefresh Plugin
+            enableBoxRefresh: true,
+            //Bootstrap.js tooltip
+            enableBSToppltip: true,
+            BSTooltipSelector: "[data-toggle='tooltip']",
+            //Enable Fast Click. Fastclick.js creates a more
+            //native touch experience with touch devices. If you
+            //choose to enable the plugin, make sure you load the script
+            //before AdminLTE's app.js
+            enableFastclick: true,
+            //Control Sidebar Options
+            enableControlSidebar: true,
+            controlSidebarOptions: {
+                //Which button should trigger the open/close event
+                toggleBtnSelector: "[data-toggle='control-sidebar']",
+                //The sidebar selector
+                selector: ".control-sidebar",
+                //Enable slide over content
+                slide: true
+            },
+            //Box Widget Plugin. Enable this plugin
+            //to allow boxes to be collapsed and/or removed
+            enableBoxWidget: true,
+            //Box Widget plugin options
+            boxWidgetOptions: {
+                boxWidgetIcons: {
+                    //Collapse icon
+                    collapse: 'fa-minus',
+                    //Open icon
+                    open: 'fa-plus',
+                    //Remove icon
+                    remove: 'fa-times'
+                },
+                boxWidgetSelectors: {
+                    //Remove button selector
+                    remove: '[data-widget="remove"]',
+                    //Collapse button selector
+                    collapse: '[data-widget="collapse"]'
+                }
+            },
+            //Direct Chat plugin options
+            directChat: {
+                //Enable direct chat by default
+                enable: true,
+                //The button to open and close the chat contacts pane
+                contactToggleSelector: '[data-widget="chat-pane-toggle"]'
+            },
+            //Define the set of colors to use globally around the website
+            colors: {
+                lightBlue: "#3c8dbc",
+                red: "#f56954",
+                green: "#00a65a",
+                aqua: "#00c0ef",
+                yellow: "#f39c12",
+                blue: "#0073b7",
+                navy: "#001F3F",
+                teal: "#39CCCC",
+                olive: "#3D9970",
+                lime: "#01FF70",
+                orange: "#FF851B",
+                fuchsia: "#F012BE",
+                purple: "#8E24AA",
+                maroon: "#D81B60",
+                black: "#222222",
+                gray: "#d2d6de"
+            },
+            //The standard screen sizes that bootstrap uses.
+            //If you change these in the variables.less file, change
+            //them here too.
+            screenSizes: {
+                xs: 480,
+                sm: 768,
+                md: 992,
+                lg: 1200
+            }
+        }
+    </script>
+}
+@section ExtraScripts
+{
+    @System.Web.Optimization.Scripts.Render("~/bundles/select2")
+    @Scripts.Render("~/bundles/inputmask")
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $(":input").inputmask();
+        });
+        function TableDailyUpateViewCallback(data) {
+        }
+    </script>
+}
+S
+@section ExtraStyles
+{
+    @Styles.Render("~/Content/themes/select2")
+    @Styles.Render("~/Content/themes/table-daily-upate-view")
+
+}

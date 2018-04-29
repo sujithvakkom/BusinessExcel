@@ -30,5 +30,10 @@ namespace BusinessExcel.Providers.ProviderContext
                         .Skip(skippingRows).Take(pageSize);
             }
         }
+
+        internal object GetDailyUpateViewPagingExport()
+        {
+            return this.DailyUpateView.ToList();
+        }
     }
 }

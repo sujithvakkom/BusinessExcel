@@ -45,6 +45,16 @@ namespace BusinessExcel
             bundles.Add(new ScriptBundle("~/bundles/select2").Include(
                 "~/Scripts/AdminLTE/plugins/select2/select2.full.min.js"));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/inputmask").Include(
+                        //~/Scripts/Inputmask/dependencyLibs/inputmask.dependencyLib.js",  //if not using jquery
+                        "~/Scripts/Inputmask/inputmask.js",
+                        "~/Scripts/Inputmask/jquery.inputmask.js",
+                        "~/Scripts/Inputmask/inputmask.extensions.js",
+                        "~/Scripts/Inputmask/inputmask.date.extensions.js",
+                        //and other extensions you want to include
+                        "~/Scripts/Inputmask/inputmask.numeric.extensions.js"));
+
             //Styles
 
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
@@ -68,6 +78,10 @@ namespace BusinessExcel
             bundles.Add(new StyleBundle("~/Content/themes/select2").Include(
                 "~/Scripts/AdminLTE/plugins/select2/select2.min.css",
                 "~/Content/Custom/site.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/themes/table-daily-upate-view").Include(
+                "~/Content/Custom/table-daily-upate-view.css"
                 ));
         }
     }

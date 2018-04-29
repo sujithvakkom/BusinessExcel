@@ -40,6 +40,6 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Column("user_name")]
         public string UserName { get; set; }
         [Column("value")]
-        public Nullable<int> Value { get; set; }
+        public Nullable<int> TotalValue { get; set; }
     }
 }
