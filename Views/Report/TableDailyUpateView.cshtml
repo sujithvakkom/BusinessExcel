@@ -71,6 +71,10 @@
 
                     using (var db = new SalesManageDataContext())
                     {
+                        WebGridColumn col = new WebGridColumn() {
+                            
+                        };
+
                         int count = 0;
                         var data = db.DailyUpateViewPaging(pageNumber: ViewBag.DailyUpateViewPage,
                             pageSize: 20,
@@ -83,7 +87,7 @@
                             );
                         grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                         @grid.GetHtml(
-                           tableStyle: "table table-striped table-bordered",
+                           tableStyle: "table table-striped table-bordered be-pagination-spl",
                            htmlAttributes: new { @id = "example" },
                            columns: new[] {
                                grid.Column(columnName:"Name",header:"Name",format:null,style:"name",canSort:false),

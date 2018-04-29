@@ -72,4 +72,4 @@ tfoot tr td{
 
  tfoot .extra-table-pager{display:none;}
 
- .pagination{margin:0px;}
+ table.be-pagination-spl{margin:0px !important;}
