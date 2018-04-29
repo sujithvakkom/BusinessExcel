@@ -49,3 +49,6 @@ Temporary Items
 *.xml
 *.csproj.user
 *.suo
+Web.config
+Web.Debug.config
+Web.Release.config

@@ -31,13 +31,27 @@
                    linkText: BusinessExcel.Controllers.AccountsController.WELCOME_TITLE,
                    actionName: BusinessExcel.Controllers.AccountsController.WELCOME,
                    controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
-                   ajaxOptions: new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "main-body", OnComplete = "ajax_call_load_complete" },
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnBegin = "move('#page-load')",
+                       OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnFailure = "loadin_failed"
+                   },
                    carrot: "fa fa-home")
                                     @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AccountsController.MYPROFILE_TITLE,
                    actionName: BusinessExcel.Controllers.AccountsController.MYPROFILE,
                    controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
-                   ajaxOptions: new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "main-body", OnComplete = "ajax_call_load_complete" },
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnBegin = "move('#page-load')",
+                       OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnFailure = "loadin_failed"
+                   },
                    carrot: "fa fa-user")
             @if (User.IsInRole(BERoleDetails.SYSTEM_ADMINISTRATOR))
             {
@@ -77,7 +91,14 @@
                    linkText: BusinessExcel.Controllers.ReportController.ACTIONS_TITLE,
                    actionName: BusinessExcel.Controllers.ReportController.ACTIONS,
                    controllerName:BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
-                   ajaxOptions:new AjaxOptions() { InsertionMode =InsertionMode.Replace,UpdateTargetId= "main-body",OnComplete="ajax_call_load_complete" },
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnBegin = "move('#page-load')",
+                       OnComplete = "( function(data) { ajax_call_load_complete('#page-load', data); } ) ",
+                       OnFailure = "loadin_failed"
+                   },
                    carrot: "fa fa-tasks")
                         </ul>
                     </li>
