@@ -47,8 +47,9 @@ Temporary Items
 .apdisk
 *.dll
 *.xml
-*.csproj.user
+
+.dll
+*.pdb
+.cache
+.exe
 *.suo
-Web.config
-Web.Debug.config
-Web.Release.config

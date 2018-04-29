@@ -1,7 +1,8 @@
-﻿@using BootstrapHtmlHelper
+﻿@model UserProfile 
+
+@using BootstrapHtmlHelper
 @using BusinessExcel.Models
 @using BusinessExcel.Providers.ProviderContext.Entities
-@model UserProfile
 @{ 
     ViewContext viewContext = Html.ViewContext;
     RouteValueDictionary routeValues = viewContext.RouteData.Values;
