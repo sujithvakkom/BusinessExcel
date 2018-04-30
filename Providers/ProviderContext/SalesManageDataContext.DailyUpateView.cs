@@ -12,14 +12,15 @@ namespace BusinessExcel.Providers.ProviderContext
     public partial class SalesManageDataContext : DbContext
     {
 
-        public IQueryable<DailyUpateView> DailyUpateViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count, ActionViewFilters Filters)
+        public IQueryable<DailyUpateView> DailyUpateViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count, 
+            ActionViewFilters Filters)
         {
             int skippingRows = (pageNumber - 1) * pageSize;
             if (Filters == null)
                 Filters = new Models.ActionViewFilters() { ItemCode = "" };
 
             var res = from x in this.DailyUpateView
-                      where (Filters.ItemCode==null || x.Item == Filters.ItemCode || Filters.ItemCode == "")
+                      where (String.IsNullOrEmpty(Filters.ItemCode) || x.Item == Filters.ItemCode)
                       select x;
 
             count = res.Count();
@@ -80,9 +81,15 @@ namespace BusinessExcel.Providers.ProviderContext
             }
         }
 
-        internal object GetDailyUpateViewPagingExport()
+        internal object GetDailyUpateViewPagingExport(ActionViewFilters Filters)
         {
-            return this.DailyUpateView.ToList();
+
+            if (Filters == null)
+                Filters = new Models.ActionViewFilters() { ItemCode = "" };
+            var res = from x in this.DailyUpateView
+                      where (String.IsNullOrEmpty(Filters.ItemCode) || x.Item == Filters.ItemCode)
+                      select x;
+            return res.ToList();
         }
     }
 }

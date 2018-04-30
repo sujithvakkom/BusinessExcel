@@ -1,8 +1,16 @@
-﻿#table-daily-upate-view tbody td.name {
-   width:15%
+﻿#table-daily-upate-view table {
+    /*table-layout: fixed;*/
+}
+#table-daily-upate-view table tbody td{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+#table-daily-upate-view tbody td.name {
+   width:17%
 }
 #table-daily-upate-view tbody td.user-name { 
-   width:10%
+   width:8%
 }
 #table-daily-upate-view tbody td.location {    
    width:15%
@@ -15,19 +23,19 @@
    overflow-y:hidden
 }
 #table-daily-upate-view tbody td.create-time {    
-   width:10%
+   width:7%
 }
 #table-daily-upate-view tbody td.item {
    width:10%
 }
 #table-daily-upate-view tbody td.description {
-   width:15%
+   width:22%
 }
 #table-daily-upate-view tbody td.quantity {
-   width:5%;
+   width:1.5%;
    text-align:right;
 }
 #table-daily-upate-view tbody td.values {
-   width:5%;
+   width:2%;
    text-align:right
 }

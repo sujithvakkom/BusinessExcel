@@ -52,13 +52,13 @@ namespace BusinessExcel.Controllers
 
         public static string EXPORTEXCEL="ExportExcel";
         public static string EXPORTEXCEL_TITLE = "Export Excel";
-        public ActionResult ExportExcel()
+        public ActionResult ExportExcel(ActionViewFilters Filters = null)
         {
 
             using (var db = new SalesManageDataContext())
             {
                 var gv = new System.Web.UI.WebControls.GridView();
-                gv.DataSource = db.GetDailyUpateViewPagingExport();
+                gv.DataSource = db.GetDailyUpateViewPagingExport(Filters);
                 gv.DataBind();
                 Response.ClearContent();
                 Response.Buffer = true;
