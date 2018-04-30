@@ -3,6 +3,7 @@
 @using BusinessExcel.Controllers
 @using BootstrapHtmlHelper
 @using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
 
 @model ActionViewFilters
 
@@ -84,23 +85,23 @@
             <h3 class="box-title">Merchant Actions</h3>
         </div>
         <div class="box-body">
-
+            
             <div id="table-daily-upate-view" class="table-responsive">
                 @{
 
                     using (var db = new SalesManageDataContext())
                     {
                         WebGridColumn col = new WebGridColumn() {
-                            
+
                         };
 
                         int count = 0;
-                        var data = db.DailyUpateViewPaging(pageNumber: ViewBag.DailyUpateViewPage,
-                            pageSize: 20,
-                            sort: ViewBag.DailyUpateViewSort,
-                            sortdir: ViewBag.DailyUpateViewDir,
-                            count: out count,Filters:Model
-                            );
+                        IQueryable<DailyUpateView> data = db.DailyUpateViewPaging(pageNumber: ViewBag.DailyUpateViewPage,
+                                    pageSize: 20,
+                                    sort: ViewBag.DailyUpateViewSort,
+                                    sortdir: ViewBag.DailyUpateViewDir,
+                                    count: out count,Filters:Model
+                                    );
                         var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
                             ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 20
                             );
@@ -109,20 +110,47 @@
                            tableStyle: "table table-striped table-bordered be-pagination-spl",
                            htmlAttributes: new { @id = "example" },
                            columns: new[] {
-                               grid.Column(columnName:"Name",header:"Name",format:null,style:"name",canSort:false),
+                               grid.Column(columnName:"Name",
+                               header:Html.AdminLTESorter("Name","Name",grid),
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Name),
+                               style:"name",canSort:true),
+
                                grid.Column(columnName:"UserName",header:"User Name",format:null,style:"user-name",canSort:false),
-                               grid.Column(columnName:"Location",header:"Location",format:null,style:"location",canSort:false),
-                               grid.Column(columnName:"Brand",header:"Brand",format:null,style:"brand",canSort:false),
-                               grid.Column(columnName:"Category",header:"Category",format:null,style:"category",canSort:false),
-                               grid.Column(columnName:"CreateTime",header:"Create Date",format:x=>string.Format("{0:dd-MMM-yyyy}",x.CreateTime),style:"create-time",canSort:true),
-                               grid.Column(columnName:"Item",header:"Item",format:null,style:"item",canSort:false),
-                               grid.Column(columnName:"Description",header:"Description",format:null,style:"description",canSort:false),
-                               grid.Column(columnName:"Quantity",header:"Quantity",format:x=>string.Format("{0:0.00}",x.Quantity),style:"quantity",canSort:false),
+
+                               grid.Column(columnName:"Location",header:"Location",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Location),
+                               style:"location",canSort:false),
+
+                               grid.Column(columnName:"Brand",
+                               header:Html.AdminLTESorter("Brand","Brand",grid),
+                               format:null,style:"brand",canSort:true),
+
+                               grid.Column(columnName:"Category",header:"Category",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Category),
+                               style:"category",canSort:false),
+
+                               grid.Column(columnName:"CreateTime",
+                               header:Html.AdminLTESorter("CreateTime","Create Date",grid),
+                               format:x=>string.Format("{0:dd-MMM-yyyy}",x.CreateTime),
+                               style:"create-time",canSort:true),
+
+                               grid.Column(columnName:"Item",
+                               header:Html.AdminLTESorter("Item","Item",grid),
+                               format:null,style:"item",canSort:true),
+
+                               grid.Column(columnName:"Description",header:"Description",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Description),
+                               style:"description",canSort:false),
+
+                               grid.Column(columnName:"Quantity",header:"Quantity",
+                               format:x=>string.Format("{0:0.00}",x.Quantity),
+                               style:"quantity",canSort:false),
+
                                grid.Column(columnName:"TotalValue",header:"Value",      format:x=>string.Format("{0:0.00}",x.TotalValue),   style:"values",canSort:false)
                            },
                            footerStyle: "extra-table-pager"
                            )
-                          
+
                        @grid.PagerList(mode:WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
                            nextText: "NEXT",
                            firstText: "FIRST",

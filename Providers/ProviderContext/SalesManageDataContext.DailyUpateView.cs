@@ -35,10 +35,10 @@ namespace BusinessExcel.Providers.ProviderContext
                 switch (sortdir)
                 {
                     case "DESC":
-                        return res.OrderByDescending(x => x.CreateTime)
+                        return res.OrderByDescending(sort)
                             .Skip(skippingRows).Take(pageSize);
                     default:
-                        return res.OrderBy(x => x.CreateTime)
+                        return res.OrderBy(sort)
                             .Skip(skippingRows).Take(pageSize);
                 }
             }
