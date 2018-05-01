@@ -261,8 +261,6 @@ C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\System.Net.Http.WebRequest.
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\System.Web.Http.xml
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\System.Web.Http.WebHost.xml
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\System.Web.Mvc.xml
-C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\HtmlAgilityPack.pdb
-C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\HtmlAgilityPack.xml
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\obj\Debug\BusinessExcel.pdb

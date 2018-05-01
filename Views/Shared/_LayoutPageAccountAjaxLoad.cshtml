@@ -17,11 +17,10 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">*@
 
-    @System.Web.Optimization.Scripts.Render("~/bundles/all")
-
+    @Scripts.Render("~/bundles/all")
+    
     @Styles.Render("~/Content/themes/select2")
     @Styles.Render("~/Content/themes/table-daily-upate-view")
-
 
     @RenderSection("extraStyles", false)
     @Styles.Render("~/Content/themes/base/css")
@@ -163,6 +162,8 @@
         $(function () {
             //Initialize Select2 Elements
             $(":input").inputmask();
+            //Pace.ajaxStart();
+            $(document).ajaxStart(function () { Pace.restart(); });
         });
         function TableDailyUpateViewCallback(data) {
         }
@@ -189,6 +190,7 @@
              }*/
         }
         function move(myBar) {
+            Pace.restart();
             //var elem = document.getElementById(myBar);
             var width = 0;
 
