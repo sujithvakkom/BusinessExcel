@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Objects;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,13 +14,15 @@ namespace BusinessExcel.Controllers.JSON
         //
         // GET: /JSON/
 
-        public ActionResult ItemAutoCompleter(String Search)
+        public JsonResult ItemAutoCompleter(String Search)
         {
+            JsonResult res = null;
             using (var db = new SalesManageDataContext()) {
-                ObjectParameter rowCount = new ObjectParameter("rowCount",0);
-                var x = db.getItemDetails("", null, rowCount);
+                var row_count = new ObjectParameter("row_count",System.Data.SqlDbType.Int);
+                var x = db.getItemDetails(null, null, row_count).ToList(); ;
+                res = Json(x,JsonRequestBehavior.AllowGet);
             }
-            return View();
+            return res;
         }
 
     }

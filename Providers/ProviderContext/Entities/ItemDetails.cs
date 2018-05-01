@@ -7,7 +7,7 @@ using System.Web;
 
 namespace BusinessExcel.Providers.ProviderContext.Entities
 {
-    public partial class getItemDetails_Result
+    public partial class ItemDetails
     {
         public int inventory_item_id { get; set; }
         public string item_code { get; set; }

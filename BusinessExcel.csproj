@@ -360,7 +360,6 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Views\PLRegister\photography_live.html" />
-    <Content Include="Providers\ProviderContext\Entities\UserManagement.cshtml" />
     <None Include="Providers\Samples\SimpleMembershipProvider.cs" />
     <Compile Include="Providers\Samples\TestMembershipProvider.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.cs" />
