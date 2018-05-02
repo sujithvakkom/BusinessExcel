@@ -21,8 +21,12 @@ namespace BusinessExcel
                         "~/Scripts/jquery.unobtrusive-ajax.min.js",
                         "~/admin-lte/js/adminlte.js",
                         "~/Scripts/BE/be-base.js",
-                        "~/Scripts/AdminLTE/plugins/select2/select2.full.min.js",
+                        "~/Scripts/AdminLTE/plugins/select2/select2.full.min.js"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/pace").Include(
                         "~/Scripts/AdminLTE/plugins/pace/pace.min.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/bootstrap.min.js"));
@@ -64,7 +68,8 @@ namespace BusinessExcel
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                 //"~/Content/bootstrap-theme.min.css"
                 "~/Content/bootstrap.min.css",
-                "~/Content/bootstrap-grid.min"
+                "~/Content/bootstrap-grid.min",
+                "~/Content/pace/themes/white/pace-theme-minimal.css"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/themes/smenu/css").Include(

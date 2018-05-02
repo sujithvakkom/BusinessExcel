@@ -10,22 +10,18 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link rel="shortcut icon" href="../../Images/business-excel-logo-dark.ico" />
-    <!-- Font Awesome Icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    @*<!-- Ionicons -->
-        <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">*@
 
     @Scripts.Render("~/bundles/all")
-    
+    @Scripts.Render("~/bundles/pace")
+
     @Styles.Render("~/Content/themes/select2")
     @Styles.Render("~/Content/themes/table-daily-upate-view")
-
-    @RenderSection("extraStyles", false)
     @Styles.Render("~/Content/themes/base/css")
     @Styles.Render("~/Content/themes/adminlte/css")
     @Styles.Render("~/Content/css")
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    @RenderSection("extraStyles", false)
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
@@ -153,28 +149,35 @@
                 lg: 1200
             }
         }
+        window.paceOptions = {
+            ajax: false, // disabled
+            document: true, // disabled
+            eventLag: false, // disabled
+            // Disable the 'elements' source
+            elements: false,
+
+            // Only show the progress on regular and ajax-y page navigation,
+            // not every request
+            restartOnRequestAfter: false,
+            restartOnPushState: false
+        }
     </script>
     @RenderSection("scripts", required: false)
 
-    @System.Web.Optimization.Scripts.Render("~/bundles/select2")
+    @Scripts.Render("~/bundles/select2")
     @Scripts.Render("~/bundles/inputmask")
     <script>
+        $(document).ajaxStart(function () {
+            Pace.restart();
+        })
+
         $(function () {
             //Initialize Select2 Elements
             $(":input").inputmask();
-            //Pace.ajaxStart();
-            $(document).ajaxStart(function () { Pace.restart(); });
         });
         function TableDailyUpateViewCallback(data) {
         }
         function ajax_call_load_complete(myBar,data) {
-            var id = setInterval(frame, 10);
-            function frame() {
-                var eml = $(myBar);
-                eml.width(0 + '%');
-                eml.hide();
-                clearInterval(id);
-            }
             viewInit();
             $.validator.unobtrusive.parse('form');
         }
@@ -190,24 +193,7 @@
              }*/
         }
         function move(myBar) {
-            Pace.restart();
-            //var elem = document.getElementById(myBar);
-            var width = 0;
-
-            var id = setInterval(frame, 10);
-            var eml = $(myBar);
-            eml.width(width + '%');
-            eml.show();
-            function frame() {
-                if (width >= 200) {
-                    clearInterval(id);
-
-                    eml.hide();
-                } else {
-                    width++;
-                    eml.width(width + '%');
-                }
-            }
+            
         }
         function loadin_failed(data) {
 

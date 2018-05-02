@@ -21,30 +21,19 @@ namespace BusinessExcel.Providers.ProviderContext
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }
-        public virtual IEnumerable<ItemDetails> getItemDetails(string item_code, Nullable<int> page_size, ObjectParameter row_count)
+
+
+        public virtual ObjectResult<ItemDetails> getItemDetails(string item_code, Nullable<int> page_size, ObjectParameter row_count)
         {
             var item_codeParameter = item_code != null ?
                 new ObjectParameter("item_code", item_code) :
-                new ObjectParameter("item_code", System.Data.SqlDbType.VarChar);
+                new ObjectParameter("item_code", typeof(string));
+
             var page_sizeParameter = page_size.HasValue ?
                 new ObjectParameter("page_size", page_size) :
-                new ObjectParameter("page_size", System.Data.SqlDbType.Int);
+                new ObjectParameter("page_size", typeof(int));
 
-            SqlParameter p1 =
-                new SqlParameter("item_code", System.Data.SqlDbType.VarChar);
-
-            SqlParameter p2 =
-                new SqlParameter("page_size", System.Data.SqlDbType.Int);
-            
-            SqlParameter p3 =
-                new SqlParameter("row_count", System.Data.SqlDbType.Int);
-                p3.Direction=System.Data.ParameterDirection.Output;
-
-            return Database.SqlQuery<ItemDetails>("[sc_salesmanage_merchant].[getItemDetails] @item_code ,@page_size ,@row_count OUTPUT", p1, p2, p3);
-
-            //return ((IObjectContextAdapter)this).ObjectContext.ExecuteStoreQuery<ItemDetails>("getItemDetails @item_code, @page_size, @row_count", item_codeParameter, page_sizeParameter, row_count);
-
-            //return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ItemDetails>("getItemDetails", item_codeParameter, page_sizeParameter, row_count);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ItemDetails>("getItemDetails", item_codeParameter, page_sizeParameter, row_count);
         }
 
         /*
