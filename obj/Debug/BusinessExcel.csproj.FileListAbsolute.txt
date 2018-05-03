@@ -266,3 +266,6 @@ C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\HtmlAgilityPack.xml
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\obj\Debug\BusinessExcel.pdb
+C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.dll
+C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.pdb
+C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.xml
