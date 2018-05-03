@@ -1,0 +1,7 @@
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\bin\DBSalesManage.dll.config
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\bin\DBSalesManage.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\bin\DBSalesManage.pdb
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\bin\EntityFramework.xml
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\obj\Release\DBSalesManage.csprojResolveAssemblyReference.cache
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\obj\Release\DBSalesManage.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\obj\Release\DBSalesManage.pdb

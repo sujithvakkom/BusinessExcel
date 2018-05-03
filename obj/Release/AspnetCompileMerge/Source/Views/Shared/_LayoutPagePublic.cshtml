@@ -4,23 +4,22 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link rel="shortcut icon" href="~/Images/business-excel-logo-dark.ico" />
+    <link rel="shortcut icon" href="../../Images/business-excel-logo-dark.ico" />
     <!-- Font Awesome Icons -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
     <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 
-    @Styles.Render("~/Content/themes/adminlte/css")
     @Styles.Render("~/Content/themes/base/css")
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/adminlte/css")
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition  login-page">
     @RenderSection("dialogs", false)
-    @Html.Partial("_HeaderPartialPublic", Model)
     @RenderBody()
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/adminlte")
+    @System.Web.Optimization.Scripts.Render("~/bundles/bootstrap")
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
+    @System.Web.Optimization.Scripts.Render("~/bundles/adminlte")
     @RenderSection("scripts", required: false)
 </body>
 </html>

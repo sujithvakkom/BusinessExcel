@@ -19,7 +19,7 @@ namespace BusinessExcel.Controllers.JSON
             JsonResult res = null;
             using (var db = new DBSalesmanageEntities("SalesManageData")) {
                 var row_count = new ObjectParameter("row_count",typeof(int));
-                IEnumerable<getItemDetails_Result> x = db.getItemDetails(null, null, row_count); ;
+                var x = db.getItemDetailsCall("101", 20, row_count); 
                 res = Json(x.ToList(), JsonRequestBehavior.AllowGet);
             }
             return res;

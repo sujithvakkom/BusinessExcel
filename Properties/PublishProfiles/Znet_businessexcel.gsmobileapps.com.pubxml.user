@@ -7,7 +7,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA0Ew+r7ERvUKzpYCkyC5z/AAAAAACAAAAAAADZgAAwAAAABAAAAD3qohucZx9cGafVQHJh9QJAAAAAASAAACgAAAAEAAAAIXVMg9rX20el0fMHAqUQsMYAAAAzlsp6hnHVwMAaL+yV/KftI65smyHuJy7FAAAAABNIaAuZCJMNFKJmw/BypegAA4S</EncryptedPassword>
-    <_PublishTargetUrl>ftp://ftp.gsmobileapps.com</_PublishTargetUrl>
+    <_PublishTargetUrl>ftp://web-05.znetindia.net</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Data/BusinessExcelData.mdf">

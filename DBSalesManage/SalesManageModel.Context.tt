@@ -66,12 +66,13 @@ if (!loader.IsLazyLoadingEnabled(container))
         this.Configuration.LazyLoadingEnabled = false;
 <#
 }
+else
+{
 #>
-    }
-
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-        throw new UnintentionalCodeFirstException();
+	Database.SetInitializer<DBSalesmanageEntities>(null);
+<#
+}
+#>
     }
 
 <#

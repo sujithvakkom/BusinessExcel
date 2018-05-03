@@ -2,23 +2,23 @@
 
 @model BusinessExcel.Models.RegisterModel
 
-
 @using (Ajax.BeginForm("Register", new AjaxOptions()
 {
     HttpMethod = "Post",
     InsertionMode = InsertionMode.Replace
 }))
 {
+    @Html.AntiForgeryToken()
     <div class="register-box">
         <div class="register-logo">
             <a href="../../index2.html">
-                <img src="~/Images/business-excel-dark-185X27.png" />
+                <img src="../../Images/business-excel-dark-185X27.png" />
             </a>
         </div>
         <div class="register-box-body">
             <p class="login-box-msg">Register a new membership</p>
             @Html.AdminLTETextBoxFor(
-            m => m.FullName,
+            m => m.RegFullName,
         null,
         new Dictionary<string, object>() { { "class", "form-control" } },
         null,
@@ -33,7 +33,7 @@
                 </div>*@
 
             @Html.AdminLTETextBoxFor(
-        m => m.Email,
+        m => m.RegEmail,
         null,
         new Dictionary<string, object>() { { "class", "form-control" } },
         null,
@@ -48,7 +48,7 @@
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>*@
             @Html.AdminLTEPasswordFor(
-        m => m.Password,
+        m => m.RegPassword,
         null,
         new Dictionary<string, object>() { { "class", "form-control" } },
         null,
@@ -62,7 +62,7 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>*@
             @Html.AdminLTEPasswordFor(
-        m => m.ConfirmPassword,
+        m => m.RegConfirmPassword,
         null,
         new Dictionary<string, object>() { { "class", "form-control" } },
         null,
