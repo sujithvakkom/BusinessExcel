@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessExcel", "BusinessEx
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootstrapHtmlHelper", "..\BootstrapHtmlHelper\BootstrapHtmlHelper.csproj", "{E5193A9C-62FB-4969-9EC5-C6ED10A035EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBSalesManage", "..\DBSalesManage\DBSalesManage.csproj", "{9B1879C5-568C-42A8-AFC6-7CDE6A23707C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBSalesManage", "DBSalesManage\DBSalesManage.csproj", "{9B1879C5-568C-42A8-AFC6-7CDE6A23707C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
