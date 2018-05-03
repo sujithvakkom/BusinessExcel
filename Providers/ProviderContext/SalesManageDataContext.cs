@@ -17,6 +17,7 @@ namespace BusinessExcel.Providers.ProviderContext
         }
 
         public DbSet<DailyUpateView> DailyUpateView { get; set; }
-        
+
+
     }
 }

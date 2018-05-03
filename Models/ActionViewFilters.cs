@@ -9,7 +9,7 @@ namespace BusinessExcel.Models
     public class ActionViewFilters
     {
 
-        [Display(Name = "User Name")]
+        [Display(Name = "Item Code")]
         public string ItemCode { get; set; }
     }
 }

@@ -167,7 +167,9 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Content Include="Content\pace\themes\white\pace-theme-minimal.css" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\JSON\JSON.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
@@ -182,9 +184,12 @@
     <Compile Include="Models\RolesName.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\ItemDetails.cs" />
     <Compile Include="Providers\ProviderContext\Entities\DailyUpateView.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.itemDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.DailyUpateView.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Sessions.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDB\EFSalesManageContext.cs" />
     <Compile Include="Providers\ProviderContext\SessionContext.cs" />
     <Content Include="admin-lte\css\AdminLTE.css" />
     <Content Include="admin-lte\css\AdminLTE.min.css" />
@@ -273,6 +278,7 @@
     <Content Include="Content\tether\tether.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\AdminLTE\plugins\pace\pace.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -357,7 +363,6 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Views\PLRegister\photography_live.html" />
-    <Content Include="Providers\ProviderContext\Entities\UserManagement.cshtml" />
     <None Include="Providers\Samples\SimpleMembershipProvider.cs" />
     <Compile Include="Providers\Samples\TestMembershipProvider.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.cs" />
@@ -545,6 +550,10 @@
     <ProjectReference Include="..\BootstrapHtmlHelper\BootstrapHtmlHelper.csproj">
       <Project>{e5193a9c-62fb-4969-9ec5-c6ed10a035eb}</Project>
       <Name>BootstrapHtmlHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBSalesManage\DBSalesManage.csproj">
+      <Project>{9b1879c5-568c-42a8-afc6-7cde6a23707c}</Project>
+      <Name>DBSalesManage</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
