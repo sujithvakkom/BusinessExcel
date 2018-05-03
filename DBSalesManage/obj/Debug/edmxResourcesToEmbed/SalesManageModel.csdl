@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBSalesmanage" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="DBSalesmanageEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="model_m" EntityType="DBSalesmanage.model_m" />
+    <EntitySet Name="inventory_item_m" EntityType="DBSalesmanage.inventory_item_m" />
+    <EntitySet Name="inventory_item_price" EntityType="DBSalesmanage.inventory_item_price" />
+    <AssociationSet Name="fk_inventory_item_m_model_m1" Association="DBSalesmanage.fk_inventory_item_m_model_m1">
+      <End Role="model_m" EntitySet="model_m" />
+      <End Role="inventory_item_m" EntitySet="inventory_item_m" />
+    </AssociationSet>
+    <AssociationSet Name="fk_inventory_item_price_inventory_item_m1" Association="DBSalesmanage.fk_inventory_item_price_inventory_item_m1">
+      <End Role="inventory_item_m" EntitySet="inventory_item_m" />
+      <End Role="inventory_item_price" EntitySet="inventory_item_price" />
+    </AssociationSet>
+    <FunctionImport Name="getItemDetails" ReturnType="Collection(DBSalesmanage.getItemDetails_Result)">
+      <Parameter Name="item_code" Mode="In" Type="String" />
+      <Parameter Name="page_size" Mode="In" Type="Int32" />
+      <Parameter Name="row_count" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="model_m">
+    <Key>
+      <PropertyRef Name="model_id" />
+    </Key>
+    <Property Name="model_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="unit_selling_price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+    <NavigationProperty Name="inventory_item_m" Relationship="DBSalesmanage.fk_inventory_item_m_model_m1" FromRole="model_m" ToRole="inventory_item_m" />
+  </EntityType>
+  <EntityType Name="inventory_item_m">
+    <Key>
+      <PropertyRef Name="inventory_item_id" />
+    </Key>
+    <Property Name="inventory_item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="brand_id" Type="Int32" Nullable="false" />
+    <Property Name="model_id" Type="Int32" Nullable="false" />
+    <Property Name="category_id" Type="Int32" />
+    <Property Name="item_code" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="model_m" Relationship="DBSalesmanage.fk_inventory_item_m_model_m1" FromRole="inventory_item_m" ToRole="model_m" />
+    <NavigationProperty Name="inventory_item_price" Relationship="DBSalesmanage.fk_inventory_item_price_inventory_item_m1" FromRole="inventory_item_m" ToRole="inventory_item_price" />
+  </EntityType>
+  <EntityType Name="inventory_item_price">
+    <Key>
+      <PropertyRef Name="price" />
+      <PropertyRef Name="inventory_item_id" />
+    </Key>
+    <Property Name="price" Type="Decimal" Nullable="false" Precision="4" Scale="2" />
+    <Property Name="inventory_item_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="inventory_item_m" Relationship="DBSalesmanage.fk_inventory_item_price_inventory_item_m1" FromRole="inventory_item_price" ToRole="inventory_item_m" />
+  </EntityType>
+  <Association Name="fk_inventory_item_m_model_m1">
+    <End Type="DBSalesmanage.model_m" Role="model_m" Multiplicity="1" />
+    <End Type="DBSalesmanage.inventory_item_m" Role="inventory_item_m" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="model_m">
+        <PropertyRef Name="model_id" />
+      </Principal>
+      <Dependent Role="inventory_item_m">
+        <PropertyRef Name="model_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_inventory_item_price_inventory_item_m1">
+    <End Type="DBSalesmanage.inventory_item_m" Role="inventory_item_m" Multiplicity="1" />
+    <End Type="DBSalesmanage.inventory_item_price" Role="inventory_item_price" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="inventory_item_m">
+        <PropertyRef Name="inventory_item_id" />
+      </Principal>
+      <Dependent Role="inventory_item_price">
+        <PropertyRef Name="inventory_item_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="getItemDetails_Result">
+    <Property Type="Int32" Name="inventory_item_id" Nullable="false" />
+    <Property Type="String" Name="item_code" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="description" Nullable="true" MaxLength="150" />
+    <Property Type="Decimal" Name="price" Nullable="true" Precision="4" Scale="2" />
+    <Property Type="String" Name="model" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="model_description" Nullable="true" MaxLength="150" />
+  </ComplexType>
+</Schema>

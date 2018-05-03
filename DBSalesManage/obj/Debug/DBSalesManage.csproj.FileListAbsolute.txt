@@ -1,0 +1,8 @@
+C:\Users\srkrishnan\Documents\GitHub\DBSalesManage\bin\DBSalesManage.dll.config
+C:\Users\srkrishnan\Documents\GitHub\DBSalesManage\bin\DBSalesManage.dll
+C:\Users\srkrishnan\Documents\GitHub\DBSalesManage\bin\DBSalesManage.pdb
+C:\Users\srkrishnan\Documents\GitHub\DBSalesManage\bin\EntityFramework.dll
+C:\Users\srkrishnan\Documents\GitHub\DBSalesManage\bin\EntityFramework.xml
+C:\Users\srkrishnan\Documents\GitHub\DBSalesManage\obj\Debug\DBSalesManage.csprojResolveAssemblyReference.cache
+C:\Users\srkrishnan\Documents\GitHub\DBSalesManage\obj\Debug\DBSalesManage.dll
+C:\Users\srkrishnan\Documents\GitHub\DBSalesManage\obj\Debug\DBSalesManage.pdb

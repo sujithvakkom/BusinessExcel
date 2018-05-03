@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBSalesmanage.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_merchant.merchant_checkin_tracker' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_merchant.messages_sent_user_m' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="model_m">
+    <Key>
+      <PropertyRef Name="model_id" />
+    </Key>
+    <Property Name="model_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="nvarchar" MaxLength="150" />
+    <Property Name="model" Type="nvarchar" MaxLength="50" />
+    <Property Name="unit_selling_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_test.competitor_activity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_user.location_target' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_user.order_approval_authority' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_user.user_group_brand' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_user.user_location' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="inventory_item_m">
+    <Key>
+      <PropertyRef Name="inventory_item_id" />
+    </Key>
+    <Property Name="inventory_item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="nvarchar" MaxLength="150" />
+    <Property Name="brand_id" Type="int" Nullable="false" />
+    <Property Name="model_id" Type="int" Nullable="false" />
+    <Property Name="category_id" Type="int" />
+    <Property Name="item_code" Type="nchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_vansale.inventory_item_price' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="inventory_item_price">
+    <Key>
+      <PropertyRef Name="price" />
+      <PropertyRef Name="inventory_item_id" />
+    </Key>
+    <Property Name="price" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+    <Property Name="inventory_item_id" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_vansale.inventory_item_stock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_vansale.order_dtl' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.db_salesmanage_user.merchant_checkin_v' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.db_salesmanage_user.user_location_detail_v' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_merchant.daily_sale_detail_v' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_merchant.daily_update_v' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_merchant.merchant_daily_cat_v' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_merchant.merchant_periodic_update' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'db_salesmanage.sc_salesmanage_test.user_target_period_v' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <Association Name="fk_inventory_item_m_model_m1">
+    <End Role="model_m" Type="Self.model_m" Multiplicity="1" />
+    <End Role="inventory_item_m" Type="Self.inventory_item_m" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="model_m">
+        <PropertyRef Name="model_id" />
+      </Principal>
+      <Dependent Role="inventory_item_m">
+        <PropertyRef Name="model_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_inventory_item_price_inventory_item_m1">
+    <End Role="inventory_item_m" Type="Self.inventory_item_m" Multiplicity="1" />
+    <End Role="inventory_item_price" Type="Self.inventory_item_price" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="inventory_item_m">
+        <PropertyRef Name="inventory_item_id" />
+      </Principal>
+      <Dependent Role="inventory_item_price">
+        <PropertyRef Name="inventory_item_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="getItemDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="sc_salesmanage_merchant">
+    <Parameter Name="item_code" Type="nvarchar" Mode="In" />
+    <Parameter Name="page_size" Type="int" Mode="In" />
+    <Parameter Name="row_count" Type="int" Mode="InOut" />
+  </Function>
+  <EntityContainer Name="DBSalesmanageStoreContainer">
+    <EntitySet Name="model_m" EntityType="Self.model_m" Schema="sc_salesmanage_merchant" store:Type="Tables" />
+    <EntitySet Name="inventory_item_m" EntityType="Self.inventory_item_m" Schema="sc_salesmanage_vansale" store:Type="Tables" />
+    <EntitySet Name="inventory_item_price" EntityType="Self.inventory_item_price" store:Type="Tables" store:Schema="sc_salesmanage_vansale">
+      <DefiningQuery>SELECT 
+[inventory_item_price].[price] AS [price], 
+[inventory_item_price].[inventory_item_id] AS [inventory_item_id]
+FROM [sc_salesmanage_vansale].[inventory_item_price] AS [inventory_item_price]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="fk_inventory_item_m_model_m1" Association="Self.fk_inventory_item_m_model_m1">
+      <End Role="model_m" EntitySet="model_m" />
+      <End Role="inventory_item_m" EntitySet="inventory_item_m" />
+    </AssociationSet>
+    <AssociationSet Name="fk_inventory_item_price_inventory_item_m1" Association="Self.fk_inventory_item_price_inventory_item_m1">
+      <End Role="inventory_item_m" EntitySet="inventory_item_m" />
+      <End Role="inventory_item_price" EntitySet="inventory_item_price" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

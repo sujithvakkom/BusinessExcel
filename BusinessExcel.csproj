@@ -551,10 +551,6 @@
       <Project>{e5193a9c-62fb-4969-9ec5-c6ed10a035eb}</Project>
       <Name>BootstrapHtmlHelper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DBSalesManage\DBSalesManage.csproj">
-      <Project>{9b1879c5-568c-42a8-afc6-7cde6a23707c}</Project>
-      <Name>DBSalesManage</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\index.d.ts" />
