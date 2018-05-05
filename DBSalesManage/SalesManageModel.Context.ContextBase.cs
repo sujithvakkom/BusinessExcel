@@ -12,11 +12,9 @@ namespace DBSalesManage
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Objects;
-    using System.Data.Objects.DataClasses;
     using System.Data.SqlClient;
-    using System.Linq;
     using System.Linq.Expressions;
 
     public partial class DBSalesmanageEntities : DbContext
@@ -28,7 +26,7 @@ namespace DBSalesManage
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        { 
+        {
 
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingEntitySetNameConvention>();
             //modelBuilder.Entity<getItemDetails>().Map(m => m.Properties( getItemDetailsXX()));
@@ -45,33 +43,34 @@ namespace DBSalesManage
             throw new NotImplementedException();
         }
 
+
         public virtual ObjectResult<getItemDetails> getItemDetailsImport(string item_code, Nullable<int> page_size, ObjectParameter row_count)
         {
             var item_codeParameter = item_code != null ?
                 new ObjectParameter("item_code", item_code) :
-                new ObjectParameter("item_code", typeof(string));
+                new ObjectParameter("item_code", typeof(string)) ;
 
             var page_sizeParameter = page_size.HasValue ?
                 new ObjectParameter("page_size", page_size) :
                 new ObjectParameter("page_size", typeof(int));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getItemDetails>("getItemDetails", item_codeParameter, page_sizeParameter, row_count);
+            
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getItemDetails>("[getItemDetailsTemp]");
         }
         
         public virtual IEnumerable<getItemDetails> getItemDetailsCall(string item_code, Nullable<int> page_size, ObjectParameter row_count)
         {
             var item_codeParameter = item_code != null ?
-                new SqlParameter("item_code", item_code) :
-                new SqlParameter("item_code", typeof(string));
+                new SqlParameter("@item_code", item_code) :
+                new SqlParameter("@item_code", typeof(string));
 
             var page_sizeParameter = page_size.HasValue ?
-                new SqlParameter("page_size", page_size) :
-                new SqlParameter("page_size", typeof(int));
+                new SqlParameter("@page_size", page_size) :
+                new SqlParameter("@page_size", typeof(int));
 
             var row_countParameter = 
-                new SqlParameter("row_count", typeof(int));
+                new SqlParameter("@row_count", typeof(int));
             row_countParameter.Direction = System.Data.ParameterDirection.Output;
-
+            
             return this.Database.SqlQuery<getItemDetails>("getItemDetails @item_code, @page_size, @row_count out", item_codeParameter, page_sizeParameter, row_countParameter);
         }
     }

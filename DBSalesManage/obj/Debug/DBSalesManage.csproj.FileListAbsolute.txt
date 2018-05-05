@@ -13,3 +13,13 @@ C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\bin\EntityFrame
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\obj\Debug\DBSalesManage.csprojResolveAssemblyReference.cache
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\obj\Debug\DBSalesManage.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\obj\Debug\DBSalesManage.pdb
+C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\obj\Debug\DBSalesManage.csprojResolveAssemblyReference.cache
+C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\bin\DBSalesManage.dll.config
+C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\bin\DBSalesManage.dll
+C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\bin\DBSalesManage.pdb
+C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\bin\EntityFramework.dll
+C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\bin\EntityFramework.xml
+C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\obj\Debug\DBSalesManage.dll
+C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\obj\Debug\DBSalesManage.pdb
+C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\bin\EntityFramework.SqlServer.dll
+C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\bin\EntityFramework.SqlServer.xml
