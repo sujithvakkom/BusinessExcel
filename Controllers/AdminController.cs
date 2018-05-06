@@ -30,6 +30,15 @@ namespace BusinessExcel.Controllers
         //
         public static string USERREQUESTTABLEPARTIAL = "UserRequestTablePartial";
         public static string USERSTABLEPARTIAL = "UsersTablePartial";
+
+        //Roster
+        public static string ROSTERTABLEPARTIAL = "RosterTablePartial";
+        public static string USERROSTER = "UserRoster";
+        public static string USERROSTER_TITLE = "User Roster";
+        public static string AJAXCREATEROSTER = "AjaxCreateRoster";
+        public static string ROSTERCREATIONMESSAGE = "RosterCreationMessage";
+
+
         // GET: /Admin/UserManagement
 
         [Authorize(Roles = "System Administrator")]
@@ -116,6 +125,48 @@ namespace BusinessExcel.Controllers
         public PartialViewResult UsersTablePartial(UserProfile UserProfile)
         {
             return PartialView(UserProfile);
+        }
+
+
+        //[Authorize(Roles = "Manager")]
+        [Authorize(Roles = "System Administrator")]
+        [HttpGet]
+        public ActionResult UserRoster()
+        {
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERROSTER_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = USERROSTER_TITLE;
+            return View();
+        }
+
+        [HttpPost]
+        // [Authorize(Roles = "manager")]
+        [Authorize(Roles = "System Administrator")]
+        public PartialViewResult AjaxCreateRoster(RosterModel RoleName)
+        {
+            ViewData.Add(ROSTERCREATIONMESSAGE, "");
+            if (ModelState.IsValid)
+            {
+                //if (!Roles.RoleExists(RoleName.RolesName))
+                //{
+                //    Roles.CreateRole(RoleName.RolesName);
+                //    ViewData[ROLECREATIONMESSAGE] = "Role Created.";
+                //    RoleName.RolesName = "";
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("RoleName", "Role existing.");
+                //    ViewData[ROLECREATIONMESSAGE] = "Role existing.";
+                //}
+            }
+            return PartialView(RoleName);
+        }
+
+       // [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "System Administrator")]
+        public PartialViewResult RosterTablePartial()
+        {
+            return PartialView();
         }
     }
 }

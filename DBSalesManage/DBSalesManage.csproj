@@ -40,15 +40,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -82,12 +79,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="getItemDetails_Result.ModelBase.cs" />
-    <Compile Include="inventory_item_m.ModelBase.cs" />
-    <Compile Include="inventory_item_price.ModelBase.cs" />
-    <Compile Include="model_m.ModelBase.cs" />
+    <Compile Include="DBSalesmanageEntities.cs" />
+    <Compile Include="getItemDetails_Result.cs">
+      <DependentUpon>SalesManageModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inventory_item_m.cs">
+      <DependentUpon>SalesManageModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="inventory_item_price.cs">
+      <DependentUpon>SalesManageModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model_m.cs">
+      <DependentUpon>SalesManageModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SalesManageModel.Context.ContextBase.cs" />
     <Compile Include="SalesManageModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -103,7 +108,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SalesManageModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="SalesManageModel.ModelBase.cs" />
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>SalesManageModel.tt</DependentUpon>
     </Compile>

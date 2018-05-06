@@ -185,6 +185,7 @@
     <Compile Include="Models\RoleContext.cs" />
     <Compile Include="Models\RoleDefine.cs" />
     <Compile Include="Models\RolesName.cs" />
+    <Compile Include="Models\Roster.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemDetails.cs" />
@@ -480,6 +481,9 @@
     <Content Include="Views\Accounts\_ChangeUsernameBlock.cshtml" />
     <Content Include="Views\Accounts\_ChangeUserPasswordBlock.cshtml" />
     <Content Include="Views\Shared\_LoadingFailed.cshtml" />
+    <Content Include="Views\Admin\UserRoster.cshtml" />
+    <Content Include="Views\Admin\AjaxCreateRoster.cshtml" />
+    <Content Include="Views\Admin\RosterTablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
