@@ -171,6 +171,7 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Content Include="Content\pace\themes\white\pace-theme-minimal.css" />
+    <Compile Include="Controllers\AdminController.Location.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\JSON\JSON.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Models\RoleDefine.cs" />
     <Compile Include="Models\RolesName.cs" />
     <Compile Include="Models\Roster.cs" />
+    <Compile Include="Models\RosterContext.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemDetails.cs" />
@@ -557,10 +559,6 @@
     <ProjectReference Include="..\BootstrapHtmlHelper\BootstrapHtmlHelper.csproj">
       <Project>{e5193a9c-62fb-4969-9ec5-c6ed10a035eb}</Project>
       <Name>BootstrapHtmlHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="DBSalesManage\DBSalesManage.csproj">
-      <Project>{9b1879c5-568c-42a8-afc6-7cde6a23707c}</Project>
-      <Name>DBSalesManage</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -40,10 +40,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
@@ -79,7 +75,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBSalesmanageEntities.cs" />
     <Compile Include="getItemDetails_Result.cs">
       <DependentUpon>SalesManageModel.tt</DependentUpon>
     </Compile>
@@ -123,7 +118,6 @@
     <Content Include="SalesManageModel.edmx.diagram">
       <DependentUpon>SalesManageModel.edmx</DependentUpon>
     </Content>
-    <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -35,7 +35,7 @@
                         <div id="user-roster-creation-form">
                             @Html.Partial(BusinessExcel.Controllers.AdminController.AJAXCREATEROSTER,
 new BusinessExcel.Models.RosterModel()
-{ UserId = null, EndDate = null, StartDate = null, LocationId = null, RosterId = null
+{ user_id = null, end_date = null, start_date = null, location_id = null
                             })
                         </div>
 
@@ -45,7 +45,7 @@ new BusinessExcel.Models.RosterModel()
                         </div>
 
 
-                        <div id="role-table-display">
+                        <div id="roster-table-display">
                             @Html.Partial(BusinessExcel.Controllers.AdminController.ROSTERTABLEPARTIAL)
                         </div>
                        

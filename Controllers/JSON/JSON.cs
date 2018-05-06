@@ -1,10 +1,5 @@
-﻿using BusinessExcel.Providers.ProviderContext.SalesManageDB;
-using DBSalesManage;
+﻿
 using System;
-using System.Collections.Generic;
-using System.Data.Objects;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace BusinessExcel.Controllers.JSON

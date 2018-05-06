@@ -15,21 +15,21 @@
 {
 
     <div class="row">
-        @Html.AdminLTETextBoxFor(m => m.UserId,
+        @Html.AdminLTETextBoxFor(m => m.user_id,
                null,
                new Dictionary<string, object>() { { "class", "form-control" },
                    { "required", "" } },
                new Dictionary<string, object>() { { "class", "col-md-2" } },
                null, "", false, true, true)
-        @Html.AdminLTETextBoxFor(m => m.StartDate, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
+        @Html.AdminLTETextBoxFor(m => m.start_date, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
 
                new Dictionary<string, object>() { { "class", "col-md-2" } }, null, "", false, true, true)
 
-        @Html.AdminLTETextBoxFor(m => m.EndDate, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
+        @Html.AdminLTETextBoxFor(m => m.end_date, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
 
                new Dictionary<string, object>() { { "class", "col-md-2" } }
                , null, "", false, true, true)
-        @Html.AdminLTETextBoxFor(m => m.LocationId, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
+        @Html.AdminLTETextBoxFor(m => m.location_id, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
 
                new Dictionary<string, object>() { { "class", "col-md-2" } },
                null, "", false, true, true)
