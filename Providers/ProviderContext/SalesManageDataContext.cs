@@ -18,6 +18,6 @@ namespace BusinessExcel.Providers.ProviderContext
 
         public DbSet<DailyUpateView> DailyUpateView { get; set; }
 
-
+        //public DbSet<ItemDetails> ItemDetails { get; set; }
     }
 }

@@ -272,3 +272,5 @@ C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\HtmlAgilityPack.pdb
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\HtmlAgilityPack.xml
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\EntityFramework.SqlServer.dll
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\EntityFramework.SqlServer.xml
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\EntityFramework.SqlServer.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\EntityFramework.SqlServer.xml
