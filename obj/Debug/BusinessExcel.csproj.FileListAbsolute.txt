@@ -262,8 +262,6 @@ C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\System.Web.Mvc.xml
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\obj\Debug\BusinessExcel.pdb
-C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\DBSalesManage.dll
-C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\DBSalesManage.pdb
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\HtmlAgilityPack.pdb
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\HtmlAgilityPack.xml
 C:\Users\sujithvakkom\Source\Repos\BusinessExcel\bin\DBSalesManage.dll

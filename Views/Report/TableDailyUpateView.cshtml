@@ -7,30 +7,30 @@
 
 @model ActionViewFilters
 
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            @BusinessExcel.Controllers.ReportController.ACTIONS_TITLE
-            <small>Report</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.ReportController.REPORTCONTROLLER</a></li>
-            <li class="active">@BusinessExcel.Controllers.ReportController.ACTIONS_TITLE</li>
-        </ol>
-    </section>
-    <!-- Main content -->
-    <section class="content">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @BusinessExcel.Controllers.ReportController.ACTIONS_TITLE
+        <small>Report</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.ReportController.REPORTCONTROLLER</a></li>
+        <li class="active">@BusinessExcel.Controllers.ReportController.ACTIONS_TITLE</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
     <!-- Your Page Content Here -->
     @using (Ajax.BeginForm(ReportController.ACTIONS,
-        ReportController.REPORTCONTROLLER,
-        new AjaxOptions()
-        {
-            HttpMethod="Get",
-            UpdateTargetId = "main-body",
-            OnBegin = "move('#page-load')",
-            OnComplete = "ajax_call_load_complete('#page-load')",
-            OnFailure = "loadin_failed"
-        }))
+                ReportController.REPORTCONTROLLER,
+                new AjaxOptions()
+                {
+                    HttpMethod = "Get",
+                    UpdateTargetId = "main-body",
+                    OnBegin = "move('#page-load')",
+                    OnComplete = "ajax_call_load_complete('#page-load')",
+                    OnFailure = "loadin_failed"
+                }))
 
     {
         <!-- Your Page Content Here -->
@@ -59,6 +59,9 @@
                  true,
                  true,
                  true)
+
+                    </div>
+                    <div class="col-lg-3">
                     </div>
                 </div>
             </div>            <!-- /.box-body -->
@@ -77,8 +80,8 @@
                    cssClass: "btn btn-link", routeValues: Model,
                    carrot: "fa fa-download")
                     </div>
-                    </div>
                 </div>
+            </div>
         </div><!-- /.box -->
     }
     <div class="box box-primary">
@@ -86,13 +89,14 @@
             <h3 class="box-title">Merchant Actions</h3>
         </div>
         <div class="box-body">
-            
+
             <div id="table-daily-upate-view" class="table-responsive">
                 @{
 
                     using (var db = new SalesManageDataContext())
                     {
-                        WebGridColumn col = new WebGridColumn() {
+                        WebGridColumn col = new WebGridColumn()
+                        {
 
                         };
 
@@ -101,7 +105,7 @@
                                     pageSize: 20,
                                     sort: ViewBag.DailyUpateViewSort,
                                     sortdir: ViewBag.DailyUpateViewDir,
-                                    count: out count,Filters:Model
+                                    count: out count, Filters: Model
                                     );
                         var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
                             ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 20
@@ -152,7 +156,7 @@
                            footerStyle: "extra-table-pager"
                            )
 
-                       @grid.PagerList(mode:WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                        @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
                            nextText: "NEXT",
                            firstText: "FIRST",
                            previousText: "PREV.",

@@ -1,10 +1,8 @@
-﻿using DBSalesManage;
-
+﻿
 namespace BusinessExcel.Providers.ProviderContext.SalesManageDB
 {
-    public class EFSalesManageContext : DBSalesmanageEntities
+    public class EFSalesManageContext 
     {
-        public EFSalesManageContext()
-            : base("SalesManageData") { }
+        public EFSalesManageContext() { }
     }
 }
