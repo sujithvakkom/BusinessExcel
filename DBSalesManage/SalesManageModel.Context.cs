@@ -11,28 +11,22 @@ namespace DBSalesManage
 {
     using System;
     using System.Data.Entity;
+    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Objects;
-    using System.Data.Objects.DataClasses;
-    using System.Linq;
-    
+
     public partial class DBSalesmanageEntities : DbContext
     {
         public DBSalesmanageEntities()
             : base("name=DBSalesmanageEntities")
         {
-        }
-    
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         public DbSet<model_m> model_m { get; set; }
         public DbSet<inventory_item_m> inventory_item_m { get; set; }
         public DbSet<inventory_item_price> inventory_item_price { get; set; }
     
-        public virtual ObjectResult<getItemDetails_Result> getItemDetails(string item_code, Nullable<int> page_size, ObjectParameter row_count)
+        public virtual ObjectResult<getItemDetails> getItemDetails(string item_code, Nullable<int> page_size, ObjectParameter row_count)
         {
             var item_codeParameter = item_code != null ?
                 new ObjectParameter("item_code", item_code) :
@@ -42,7 +36,7 @@ namespace DBSalesManage
                 new ObjectParameter("page_size", page_size) :
                 new ObjectParameter("page_size", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getItemDetails_Result>("getItemDetails", item_codeParameter, page_sizeParameter, row_count);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getItemDetails>("getItemDetails", item_codeParameter, page_sizeParameter, row_count);
         }
     }
 }

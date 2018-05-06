@@ -1,0 +1,25 @@
+﻿@model BusinessExcel.Models.RolesNameModel
+@using BootstrapHtmlHelper
+
+@using (Ajax.BeginForm(BusinessExcel.Controllers.AdminController.AJAXCREATEROLE,
+                                                    ajaxOptions:
+                                                    new AjaxOptions()
+                                                    {
+                                                        UpdateTargetId = "role-creation-form",
+                                                        InsertionMode = InsertionMode.Replace,
+                                                        OnSuccess = "refreshRoleTable"
+                                                    }))
+{
+    @Html.AdminLTETextBoxFor(m => m.RolesName,
+                       null,
+                       new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
+                       null,
+                       null,
+                       "",
+                       true,
+                       true,
+                       true)
+    <button type="submit" class="btn btn-primary">Add</button>
+    <br />
+    @ViewData[BusinessExcel.Controllers.AdminController.ROLECREATIONMESSAGE]
+}

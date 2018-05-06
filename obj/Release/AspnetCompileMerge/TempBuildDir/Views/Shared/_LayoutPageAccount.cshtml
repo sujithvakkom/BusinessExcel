@@ -4,14 +4,20 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link rel="shortcut icon" href="~/Images/business-excel-logo-dark.ico" />
+    <link rel="shortcut icon" href="../../Images/business-excel-logo-dark.ico" />
     <!-- Font Awesome Icons -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Ionicons -->
+    @*<!-- Ionicons -->
     <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">*@
 
-    @Styles.Render("~/Content/themes/adminlte/css")
+        @System.Web.Optimization.Scripts.Render("~/bundles/all")
+        
+    @RenderSection("extraStyles", false)
     @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/Content/themes/adminlte/css")
+    @Styles.Render("~/Content/css")
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     @RenderSection("dialogs")
@@ -19,7 +25,6 @@
         @RenderBody()
     </div>
     @RenderSection("scripts", required: false)
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/adminlte")
+    @RenderSection("extraScripts",false)
 </body>
 </html>

@@ -1,0 +1,207 @@
+﻿@using BusinessExcel.Models
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="../../Images/business-excel-logo-dark.ico" />
+
+    @Scripts.Render("~/bundles/all")
+    @Scripts.Render("~/bundles/pace")
+
+    @Styles.Render("~/Content/themes/select2")
+    @Styles.Render("~/Content/themes/table-daily-upate-view")
+    @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/Content/themes/adminlte/css")
+    @Styles.Render("~/Content/css")
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    @RenderSection("extraStyles", false)
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+    @Html.Partial("_LoadingFailed")
+    @RenderSection("dialogs", false)
+    <div class="wrapper">
+
+        <header class="main-header">
+            @Html.Partial("_MainHeaderAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
+        </header><!-- sidebar: style can be found in sidebar.less -->
+        <aside class="main-sidebar">
+            @Html.Partial("_MainSideBarAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
+        </aside><div class="content-wrapper">
+
+            <div class="progress-xxs">
+                <div id="page-load" class="progress-bar progress-bar-striped active" style="width: 0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <span class="sr-only">20% Complete</span>
+                </div>
+            </div>
+            <div id="main-body">
+
+                @RenderBody()
+            </div>
+        </div><!-- /.content-wrapper -->
+        <footer class="main-footer">
+            @Html.Partial("_MainFooterAccount")
+        </footer>
+    </div>
+
+    <script>
+        var AdminLTEOptions = {
+            //Add slimscroll to navbar menus
+            //This requires you to load the slimscroll plugin
+            //in every page before app.js
+            navbarMenuSlimscroll: false,
+            navbarMenuSlimscrollWidth: "3px", //The width of the scroll bar
+            navbarMenuHeight: "200px", //The height of the inner menu
+            //General animation speed for JS animated elements such as box collapse/expand and
+            //sidebar treeview slide up/down. This options accepts an integer as milliseconds,
+            //'fast', 'normal', or 'slow'
+            animationSpeed: 500,
+            //Sidebar push menu toggle button selector
+            sidebarToggleSelector: "[data-toggle='push-menu']",
+            //Activate sidebar push menu
+            sidebarPushMenu: true,
+            //Activate sidebar slimscroll if the fixed layout is set (requires SlimScroll Plugin)
+            sidebarSlimScroll: true,
+            //Enable sidebar expand on hover effect for sidebar mini
+            //This option is forced to true if both the fixed layout and sidebar mini
+            //are used together
+            sidebarExpandOnHover: false,
+            //BoxRefresh Plugin
+            enableBoxRefresh: true,
+            //Bootstrap.js tooltip
+            enableBSToppltip: true,
+            BSTooltipSelector: "[data-toggle='tooltip']",
+            //Enable Fast Click. Fastclick.js creates a more
+            //native touch experience with touch devices. If you
+            //choose to enable the plugin, make sure you load the script
+            //before AdminLTE's app.js
+            enableFastclick: true,
+            //Control Sidebar Options
+            enableControlSidebar: true,
+            controlSidebarOptions: {
+                //Which button should trigger the open/close event
+                toggleBtnSelector: "[data-toggle='control-sidebar']",
+                //The sidebar selector
+                selector: ".control-sidebar",
+                //Enable slide over content
+                slide: true
+            },
+            //Box Widget Plugin. Enable this plugin
+            //to allow boxes to be collapsed and/or removed
+            enableBoxWidget: true,
+            //Box Widget plugin options
+            boxWidgetOptions: {
+                boxWidgetIcons: {
+                    //Collapse icon
+                    collapse: 'fa-minus',
+                    //Open icon
+                    open: 'fa-plus',
+                    //Remove icon
+                    remove: 'fa-times'
+                },
+                boxWidgetSelectors: {
+                    //Remove button selector
+                    remove: '[data-widget="remove"]',
+                    //Collapse button selector
+                    collapse: '[data-widget="collapse"]'
+                }
+            },
+            //Direct Chat plugin options
+            directChat: {
+                //Enable direct chat by default
+                enable: true,
+                //The button to open and close the chat contacts pane
+                contactToggleSelector: '[data-widget="chat-pane-toggle"]'
+            },
+            //Define the set of colors to use globally around the website
+            colors: {
+                lightBlue: "#3c8dbc",
+                red: "#f56954",
+                green: "#00a65a",
+                aqua: "#00c0ef",
+                yellow: "#f39c12",
+                blue: "#0073b7",
+                navy: "#001F3F",
+                teal: "#39CCCC",
+                olive: "#3D9970",
+                lime: "#01FF70",
+                orange: "#FF851B",
+                fuchsia: "#F012BE",
+                purple: "#8E24AA",
+                maroon: "#D81B60",
+                black: "#222222",
+                gray: "#d2d6de"
+            },
+            //The standard screen sizes that bootstrap uses.
+            //If you change these in the variables.less file, change
+            //them here too.
+            screenSizes: {
+                xs: 480,
+                sm: 768,
+                md: 992,
+                lg: 1200
+            }
+        }
+        window.paceOptions = {
+            ajax: false, // disabled
+            document: true, // disabled
+            eventLag: false, // disabled
+            // Disable the 'elements' source
+            elements: false,
+
+            // Only show the progress on regular and ajax-y page navigation,
+            // not every request
+            restartOnRequestAfter: false,
+            restartOnPushState: false
+        }
+    </script>
+    @RenderSection("scripts", required: false)
+
+    @Scripts.Render("~/bundles/select2")
+    @Scripts.Render("~/bundles/inputmask")
+    <script>
+        $(document).ajaxStart(function () {
+            Pace.restart();
+        })
+
+        $(function () {
+            //Initialize Select2 Elements
+            $(":input").inputmask();
+        });
+        function TableDailyUpateViewCallback(data) {
+        }
+        function ajax_call_load_complete(myBar,data) {
+            viewInit();
+            $.validator.unobtrusive.parse('form');
+        }
+        function viewInit() {
+            $(window).trigger('resize');
+            var i;
+            $('.box').boxWidget();
+            $(":input").inputmask();
+            //move('#page-load')
+            /* for (i = 0; i < 100; i++) {
+                 $().css("width", i.toString() + "%");
+
+             }*/
+        }
+        function move(myBar) {
+            
+        }
+        function loadin_failed(data) {
+
+            $('#loading-failure-body').text(data.message)
+            $('#loading-failure').modal();
+        }
+    </script>
+
+    @RenderSection("extraScripts", false)
+</body>
+</html>

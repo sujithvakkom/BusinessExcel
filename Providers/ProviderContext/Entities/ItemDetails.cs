@@ -7,13 +7,21 @@ using System.Web;
 
 namespace BusinessExcel.Providers.ProviderContext.Entities
 {
+
+    [ComplexType()]
     public partial class ItemDetails
     {
+        [Column("inventory_item_id", Order = 1)]
         public int inventory_item_id { get; set; }
+        [Column("item_code", Order = 2)]
         public string item_code { get; set; }
+        [Column("description", Order = 3)]
         public string description { get; set; }
+        [Column("price", Order = 4)]
         public Nullable<decimal> price { get; set; }
+        [Column("model", Order = 5)]
         public string model { get; set; }
+        [Column("model_description", Order = 6)]
         public string model_description { get; set; }
     }
 }

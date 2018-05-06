@@ -1,17 +1,10 @@
 
 using System;
 using System.Data.Entity;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using BusinessExcel.Providers.ProviderContext.Entities;
-using BusinessExcel.Models;
-using BusinessExcel.Extentions;
-using System.Data.Objects;
 using System.Data.Entity.Infrastructure;
-using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
-using System.Data.Entity.ModelConfiguration;
-using System.Data.Entity.ModelConfiguration.Configuration;
 
 namespace BusinessExcel.Providers.ProviderContext
 {
@@ -23,17 +16,21 @@ namespace BusinessExcel.Providers.ProviderContext
         }
 
 
-        public virtual ObjectResult<ItemDetails> getItemDetails(string item_code, Nullable<int> page_size, ObjectParameter row_count)
+        public virtual DbRawSqlQuery<ItemDetails> getItemDetails(string item_code//, 
+            //Nullable<int> page_size, ObjectParameter row_count
+            )
         {
             var item_codeParameter = item_code != null ?
-                new ObjectParameter("item_code", item_code) :
-                new ObjectParameter("item_code", typeof(string));
+                new SqlParameter("item_code", item_code) :
+                new SqlParameter("item_code",System.Data.SqlDbType.NVarChar);
 
-            var page_sizeParameter = page_size.HasValue ?
-                new ObjectParameter("page_size", page_size) :
-                new ObjectParameter("page_size", typeof(int));
+            //var page_sizeParameter = page_size.HasValue ?
+            //    new ObjectParameter("page_size", page_size) :
+            //    new ObjectParameter("page_size", typeof(int));
 
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ItemDetails>("getItemDetails", item_codeParameter, page_sizeParameter, row_count);
+            return this.Database.SqlQuery<ItemDetails>("[sc_salesmanage_merchant].[getItemDetailsTemp] @item_code", item_codeParameter
+                //, page_sizeParameter, row_count
+                );
         }
 
         /*
