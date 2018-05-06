@@ -22,15 +22,15 @@
 <section class="content">
     <!-- Your Page Content Here -->
     @using (Ajax.BeginForm(ReportController.ACTIONS,
-                ReportController.REPORTCONTROLLER,
-                new AjaxOptions()
-                {
-                    HttpMethod = "Get",
-                    UpdateTargetId = "main-body",
-                    OnBegin = "move('#page-load')",
-                    OnComplete = "ajax_call_load_complete('#page-load')",
-                    OnFailure = "loadin_failed"
-                }))
+                        ReportController.REPORTCONTROLLER,
+                        new AjaxOptions()
+                        {
+                            HttpMethod = "Get",
+                            UpdateTargetId = "main-body",
+                            OnBegin = "move('#page-load')",
+                            OnComplete = "ajax_call_load_complete('#page-load')",
+                            OnFailure = "loadin_failed"
+                        }))
 
     {
         <!-- Your Page Content Here -->
@@ -46,19 +46,29 @@
                     <div class="col-lg-2">
                         @Html.AntiForgeryToken()
 
-                        @Html.AdminLTETextBoxFor(
-                 m => m.ItemCode,
-                 null,
-                 new Dictionary<string, object>() {
-                                        { "class", "form-control" },
-                                        { "data-inputmask" , "'mask': '999-9999-999999'" }
-                     },
-                 null,
-                 null,
-                 null,
-                 true,
-                 true,
-                 true)
+                        @Html.AdminLTEDropDownListFor(
+m => m.ItemCode,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
+                                        { "class", "form-control select2" },
+                                        { "data-inputmask" , "'mask': '999-9999-999999'" },
+},
+htmlGroupAttributes: null,
+htmlGlyphiconsAttributes: null,
+autoCompleteOptions: new AutoCompleteOptions()
+{
+    AjaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        Url = Url.Action(actionName: "ItemAutoCompleter",
+controllerName: "JSON")
+    },
+    DescriptionField = "description",
+    IDField = "item_code",
+    Formate="<span>state.id</span><br>state.text",
+    IsAutoComplete = true,
+    SelectItems = null
+})
 
                     </div>
                     <div class="col-lg-3">
