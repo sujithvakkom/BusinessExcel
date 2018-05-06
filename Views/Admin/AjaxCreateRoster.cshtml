@@ -1,0 +1,46 @@
+﻿@model BusinessExcel.Models.RosterModel
+@using BootstrapHtmlHelper
+
+@using (Ajax.BeginForm(
+               actionName: BusinessExcel.Controllers.AdminController.AJAXCREATEROSTER,
+                routeValues: null,
+                ajaxOptions: new AjaxOptions()
+                {
+                    UpdateTargetId = "user-roster-creation-form",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "refreshRosterTable"
+                },
+                htmlAttributes: new { @class = "form-inline" })
+                                                                                                                                                    )
+{
+
+    <div class="row">
+        @Html.AdminLTETextBoxFor(m => m.UserId,
+               null,
+               new Dictionary<string, object>() { { "class", "form-control" },
+                   { "required", "" } },
+               new Dictionary<string, object>() { { "class", "col-md-2" } },
+               null, "", false, true, true)
+        @Html.AdminLTETextBoxFor(m => m.StartDate, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
+
+               new Dictionary<string, object>() { { "class", "col-md-2" } }, null, "", false, true, true)
+
+        @Html.AdminLTETextBoxFor(m => m.EndDate, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
+
+               new Dictionary<string, object>() { { "class", "col-md-2" } }
+               , null, "", false, true, true)
+        @Html.AdminLTETextBoxFor(m => m.LocationId, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
+
+               new Dictionary<string, object>() { { "class", "col-md-2" } },
+               null, "", false, true, true)
+
+
+        <button type="submit" class="btn btn-primary col-md-offset-2 " style="margin-left:15px" >Add New</button>
+    </div>
+        <br />
+        @ViewData[BusinessExcel.Controllers.AdminController.ROSTERCREATIONMESSAGE]
+
+}
+
+
+

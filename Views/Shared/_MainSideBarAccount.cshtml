@@ -76,6 +76,20 @@
                    cssClass: "",
                    carrot: "fa fa-puzzle-piece")
                             </ul>
+
+                            @*Rosters*@
+                            <a href="#"><i class="fa fa-user-secret"></i><span>Actions</span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                @Html.AdminLTEMenuActionLinkBlock(
+                   linkText: BusinessExcel.Controllers.AdminController.USERROSTER_TITLE,
+                   actionName: BusinessExcel.Controllers.AdminController.USERROSTER,
+                   controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
+                   cssClass: "",
+                   carrot: "fa fa-user-md")
+                   
+                            </ul>
+
+
                         </li>
                     </ul>
                 </li>

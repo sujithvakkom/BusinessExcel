@@ -182,6 +182,7 @@
     <Compile Include="Models\RoleContext.cs" />
     <Compile Include="Models\RoleDefine.cs" />
     <Compile Include="Models\RolesName.cs" />
+    <Compile Include="Models\Roster.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemDetails.cs" />
@@ -477,6 +478,9 @@
     <Content Include="Views\Accounts\_ChangeUsernameBlock.cshtml" />
     <Content Include="Views\Accounts\_ChangeUserPasswordBlock.cshtml" />
     <Content Include="Views\Shared\_LoadingFailed.cshtml" />
+    <Content Include="Views\Admin\UserRoster.cshtml" />
+    <Content Include="Views\Admin\AjaxCreateRoster.cshtml" />
+    <Content Include="Views\Admin\RosterTablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -550,6 +554,10 @@
     <ProjectReference Include="..\BootstrapHtmlHelper\BootstrapHtmlHelper.csproj">
       <Project>{e5193a9c-62fb-4969-9ec5-c6ed10a035eb}</Project>
       <Name>BootstrapHtmlHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="DBSalesManage\DBSalesManage.csproj">
+      <Project>{9b1879c5-568c-42a8-afc6-7cde6a23707c}</Project>
+      <Name>DBSalesManage</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -266,3 +266,6 @@ C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\DBSalesManage.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\DBSalesManage.pdb
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\HtmlAgilityPack.pdb
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\HtmlAgilityPack.xml
+C:\WORKS\BusinessExcel\bin\DBSalesManage.dll
+C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.dll
+C:\WORKS\BusinessExcel\bin\DBSalesManage.pdb
