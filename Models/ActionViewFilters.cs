@@ -20,5 +20,7 @@ namespace BusinessExcel.Models
 
         [Display(Name = "User")]
         public string UserName { get; set; }
+        [Display(Name ="Brand")]
+        public string BrandID { get; set; }
     }
 }

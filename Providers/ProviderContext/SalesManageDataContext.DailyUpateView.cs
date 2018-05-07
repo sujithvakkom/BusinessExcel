@@ -30,6 +30,10 @@ namespace BusinessExcel.Providers.ProviderContext
                     res = res.Where(x => x.CreateTime > Filters.StartDate);
             if (!string.IsNullOrEmpty(Filters.UserName))
                 res = res.Where(x => x.UserName == Filters.UserName);
+
+            if (!string.IsNullOrEmpty(Filters.BrandID))
+                res = res.Where(x => x.BrandId.ToString() == Filters.BrandID);
+
             count = res.Count();
 
             if (sort == null || sort == "")

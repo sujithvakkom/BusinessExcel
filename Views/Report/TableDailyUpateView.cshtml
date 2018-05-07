@@ -44,10 +44,10 @@
             </div><!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
-                    @Html.AntiForgeryToken()
-                    <div class="col-lg-3">
+                                        @Html.AntiForgeryToken()
+                                        <div class="col-lg-3">
 
-                        @Html.AdminLTEDropDownListFor(
+                                            @Html.AdminLTEDropDownListFor(
                             m => m.ItemCode,
                             htmlLabelAttributes: null,
                             htmlDropDownAttributes: new Dictionary<string, object>() {
@@ -69,7 +69,33 @@
                                 IsAutoComplete = true,
                                 SelectItems = null
                             },
-                            showLabel:true)
+                            showLabel: true)
+
+                                        </div>
+                    <div class="col-lg-3">
+
+                        @Html.AdminLTEDropDownListFor(
+                            m => m.BrandID,
+                            htmlLabelAttributes: null,
+                            htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" },
+                            },
+                            htmlGroupAttributes: null,
+                            autoCompleteOptions: new AutoCompleteOptions()
+                            {
+                                AjaxOptions = new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    Url = Url.Action(actionName: JSONController.BRANDAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                },
+                                DescriptionField = "description",
+                                IDField = "brand_id",
+                                Formate = "'<tr><td>' + state.id + '</td><td><span>'+state.text + '</span></td></tr>'",
+                                SelectedItem = ViewData[ReportController.SELECTED_FILTED_BRAND],
+                                IsAutoComplete = true,
+                                SelectItems = null
+                            },
+                            showLabel: true)
 
                     </div>
                     <div class="col-lg-3">

@@ -13,29 +13,25 @@ namespace BusinessExcel.Providers.ProviderContext
 
     public partial class SalesManageDataContext : DbContext
     {
-        public virtual UserDetail getUserDetail(string userName)
+        public virtual BrandDetail getBrandDetail(string BrandId)
         {
-            const string SELECT_USER = @"select user_name, 
-                                                isnull(display_name,first_name+' '+second_name) as full_name 
-                                                from [sc_salesmanage_user].[user_m] 
-                                            where 
-                                                user_name = @user_name";
+            const string SELECT_BRAND = @"select brand_id,description from [sc_salesmanage_vansale].[brand_m] where brand_id = @brand_id";
             
-            var user_name = userName != null ?
-                  new SqlParameter("@user_name", userName) :
-                  new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            var brand_id = BrandId != null ?
+                  new SqlParameter("@brand_id", BrandId) :
+                  new SqlParameter("@brand_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            UserDetail detail =
-                this.Database.SqlQuery<UserDetail>(SELECT_USER, user_name).ToList()[0];
+            BrandDetail detail =
+                this.Database.SqlQuery<BrandDetail>(SELECT_BRAND, brand_id).ToList()[0];
             return detail;
         }
 
-        public virtual List<UserDetail> getUserDetails(string search, int Page, out int RowCount)
+        public virtual List<BrandDetail> getBrandDetails(string search, int Page, out int RowCount)
         {
-            List<UserDetail> items = new List<UserDetail>();
-              var user_name = search != null ?
-                    new SqlParameter("@user_name", search) :
-                    new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            List<BrandDetail> items = new List<BrandDetail>();
+              var filter = search != null ?
+                    new SqlParameter("@filter", search) :
+                    new SqlParameter("@filter", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
             int? page = null;
             var page_size = page != null ?
@@ -54,8 +50,8 @@ namespace BusinessExcel.Providers.ProviderContext
             row_count.Direction = System.Data.ParameterDirection.Output;
             try
             {
-                items = this.Database.SqlQuery<UserDetail>(
-                                                "[sc_salesmanage_user].[getUserDetails] @user_name ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                items = this.Database.SqlQuery<BrandDetail>(
+                                                "[sc_salesmanage_vansale].[getBrandDetails] @filter ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }

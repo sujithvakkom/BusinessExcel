@@ -20,6 +20,7 @@ namespace BusinessExcel.Controllers
         public static string ACTIONS = "Actions";
         public static string SELECTED_FILTED_ITEM = "SelectedFilteredItem";
         public static string SELECTED_FILTED_USER = "SelectedFilteredUser";
+        public static string SELECTED_FILTED_BRAND = "SelectedFilteredBrand";
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
         public ActionResult Actions(string sort,string sortdir, int page = 1,ActionViewFilters Filters=null)
         {
@@ -57,7 +58,12 @@ namespace BusinessExcel.Controllers
             if (!string.IsNullOrEmpty(Filters.UserName))
                 using (var db = new SalesManageDataContext())
                 {
-                    ViewData[SELECTED_FILTED_USER] = db.getUserDetails(Filters.UserName);
+                    ViewData[SELECTED_FILTED_USER] = db.getUserDetail(Filters.UserName);
+                }
+            if (!string.IsNullOrEmpty(Filters.BrandID))
+                using (var db = new SalesManageDataContext())
+                {
+                    ViewData[SELECTED_FILTED_BRAND] = db.getBrandDetail(Filters.BrandID);
                 }
             return PartialView(TABLEDAILYUPATEVIEW,Filters);
         }

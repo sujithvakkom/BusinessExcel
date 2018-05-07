@@ -172,6 +172,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Content Include="Content\pace\themes\white\pace-theme-minimal.css" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -192,8 +193,10 @@
     <Compile Include="Providers\BERoleProvider.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemDetails.cs" />
     <Compile Include="Providers\ProviderContext\Entities\DailyUpateView.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\BrandDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.BrandDetail.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.ItemDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.DailyUpateView.cs" />
