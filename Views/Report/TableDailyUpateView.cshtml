@@ -4,6 +4,7 @@
 @using BootstrapHtmlHelper
 @using BusinessExcel.Providers.ProviderContext
 @using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
 
 @model ActionViewFilters
 
@@ -43,35 +44,87 @@
             </div><!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
-                    <div class="col-lg-2">
-                        @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
+                    <div class="col-lg-3">
 
                         @Html.AdminLTEDropDownListFor(
-m => m.ItemCode,
-htmlLabelAttributes: null,
-htmlDropDownAttributes: new Dictionary<string, object>() {
-                                        { "class", "form-control select2" },
-                                        { "data-inputmask" , "'mask': '999-9999-999999'" },
-},
-htmlGroupAttributes: null,
-htmlGlyphiconsAttributes: null,
-autoCompleteOptions: new AutoCompleteOptions()
-{
-    AjaxOptions = new AjaxOptions()
-    {
-        HttpMethod = "GET",
-        Url = Url.Action(actionName: "ItemAutoCompleter",
-controllerName: "JSON")
-    },
-    DescriptionField = "description",
-    IDField = "item_code",
-    Formate="<span>state.id</span><br>state.text",
-    IsAutoComplete = true,
-    SelectItems = null
-})
+                            m => m.ItemCode,
+                            htmlLabelAttributes: null,
+                            htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" },
+                                                                    { "data-inputmask" , "'mask': '999-9999-999999'" },
+                            },
+                            htmlGroupAttributes: null,
+                            autoCompleteOptions: new AutoCompleteOptions()
+                            {
+                                AjaxOptions = new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    Url = Url.Action(actionName: JSONController.ITEMAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                },
+                                DescriptionField = "description",
+                                IDField = "item_code",
+                                Formate = "'<div><span>' + state.id + '</span></br>'+state.text + '</div>'",
+                                SelectedItem = ViewData[ReportController.SELECTED_FILTED_ITEM],
+                                IsAutoComplete = true,
+                                SelectItems = null
+                            },
+                            showLabel:true)
 
                     </div>
                     <div class="col-lg-3">
+
+                        @Html.AdminLTEDatePickerFor(
+                       m => m.StartDate,
+                       htmlLabelAttributes: null,
+                       htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                       htmlGroupAttributes: null,
+                       htmlGlyphiconsAttributes: null,
+                       glyphiconsName: "fa fa-calendar",
+                       showLabel: true,
+                       hasValidation: true,
+                       showGlyphicons: true)
+                    </div>
+                    <div class="col-lg-3">
+
+                        @Html.AdminLTEDatePickerFor(
+                       m => m.EndDate,
+                       htmlLabelAttributes: null,
+                       htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                       htmlGroupAttributes: null,
+                       htmlGlyphiconsAttributes: null,
+                       glyphiconsName: "fa fa-calendar",
+                       showLabel: true,
+                       hasValidation: true,
+                       showGlyphicons: true)
+                    </div>
+
+
+                    <div class="col-lg-3">
+
+                        @Html.AdminLTEDropDownListFor(
+                            m => m.UserName,
+                            htmlLabelAttributes: null,
+                            htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+                            },
+                            htmlGroupAttributes: null,
+                            autoCompleteOptions: new AutoCompleteOptions()
+                            {
+                                AjaxOptions = new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                },
+                                DescriptionField = "full_name",
+                                IDField = "user_name",
+                                Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                                IsAutoComplete = true,
+                                SelectItems = null
+                            },
+                            showLabel: true)
+
                     </div>
                 </div>
             </div>            <!-- /.box-body -->

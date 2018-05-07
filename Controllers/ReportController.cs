@@ -18,6 +18,8 @@ namespace BusinessExcel.Controllers
         public static string ACTIONS_TITLE = "Actions";
         public static string REPORTCONTROLLER = "Report";
         public static string ACTIONS = "Actions";
+        public static string SELECTED_FILTED_ITEM = "SelectedFilteredItem";
+        public static string SELECTED_FILTED_USER = "SelectedFilteredUser";
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
         public ActionResult Actions(string sort,string sortdir, int page = 1,ActionViewFilters Filters=null)
         {
@@ -47,6 +49,16 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = ACTIONS_TITLE;
+            if (!string.IsNullOrEmpty(Filters.ItemCode))
+                using (var db = new SalesManageDataContext())
+                {
+                    ViewData[SELECTED_FILTED_ITEM] = db.getItemDetails(Filters.ItemCode);
+                }
+            if (!string.IsNullOrEmpty(Filters.UserName))
+                using (var db = new SalesManageDataContext())
+                {
+                    ViewData[SELECTED_FILTED_USER] = db.getUserDetails(Filters.UserName);
+                }
             return PartialView(TABLEDAILYUPATEVIEW,Filters);
         }
 

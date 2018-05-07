@@ -8,12 +8,14 @@ using System.Web.Mvc;
 
 namespace BusinessExcel.Controllers.JSON
 {
-    public class JSONController : Controller
+    public partial class JSONController : Controller
     {
         //
         // GET: /JSON/
 
-        public JsonResult ItemAutoCompleter(String Search)
+        public static string ITEMAUTOCOMPLETER = "ItemAutoCompleter";
+        public static string JSONCONTROLLER = "JSON";
+        public JsonResult ItemAutoCompleter(String Search,int Page)
         {
             JsonResult res = null;
             using (var db = new SalesManageDataContext()) {
@@ -28,8 +30,8 @@ namespace BusinessExcel.Controllers.JSON
                     new SqlParameter("@page_size", page) :
                     new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
 
-                int? page_num = null;
-                var page_number = page != null ?
+                int? page_num = Page;
+                var page_number = page_num != null ?
                     new SqlParameter("@page_number", page_num) :
                     new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
 
