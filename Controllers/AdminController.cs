@@ -42,6 +42,9 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERMANAGEMENT_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = USERMANAGEMENT_TITLE;
+            if (Request.IsAjaxRequest())
+                return PartialView();
+
             return View();
         }
 
@@ -53,6 +56,8 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + VIEWMANAGER_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = VIEWMANAGER_TITLE;
+            if (Request.IsAjaxRequest())
+                return PartialView();
             return View(UserProfile);
         }
         [HttpPost]

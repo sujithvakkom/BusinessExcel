@@ -32,7 +32,8 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ACTIONS_TITLE;
             if (Request.IsAjaxRequest())
             {
-                return TableDailyUpateView(sort, sortdir, page,Filters);
+                return PartialView(TABLEDAILYUPATEVIEW, Filters);
+                //return TableDailyUpateView(sort, sortdir, page,Filters);
             }
             return View();
         }

@@ -63,17 +63,31 @@
                         <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.AdminController.ADMIN,actions:currentAction,cssClass:"active")">
                             <a href="#"><i class="fa fa-user-secret"></i><span>Security</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
-                                                                @Html.AdminLTEMenuActionLinkBlock(
+                                                                @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AdminController.USERMANAGEMENT_TITLE,
                    actionName: BusinessExcel.Controllers.AdminController.USERMANAGEMENT,
                    controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
-                   cssClass: "",
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnBegin = "move('#page-load')",
+                       OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnFailure = "loadin_failed"
+                   },
                    carrot: "fa fa-user-md")
-                                                                @Html.AdminLTEMenuActionLinkBlock(
+                                                                @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE,
                    actionName: BusinessExcel.Controllers.AdminController.VIEWMANAGEMENT,
                    controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
-                   cssClass: "",
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnBegin = "move('#page-load')",
+                       OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnFailure = "loadin_failed"
+                   },
                    carrot: "fa fa-puzzle-piece")
                             </ul>
 
