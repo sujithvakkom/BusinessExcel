@@ -11,7 +11,7 @@ namespace BusinessExcel.Models
         public RosterContext() 
             : base("BusinessExcelData")
         {
-            Database.SetInitializer<RosterContext>(null);
+           //Database.SetInitializer<RosterContext>(null);
         }
 
 

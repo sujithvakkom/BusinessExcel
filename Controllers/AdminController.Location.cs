@@ -79,7 +79,7 @@ namespace BusinessExcel.Controllers
 
         [HttpPost]
         [Authorize(Roles = "System Administrator")]
-        public String AjaxRemoveRole(RosterModel Roster)
+        public String AjaxRemoveRoster(RosterModel Roster)
         {
             ViewData.Add(ROLECREATIONMESSAGE, "");
             if (ModelState.IsValid)
