@@ -23,15 +23,15 @@
 <section class="content">
     <!-- Your Page Content Here -->
     @using (Ajax.BeginForm(ReportController.ACTIONS,
-                        ReportController.REPORTCONTROLLER,
-                        new AjaxOptions()
-                        {
-                            HttpMethod = "Get",
-                            UpdateTargetId = "main-body",
-                            OnBegin = "move('#page-load')",
-                            OnComplete = "ajax_call_load_complete('#page-load')",
-                            OnFailure = "loadin_failed"
-                        }))
+                                ReportController.REPORTCONTROLLER,
+                                new AjaxOptions()
+                                {
+                                    HttpMethod = "Get",
+                                    UpdateTargetId = "main-body",
+                                    OnBegin = "move('#page-load')",
+                                    OnComplete = "ajax_call_load_complete('#page-load')",
+                                    OnFailure = "loadin_failed"
+                                }))
 
     {
         <!-- Your Page Content Here -->
@@ -44,15 +44,14 @@
             </div><!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
-                                        @Html.AntiForgeryToken()
-                                        <div class="col-lg-3">
+                    @Html.AntiForgeryToken()
+                    <div class="col-lg-5">
 
-                                            @Html.AdminLTEDropDownListFor(
+                        @Html.AdminLTEDropDownListFor(
                             m => m.ItemCode,
                             htmlLabelAttributes: null,
                             htmlDropDownAttributes: new Dictionary<string, object>() {
-                                                                    { "class", "form-control select2" },
-                                                                    { "data-inputmask" , "'mask': '999-9999-999999'" },
+                                                                    { "class", "form-control select2" }
                             },
                             htmlGroupAttributes: null,
                             autoCompleteOptions: new AutoCompleteOptions()
@@ -71,7 +70,7 @@
                             },
                             showLabel: true)
 
-                                        </div>
+                    </div>
                     <div class="col-lg-3">
 
                         @Html.AdminLTEDropDownListFor(
@@ -98,35 +97,8 @@
                             showLabel: true)
 
                     </div>
-                    <div class="col-lg-3">
 
-                        @Html.AdminLTEDatePickerFor(
-                       m => m.StartDate,
-                       htmlLabelAttributes: null,
-                       htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
-                       htmlGroupAttributes: null,
-                       htmlGlyphiconsAttributes: null,
-                       glyphiconsName: "fa fa-calendar",
-                       showLabel: true,
-                       hasValidation: true,
-                       showGlyphicons: true)
-                    </div>
-                    <div class="col-lg-3">
-
-                        @Html.AdminLTEDatePickerFor(
-                       m => m.EndDate,
-                       htmlLabelAttributes: null,
-                       htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
-                       htmlGroupAttributes: null,
-                       htmlGlyphiconsAttributes: null,
-                       glyphiconsName: "fa fa-calendar",
-                       showLabel: true,
-                       hasValidation: true,
-                       showGlyphicons: true)
-                    </div>
-
-
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
 
                         @Html.AdminLTEDropDownListFor(
                             m => m.UserName,
@@ -151,6 +123,24 @@
                             },
                             showLabel: true)
 
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6 col-lg-offset-6">
+
+                        @Html.AdminLTEDateRangePickerFor(
+                       m => m.StartDate,
+                       m => m.EndDate,
+                       "Date Range",
+                       htmlLabelAttributes: null,
+                       htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                       htmlGroupAttributes: null,
+                       htmlGlyphiconsAttributes: null,
+                       glyphiconsName: "fa fa-calendar",
+                       showLabel: true,
+                       hasValidation: true,
+                       showGlyphicons: true)
                     </div>
                 </div>
             </div>            <!-- /.box-body -->
