@@ -16,7 +16,7 @@ namespace BusinessExcel.Models
 
 
         public DbSet<RosterModel> UserRoster { get; set; }
-        public List<RosterModel> GetAllRosters { get; set; }
+        //public DbSet<RosterModel> GetAllRosters { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
