@@ -171,16 +171,13 @@
             Pace.restart();
         })
 
-        $(function () {
-            //Initialize Select2 Elements
-            $(":input").inputmask();
-        });
         function TableDailyUpateViewCallback(data) {
         }
         function ajax_call_load_complete(myBar,data) {
             viewInit();
             $.validator.unobtrusive.parse('form');
         }
+        
         function viewInit() {
             $(window).trigger('resize');
             var i;
@@ -191,6 +188,7 @@
                  $().css("width", i.toString() + "%");
 
              }*/
+
         }
         function move(myBar) {
             
@@ -200,6 +198,7 @@
             $('#loading-failure-body').text(data.message)
             $('#loading-failure').modal();
         }
+
     </script>
 
     @RenderSection("extraScripts", false)

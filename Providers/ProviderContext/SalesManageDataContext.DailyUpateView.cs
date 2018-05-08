@@ -19,16 +19,26 @@ namespace BusinessExcel.Providers.ProviderContext
             if (Filters == null)
                 Filters = new Models.ActionViewFilters() { ItemCode = "" };
 
-            var res = from x in this.DailyUpateView
-                      where (String.IsNullOrEmpty(Filters.ItemCode) || x.Item == Filters.ItemCode)
-                      select x;
+            var res = this.DailyUpateView.Select(x=>x);
+            if (!String.IsNullOrEmpty(Filters.ItemCode)) {
+                res = res.Where(x => x.Item == Filters.ItemCode);
+            }
+            if (Filters.StartDate.Date != DateTime.MinValue.Date)
+                if(Filters.EndDate.Date != DateTime.MinValue.Date)
+                    res = res.Where(x => x.CreateTime >= Filters.StartDate && x.CreateTime < Filters.EndDate);
+                else
+                    res = res.Where(x => x.CreateTime > Filters.StartDate);
+            if (!string.IsNullOrEmpty(Filters.UserName))
+                res = res.Where(x => x.UserName == Filters.UserName);
+
+            if (!string.IsNullOrEmpty(Filters.BrandID))
+                res = res.Where(x => x.BrandId.ToString() == Filters.BrandID);
 
             count = res.Count();
 
             if (sort == null || sort == "")
             {
-
-                return res.OrderBy(x => x.UserId)
+                return res.OrderByDescending(x => x.CreateTime)
                     .Skip(skippingRows).Take(pageSize);
             }
             else {
@@ -60,6 +70,7 @@ namespace BusinessExcel.Providers.ProviderContext
             }
             */
         }
+
 
         public IQueryable<DailyUpateView> DailyUpateViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count)
         {

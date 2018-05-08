@@ -73,3 +73,7 @@ tfoot tr td{
  tfoot .extra-table-pager{display:none;}
 
  table.be-pagination-spl{margin:0px !important;}
+
+.select2-results td span{
+    padding-left:5px;
+}

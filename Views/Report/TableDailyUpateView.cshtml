@@ -4,33 +4,34 @@
 @using BootstrapHtmlHelper
 @using BusinessExcel.Providers.ProviderContext
 @using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
 
 @model ActionViewFilters
 
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            @BusinessExcel.Controllers.ReportController.ACTIONS_TITLE
-            <small>Report</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.ReportController.REPORTCONTROLLER</a></li>
-            <li class="active">@BusinessExcel.Controllers.ReportController.ACTIONS_TITLE</li>
-        </ol>
-    </section>
-    <!-- Main content -->
-    <section class="content">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @BusinessExcel.Controllers.ReportController.ACTIONS_TITLE
+        <small>Report</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.ReportController.REPORTCONTROLLER</a></li>
+        <li class="active">@BusinessExcel.Controllers.ReportController.ACTIONS_TITLE</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
     <!-- Your Page Content Here -->
     @using (Ajax.BeginForm(ReportController.ACTIONS,
-        ReportController.REPORTCONTROLLER,
-        new AjaxOptions()
-        {
-            HttpMethod="Get",
-            UpdateTargetId = "main-body",
-            OnBegin = "move('#page-load')",
-            OnComplete = "ajax_call_load_complete('#page-load')",
-            OnFailure = "loadin_failed"
-        }))
+                        ReportController.REPORTCONTROLLER,
+                        new AjaxOptions()
+                        {
+                            HttpMethod = "Get",
+                            UpdateTargetId = "main-body",
+                            OnBegin = "move('#page-load')",
+                            OnComplete = "ajax_call_load_complete('#page-load')",
+                            OnFailure = "loadin_failed"
+                        }))
 
     {
         <!-- Your Page Content Here -->
@@ -43,22 +44,113 @@
             </div><!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
-                    <div class="col-lg-2">
-                        @Html.AntiForgeryToken()
+                                        @Html.AntiForgeryToken()
+                                        <div class="col-lg-3">
 
-                        @Html.AdminLTETextBoxFor(
-                 m => m.ItemCode,
-                 null,
-                 new Dictionary<string, object>() {
-                                        { "class", "form-control" },
-                                        { "data-inputmask" , "'mask': '999-9999-999999'" }
-                     },
-                 null,
-                 null,
-                 null,
-                 true,
-                 true,
-                 true)
+                                            @Html.AdminLTEDropDownListFor(
+                            m => m.ItemCode,
+                            htmlLabelAttributes: null,
+                            htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" },
+                                                                    { "data-inputmask" , "'mask': '999-9999-999999'" },
+                            },
+                            htmlGroupAttributes: null,
+                            autoCompleteOptions: new AutoCompleteOptions()
+                            {
+                                AjaxOptions = new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    Url = Url.Action(actionName: JSONController.ITEMAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                },
+                                DescriptionField = "description",
+                                IDField = "item_code",
+                                Formate = "'<div><span>' + state.id + '</span></br>'+state.text + '</div>'",
+                                SelectedItem = ViewData[ReportController.SELECTED_FILTED_ITEM],
+                                IsAutoComplete = true,
+                                SelectItems = null
+                            },
+                            showLabel: true)
+
+                                        </div>
+                    <div class="col-lg-3">
+
+                        @Html.AdminLTEDropDownListFor(
+                            m => m.BrandID,
+                            htmlLabelAttributes: null,
+                            htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" },
+                            },
+                            htmlGroupAttributes: null,
+                            autoCompleteOptions: new AutoCompleteOptions()
+                            {
+                                AjaxOptions = new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    Url = Url.Action(actionName: JSONController.BRANDAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                },
+                                DescriptionField = "description",
+                                IDField = "brand_id",
+                                Formate = "'<tr><td>' + state.id + '</td><td><span>'+state.text + '</span></td></tr>'",
+                                SelectedItem = ViewData[ReportController.SELECTED_FILTED_BRAND],
+                                IsAutoComplete = true,
+                                SelectItems = null
+                            },
+                            showLabel: true)
+
+                    </div>
+                    <div class="col-lg-3">
+
+                        @Html.AdminLTEDatePickerFor(
+                       m => m.StartDate,
+                       htmlLabelAttributes: null,
+                       htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                       htmlGroupAttributes: null,
+                       htmlGlyphiconsAttributes: null,
+                       glyphiconsName: "fa fa-calendar",
+                       showLabel: true,
+                       hasValidation: true,
+                       showGlyphicons: true)
+                    </div>
+                    <div class="col-lg-3">
+
+                        @Html.AdminLTEDatePickerFor(
+                       m => m.EndDate,
+                       htmlLabelAttributes: null,
+                       htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                       htmlGroupAttributes: null,
+                       htmlGlyphiconsAttributes: null,
+                       glyphiconsName: "fa fa-calendar",
+                       showLabel: true,
+                       hasValidation: true,
+                       showGlyphicons: true)
+                    </div>
+
+
+                    <div class="col-lg-3">
+
+                        @Html.AdminLTEDropDownListFor(
+                            m => m.UserName,
+                            htmlLabelAttributes: null,
+                            htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+                            },
+                            htmlGroupAttributes: null,
+                            autoCompleteOptions: new AutoCompleteOptions()
+                            {
+                                AjaxOptions = new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                },
+                                DescriptionField = "full_name",
+                                IDField = "user_name",
+                                Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                                IsAutoComplete = true,
+                                SelectItems = null
+                            },
+                            showLabel: true)
+
                     </div>
                 </div>
             </div>            <!-- /.box-body -->
@@ -77,8 +169,8 @@
                    cssClass: "btn btn-link", routeValues: Model,
                    carrot: "fa fa-download")
                     </div>
-                    </div>
                 </div>
+            </div>
         </div><!-- /.box -->
     }
     <div class="box box-primary">
@@ -86,13 +178,14 @@
             <h3 class="box-title">Merchant Actions</h3>
         </div>
         <div class="box-body">
-            
+
             <div id="table-daily-upate-view" class="table-responsive">
                 @{
 
                     using (var db = new SalesManageDataContext())
                     {
-                        WebGridColumn col = new WebGridColumn() {
+                        WebGridColumn col = new WebGridColumn()
+                        {
 
                         };
 
@@ -101,7 +194,7 @@
                                     pageSize: 20,
                                     sort: ViewBag.DailyUpateViewSort,
                                     sortdir: ViewBag.DailyUpateViewDir,
-                                    count: out count,Filters:Model
+                                    count: out count, Filters: Model
                                     );
                         var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
                             ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 20
@@ -152,7 +245,7 @@
                            footerStyle: "extra-table-pager"
                            )
 
-                       @grid.PagerList(mode:WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                        @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
                            nextText: "NEXT",
                            firstText: "FIRST",
                            previousText: "PREV.",

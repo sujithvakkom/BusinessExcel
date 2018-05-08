@@ -5,6 +5,8 @@ using BusinessExcel.Providers.ProviderContext.Entities;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace BusinessExcel.Providers.ProviderContext
 {
@@ -14,106 +16,38 @@ namespace BusinessExcel.Providers.ProviderContext
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }
-
-
-        public virtual DbRawSqlQuery<ItemDetails> getItemDetails(string item_code//, 
-            //Nullable<int> page_size, ObjectParameter row_count
-            )
+        
+        public virtual ItemDetails getItemDetails(string serarch)
         {
-            var item_codeParameter = item_code != null ?
-                new SqlParameter("item_code", item_code) :
-                new SqlParameter("item_code",System.Data.SqlDbType.NVarChar);
-
-            //var page_sizeParameter = page_size.HasValue ?
-            //    new ObjectParameter("page_size", page_size) :
-            //    new ObjectParameter("page_size", typeof(int));
-
-            return this.Database.SqlQuery<ItemDetails>("[sc_salesmanage_merchant].[getItemDetailsTemp] @item_code", item_codeParameter
-                //, page_sizeParameter, row_count
-                );
-        }
-
-        /*
-        public IQueryable<ItemDetails> GetItemDetails(int pageNumber, int pageSize, string sort, String sortdir, out int count, 
-            ActionViewFilters Filters)
-        {
-            int skippingRows = (pageNumber - 1) * pageSize;
-            if (Filters == null)
-                Filters = new Models.ActionViewFilters() { ItemCode = "" };
-
-            var res = from x in this.ItemDetails
-                      where (String.IsNullOrEmpty(Filters.ItemCode) || x.Item == Filters.ItemCode)
-                      select x;
-
-            count = res.Count();
-
-            if (sort == null || sort == "")
+            if (!String.IsNullOrEmpty(serarch))
             {
+                var item_code = serarch != null ?
+                    new SqlParameter("@item_code", serarch) :
+                    new SqlParameter("@item_code", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-                return res.OrderBy(x => x.UserId)
-                    .Skip(skippingRows).Take(pageSize);
+                int? page = null;
+                var page_size = page != null ?
+                    new SqlParameter("@page_size", page) :
+                    new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+                int? page_num = null;
+                var page_number = page_num != null ?
+                    new SqlParameter("@page_number", page_num) :
+                    new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+                int? row = null;
+                var row_count = row != null ?
+                    new SqlParameter("@row_count", row) :
+                    new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+                row_count.Direction = System.Data.ParameterDirection.Output;
+
+                var items = this.Database.SqlQuery<ItemDetails>(
+                                                "[sc_salesmanage_merchant].[getItemDetails]  @item_code ,@page_number ,@page_size ,@row_count OUTPUT", item_code, page_number, page_size, row_count)
+                                                .ToList();
+
+                return items[0];
             }
-            else {
-                switch (sortdir)
-                {
-                    case "DESC":
-                        return res.OrderByDescending(sort)
-                            .Skip(skippingRows).Take(pageSize);
-                    default:
-                        return res.OrderBy(sort)
-                            .Skip(skippingRows).Take(pageSize);
-                }
-            }
-            /*
-            switch (sort)
-            {
-                case "CreateTime":
-                    count = this.DailyUpateView.Count();
-                    if (sortdir == "ASC")
-                        return this.DailyUpateView.OrderBy(x => x.CreateTime)
-                            .Skip(skippingRows).Take(pageSize);
-                    return this.DailyUpateView.OrderByDescending(x => x.CreateTime)
-                        .Skip(skippingRows).Take(pageSize);
-
-                default:
-                    count = this.DailyUpateView.Count();
-                    return this.DailyUpateView.OrderBy(x => x.UserId)
-                        .Skip(skippingRows).Take(pageSize);
-            }
-            */
-        /*
-    }
-
-    public IQueryable<DailyUpateView> GetItemDetailsViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count)
-    {
-        int skippingRows = (pageNumber - 1) * pageSize;
-
-        switch (sort)
-        {
-            case "CreateTime":
-                count = this.DailyUpateView.Count();
-                if (sortdir == "ASC")
-                    return this.DailyUpateView.OrderBy(x => x.CreateTime)
-                        .Skip(skippingRows).Take(pageSize);
-                return this.DailyUpateView.OrderByDescending(x => x.CreateTime)
-                    .Skip(skippingRows).Take(pageSize);
-            default:
-                count = this.DailyUpateView.Count();
-                return this.DailyUpateView.OrderBy(x => x.UserId)
-                    .Skip(skippingRows).Take(pageSize);
+            return null;
         }
-
-}
-*/
-        //internal object GetDailyUpateViewPagingExport(ActionViewFilters Filters)
-        //{
-
-        //    if (Filters == null)
-        //        Filters = new Models.ActionViewFilters() { ItemCode = "" };
-        //    var res = from x in this.DailyUpateView
-        //              where (String.IsNullOrEmpty(Filters.ItemCode) || x.Item == Filters.ItemCode)
-        //              select x;
-        //    return res.ToList();
-        //}
     }
 }

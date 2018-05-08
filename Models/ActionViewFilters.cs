@@ -11,5 +11,16 @@ namespace BusinessExcel.Models
 
         [Display(Name = "Item Code")]
         public string ItemCode { get; set; }
+
+        [Display(Name = "Start Date")]
+        public DateTime StartDate { get; set; }
+
+        [Display(Name = "End Date")]
+        public DateTime EndDate { get; set; }
+
+        [Display(Name = "User")]
+        public string UserName { get; set; }
+        [Display(Name ="Brand")]
+        public string BrandID { get; set; }
     }
 }
