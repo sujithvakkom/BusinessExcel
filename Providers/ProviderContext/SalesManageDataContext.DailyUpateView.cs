@@ -34,6 +34,13 @@ namespace BusinessExcel.Providers.ProviderContext
             if (!string.IsNullOrEmpty(Filters.BrandID))
                 res = res.Where(x => x.BrandId.ToString() == Filters.BrandID);
 
+
+            if (!string.IsNullOrEmpty(Filters.Location))
+            {
+                var temp = this.getLocationDetail(Filters.Location).description;
+                res = res.Where(x => x.Location.ToString() == temp);
+            }
+
             count = res.Count();
 
             if (sort == null || sort == "")
