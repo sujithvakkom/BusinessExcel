@@ -1,7 +1,8 @@
 ﻿using BusinessExcel.Providers.ProviderContext;
 using BusinessExcel.Providers.ProviderContext.Entities;
-using DBSalesManage;
 using System;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace BusinessExcel.Controllers.JSON

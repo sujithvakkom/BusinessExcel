@@ -14,13 +14,13 @@
     List<RosterModel> rosters;
     using (var db = new RosterContext())
     {
-        var result = db.GetAllRosters;
+        var result = db.UserRoster;
         rosters = Model == null ? result.ToList() : (from x in result.ToList()
                                                      where Model.location_id == null ? true : x.user_id == Model.user_id
                                                      select x).ToList();
     }
 
-    //var users = new UsersContext().UserProfile;
+
 }
 
 

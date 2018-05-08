@@ -42,5 +42,7 @@ namespace BusinessExcel.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? end_date { get; set; }
+
+     
     }
 }
