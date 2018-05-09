@@ -371,6 +371,8 @@
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.vi.min.js" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.zh-CN.min.js" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.zh-TW.min.js" />
+    <Content Include="Scripts\AdminLTE\plugins\pace\pace.css" />
+    <Content Include="Scripts\AdminLTE\plugins\pace\pace.js" />
     <Content Include="Scripts\AdminLTE\plugins\pace\pace.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

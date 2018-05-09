@@ -69,7 +69,8 @@ namespace BusinessExcel
                 //"~/Content/bootstrap-theme.min.css"
                 "~/Content/bootstrap.min.css",
                 "~/Content/bootstrap-grid.min",
-                "~/Content/pace/themes/white/pace-theme-minimal.css",
+                "~/Content/font-awesome.min.css",
+                "~/Scripts/AdminLTE/plugins/pace/pace.css",
                 "~/Scripts/AdminLTE/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css"
 
                 ));
