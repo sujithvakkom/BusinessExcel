@@ -33,17 +33,17 @@
                    { "required", "" } },
                new Dictionary<string, object>() { { "class", "col-md-2" } },
                null, "", false, true, true)*@
-
-        @Html.AdminLTEDropDownListFor(
+        
+            @Html.AdminLTEDropDownListFor(
                             m => m.user_id,
                             htmlLabelAttributes: null,
-                           
+
 
                               htmlDropDownAttributes: new Dictionary<string, object>() {
                                                                     { "class", "form-control select2" }
-                                                                   
+
                             },
-                            htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-2" } },
+                            htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-3" } },
                             autoCompleteOptions: new AutoCompleteOptions()
                             {
                                 AjaxOptions = new AjaxOptions()
@@ -58,24 +58,41 @@
                                 IsAutoComplete = true,
                                 SelectItems = null
                             },
-                            showLabel: false),
+                            showLabel: false)
+         
+        <div class="col-md-5">
 
-        @Html.AdminLTETextBoxFor(m => m.start_date, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
+            @Html.AdminLTEDateRangePickerFor(
+                 m => m.start_date,
+                 m => m.end_date,
+                 "Date Range",
+                 htmlLabelAttributes: null,
+                 htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                 htmlGroupAttributes:null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
+                       htmlGlyphiconsAttributes: null,
+                       glyphiconsName: "fa fa-calendar",
+                       showLabel: false,
+                       hasValidation: true,
+                       showGlyphicons: true)
+        </div>
+            @*@Html.AdminLTETextBoxFor(m => m.start_date, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
 
-               new Dictionary<string, object>() { { "class", "col-md-2" } }, null, "", false, true, true)
+                   new Dictionary<string, object>() { { "class", "col-md-2" } }, null, "", false, true, true)
 
-        @Html.AdminLTETextBoxFor(m => m.end_date, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
+            @Html.AdminLTETextBoxFor(m => m.end_date, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
 
-               new Dictionary<string, object>() { { "class", "col-md-2" } }
-               , null, "", false, true, true)
-        @Html.AdminLTETextBoxFor(m => m.location_id, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
+                   new Dictionary<string, object>() { { "class", "col-md-2" } }
+                   , null, "", false, true, true)*@
+         
+            @Html.AdminLTETextBoxFor(m => m.location_id, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
 
-               new Dictionary<string, object>() { { "class", "col-md-2" } },
+             new Dictionary<string, object>() { { "class", "col-md-2" } },
                null, "", false, true, true)
+    
+            <button type="submit" class="btn btn-primary col-md-2" style="margin-left:15px">Add New</button>
+            </div>
+      
 
-
-        <button type="submit" class="btn btn-primary col-md-offset-2 " style="margin-left:15px" >Add New</button>
-    </div>
         <br />
         @ViewData[BusinessExcel.Controllers.AdminController.ROSTERCREATIONMESSAGE]
 
