@@ -127,9 +127,36 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-lg-6 col-lg-offset-6">
+                    <div class="col-lg-4">
 
-                        @Html.AdminLTEDateRangePickerFor(
+                        @Html.AdminLTEDropDownListFor(
+                            m => m.Location,
+                            htmlLabelAttributes: null,
+                            htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+                            },
+                            htmlGroupAttributes: null,
+                            autoCompleteOptions: new AutoCompleteOptions()
+                            {
+                                AjaxOptions = new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                },
+                                DescriptionField = "description",
+                                IDField = "location_id",
+                                Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                SelectedItem = ViewData[ReportController.SELECTED_FILTED_LOCATION],
+                                IsAutoComplete = true,
+                                SelectItems = null
+                            },
+                            showLabel: true)
+
+
+                        </div>
+                        <div class="col-lg-6 col-lg-offset-2">
+
+                            @Html.AdminLTEDateRangePickerFor(
                        m => m.StartDate,
                        m => m.EndDate,
                        "Date Range",
@@ -141,7 +168,7 @@
                        showLabel: true,
                        hasValidation: true,
                        showGlyphicons: true)
-                    </div>
+                        </div>
                 </div>
             </div>            <!-- /.box-body -->
             <div class="box-footer">

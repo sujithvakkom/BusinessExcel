@@ -37,7 +37,8 @@
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
                        OnBegin = "move('#page-load')",
-                       OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnSuccess = "ajax_call_load_success()",
+                       OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
                    carrot: "fa fa-home")
@@ -50,7 +51,8 @@
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
                        OnBegin = "move('#page-load')",
-                       OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnSuccess = "ajax_call_load_success()",
+                       OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
                    carrot: "fa fa-user")
@@ -72,7 +74,8 @@
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
                        OnBegin = "move('#page-load')",
-                       OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnSuccess = "ajax_call_load_success()",
+                       OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
                    carrot: "fa fa-user-md")
@@ -85,7 +88,8 @@
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
                        OnBegin = "move('#page-load')",
-                       OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnSuccess = "ajax_call_load_success()",
+                       OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
                    carrot: "fa fa-puzzle-piece")
@@ -127,13 +131,28 @@
                                                         @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.ReportController.ACTIONS_TITLE,
                    actionName: BusinessExcel.Controllers.ReportController.ACTIONS,
-                   controllerName:BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
                    ajaxOptions: new AjaxOptions()
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
                        OnBegin = "move('#page-load')",
-                       OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnSuccess = "ajax_call_load_success()",
+                       OnComplete = "ajax_call_load_complete()",
+                       OnFailure = "loadin_failed"
+                   },
+                   carrot: "fa fa-tasks")
+                                                        @Ajax.AjaxAdminLTEActionLink(
+                   linkText: "Loading Error.",
+                   actionName: "Test",
+                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnBegin = "move('#page-load')",
+                       OnSuccess = "ajax_call_load_success()",
+                       OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
                    carrot: "fa fa-tasks")

@@ -21,29 +21,9 @@ namespace BusinessExcel.Controllers
         public static string SELECTED_FILTED_ITEM = "SelectedFilteredItem";
         public static string SELECTED_FILTED_USER = "SelectedFilteredUser";
         public static string SELECTED_FILTED_BRAND = "SelectedFilteredBrand";
+        public static string SELECTED_FILTED_LOCATION = "SelectedFilteredLocation";
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
         public ActionResult Actions(string sort,string sortdir, int page = 1,ActionViewFilters Filters=null)
-        {
-            ViewBag.DailyUpateViewSort = sort;
-            ViewBag.DailyUpateViewDir = sortdir;
-            ViewBag.DailyUpateViewPage = page;
-            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
-            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-            ViewBag.Title = ACTIONS_TITLE;
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView(TABLEDAILYUPATEVIEW, Filters);
-                //return TableDailyUpateView(sort, sortdir, page,Filters);
-            }
-            return View();
-        }
-
-        //
-        // GET: /Report/
-        public static string TABLEDAILYUPATEVIEW = "TableDailyUpateView";
-        ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
-        [HttpGet]
-        public PartialViewResult TableDailyUpateView(string sort, string sortdir, int page = 1, ActionViewFilters Filters=null)
         {
             ViewBag.DailyUpateViewSort = sort;
             ViewBag.DailyUpateViewDir = sortdir;
@@ -66,6 +46,32 @@ namespace BusinessExcel.Controllers
                 {
                     ViewData[SELECTED_FILTED_BRAND] = db.getBrandDetail(Filters.BrandID);
                 }
+            if (!string.IsNullOrEmpty(Filters.Location))
+                using (var db = new SalesManageDataContext())
+                {
+                    ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(Filters.Location);
+                }
+            if (Request.IsAjaxRequest())
+            {
+                //return PartialView(TABLEDAILYUPATEVIEW, Filters);
+                return (PartialViewResult)TableDailyUpateView(sort, sortdir, page,Filters);
+            }
+            return View();
+        }
+
+        //
+        // GET: /Report/
+        public static string TABLEDAILYUPATEVIEW = "TableDailyUpateView";
+        ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
+        [HttpGet]
+        public PartialViewResult TableDailyUpateView(string sort, string sortdir, int page = 1, ActionViewFilters Filters=null)
+        {
+            ViewBag.DailyUpateViewSort = sort;
+            ViewBag.DailyUpateViewDir = sortdir;
+            ViewBag.DailyUpateViewPage = page;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = ACTIONS_TITLE;
             return PartialView(TABLEDAILYUPATEVIEW,Filters);
         }
 
