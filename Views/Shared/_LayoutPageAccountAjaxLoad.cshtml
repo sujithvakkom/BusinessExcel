@@ -174,9 +174,12 @@
         function ajax_call_load_success(data) {
             }
 
-            function ajax_call_load_complete(data) {
+        function ajax_call_load_complete(data) {
+            try {
                 viewInit();
             }
+            catch (err) { }
+        }
         
             function viewInit() {
                 $(window).trigger('resize');
@@ -224,6 +227,31 @@
                 $('#loading-failure').modal();
             }
 
+            function set_this_active(me) {
+                try {
+                    $('.sidebar li').each(function () {
+                            $(this).removeClass('active')
+                    })
+                }
+                catch (err) { }
+                $('#'+me).addClass('active')
+                try {
+                    $('.sidebar li').each(function () {
+                        if ($(this).attr("class") == 'treeview') {
+                            $(this).removeClass("active")
+                            $(this).removeClass("menu-open")
+                            var x = $(this).find('#' + me)
+                            if (x.length !== 0) {
+                                $(this).addClass('active')
+                                $(this).addClass('menu-open')
+                            }
+                        }
+                    })
+                }
+                catch (err) {
+                    alert("Error "+err)
+                }
+            }
     </script>
 
     @RenderSection("extraScripts", false)
