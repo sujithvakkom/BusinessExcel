@@ -38,6 +38,7 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERROSTER_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = USERROSTER_TITLE;
+            if (Request.IsAjaxRequest()) return PartialView();
             return View();
         }
 

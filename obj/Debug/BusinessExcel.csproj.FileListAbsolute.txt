@@ -269,3 +269,5 @@ C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.pdb
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\EntityFramework.SqlServer.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\EntityFramework.SqlServer.xml
+C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.pdb
+C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.xml
