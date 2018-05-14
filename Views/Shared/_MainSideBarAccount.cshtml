@@ -36,11 +36,11 @@
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnBegin = "move('#page-load')",
-                       OnSuccess = "ajax_call_load_success()",
+                       OnSuccess = "ajax_call_load_success();{0}",
                        OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
+                   isNavSideBar: true,
                    carrot: "fa fa-home")
                                     @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AccountsController.MYPROFILE_TITLE,
@@ -50,11 +50,11 @@
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnBegin = "move('#page-load')",
-                       OnSuccess = "ajax_call_load_success()",
+                       OnSuccess = "ajax_call_load_success();{0}",
                        OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
+                   isNavSideBar: true,
                    carrot: "fa fa-user")
             @if (User.IsInRole(BERoleDetails.SYSTEM_ADMINISTRATOR))
             {
@@ -73,11 +73,11 @@
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnBegin = "move('#page-load')",
-                       OnSuccess = "ajax_call_load_success()",
+                       OnSuccess = "ajax_call_load_success();{0}",
                        OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
+                   isNavSideBar: true,
                    carrot: "fa fa-user-md")
                                                                 @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE,
@@ -87,11 +87,11 @@
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnBegin = "move('#page-load')",
-                       OnSuccess = "ajax_call_load_success()",
+                       OnSuccess = "ajax_call_load_success();{0}",
                        OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
+                   isNavSideBar:true,
                    carrot: "fa fa-puzzle-piece")
                             </ul>
 
@@ -136,11 +136,11 @@
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnBegin = "move('#page-load')",
-                       OnSuccess = "ajax_call_load_success()",
+                       OnSuccess = "ajax_call_load_success();{0}",
                        OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
+                   isNavSideBar: true,
                    carrot: "fa fa-tasks")
                                                         @Ajax.AjaxAdminLTEActionLink(
                    linkText: "Loading Error.",
@@ -150,11 +150,11 @@
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnBegin = "move('#page-load')",
-                       OnSuccess = "ajax_call_load_success()",
+                       OnSuccess = "ajax_call_load_success();{0}",
                        OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
+                   isNavSideBar: true,
                    carrot: "fa fa-tasks")
                         </ul>
                     </li>
