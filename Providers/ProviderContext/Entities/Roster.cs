@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Security;
 
-namespace BusinessExcel.Models
+
+
+namespace BusinessExcel.Providers.ProviderContext.Entities
 {
-    [Table(name:"Rosters")]
-    public class RosterModel
+    [Table(name: "Roster",Schema = "sc_salesmanage_user")]
+    public class Roster
     {
 
         [Required]
@@ -22,7 +21,7 @@ namespace BusinessExcel.Models
         [Display(Name = "User")]
         public Int32? user_id { get; set; }
 
- 
+
         [Required]
         [Key, Column(Order = 2)]
         [Display(Name = "Location")]
@@ -43,6 +42,15 @@ namespace BusinessExcel.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? end_date { get; set; }
 
-     
+
+
+        [Display(Name = "User")]
+        public string user_name { get; set; }
+
+
+
+        [Display(Name = "Location")]
+        public string location_name { get; set; }
+
     }
 }

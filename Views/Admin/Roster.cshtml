@@ -1,0 +1,59 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+
+
+<section class="content-header">
+    <h1>
+        @BusinessExcel.Controllers.AdminController.ROSTER_TITLE
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Manager</a></li>
+        <li class="active">Manager Panel</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Your Page Content Here -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" id="roster-form">
+
+                <div class="box-body">
+
+                    <div id="roster-creation-form">
+                        @Html.Partial(BusinessExcel.Controllers.AdminController.AJAXCREATEROSTER,
+new Roster()
+{
+
+    user_id = null,
+    end_date = null,
+    start_date = null,
+    location_id = null
+})
+                    </div>
+
+
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Rosters List</h3>
+                    </div>
+
+
+                    <div id="roster-table-display">
+                        @Html.Partial(BusinessExcel.Controllers.AdminController.ROSTERTABLEPARTIAL)
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+</section><!-- /.content -->

@@ -20,8 +20,8 @@ namespace BusinessExcel.Controllers
 
         //Roster
         public static string ROSTERTABLEPARTIAL = "RosterTablePartial";
-        public static string USERROSTER = "UserRoster";
-        public static string USERROSTER_TITLE = "User Roster";
+        public static string ROSTER = "Roster";
+        public static string ROSTER_TITLE = "Roster";
         public static string AJAXCREATEROSTER = "AjaxCreateRoster";
         public static string ROSTERCREATIONMESSAGE = "RosterCreationMessage";
         public static string AJAXREMOVEROSTER= "AjaxRemoveRoster";
@@ -33,11 +33,11 @@ namespace BusinessExcel.Controllers
         //[Authorize(Roles = "Manager")]
         [Authorize(Roles = "System Administrator")]
         [HttpGet]
-        public ActionResult UserRoster()
+        public ActionResult Roster()
         {
-            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERROSTER_TITLE;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ROSTER_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-            ViewBag.Title = USERROSTER_TITLE;
+            ViewBag.Title = ROSTER_TITLE;
             if (Request.IsAjaxRequest()) return PartialView();
             return View();
         }
@@ -45,16 +45,20 @@ namespace BusinessExcel.Controllers
         [HttpPost]
         // [Authorize(Roles = "manager")]
         [Authorize(Roles = "System Administrator")]
-        public PartialViewResult AjaxCreateRoster( RosterModel Roster)
+        public PartialViewResult AjaxCreateRoster( Roster Roster)
         {
 
             ViewData.Add(ROSTERCREATIONMESSAGE, "");
             if (ModelState.IsValid)
             {
-                RosterContext d = new RosterContext();
-              
-                 d.UserRoster.Add(Roster);
-                 d.SaveChanges();
+                
+                using (var db = new SalesManageDataContext())
+                {
+                    db.Roster.Add(Roster);
+                    db.SaveChanges();
+                }
+
+                    
                 
                 //if (!Roles.RoleExists(RoleName.RolesName))
                 //{
@@ -80,7 +84,7 @@ namespace BusinessExcel.Controllers
 
         [HttpPost]
         [Authorize(Roles = "System Administrator")]
-        public String AjaxRemoveRoster(RosterModel Roster)
+        public String AjaxRemoveRoster(Roster Roster)
         {
             ViewData.Add(ROLECREATIONMESSAGE, "");
             if (ModelState.IsValid)
