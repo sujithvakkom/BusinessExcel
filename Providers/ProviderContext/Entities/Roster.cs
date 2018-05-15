@@ -7,7 +7,7 @@ using System.Web.Security;
 
 namespace BusinessExcel.Providers.ProviderContext.Entities
 {
-    [Table(name: "Roster",Schema = "sc_salesmanage_user")]
+    [Table(name: "Roster",Schema = "db_salesmanage_user")]
     public class Roster
     {
 
@@ -32,24 +32,22 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Key, Column(Order = 3)]
         [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? start_date { get; set; }
 
         [Required]
         [Key, Column(Order = 4)]
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? end_date { get; set; }
 
 
 
-        [Display(Name = "User")]
+      
         public string user_name { get; set; }
 
 
 
-        [Display(Name = "Location")]
+       
         public string location_name { get; set; }
 
     }

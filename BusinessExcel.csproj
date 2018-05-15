@@ -177,6 +177,7 @@
     <Compile Include="Controllers\JSON\JSON.LocationAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
+    <Compile Include="Controllers\ReportController.Roster.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
@@ -584,6 +585,7 @@
     <Content Include="Views\Admin\AjaxCreateRoster.cshtml" />
     <Content Include="Views\Admin\RosterTablePartial.cshtml" />
     <Content Include="Views\Admin\Roster.cshtml" />
+    <Content Include="Views\Report\TableRosterUpateView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

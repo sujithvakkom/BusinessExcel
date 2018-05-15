@@ -36,12 +36,13 @@ new Roster()
 
 
                     <div class="box-header with-border">
-                        <h3 class="box-title">Rosters List</h3>
+                        <h3 class="box-title">Roster List</h3>
                     </div>
-
-
+                 
                     <div id="roster-table-display">
-                        @Html.Partial(BusinessExcel.Controllers.AdminController.ROSTERTABLEPARTIAL)
+                      @*  @Html.Partial(BusinessExcel.Controllers.AdminController.ROSTERTABLEPARTIAL)*@
+                        @*@Html.Partial(BusinessExcel.Controllers.ReportController.TABLEROSTERUPATEVIEW)*@
+                        @Html.Partial("~/Views/Report/TableRosterUpateView.cshtml");
                     </div>
 
                 </div>
