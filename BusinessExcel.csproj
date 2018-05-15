@@ -177,6 +177,7 @@
     <Compile Include="Controllers\JSON\JSON.LocationAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
+    <Compile Include="Controllers\ReportController.Roster.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
@@ -190,8 +191,6 @@
     <Compile Include="Models\RoleContext.cs" />
     <Compile Include="Models\RoleDefine.cs" />
     <Compile Include="Models\RolesName.cs" />
-    <Compile Include="Models\Roster.cs" />
-    <Compile Include="Models\RosterContext.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemDetails.cs" />
@@ -200,6 +199,8 @@
     <Compile Include="Providers\ProviderContext\Entities\LocationDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.Roster.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.BrandDetail.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.LocationDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserDetails.cs" />
@@ -481,7 +482,7 @@
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserProfile.cs" />
-    <Compile Include="Providers\ProviderContext\UsersContext.cs" />
+    <Compile Include="Views\Accounts\UsersContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Scripts\AdminLTE\plugins\select2\i18n\ar.js" />
     <Content Include="Scripts\AdminLTE\plugins\select2\i18n\az.js" />
@@ -583,6 +584,8 @@
     <Content Include="Views\Admin\UserRoster.cshtml" />
     <Content Include="Views\Admin\AjaxCreateRoster.cshtml" />
     <Content Include="Views\Admin\RosterTablePartial.cshtml" />
+    <Content Include="Views\Admin\Roster.cshtml" />
+    <Content Include="Views\Report\TableRosterUpateView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

@@ -7,14 +7,16 @@
 @using BusinessExcel.Providers.ProviderContext
 @using BusinessExcel.Providers.ProviderContext.Entities
 
-@model RosterModel
+@model Roster
+
+
 
 @{
     int countRosters = 0;
-    List<RosterModel> rosters;
-    using (var db = new RosterContext())
+    List<Roster> rosters;
+    using (var db = new SalesManageDataContext())
     {
-        var result = db.UserRoster;
+        var result = db.Roster;
         rosters = Model == null ? result.ToList() : (from x in result.ToList()
                                                      where Model.location_id == null ? true : x.user_id == Model.user_id
                                                      select x).ToList();
@@ -29,8 +31,10 @@
 <table id="example" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
-            <td>User Name</td>
-            <td>Email</td>
+            <td>User</td>
+            <td>Start Date</td>
+            <td>End Date</td>
+            <td>Location</td>
         </tr>
     </thead>
     @foreach (var roster in rosters)
@@ -46,19 +50,19 @@ ajaxOptions: new AjaxOptions()
 {
     //UpdateTargetId = "role-table-display",
     //InsertionMode = InsertionMode.Replace,
-   //// OnSuccess = "refreshRoleTable('remove-role-confirm-" + @roster.start_date.Replace(' ', '-') + "')"//, Confirm = "Do you want to remove role?"
+    //// OnSuccess = "refreshRoleTable('remove-role-confirm-" + @roster.start_date.Replace(' ', '-') + "')"//, Confirm = "Do you want to remove role?"
 }
 ////htmlAttributes: new { @style = "display:inline;", @id = "form-remove-" + roster.UserName.Replace(' ', '-'), @class = "align-self-end" }
 ))
                 {
-                    @Html.Hidden("UserName", roster.user_id)
+                    @Html.Hidden("user", roster.user_id)
                     @Html.AntiForgeryToken()
                         <!-- Button trigger modal -->
                     @*<button type="button" class="btn btn-link" data-toggle="modal" data-target="#remove-role-confirm-@user.UserName.Replace(' ', '-')">
-                        Remove
-                    </button>*@
+                            Remove
+                        </button>*@
                     @*@Html.AdminLTEActionLink(AdminController.VIEWMANAGER_TITLE, AdminController.VIEWMANAGEMENT, AdminController.ADMIN,
-                   routeValues: new { UserName = user.UserName })*@
+                        routeValues: new { UserName = user.UserName })*@
 
                         <!-- Modal -->
                     <div class="modal fade" id="remove-roster-confirm-@roster.user_id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

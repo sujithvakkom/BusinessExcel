@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace BusinessExcel.Controllers
 {
-    public class ReportController : Controller
+    public partial class ReportController : Controller
     {
         //
         // GET: /Report/

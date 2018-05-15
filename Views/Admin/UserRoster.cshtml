@@ -4,7 +4,7 @@
 
     <section class="content-header">
         <h1>
-            @BusinessExcel.Controllers.AdminController.USERROSTER_TITLE
+            @BusinessExcel.Controllers.AdminController.ROSTER_TITLE
             <small>Control panel</small>
         </h1>
         <ol class="breadcrumb">
@@ -18,20 +18,20 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-primary" id="user-roster-form">
+                <div class="box box-primary" id="roster-form">
                    
                     <div class="box-body">
 
-                        <div id="user-roster-creation-form">
+                        <div id="roster-creation-form">
                             @Html.Partial(BusinessExcel.Controllers.AdminController.AJAXCREATEROSTER,
-new BusinessExcel.Models.RosterModel()
+new Roster()
 { user_id = null, end_date = null, start_date = null, location_id = null
                             })
                         </div>
 
 
                         <div class="box-header with-border">
-                            <h3 class="box-title">User Rosters</h3>
+                            <h3 class="box-title">Rosters List</h3>
                         </div>
 
 
