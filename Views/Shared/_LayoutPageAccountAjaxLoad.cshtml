@@ -236,20 +236,17 @@
                 catch (err) { }
                 $('#'+me).addClass('active')
                 try {
-                    $('.treeview').each(function (name,value) {
-                        alert(value.html)
+                    $('.treeview').each(function (name, value) {
+
+                        var x = $(value).find('#' + me)
+                        if (x.length !== 0) {
+                            $(value).addClass('active')
+                            $(value).addClass('menu-open')
+                        }
+                        else {
+                            $(value).removeClass('menu-open')
+                        }
                     })
-                    //$('.sidebar-menu').each(function () {
-                    //    if ($(this).attr("class") == 'treeview') {
-                    //        $(this).removeClass("active")
-                    //        $(this).removeClass("menu-open")
-                    //        var x = $(this).find('#' + me)
-                    //        if (x.length !== 0) {
-                    //            $(this).addClass('active')
-                    //            $(this).addClass('menu-open')
-                    //        }
-                    //    }
-                    //})
                 }
                 catch (err) {
                     alert("Error "+err)
