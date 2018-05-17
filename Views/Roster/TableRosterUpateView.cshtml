@@ -11,27 +11,27 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        @BusinessExcel.Controllers.ReportController.RosterActions_TITLE
+        @BusinessExcel.Controllers.RosterController.RosterActions_TITLE
         <small>List</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.ReportController.REPORTCONTROLLER</a></li>
-        <li class="active">@BusinessExcel.Controllers.ReportController.RosterActions_TITLE</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER</a></li>
+        <li class="active">@BusinessExcel.Controllers.RosterController.RosterActions_TITLE</li>
     </ol>
 </section>
 <!-- Main content -->
 <section class="content">
     <!-- Your Page Content Here -->
-    @using (Ajax.BeginForm(ReportController.ROSTER_ACTIONS,
-                                        ReportController.REPORTCONTROLLER,
-                                        new AjaxOptions()
-                                        {
-                                            HttpMethod = "Get",
-                                            UpdateTargetId = "main-body",
-                                            OnBegin = "move('#page-load')",
-                                            OnComplete = "ajax_call_load_complete('#page-load')",
-                                            OnFailure = "loadin_failed"
-                                        }))
+    @*@using (Ajax.BeginForm(RosterController.ROSTER_ACTIONS,
+                                                RosterController.ROSTERCONTROLLER,
+                                                new AjaxOptions()
+                                                {
+                                                    HttpMethod = "Get",
+                                                    UpdateTargetId = "main-body",
+                                                    OnBegin = "move('#page-load')",
+                                                    OnComplete = "ajax_call_load_complete('#page-load')",
+                                                    OnFailure = "loadin_failed"
+                                                }))
 
     {
         <!-- Your Page Content Here -->
@@ -45,7 +45,7 @@
             <div class="box-body">
                 <div class="row">
                     @Html.AntiForgeryToken()
-                   
+
 
                     <div class="col-md-3">
 
@@ -66,14 +66,14 @@
                                 DescriptionField = "full_name",
                                 IDField = "user_name",
                                 Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                                SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
                                 IsAutoComplete = true,
                                 SelectItems = null
                             },
                             showLabel: true)
 
                     </div>
-                
+
 
                     <div class="col-md-3">
 
@@ -94,7 +94,7 @@
                                 DescriptionField = "description",
                                 IDField = "location_id",
                                 Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                SelectedItem = ViewData[ReportController.SELECTED_FILTED_LOCATION],
+                                SelectedItem = ViewData[RosterController.SELECTED_FILTED_LOCATION],
                                 IsAutoComplete = true,
                                 SelectItems = null
                             },
@@ -125,23 +125,13 @@
 
                         <input type="submit" value="Filter" class="btn btn-primary" />
                     </div>
-                    <div class="col-lg-offset-8">
-
-                        @Html.AdminLTEActionLink(
-                   linkText: BusinessExcel.Controllers.ReportController.EXPORTEXCEL_TITLE,
-                   actionName: BusinessExcel.Controllers.ReportController.EXPORTEXCEL,
-                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
-                   cssClass: "btn btn-link", routeValues: Model,
-                   carrot: "fa fa-download")
-                    </div>
+                   
                 </div>
             </div>
         </div><!-- /.box -->
-    }
+    }*@
     <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">Roster List</h3>
-        </div>
+        
         <div class="box-body">
 
             <div id="table-daily-upate-view" class="table-responsive">
@@ -155,57 +145,31 @@
                         };
 
                         int count = 0;
-                        IQueryable<DailyUpateView> data = db.DailyUpateViewPaging(pageNumber: ViewBag.DailyUpateViewPage,
-                                    pageSize: 20,
-                                    sort: ViewBag.DailyUpateViewSort,
-                                    sortdir: ViewBag.DailyUpateViewDir,
+                        IQueryable<Roster> data = db.RosterUpateViewPaging(pageNumber: ViewBag.RosterUpateViewPage,
+                                    pageSize: 6,
+                                    sort: ViewBag.RosterUpateViewSort,
+                                    sortdir: ViewBag.RosterUpateViewDir,
                                     count: out count, Filters: Model
                                     );
+
                         var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
-                            ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 20
-                            );
+                                            ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 6
+                                            );
                         grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                         @grid.GetHtml(
                            tableStyle: "table table-striped table-bordered be-pagination-spl",
                            htmlAttributes: new { @id = "example" },
                            columns: new[] {
-                               grid.Column(columnName:"Name",
-                               header:Html.AdminLTESorter("Name","Name",grid),
-                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Name),
-                               style:"name",canSort:true),
+                              
 
-                               grid.Column(columnName:"UserName",header:"User Name",format:null,style:"user-name",canSort:false),
+                               grid.Column(columnName:"user_id",header:"User Name",format:null,style:"user-name",canSort:false),
 
-                               grid.Column(columnName:"Location",header:"Location",
-                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Location),
+                               grid.Column(columnName:"location_id",header:"Location",
+                               format:null,
                                style:"location",canSort:false),
 
-                               grid.Column(columnName:"Brand",
-                               header:Html.AdminLTESorter("Brand","Brand",grid),
-                               format:null,style:"brand",canSort:true),
-
-                               grid.Column(columnName:"Category",header:"Category",
-                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Category),
-                               style:"category",canSort:false),
-
-                               grid.Column(columnName:"CreateTime",
-                               header:Html.AdminLTESorter("CreateTime","Create Date",grid),
-                               format:x=>string.Format("{0:dd-MMM-yyyy}",x.CreateTime),
-                               style:"create-time",canSort:true),
-
-                               grid.Column(columnName:"Item",
-                               header:Html.AdminLTESorter("Item","Item",grid),
-                               format:null,style:"item",canSort:true),
-
-                               grid.Column(columnName:"Description",header:"Description",
-                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Description),
-                               style:"description",canSort:false),
-
-                               grid.Column(columnName:"Quantity",header:"Quantity",
-                               format:x=>string.Format("{0:0.00}",x.Quantity),
-                               style:"quantity",canSort:false),
-
-                               grid.Column(columnName:"TotalValue",header:"Value",      format:x=>string.Format("{0:0.00}",x.TotalValue),   style:"values",canSort:false)
+                              
+                               
                            },
                            footerStyle: "extra-table-pager"
                            )

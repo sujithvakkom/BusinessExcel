@@ -171,14 +171,13 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Content Include="Content\pace\themes\white\pace-theme-minimal.css" />
-    <Compile Include="Controllers\AdminController.Location.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.LocationAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
-    <Compile Include="Controllers\ReportController.Roster.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\RosterController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
     <Compile Include="Models\ConstantUsages.cs" />
@@ -200,6 +199,7 @@
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.RosterList.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Roster.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.BrandDetail.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.LocationDetails.cs" />
@@ -581,11 +581,9 @@
     <Content Include="Views\Accounts\_ChangeUsernameBlock.cshtml" />
     <Content Include="Views\Accounts\_ChangeUserPasswordBlock.cshtml" />
     <Content Include="Views\Shared\_LoadingFailed.cshtml" />
-    <Content Include="Views\Admin\UserRoster.cshtml" />
-    <Content Include="Views\Admin\AjaxCreateRoster.cshtml" />
-    <Content Include="Views\Admin\RosterTablePartial.cshtml" />
-    <Content Include="Views\Admin\Roster.cshtml" />
-    <Content Include="Views\Report\TableRosterUpateView.cshtml" />
+    <Content Include="Views\Roster\AjaxCreateRoster.cshtml" />
+    <Content Include="Views\Roster\RosterIndex.cshtml" />
+    <Content Include="Views\Roster\TableRosterUpateView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

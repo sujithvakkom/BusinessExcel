@@ -11,8 +11,9 @@ namespace BusinessExcel.Providers.ProviderContext
     public partial class SalesManageDataContext : DbContext
     {
 
-      
         public DbSet<Roster> Roster { get; set; }
+       // public DbSet<Roster> RosterList { get; set; }
 
+        //public DbSet<ItemDetails> ItemDetails { get; set; }
     }
 }

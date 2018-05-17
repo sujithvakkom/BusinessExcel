@@ -1,10 +1,15 @@
-﻿@using BusinessExcel.Models
-@using BusinessExcel.Providers.ProviderContext.Entities
+﻿
 
+@using BusinessExcel.Models
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+
+@model ActionViewFilters
 
 <section class="content-header">
     <h1>
-        @BusinessExcel.Controllers.AdminController.ROSTER_TITLE
+        @BusinessExcel.Controllers.RosterController.ROSTER_TITLE
         <small>Control panel</small>
     </h1>
     <ol class="breadcrumb">
@@ -23,7 +28,7 @@
                 <div class="box-body">
 
                     <div id="roster-creation-form">
-                        @Html.Partial(BusinessExcel.Controllers.AdminController.AJAXCREATEROSTER,
+                        @Html.Partial(BusinessExcel.Controllers.RosterController.AJAXCREATEROSTER,
 new Roster()
 {
 
@@ -35,14 +40,15 @@ new Roster()
                     </div>
 
 
-                    <div class="box-header with-border">
+                    @*<div class="box-header with-border">
                         <h3 class="box-title">Roster List</h3>
-                    </div>
-                 
+                    </div>*@
+
                     <div id="roster-table-display">
-                      @*  @Html.Partial(BusinessExcel.Controllers.AdminController.ROSTERTABLEPARTIAL)*@
-                        @*@Html.Partial(BusinessExcel.Controllers.ReportController.TABLEROSTERUPATEVIEW)*@
-                        @Html.Partial("~/Views/Report/TableRosterUpateView.cshtml");
+                        @*  @Html.Partial(BusinessExcel.Controllers.AdminController.ROSTERTABLEPARTIAL)*@
+
+                        @Html.Action(BusinessExcel.Controllers.RosterController.TABLEROSTERUPATEVIEW, Model)
+                        @* @Html.Partial("~/Views/Report/TableRosterUpateView.cshtml");*@
                     </div>
 
                 </div>

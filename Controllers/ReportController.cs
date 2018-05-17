@@ -23,7 +23,7 @@ namespace BusinessExcel.Controllers
         public static string SELECTED_FILTED_BRAND = "SelectedFilteredBrand";
         public static string SELECTED_FILTED_LOCATION = "SelectedFilteredLocation";
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
-        public ActionResult Actions(string sort,string sortdir, int page = 1,ActionViewFilters Filters=null)
+        public ActionResult Actions(string sort, string sortdir, int page = 1, ActionViewFilters Filters = null)
         {
             ViewBag.DailyUpateViewSort = sort;
             ViewBag.DailyUpateViewDir = sortdir;
@@ -54,7 +54,7 @@ namespace BusinessExcel.Controllers
             if (Request.IsAjaxRequest())
             {
                 //return PartialView(TABLEDAILYUPATEVIEW, Filters);
-                return (PartialViewResult)TableDailyUpateView(sort, sortdir, page,Filters);
+                return (PartialViewResult)TableDailyUpateView(sort, sortdir, page, Filters);
             }
             return View();
         }
@@ -64,7 +64,7 @@ namespace BusinessExcel.Controllers
         public static string TABLEDAILYUPATEVIEW = "TableDailyUpateView";
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
         [HttpGet]
-        public PartialViewResult TableDailyUpateView(string sort, string sortdir, int page = 1, ActionViewFilters Filters=null)
+        public PartialViewResult TableDailyUpateView(string sort, string sortdir, int page = 1, ActionViewFilters Filters = null)
         {
             ViewBag.DailyUpateViewSort = sort;
             ViewBag.DailyUpateViewDir = sortdir;
@@ -72,10 +72,10 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = ACTIONS_TITLE;
-            return PartialView(TABLEDAILYUPATEVIEW,Filters);
+            return PartialView(TABLEDAILYUPATEVIEW, Filters);
         }
 
-        public static string EXPORTEXCEL="ExportExcel";
+        public static string EXPORTEXCEL = "ExportExcel";
         public static string EXPORTEXCEL_TITLE = "Export Excel";
         public ActionResult ExportExcel(ActionViewFilters Filters = null)
         {
@@ -98,6 +98,6 @@ namespace BusinessExcel.Controllers
                 Response.End();
             }
             return View("Index");
+        }
     }
-}
 }
