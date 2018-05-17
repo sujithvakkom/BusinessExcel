@@ -1,9 +1,9 @@
-﻿@model UserProfile 
+﻿@model UserProfile
 
 @using BootstrapHtmlHelper
 @using BusinessExcel.Models
 @using BusinessExcel.Providers.ProviderContext.Entities
-@{ 
+@{
     ViewContext viewContext = Html.ViewContext;
     RouteValueDictionary routeValues = viewContext.RouteData.Values;
     string currentAction = routeValues["action"].ToString();
@@ -27,8 +27,8 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">USER CONTROLS</li>
-            
-                        @Ajax.AjaxAdminLTEActionLink(
+
+            @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AccountsController.WELCOME_TITLE,
                    actionName: BusinessExcel.Controllers.AccountsController.WELCOME,
                    controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
@@ -42,7 +42,7 @@
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-home")
-                                    @Ajax.AjaxAdminLTEActionLink(
+            @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AccountsController.MYPROFILE_TITLE,
                    actionName: BusinessExcel.Controllers.AccountsController.MYPROFILE,
                    controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
@@ -62,10 +62,10 @@
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">ADMIN CONTROLS</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.AdminController.ADMIN,actions:currentAction,cssClass:"active")">
+                        <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.AdminController.ADMIN,actions:BusinessExcel.Controllers.AdminController.USERMANAGEMENT+","+BusinessExcel.Controllers.AdminController.VIEWMANAGEMENT,cssClass:"active")">
                             <a href="#"><i class="fa fa-user-secret"></i><span>Security</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
-                                                                @Ajax.AjaxAdminLTEActionLink(
+                                @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AdminController.USERMANAGEMENT_TITLE,
                    actionName: BusinessExcel.Controllers.AdminController.USERMANAGEMENT,
                    controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
@@ -79,7 +79,7 @@
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-user-md")
-                                                                @Ajax.AjaxAdminLTEActionLink(
+                                @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE,
                    actionName: BusinessExcel.Controllers.AdminController.VIEWMANAGEMENT,
                    controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
@@ -91,10 +91,11 @@
                        OnComplete = "ajax_call_load_complete()",
                        OnFailure = "loadin_failed"
                    },
-                   isNavSideBar:true,
+                   isNavSideBar: true,
                    carrot: "fa fa-puzzle-piece")
                             </ul>
 
+                        <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.AdminController.ADMIN,actions: BusinessExcel.Controllers.AdminController.ROSTER, cssClass:"active")">
                             @*Rosters*@
                             <a href="#"><i class="fa fa-user-secret"></i><span>Rosters</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
@@ -112,13 +113,13 @@
                        OnFailure = "loadin_failed"
                    },
                    carrot: "fa fa-user-md")
-                   
+
                             </ul>
-
-
                         </li>
-                    </ul>
+
                 </li>
+            </ul>
+            </li>
             }
 
             <li>
@@ -128,7 +129,7 @@
                     <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,actions:currentAction,cssClass:"active")">
                         <a href="#"><i class="fa fa-rss"></i><span>Action Reports</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                                                        @Ajax.AjaxAdminLTEActionLink(
+                            @Ajax.AjaxAdminLTEActionLink(
                    linkText: BusinessExcel.Controllers.ReportController.ACTIONS_TITLE,
                    actionName: BusinessExcel.Controllers.ReportController.ACTIONS,
                    controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
@@ -142,7 +143,7 @@
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-tasks")
-                                                        @Ajax.AjaxAdminLTEActionLink(
+                            @Ajax.AjaxAdminLTEActionLink(
                    linkText: "Loading Error.",
                    actionName: "Test",
                    controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
@@ -161,7 +162,7 @@
                 </ul>
             </li>
 
-        </ul>
-    </section>
+            </ul>
+        </section>
 
-</div>
+    </div>
