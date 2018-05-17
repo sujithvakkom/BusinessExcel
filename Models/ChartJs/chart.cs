@@ -25,5 +25,5 @@ namespace BusinessExcel.Models.ChartJs
         public data data { get; set; }
         public options options { get; set; }
     }
-}
+
 }

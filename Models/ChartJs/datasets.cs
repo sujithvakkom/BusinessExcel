@@ -17,7 +17,7 @@ namespace BusinessExcel.Models.ChartJs
         public string[] backgroundColor { get; set; }
         public string[] borderColor { get; set; }
         public decimal _borderWidth;
-        public decimal borderWidth { get { return decimal.is(_borderWidth) ? 0 : _borderWidth; } set { _borderWidth = value; } }
+     //   public decimal borderWidth { get { return decimal.is(_borderWidth) ? 0 : _borderWidth; } set { _borderWidth = value; } }
     }
 
 }
