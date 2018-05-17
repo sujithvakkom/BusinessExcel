@@ -159,8 +159,9 @@
                         @grid.GetHtml(
                            tableStyle: "table table-striped table-bordered be-pagination-spl",
                            htmlAttributes: new { @id = "example" },
+                          
                            columns: new[] {
-                              
+
 
                                grid.Column(columnName:"user_id",header:"User Name",format:null,style:"user-name",canSort:false),
 
@@ -168,9 +169,23 @@
                                format:null,
                                style:"location",canSort:false),
 
+
+
+                               grid.Column("",
+                    style: "btn",
+                    format: @<text><div style="padding-left:10px;">
+                            <a class="edit-roster   fa  fa-pencil-square-o" id="@item.user_id" style="font-size: 20px;" title="Edit"></a> 
+                            <a class="delete-roster fa fa-trash-o" id="@item.user_id" style="font-size: 20px;"  title="Delete"></a>
+                        </div>
+                    </text>),
+
+
+
                               
-                               
-                           },
+
+
+
+    },
                            footerStyle: "extra-table-pager"
                            )
 
@@ -179,10 +194,144 @@
                            firstText: "FIRST",
                            previousText: "PREV.",
                            lastText: "LAST")
-                    }
+}
                 }
             </div>
         </div>
     </div>
 
 </section><!-- /.content -->
+
+
+
+<script>
+
+
+
+
+
+    $('.delete-roster').on('click', function () {
+        //if (confirm("Are you sure to delete this roster?")) {
+
+            $('#modalnew').modal('show');
+            var tr = $(this).parents('tr:first');
+
+            //var tr = $(this).parents('tr:first');
+            //var PLID = tr.find("#pkiPipeline").html();
+            //var PLAccumulated_Length = tr.find("#lblAccumulated_Length").val();
+            //var PLElevation = tr.find("#lblElevation").val();
+
+
+            var UserID = $(this).prop('id');
+            $('.modal-body').html(UserID);
+            //Deletes the record with ID sent below
+            //$.post(
+            //    '/Home/DeleteContact/',
+            //    { ID: ID },
+            //    function (item) {
+            //        tr.remove();
+            //    }, "json");
+
+            $('#btnDeleteRoster').on('click', function (evt) {
+                ///evt.stopPropagation();
+
+                $('#modalnew').modal('hide');
+                $.ajax({
+
+                    // edit to add steve's suggestion.
+                    //url: "/ControllerName/ActionName",
+
+                    url: '@Url.Action(BusinessExcel.Controllers.RosterController.AJAXDELETEROSTER, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
+                    dataType: 'html',
+                    data: ({
+                        //insert your parameters to pass to controller
+                        id: UserID
+                    }),
+                    success: function (data) {
+                        // your data could be a View or Json or what ever you returned in your action method
+                        // parse your data here
+                        //alert(data);
+
+                        if(data!=0){
+                            tr.remove();
+                        }
+                    },
+                    begin: function () {
+                        // $('#role-table-display').modal('hide')
+                    }
+                });
+
+
+            });
+
+        //}
+    });
+
+
+
+    $('.edit-roster').on('click', function () {
+        //if (confirm("Are you sure to delete this roster?")) {
+
+        var tr = $(this).parents('tr:first');
+
+        tr.on('click', function () {
+            //Get the value from address id column. Column index starts from zero
+            var uid = $(this).children("td:eq(0)").html();
+            var lid = $(this).children("td:eq(1)").html();
+          
+            alert(uid + "-"+ lid);
+        });
+
+        var UserID = $(this).prop('id');
+       
+        //Deletes the record with ID sent below
+        //$.post(
+        //    '/Home/DeleteContact/',
+        //    { ID: ID },
+        //    function (item) {
+        //        tr.remove();
+        //    }, "json");
+
+
+
+        $('#btnDeleteRoster').on('click', function (evt) {
+            ///evt.stopPropagation();
+
+          
+            $.ajax({
+
+                // edit to add steve's suggestion.
+                //url: "/ControllerName/ActionName",
+
+                url: '@Url.Action(BusinessExcel.Controllers.RosterController.AJAXDELETEROSTER, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
+                dataType: 'html',
+                data: ({
+                    //insert your parameters to pass to controller
+                    id: UserID
+                }),
+                success: function (data) {
+                    // your data could be a View or Json or what ever you returned in your action method
+                    // parse your data here
+                    //alert(data);
+
+                    if (data != 0) {
+                        tr.remove();
+                    }
+                },
+                begin: function () {
+                    // $('#role-table-display').modal('hide')
+                }
+            });
+
+
+        });
+
+
+
+
+
+
+
+        //}
+    });
+</script>

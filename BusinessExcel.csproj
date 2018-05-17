@@ -596,6 +596,7 @@
     <Content Include="Views\Roster\AjaxCreateRoster.cshtml" />
     <Content Include="Views\Roster\RosterIndex.cshtml" />
     <Content Include="Views\Roster\TableRosterUpateView.cshtml" />
+    <Content Include="Views\Roster\AjaxDeleteRoster.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
