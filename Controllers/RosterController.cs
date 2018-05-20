@@ -22,7 +22,7 @@ namespace BusinessExcel.Controllers
         public static string ROSTER_TITLE = "Roster";
         public static string AJAXCREATEROSTER = "AjaxCreateRoster";
         public static string ROSTERCREATIONMESSAGE = "RosterCreationMessage";
-        public static string AJAXREMOVEROSTER = "AjaxRemoveRoster";
+        public static string AJAXDELETEROSTER = "AjaxDeleteRoster";
 
 
         public static string RosterActions_TITLE = "Roster List";
@@ -72,7 +72,8 @@ namespace BusinessExcel.Controllers
                 {
                     db.Roster.Add(Roster);
                     db.SaveChanges();
-                   
+
+                       
                 }
 
 
@@ -101,7 +102,7 @@ namespace BusinessExcel.Controllers
 
         [HttpPost]
         [Authorize(Roles = "System Administrator")]
-        public String AjaxRemoveRoster(Roster Roster)
+        public String AjaxDeleteRoster1()
         {
             //ViewData.Add(ROLECREATIONMESSAGE, "");
             if (ModelState.IsValid)
@@ -126,6 +127,25 @@ namespace BusinessExcel.Controllers
             return ViewData[ROSTERCREATIONMESSAGE].ToString();
         }
 
+      
+
+        public JsonResult AjaxDeleteRoster(int ID)
+        {
+            var deleteId = 0;
+            if(ID>0)
+            {
+                using (var db = new SalesManageDataContext())
+                {
+             
+
+                    db.Roster.RemoveRange(db.Roster.Where(c => c.user_id == ID));
+
+                    deleteId = db.SaveChanges();
+
+                }
+            }
+            return Json(deleteId, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult RosterActions(string sort, string sortdir, int page = 1, ActionViewFilters Filters = null)
         {

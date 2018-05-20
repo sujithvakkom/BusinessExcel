@@ -62,5 +62,50 @@ new Roster()
 
     </div>
 
+    <div class="modal fade" id="modalnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Are you sure to delete this roster?</h4>
+                </div>
+                <div class="modal-body">
+                  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnDeleteRoster" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </section><!-- /.content -->
+
+<script>
+
+
+
+        var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
+    function refreshRosterList() {
+        $('#roster-table-display').append(loadingelement);
+            $.ajax({
+                // edit to add steve's suggestion.
+                //url: "/ControllerName/ActionName",
+                url: '@Url.Action(BusinessExcel.Controllers.RosterController.TABLEROSTERUPATEVIEW, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
+                success: function (data) {
+                    // your data could be a View or Json or what ever you returned in your action method
+                    // parse your data here
+                    //alert(data);
+                    $('#roster-table-display').html(data)
+
+                    $('#roster-table-display').find("[id='loading-element']").remove();
+                },
+                begin: function () {
+                    // $('#role-table-display').modal('hide')
+                }
+            });
+    }
+
+   
+</script>
