@@ -1,13 +1,15 @@
-﻿using System;
+﻿using BusinessExcel.Models.ChartJs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BusinessExcel.Models.ChartJs;
 
 namespace BusinessExcel.Models.ChartJs
 {
-    public partial class chart
+    public partial class chart<T>
     {
-        public chart(ChartType type, data data, options options) {
+        public chart(ChartType type, data<T> data, options options) {
             this._type = type.ToString();
             this.data = data;
             this.options = options;
@@ -22,8 +24,7 @@ namespace BusinessExcel.Models.ChartJs
             get { return _type == null ? ChartType.line.ToString() : _type; }
             set { _type = value; }
         }
-        public data data { get; set; }
+        public data<T> data { get; set; }
         public options options { get; set; }
     }
-}
 }
