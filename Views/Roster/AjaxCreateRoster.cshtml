@@ -26,7 +26,7 @@
 {
 
     <div class="row">
-
+        
         @*@Html.AdminLTETextBoxFor(m => m.user_id,
             null,
             new Dictionary<string, object>() { { "class", "form-control" },
@@ -43,7 +43,7 @@
                                                                     { "class", "form-control select2" }
 
                             },
-                            htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3" } },
+                            htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3 " }, { "onChange", "SelectedUserName(this)" }  },
                             autoCompleteOptions: new AutoCompleteOptions()
                             {
                                 AjaxOptions = new AjaxOptions()
@@ -98,7 +98,7 @@
                             htmlDropDownAttributes: new Dictionary<string, object>() {
                                                                     { "class", "form-control select2" }
                             },
-                             htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3" } },
+                             htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3" }, { "onChange", "SelectedLocationName(this)" } },
                             autoCompleteOptions: new AutoCompleteOptions()
                             {
                                 AjaxOptions = new AjaxOptions()
@@ -116,11 +116,39 @@
                             showLabel: false)
 
         <button type="submit" class="btn btn-primary col-md-1" style="margin-left:15px">Add New</button>
+
+        @Html.HiddenFor(x => x.user_name, new { id = "user_name" })
+        @Html.HiddenFor(x => x.location_name, new { id = "location_name" })
     </div>
 
 
             <br />
-            @ViewData[BusinessExcel.Controllers.RosterController.ROSTERCREATIONMESSAGE]
+            <div style="color:red;font-size:large">
+                @ViewData[BusinessExcel.Controllers.RosterController.ROSTERCREATIONMESSAGE]
+            </div>
 
 }
 
+<script>
+
+    //To get selected value an text of dropdownlist
+    function SelectedUserName(ddlObject)
+    {
+     
+   
+     
+        var username = $(ddlObject).find('option:selected').text();
+        $("#user_name").val(username);
+  
+    }
+
+    function SelectedLocationName(ddlObject) {
+
+
+
+        var username = $(ddlObject).find('option:selected').text();
+        $("#location_name").val(username);
+
+    }
+
+</script>  

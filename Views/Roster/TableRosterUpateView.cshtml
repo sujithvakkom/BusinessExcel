@@ -153,52 +153,59 @@
                                     );
 
                         var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
-                                            ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 6
+                                            ajaxUpdateCallback: "callBack", rowsPerPage: 6
                                             );
                         grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                         @grid.GetHtml(
-                           tableStyle: "table table-striped table-bordered be-pagination-spl",
-                           htmlAttributes: new { @id = "example" },
+            tableStyle: "table table-striped table-bordered be-pagination-spl",
+            htmlAttributes: new { @id = "example" },
+
+            columns: new[] {
+
                           
-                           columns: new[] {
-
-
-                               grid.Column(columnName:"user_id",header:"User Name",format:null,style:"user-name",canSort:false),
-
-                               grid.Column(columnName:"location_id",header:"Location",
-                               format:null,
-                               style:"location",canSort:false),
 
 
 
-                               grid.Column("",
-                    style: "btn",
-                    format: @<text><div style="padding-left:10px;">
-                            <a class="edit-roster   fa  fa-pencil-square-o" id="@item.user_id" style="font-size: 20px;" title="Edit"></a> 
-                            <a class="delete-roster fa fa-trash-o" id="@item.user_id" style="font-size: 20px;"  title="Delete"></a>
+                            grid.Column(columnName:"user_id",header:"User ID",format:null,style:"user-name",canSort:false),
+                            grid.Column(columnName:"user_name",header:"User Name",format:null,style:"user-name",canSort:false),
+                            grid.Column(columnName:"start_date",header:"Start Date",format: @<text>@item.start_date.ToString("dd/MMM/yyyy")</text>, style:"start_date",canSort:false), grid.Column(columnName:"end_date",header:"End Date",format: @<text> @item.end_date.ToString("dd/MMM/yyyy") </text> , style:"end_date",canSort:false),
+
+                //grid.Column(columnName:"location_id",header:"Location ID",format:null,style:"location",canSort:false),
+              grid.Column(null, null, format: @<input type="hidden" name="rosterID"  value="@item.location_id" />),
+
+                grid.Column(columnName:"location_name",header:"Location Name",format:null,style:"location",canSort:false),
+                 grid.Column(null, null, format: @<input type="hidden" name="rosterID" class="hidRosterId" value="@item.roster_id" />),
+
+                grid.Column("", style: "btn", format: @<text><div style="padding-left:10px;">
+                            
+                
+                <a class="edit-roster   glyphicon glyphicon-edit" id="@item.user_id" style="font-size: 20px;" title="Edit"></a> 
+                            <a class="delete-roster glyphicon glyphicon-trash" id="@item.user_id" style="font-size: 20px;"  title="Delete"></a>
                         </div>
                     </text>),
 
 
 
-                              
+
+              
 
 
 
-    },
-                           footerStyle: "extra-table-pager"
-                           )
+},
+            footerStyle: "extra-table-pager"
+            )
 
                         @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
-                           nextText: "NEXT",
-                           firstText: "FIRST",
-                           previousText: "PREV.",
-                           lastText: "LAST")
+            nextText: "NEXT",
+            firstText: "FIRST",
+            previousText: "PREV.",
+            lastText: "LAST")
 }
                 }
             </div>
         </div>
     </div>
+
 
 </section><!-- /.content -->
 
@@ -210,20 +217,35 @@
 
 
 
-    $('.delete-roster').on('click', function () {
+    $(document).on('click', '.delete-roster', function () {
         //if (confirm("Are you sure to delete this roster?")) {
+     
 
             $('#modalnew').modal('show');
             var tr = $(this).parents('tr:first');
-
-            //var tr = $(this).parents('tr:first');
-            //var PLID = tr.find("#pkiPipeline").html();
-            //var PLAccumulated_Length = tr.find("#lblAccumulated_Length").val();
-            //var PLElevation = tr.find("#lblElevation").val();
-
-
             var UserID = $(this).prop('id');
-            $('.modal-body').html(UserID);
+            var roster_id = tr.find('.hidRosterId').val();
+            
+          
+            
+
+           // tr.on('click', function () {
+             
+                var uid = $(this).closest('tr').children("td:eq(0)").html();
+                var uname = $(this).closest('tr').children("td:eq(1)").html();
+                var stdate = $(this).closest('tr').children("td:eq(2)").html();
+                var eddate = $(this).closest('tr').children("td:eq(3)").html();
+                var lid = $(this).closest('tr').children("td:eq(4)").html();
+                var lname = $(this).closest('tr').children("td:eq(5)").html();
+
+          
+
+            $('.modal-body').html("<style>#tabmodel th td { border: 1px solid black;border-collapse: collapse;} </style>" +
+                "<table style='width:100%' id='tabmodel'><tr><th>USERNAME</th> <th>START DATE</th> <th>END DATE</th> <th>LOCATION</th> </tr>" +
+                "<tr> <td>" + uname + "</td><td>" + stdate + "</td>  <td>" + eddate + "</td>   <td>" + lname + "</td>  </tr> </table>");
+           // });
+
+        
             //Deletes the record with ID sent below
             //$.post(
             //    '/Home/DeleteContact/',
@@ -232,28 +254,33 @@
             //        tr.remove();
             //    }, "json");
 
-            $('#btnDeleteRoster').on('click', function (evt) {
-                ///evt.stopPropagation();
+            $('#btnDeleteRoster').off().on('click', function (evt) {
+                //evt.stopPropagation();
 
                 $('#modalnew').modal('hide');
                 $.ajax({
 
                     // edit to add steve's suggestion.
                     //url: "/ControllerName/ActionName",
-
+                    
                     url: '@Url.Action(BusinessExcel.Controllers.RosterController.AJAXDELETEROSTER, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
                     dataType: 'html',
                     data: ({
                         //insert your parameters to pass to controller
-                        id: UserID
+                        id:roster_id
                     }),
                     success: function (data) {
                         // your data could be a View or Json or what ever you returned in your action method
                         // parse your data here
                         //alert(data);
 
-                        if(data!=0){
-                            tr.remove();
+                        if (data != 0) {
+
+                            tr.css("background-color", "Red").delay(100).show().fadeOut('slow');;
+
+                           
+                            
+                          //  $('#successMessage').html("Roster deleted successfully").delay(2000).show().fadeOut('slow');
                         }
                     },
                     begin: function () {
@@ -263,27 +290,68 @@
 
 
             });
-
+       
         //}
     });
 
 
 
-    $('.edit-roster').on('click', function () {
+    $(document).on('click', ".edit-roster", function () {
         //if (confirm("Are you sure to delete this roster?")) {
 
         var tr = $(this).parents('tr:first');
 
-        tr.on('click', function () {
+        var roster_id = tr.find('.hidRosterId').val();
+
+        //hidRosterId
+     
+      //  tr.on('click', function () {
+
             //Get the value from address id column. Column index starts from zero
             var uid = $(this).children("td:eq(0)").html();
             var lid = $(this).children("td:eq(1)").html();
-          
-            alert(uid + "-"+ lid);
-        });
+
+            //  [name = rosterID]
+           // var roster_id = $(this).find("input[type='hidden']").val();
+
+           
+            $.ajax({
+
+                // edit to add steve's suggestion.
+                //url: "/ControllerName/ActionName",
+
+                url: '@Url.Action(BusinessExcel.Controllers.RosterController.ROSTER_EDIT, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
+                //dataType: "json",
+                dataType: "html",
+                type: "GET",
+                //data: "id=" + id,
+                data: ({
+                    //insert your parameters to pass to controller
+                    roster_Id: roster_id
+                }),
+                success: function (data) {
+                    // your data could be a View or Json or what ever you returned in your action method
+                    // parse your data here
+                    //alert(data);
+                  
+                    $('#roster-creation-form').html(data);
+                },
+
+             
+
+                begin: function () {
+                    // $('#role-table-display').modal('hide')
+                }
+            });
+
+
+
+
+
+       // });
 
         var UserID = $(this).prop('id');
-       
+
         //Deletes the record with ID sent below
         //$.post(
         //    '/Home/DeleteContact/',
@@ -294,10 +362,10 @@
 
 
 
-        $('#btnDeleteRoster').on('click', function (evt) {
+        @*$('#btnDeleteRoster').on('click', function (evt) {
             ///evt.stopPropagation();
 
-          
+
             $.ajax({
 
                 // edit to add steve's suggestion.
@@ -324,7 +392,7 @@
             });
 
 
-        });
+        });*@
 
 
 

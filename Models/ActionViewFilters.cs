@@ -6,7 +6,7 @@ using System.Web;
 
 namespace BusinessExcel.Models
 {
-    public class ActionViewFilters
+    public partial class ActionViewFilters
     {
 
         [Display(Name = "Item Code")]

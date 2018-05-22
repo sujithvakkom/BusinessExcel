@@ -19,13 +19,13 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Required]
         [Key, Column(Order = 1)]
         [Display(Name = "User")]
-        public Int32? user_id { get; set; }
+        public string user_id { get; set; }
 
 
         [Required]
         [Key, Column(Order = 2)]
         [Display(Name = "Location")]
-        public Int32? location_id { get; set; }
+        public string location_id { get; set; }
 
 
         [Required]
