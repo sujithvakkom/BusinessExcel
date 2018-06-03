@@ -19,6 +19,7 @@ namespace BusinessExcel.Controllers
         public static string ROSTERTABLEPARTIAL = "RosterTablePartial";
         public static string ROSTERCONTROLLER = "Roster";
         public static string ROSTER_ACTION = "RosterIndex";
+        public static string ROSTER_EDIT = "EditRoster";
         public static string ROSTER_TITLE = "Roster";
         public static string AJAXCREATEROSTER = "AjaxCreateRoster";
         public static string ROSTERCREATIONMESSAGE = "RosterCreationMessage";
@@ -58,6 +59,61 @@ namespace BusinessExcel.Controllers
 
         }
 
+        public PartialViewResult EditRoster(string roster_Id)
+        {
+            var deleteId = 0;
+            //if (ID.Length > 0)
+            //{
+            //    using (var db = new SalesManageDataContext())
+            //    {
+
+
+            //        db.Roster.RemoveRange(db.Roster.Where(c => c.user_id == ID));
+
+            //        deleteId = db.SaveChanges();
+
+            //    }
+            //}
+
+            Roster md = new Roster();
+
+            md.user_id = "000002";
+            md.user_name = "Leo Audreen Bulias";
+
+            return  PartialView(AJAXCREATEROSTER, md);
+            //return Json(roster_Id, JsonRequestBehavior.AllowGet);
+        }
+
+
+        //public JsonResult EditRoster(string roster_Id)
+        //{
+        //    var deleteId = 0;
+        //    //if (ID.Length > 0)
+        //    //{
+        //    //    using (var db = new SalesManageDataContext())
+        //    //    {
+
+
+        //    //        db.Roster.RemoveRange(db.Roster.Where(c => c.user_id == ID));
+
+        //    //        deleteId = db.SaveChanges();
+
+        //    //    }
+        //    //}
+
+        //    Roster md = new Roster();
+
+        //    md.user_id = "000002";
+        //    md.user_name = "Leo Audreen Bulias";
+
+        //    return Json(new { Url = Url.Action(AJAXCREATEROSTER, md) });
+        //    //return Json(roster_Id, JsonRequestBehavior.AllowGet);
+        //}
+
+
+
+
+
         [HttpPost]
         // [Authorize(Roles = "manager")]
         [Authorize(Roles = "System Administrator")]
@@ -67,11 +123,28 @@ namespace BusinessExcel.Controllers
             ViewData.Add(ROSTERCREATIONMESSAGE, "");
             if (ModelState.IsValid)
             {
+               
 
                 using (var db = new SalesManageDataContext())
                 {
-                    db.Roster.Add(Roster);
-                    db.SaveChanges();
+
+                 var data=   db.Roster.Where(u => u.user_id == Roster.user_id && ((u.start_date<=Roster.end_date && u.end_date >=Roster.start_date)  )  ).FirstOrDefault();
+
+             
+                    if (data == null)
+                    {
+                        db.Roster.Add(Roster);
+                        db.SaveChanges();
+
+                        ModelState.Clear();
+
+
+                    }
+                    else
+                    {
+                        ViewData[ROSTERCREATIONMESSAGE] = "Given user ("+data.user_name+") already assigned to '" +data.location_name + "' ( "+(data.start_date).Value.ToString("dd/MMM/yyyy") + " - "+data.end_date.Value.ToString("dd/MMM/yyyy")+")";
+                        ModelState.AddModelError("RosterName", "Roster existing.");
+                    }
 
                        
                 }
@@ -89,8 +162,14 @@ namespace BusinessExcel.Controllers
                 //    ModelState.AddModelError("RoleName", "Role existing.");
                 //    ViewData[ROLECREATIONMESSAGE] = "Role existing.";
                 //}
+                return PartialView(new Roster());
+
             }
-            return PartialView(Roster);
+            else
+            {
+                return PartialView(Roster);
+            }
+          
         }
 
         // [Authorize(Roles = "Manager")]
@@ -132,13 +211,13 @@ namespace BusinessExcel.Controllers
         public JsonResult AjaxDeleteRoster(int ID)
         {
             var deleteId = 0;
-            if(ID>0)
+            if(ID > 0)
             {
                 using (var db = new SalesManageDataContext())
                 {
              
 
-                    db.Roster.RemoveRange(db.Roster.Where(c => c.user_id == ID));
+                    db.Roster.RemoveRange(db.Roster.Where(c => c.roster_id == ID));
 
                     deleteId = db.SaveChanges();
 

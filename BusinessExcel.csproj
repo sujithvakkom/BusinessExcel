@@ -179,6 +179,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RosterController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
+    <Compile Include="Models\ActionViewFilters.Roster.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
     <Compile Include="Models\ChartJs\Axes.cs" />
     <Compile Include="Models\ChartJs\chart.cs" />
