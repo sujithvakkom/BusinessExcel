@@ -8,6 +8,9 @@
 
 @model ActionViewFilters
 
+
+
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -19,192 +22,225 @@
         <li class="active">@BusinessExcel.Controllers.RosterController.RosterActions_TITLE</li>
     </ol>
 </section>
+
+
+
+
 <!-- Main content -->
 <section class="content">
-    <!-- Your Page Content Here -->
-    @*@using (Ajax.BeginForm(RosterController.ROSTER_ACTIONS,
-                                                RosterController.ROSTERCONTROLLER,
-                                                new AjaxOptions()
-                                                {
-                                                    HttpMethod = "Get",
-                                                    UpdateTargetId = "main-body",
-                                                    OnBegin = "move('#page-load')",
-                                                    OnComplete = "ajax_call_load_complete('#page-load')",
-                                                    OnFailure = "loadin_failed"
-                                                }))
 
-    {
+   
         <!-- Your Page Content Here -->
-        <div class="box box-default collapsed-box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Filters</h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-                </div><!-- /.box-tools -->
-            </div><!-- /.box-header -->
-            <div class="box-body">
-                <div class="row">
-                    @Html.AntiForgeryToken()
-
-
-                    <div class="col-md-3">
-
-                        @Html.AdminLTEDropDownListFor(
-                            m => m.UserName,
-                            htmlLabelAttributes: null,
-                            htmlDropDownAttributes: new Dictionary<string, object>() {
-                                                                    { "class", "form-control select2" }
-                            },
-                            htmlGroupAttributes: null,
-                            autoCompleteOptions: new AutoCompleteOptions()
-                            {
-                                AjaxOptions = new AjaxOptions()
+        @using (Ajax.BeginForm(RosterController.ROSTER_ACTIONS,
+                                RosterController.ROSTERCONTROLLER,
+                                new AjaxOptions()
                                 {
-                                    HttpMethod = "GET",
-                                    Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                },
-                                DescriptionField = "full_name",
-                                IDField = "user_name",
-                                Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
-                                IsAutoComplete = true,
-                                SelectItems = null
-                            },
-                            showLabel: true)
+                                    HttpMethod = "Get",
+                                    UpdateTargetId = "roster-table-display",
+                                    OnBegin = "move('#page-load')",
+                                    OnComplete = "ajax_call_load_complete('#page-load')",
+                                    OnFailure = "loadin_failed"
+                                }))
 
-                    </div>
+        {
 
 
-                    <div class="col-md-3">
 
-                        @Html.AdminLTEDropDownListFor(
-                            m => m.Location,
-                            htmlLabelAttributes: null,
-                            htmlDropDownAttributes: new Dictionary<string, object>() {
+
+
+
+        <!-- Your Page Content Here -->
+            <div class="box box-default collapsed-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Filters</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                   </div><!-- /.box-tools -->
+                </div><!-- /.box-header -->
+
+
+                <div class="box-body">
+                    <div class="row">
+                     
+                        <div class="col-md-3">
+
+                            @Html.AdminLTEDropDownListFor(
+m => m.UserName,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
                                                                     { "class", "form-control select2" }
-                            },
-                            htmlGroupAttributes: null,
-                            autoCompleteOptions: new AutoCompleteOptions()
-                            {
-                                AjaxOptions = new AjaxOptions()
-                                {
-                                    HttpMethod = "GET",
-                                    Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                },
-                                DescriptionField = "description",
-                                IDField = "location_id",
-                                Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                SelectedItem = ViewData[RosterController.SELECTED_FILTED_LOCATION],
-                                IsAutoComplete = true,
-                                SelectItems = null
-                            },
-                            showLabel: true)
+},
+htmlGroupAttributes: null,
+autoCompleteOptions: new AutoCompleteOptions()
+{
+    AjaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+    },
+    DescriptionField = "full_name",
+    IDField = "user_name",
+    Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+    SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
+    IsAutoComplete = true,
+    SelectItems = null
+},
+showLabel: false)
+
+                        </div>
 
 
-                    </div>
-                    <div class="col-md-3 col-md-offset-2">
+                        <div class="col-md-3">
 
-                        @Html.AdminLTEDateRangePickerFor(
-                       m => m.StartDate,
-                       m => m.EndDate,
-                       "Date Range",
-                       htmlLabelAttributes: null,
-                       htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
-                       htmlGroupAttributes: null,
+                            @Html.AdminLTEDropDownListFor(
+m => m.LocationID,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+},
+htmlGroupAttributes: null,
+autoCompleteOptions: new AutoCompleteOptions()
+{
+    AjaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+    },
+    DescriptionField = "description",
+    IDField = "location_id",
+    Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+    SelectedItem = ViewData[RosterController.SELECTED_FILTED_LOCATION],
+    IsAutoComplete = true,
+    SelectItems = null
+},
+showLabel: false)
+
+
+                        </div>
+                        <div class="col-md-4">
+
+                          @Html.AdminLTEDateRangePickerFor(
+                 m => m.StartDate,
+                 m => m.EndDate,
+                 "Date Range",
+                 htmlLabelAttributes: null,
+                 htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
+                 htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
                        htmlGlyphiconsAttributes: null,
                        glyphiconsName: "fa fa-calendar",
-                       showLabel: true,
+                       showLabel: false,
                        hasValidation: true,
                        showGlyphicons: true)
-                    </div>
-                </div>
-            </div>            <!-- /.box-body -->
-            <div class="box-footer">
+
+
+
+
+                        </div>
+                      
+                            <div class="col-md-2">
+
+                                <input type="submit" value="Filter" class="btn btn-primary myfilter" id="filter"/>
+                            </div>
+                           
+                           
+
+                        </div>
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-md-1">
 
-                        <input type="submit" value="Filter" class="btn btn-primary" />
+                        @Html.AdminLTEActionLink(
+linkText: BusinessExcel.Controllers.RosterController.EXPORTEXCEL_TITLE,
+actionName: BusinessExcel.Controllers.RosterController.EXPORTEXCEL,
+controllerName: BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER,
+cssClass: "btn btn-link", routeValues: Model,
+carrot: "fa fa-download")
                     </div>
-                   
                 </div>
-            </div>
-        </div><!-- /.box -->
-    }*@
-    <div class="box box-primary">
-        
-        <div class="box-body">
+                </div>            <!-- /.box-body -->
+              
+            </div><!-- /.box -->
 
-            <div id="table-daily-upate-view" class="table-responsive">
-                @{
+        }
 
-                    using (var db = new SalesManageDataContext())
-                    {
-                        WebGridColumn col = new WebGridColumn()
+
+
+
+        <div class="box box-primary">
+
+            <div class="box-body">
+
+                <div id="table-daily-upate-view" class="table-responsive">
+                    @{
+
+                        using (var db = new SalesManageDataContext())
                         {
+                            WebGridColumn col = new WebGridColumn()
+                            {
 
-                        };
+                            };
 
-                        int count = 0;
-                        IQueryable<Roster> data = db.RosterUpateViewPaging(pageNumber: ViewBag.RosterUpateViewPage,
-                                    pageSize: 6,
-                                    sort: ViewBag.RosterUpateViewSort,
-                                    sortdir: ViewBag.RosterUpateViewDir,
-                                    count: out count, Filters: Model
-                                    );
+                            int count = 0;
+                            IQueryable<Roster> data = db.RosterUpateViewPaging(pageNumber: ViewBag.RosterUpateViewPage,
+                                        pageSize: 6,
+                                        sort: ViewBag.RosterUpateViewSort,
+                                        sortdir: ViewBag.RosterUpateViewDir,
+                                        count: out count, Filters: Model
+                                        );
 
-                        var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
-                                            ajaxUpdateCallback: "callBack", rowsPerPage: 6
-                                            );
-                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
-                        @grid.GetHtml(
-            tableStyle: "table table-striped table-bordered be-pagination-spl",
-            htmlAttributes: new { @id = "example" },
+                            var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
+                                                ajaxUpdateCallback: "callBack", rowsPerPage: 6
+                                                );
+                            grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                            @grid.GetHtml(
+tableStyle: "table table-striped table-bordered be-pagination-spl",
+htmlAttributes: new { @id = "example" },
 
-            columns: new[] {
-
-                          
+columns: new[] {
 
 
 
-                            grid.Column(columnName:"user_id",header:"User ID",format:null,style:"user-name",canSort:false),
+
+
+
                             grid.Column(columnName:"user_name",header:"User Name",format:null,style:"user-name",canSort:false),
+                             grid.Column(columnName:"u_name",header:"Name",format:null,style:"user-name",canSort:false),
                             grid.Column(columnName:"start_date",header:"Start Date",format: @<text>@item.start_date.ToString("dd/MMM/yyyy")</text>, style:"start_date",canSort:false), grid.Column(columnName:"end_date",header:"End Date",format: @<text> @item.end_date.ToString("dd/MMM/yyyy") </text> , style:"end_date",canSort:false),
 
                 //grid.Column(columnName:"location_id",header:"Location ID",format:null,style:"location",canSort:false),
-              grid.Column(null, null, format: @<input type="hidden" name="rosterID"  value="@item.location_id" />),
+              grid.Column(null, null, format: @<input type="hidden" name="locationId"  class="hidlocationId"  value="@item.location_id" />),
 
                 grid.Column(columnName:"location_name",header:"Location Name",format:null,style:"location",canSort:false),
                  grid.Column(null, null, format: @<input type="hidden" name="rosterID" class="hidRosterId" value="@item.roster_id" />),
 
                 grid.Column("", style: "btn", format: @<text><div style="padding-left:10px;">
-                            
-                
-                <a class="edit-roster   glyphicon glyphicon-edit" id="@item.user_id" style="font-size: 20px;" title="Edit"></a> 
-                            <a class="delete-roster glyphicon glyphicon-trash" id="@item.user_id" style="font-size: 20px;"  title="Delete"></a>
-                        </div>
-                    </text>),
+
+
+                        <a class="edit-roster   glyphicon glyphicon-edit" id="@item.user_name" style="font-size: 20px;" title="Edit"></a>
+                        <a class="delete-roster glyphicon glyphicon-trash" id="@item.user_name" style="font-size: 20px;" title="Delete"></a>
+                    </div>
+                </text>),
 
 
 
 
-              
+
 
 
 
 },
-            footerStyle: "extra-table-pager"
-            )
+footerStyle: "extra-table-pager"
+)
 
-                        @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
-            nextText: "NEXT",
-            firstText: "FIRST",
-            previousText: "PREV.",
-            lastText: "LAST")
-}
-                }
+                            @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+nextText: "NEXT",
+firstText: "FIRST",
+previousText: "PREV.",
+lastText: "LAST")
+                        }
+                    }
+                </div>
             </div>
         </div>
-    </div>
 
 
 </section><!-- /.content -->
@@ -214,8 +250,12 @@
 <script>
 
 
+    
+
+    $(document).on('click', '.filter', function () {
 
 
+    });
 
     $(document).on('click', '.delete-roster', function () {
         //if (confirm("Are you sure to delete this roster?")) {
@@ -231,8 +271,9 @@
 
            // tr.on('click', function () {
              
-                var uid = $(this).closest('tr').children("td:eq(0)").html();
-                var uname = $(this).closest('tr').children("td:eq(1)").html();
+               
+            var uname = $(this).closest('tr').children("td:eq(0)").html();
+            var name = $(this).closest('tr').children("td:eq(1)").html();
                 var stdate = $(this).closest('tr').children("td:eq(2)").html();
                 var eddate = $(this).closest('tr').children("td:eq(3)").html();
                 var lid = $(this).closest('tr').children("td:eq(4)").html();
@@ -246,13 +287,7 @@
            // });
 
         
-            //Deletes the record with ID sent below
-            //$.post(
-            //    '/Home/DeleteContact/',
-            //    { ID: ID },
-            //    function (item) {
-            //        tr.remove();
-            //    }, "json");
+           
 
             $('#btnDeleteRoster').off().on('click', function (evt) {
                 //evt.stopPropagation();
@@ -296,48 +331,51 @@
 
 
 
-    $(document).on('click', ".edit-roster", function () {
+    $(document).on('click', ".edit-roster", function (event) {
+
+        event.preventDefault();
         //if (confirm("Are you sure to delete this roster?")) {
 
         var tr = $(this).parents('tr:first');
 
         var roster_id = tr.find('.hidRosterId').val();
+        var loc_id = tr.find('.hidlocationId').val();
 
-        //hidRosterId
-     
-      //  tr.on('click', function () {
+        
 
-            //Get the value from address id column. Column index starts from zero
-            var uid = $(this).children("td:eq(0)").html();
-            var lid = $(this).children("td:eq(1)").html();
-
-            //  [name = rosterID]
-           // var roster_id = $(this).find("input[type='hidden']").val();
-
+            var username = $(this).closest('tr').children("td:eq(0)").html();
+            var uname = $(this).closest('tr').children("td:eq(1)").html();
+            var stdate = $(this).closest('tr').children("td:eq(2)").html();
+            var eddate = $(this).closest('tr').children("td:eq(3)").html();
+            var lname = $(this).closest('tr').children("td:eq(5)").html();
+          
            
+            var ros = {
+            
+                user_Name: username,
+                start_date: stdate,
+                end_date: eddate,
+                roster_id: roster_id,
+                location_name: lname,
+                location_id: loc_id,
+                u_name: uname
+            };
+
+          
+
+
             $.ajax({
 
-                // edit to add steve's suggestion.
-                //url: "/ControllerName/ActionName",
-
-                url: '@Url.Action(BusinessExcel.Controllers.RosterController.ROSTER_EDIT, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
+            url: '@Url.Action(BusinessExcel.Controllers.RosterController.ROSTER_EDIT)',
                 //dataType: "json",
-                dataType: "html",
                 type: "GET",
-                //data: "id=" + id,
-                data: ({
-                    //insert your parameters to pass to controller
-                    roster_Id: roster_id
-                }),
+                data: ros,
+                contentType: "application/json",
                 success: function (data) {
-                    // your data could be a View or Json or what ever you returned in your action method
-                    // parse your data here
-                    //alert(data);
-                  
+
                     $('#roster-creation-form').html(data);
                 },
 
-             
 
                 begin: function () {
                     // $('#role-table-display').modal('hide')
@@ -345,61 +383,5 @@
             });
 
 
-
-
-
-       // });
-
-        var UserID = $(this).prop('id');
-
-        //Deletes the record with ID sent below
-        //$.post(
-        //    '/Home/DeleteContact/',
-        //    { ID: ID },
-        //    function (item) {
-        //        tr.remove();
-        //    }, "json");
-
-
-
-        @*$('#btnDeleteRoster').on('click', function (evt) {
-            ///evt.stopPropagation();
-
-
-            $.ajax({
-
-                // edit to add steve's suggestion.
-                //url: "/ControllerName/ActionName",
-
-                url: '@Url.Action(BusinessExcel.Controllers.RosterController.AJAXDELETEROSTER, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
-                dataType: 'html',
-                data: ({
-                    //insert your parameters to pass to controller
-                    id: UserID
-                }),
-                success: function (data) {
-                    // your data could be a View or Json or what ever you returned in your action method
-                    // parse your data here
-                    //alert(data);
-
-                    if (data != 0) {
-                        tr.remove();
-                    }
-                },
-                begin: function () {
-                    // $('#role-table-display').modal('hide')
-                }
-            });
-
-
-        });*@
-
-
-
-
-
-
-
-        //}
     });
 </script>

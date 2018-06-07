@@ -11,6 +11,9 @@ using System.Web.Mvc;
 using System.Web.Security;
 using WebMatrix.WebData;
 
+using System.Data.Entity;
+using System.IO;
+
 namespace BusinessExcel.Controllers
 {
     public class RosterController : Controller
@@ -27,7 +30,7 @@ namespace BusinessExcel.Controllers
 
 
         public static string RosterActions_TITLE = "Roster List";
-        public static string ROSTER_REPORTCONTROLLER = "Report";
+       
         public static string ROSTER_ACTIONS = "RosterActions";
 
         
@@ -48,6 +51,9 @@ namespace BusinessExcel.Controllers
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = ROSTER_TITLE;
 
+            
+            
+
             //ViewBag.DailyUpateViewPage = page;
             //ViewBag.DailyUpateViewSort = sort;
             //ViewBag.DailyUpateViewDir = sortdir;
@@ -59,60 +65,29 @@ namespace BusinessExcel.Controllers
 
         }
 
-        public PartialViewResult EditRoster(string roster_Id)
+        public PartialViewResult EditRoster( Roster ros )
         {
-            var deleteId = 0;
-            //if (ID.Length > 0)
-            //{
-            //    using (var db = new SalesManageDataContext())
-            //    {
 
 
-            //        db.Roster.RemoveRange(db.Roster.Where(c => c.user_id == ID));
+            if (!string.IsNullOrEmpty(ros.user_name))
+                using (var db = new SalesManageDataContext())
+                {
+                    ViewData[SELECTED_FILTED_USER] = db.getUserDetail(ros.user_name);
+                }
 
-            //        deleteId = db.SaveChanges();
+            if (!string.IsNullOrEmpty(ros.location_id))
+                using (var db = new SalesManageDataContext())
+                {
+                    ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(ros.location_id);
+                }
 
-            //    }
-            //}
+            
 
-            Roster md = new Roster();
-
-            md.user_id = "000002";
-            md.user_name = "Leo Audreen Bulias";
-
-            return  PartialView(AJAXCREATEROSTER, md);
+            return  PartialView(AJAXCREATEROSTER, ros);
             //return Json(roster_Id, JsonRequestBehavior.AllowGet);
         }
 
-
-        //public JsonResult EditRoster(string roster_Id)
-        //{
-        //    var deleteId = 0;
-        //    //if (ID.Length > 0)
-        //    //{
-        //    //    using (var db = new SalesManageDataContext())
-        //    //    {
-
-
-        //    //        db.Roster.RemoveRange(db.Roster.Where(c => c.user_id == ID));
-
-        //    //        deleteId = db.SaveChanges();
-
-        //    //    }
-        //    //}
-
-        //    Roster md = new Roster();
-
-        //    md.user_id = "000002";
-        //    md.user_name = "Leo Audreen Bulias";
-
-        //    return Json(new { Url = Url.Action(AJAXCREATEROSTER, md) });
-        //    //return Json(roster_Id, JsonRequestBehavior.AllowGet);
-        //}
-
-
-
-
+        
 
         [HttpPost]
         // [Authorize(Roles = "manager")]
@@ -128,40 +103,44 @@ namespace BusinessExcel.Controllers
                 using (var db = new SalesManageDataContext())
                 {
 
-                 var data=   db.Roster.Where(u => u.user_id == Roster.user_id && ((u.start_date<=Roster.end_date && u.end_date >=Roster.start_date)  )  ).FirstOrDefault();
+                 var data=   db.Roster.Where(u => u.user_name == Roster.user_name && ((u.start_date<=Roster.end_date && u.end_date >=Roster.start_date)  ) && u.roster_id != Roster.roster_id  ).FirstOrDefault();
 
-             
+                    var existdata = db.Roster.Where(u => u.roster_id == Roster.roster_id).FirstOrDefault();
+
+
+
                     if (data == null)
                     {
-                        db.Roster.Add(Roster);
+                        if (Roster.roster_id <= 0)
+                        {
+                            db.Roster.Add(Roster);
+                        }
+                        else
+                        {
+
+                            if (existdata != null)
+                            {
+                                db.Entry(existdata).CurrentValues.SetValues(Roster);
+                            }
+                        }
+
                         db.SaveChanges();
 
                         ModelState.Clear();
 
-
+                       
+                       
                     }
                     else
                     {
-                        ViewData[ROSTERCREATIONMESSAGE] = "Given user ("+data.user_name+") already assigned to '" +data.location_name + "' ( "+(data.start_date).Value.ToString("dd/MMM/yyyy") + " - "+data.end_date.Value.ToString("dd/MMM/yyyy")+")";
+                        ViewData[ROSTERCREATIONMESSAGE] = "Given user ("+data.u_name+") already assigned to '" +data.location_name + "' ( "+(data.start_date).Value.ToString("dd/MMM/yyyy") + " - "+data.end_date.Value.ToString("dd/MMM/yyyy")+")";
                         ModelState.AddModelError("RosterName", "Roster existing.");
                     }
 
                        
                 }
 
-
-
-                //if (!Roles.RoleExists(RoleName.RolesName))
-                //{
-                //    Roles.CreateRole(RoleName.RolesName);
-                //    ViewData[ROLECREATIONMESSAGE] = "Role Created.";
-                //    RoleName.RolesName = "";
-                //}
-                //else
-                //{
-                //    ModelState.AddModelError("RoleName", "Role existing.");
-                //    ViewData[ROLECREATIONMESSAGE] = "Role existing.";
-                //}
+                
                 return PartialView(new Roster());
 
             }
@@ -179,33 +158,7 @@ namespace BusinessExcel.Controllers
             return PartialView();
         }
 
-        [HttpPost]
-        [Authorize(Roles = "System Administrator")]
-        public String AjaxDeleteRoster1()
-        {
-            //ViewData.Add(ROLECREATIONMESSAGE, "");
-            if (ModelState.IsValid)
-            {
-                //if (Roles.RoleExists(Roster.roster_id))
-                //{
-                //    var users = Roles.GetUsersInRole(RoleName.RolesName);
-                //    if (users != null && users.Count() > 0)
-                //        Roles.RemoveUsersFromRole(
-                //            Roles.GetUsersInRole(RoleName.RolesName),
-                //            RoleName.RolesName);
-                //    Roles.DeleteRole(RoleName.RolesName);
-                //    ViewData[ROLECREATIONMESSAGE] = "Role Removed.";
-                //    RoleName.RolesName = "";
-                //}
-                //else
-                //{
-                //    ModelState.AddModelError("RoleName", "Role existing.");
-                //    ViewData[ROLECREATIONMESSAGE] = "Role existing.";
-                //}
-            }
-            return ViewData[ROSTERCREATIONMESSAGE].ToString();
-        }
-
+       
       
 
         public JsonResult AjaxDeleteRoster(int ID)
@@ -235,22 +188,40 @@ namespace BusinessExcel.Controllers
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             //ViewBag.Title = ACTIONS_TITLE;
 
-            if (!string.IsNullOrEmpty(Filters.UserName))
+            if (!string.IsNullOrEmpty(Filters.UserID))
                 using (var db = new SalesManageDataContext())
                 {
                     ViewData[SELECTED_FILTED_USER] = db.getUserDetail(Filters.UserName);
                 }
 
-            if (!string.IsNullOrEmpty(Filters.Location))
+            if (!string.IsNullOrEmpty(Filters.LocationID))
                 using (var db = new SalesManageDataContext())
                 {
                     ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(Filters.Location);
                 }
-            //if (Request.IsAjaxRequest())
-            //{
-            //    //return PartialView(TABLEDAILYUPATEVIEW, Filters);
-            //    return (PartialViewResult)TableDailyUpateView(sort, sortdir, page, Filters);
-            //}
+
+
+
+           // ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(Filters.Location);
+
+            //if ((Filters.StartDate))
+            //    using (var db = new SalesManageDataContext())
+            //    {
+            //        //ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(Filters.Location);
+            //    }
+
+            //if (!string.IsNullOrEmpty(Filters.EndDate))
+            //    using (var db = new SalesManageDataContext())
+            //    {
+            //        //ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(Filters.Location);
+            //    }
+
+
+            if (Request.IsAjaxRequest())
+            {
+                //return PartialView(TABLEDAILYUPATEVIEW, Filters);
+                return (PartialViewResult)TableRosterUpateView(sort, sortdir, page, Filters);
+            }
             return View();
         }
 
@@ -269,14 +240,36 @@ namespace BusinessExcel.Controllers
             return PartialView(TABLEROSTERUPATEVIEW, Filters);
         }
 
-        //public PartialViewResult TableRosterUpateView(int page = 1)
-        //{
-        //    ViewBag.RosterUpateViewPage = page;
-        //    ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ROSTER_TITLE;
-        //    ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-        //    ViewBag.Title = ROSTER_TITLE;
-        //    return PartialView(TABLEROSTERUPATEVIEW);
-        //}
+        public static string EXPORTEXCEL = "ExportExcel";
+        public static string EXPORTEXCEL_TITLE = "Export Excel";
+        public ActionResult ExportExcel(ActionViewFilters Filters = null)
+        {
+
+            using (var db = new SalesManageDataContext())
+            {
+                var gv = new System.Web.UI.WebControls.GridView();
+                gv.DataSource = db.GetRosterUpateViewPagingExport(Filters);
+
+                gv.DataBind();
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment; filename=RosterList - "+DateTime.Now.Date+".xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Write("<style> TD { mso-number-format:\\@; } </style>");
+              
+
+                Response.Charset = "";
+                StringWriter objStringWriter = new StringWriter();
+                System.Web.UI.HtmlTextWriter objHtmlTextWriter = new System.Web.UI.HtmlTextWriter(objStringWriter);
+                gv.RenderControl(objHtmlTextWriter);
+                Response.Output.Write(objStringWriter.ToString());
+                Response.Flush();
+                Response.End();
+            }
+            return View("Index");
+        }
+
+      
 
     }
 }

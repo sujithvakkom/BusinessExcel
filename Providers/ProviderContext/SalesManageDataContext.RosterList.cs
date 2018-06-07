@@ -26,10 +26,20 @@ namespace BusinessExcel.Providers.ProviderContext
 
           
 
-            if (!string.IsNullOrEmpty(Filters.Location))
+            if (!string.IsNullOrEmpty(Filters.LocationID))
             {
-                var temp = this.getLocationDetail(Filters.Location).description;
-                res = res.Where(x => x.location_name.ToString() == temp);
+                var temp = this.getLocationDetail(Filters.LocationID).location_id;
+                res = res.Where(x => x.location_id == temp.ToString());
+            }
+
+            if (Filters.StartDate != default(DateTime))
+            {
+                res = res.Where(x => x.start_date == Filters.StartDate);
+            }
+            if (Filters.EndDate != default(DateTime))
+            {
+                res = res.Where(x => x.end_date == Filters.EndDate);
+
             }
 
             count = res.Count();
@@ -74,12 +84,12 @@ namespace BusinessExcel.Providers.ProviderContext
 
         internal object GetRosterUpateViewPagingExport(ActionViewFilters Filters)
         {
-
+           
             if (Filters == null)
-                Filters = new Models.ActionViewFilters() { ItemCode = "" };
-            var res = from x in this.DailyUpateView
-                      where (String.IsNullOrEmpty(Filters.ItemCode) || x.Item == Filters.ItemCode)
-                      select x;
+                Filters = new Models.ActionViewFilters() { Location = "" };
+            var res = from x in this.Roster
+                      where (String.IsNullOrEmpty(Filters.Location) || x.user_name == Filters.UserName)
+                      select new { user_name= x.user_name, start_date = x.start_date.Value, end_date=x.end_date.Value, location_id=x.location_id, location_name=x.location_name };
             return res.ToList();
         }
     }

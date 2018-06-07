@@ -27,15 +27,9 @@
 
     <div class="row">
         
-        @*@Html.AdminLTETextBoxFor(m => m.user_id,
-            null,
-            new Dictionary<string, object>() { { "class", "form-control" },
-                { "required", "" } },
-            new Dictionary<string, object>() { { "class", "col-md-2" } },
-            null, "", false, true, true)*@
 
         @Html.AdminLTEDropDownListFor(
-                            m => m.user_id,
+                            m => m.user_name,
                             htmlLabelAttributes: null,
 
 
@@ -43,7 +37,8 @@
                                                                     { "class", "form-control select2" }
 
                             },
-                            htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3 " }, { "onChange", "SelectedUserName(this)" }  },
+                            htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3 " }, { "onChange", "SelectedUserName(this)" } },
+                            //htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3 " }},
                             autoCompleteOptions: new AutoCompleteOptions()
                             {
                                 AjaxOptions = new AjaxOptions()
@@ -54,7 +49,8 @@
                                 DescriptionField = "full_name",
                                 IDField = "user_name",
                                 Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                                SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
+
                                 IsAutoComplete = true,
                                 SelectItems = null
                             },
@@ -67,7 +63,7 @@
                  m => m.end_date,
                  "Date Range",
                  htmlLabelAttributes: null,
-                 htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                 htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } , { "autocomplete" ,"off"} },
                  htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
                        htmlGlyphiconsAttributes: null,
                        glyphiconsName: "fa fa-calendar",
@@ -75,23 +71,8 @@
                        hasValidation: true,
                        showGlyphicons: true)
         </div>
-        @*@Html.AdminLTETextBoxFor(m => m.start_date, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
-
-                   new Dictionary<string, object>() { { "class", "col-md-2" } }, null, "", false, true, true)
-
-            @Html.AdminLTETextBoxFor(m => m.end_date, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
-
-                   new Dictionary<string, object>() { { "class", "col-md-2" } }
-                   , null, "", false, true, true)*@
-
-        @*@Html.AdminLTETextBoxFor(m => m.location_id, null, new Dictionary<string, object>() { { "class", "form-control" }, { "required", "" } },
-
-
-            new Dictionary<string, object>() { { "class", "col-md-2" } },
-
-              null, "", false, true, true)*@
-
-
+       
+    
         @Html.AdminLTEDropDownListFor(
                             m => m.location_id,
                             htmlLabelAttributes: null,
@@ -115,14 +96,16 @@
                             },
                             showLabel: false)
 
-        <button type="submit" class="btn btn-primary col-md-1" style="margin-left:15px">Add New</button>
+        <button type="submit" class="btn btn-primary col-md-1" style="margin-left:15px" id="btnAdd">Add New</button>
 
-        @Html.HiddenFor(x => x.user_name, new { id = "user_name" })
+        @Html.HiddenFor(x => x.u_name, new { id = "u_name" })
         @Html.HiddenFor(x => x.location_name, new { id = "location_name" })
+        @Html.HiddenFor(x => x.roster_id, new { id = "roster_id" })
     </div>
 
 
             <br />
+            <div id="loadingMess" style="z-index: 999;position:relative; "></div>
             <div style="color:red;font-size:large">
                 @ViewData[BusinessExcel.Controllers.RosterController.ROSTERCREATIONMESSAGE]
             </div>
@@ -138,7 +121,7 @@
    
      
         var username = $(ddlObject).find('option:selected').text();
-        $("#user_name").val(username);
+        $("#u_name").val(username);
   
     }
 
@@ -150,5 +133,35 @@
         $("#location_name").val(username);
 
     }
+
+    var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
+    function refreshRosterList() {
+        $('#loadingMess').append(loadingelement);
+        $.ajax({
+            // edit to add steve's suggestion.
+            //url: "/ControllerName/ActionName",
+            url: '@Url.Action(BusinessExcel.Controllers.RosterController.TABLEROSTERUPATEVIEW, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
+            success: function (data) {
+                // your data could be a View or Json or what ever you returned in your action method
+                // parse your data here
+                //alert(data);
+                $('#roster-table-display').html(data)
+                $('#loadingMess').find("[id='loading-element']").remove();
+
+               // $('#roster-table-display').find("[id='loading-element']").remove();
+            },
+            begin: function () {
+                // $('#role-table-display').modal('hide')
+            }
+        });
+    }
+
+    var btnValue = document.getElementById("btnAdd").textContent;
+    if( @Model.roster_id>0)
+    {
+        document.getElementById("btnAdd").textContent="Update";
+    }
+   
+   
 
 </script>  

@@ -15,6 +15,6 @@ namespace BusinessExcel.Models
         public const string SYSTEM_ADMINISTRATOR = "System Administrator";
         public const string ADMINISTRATOR =  "Administrator" ;
         public const string Manager = "Manager";
-
+        public const string DELIVERY_MANAGER = "Delivery Manager";
     }
 }

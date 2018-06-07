@@ -7,6 +7,11 @@
 
 @model ActionViewFilters
 
+
+
+
+
+
 <section class="content-header">
     <h1>
         @BusinessExcel.Controllers.RosterController.ROSTER_TITLE
@@ -23,39 +28,39 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-primary" id="roster-form">
-
-                <div class="box-body">
-
+            <div class="box box-primary" id="roster-form" >
+                <div class="box-body" style="padding:10px">
                     <div id="roster-creation-form">
                         @Html.Partial(BusinessExcel.Controllers.RosterController.AJAXCREATEROSTER,
 new Roster()
 {
 
-    user_id = null,
+    user_name = null,
     end_date = null,
     start_date = null,
     location_id = null
 })
                     </div>
 
+                    <div id="filter"></div>
                     <div id="successMessage" style="color:green;font-size:large"></div>
 
-                        @*<div class="box-header with-border">
-                <h3 class="box-title">Roster List</h3>
-            </div>*@
-
-                        <div id="roster-table-display">
-                            @*  @Html.Partial(BusinessExcel.Controllers.AdminController.ROSTERTABLEPARTIAL)*@
-
-                            @Html.Action(BusinessExcel.Controllers.RosterController.TABLEROSTERUPATEVIEW, Model)
-                            @* @Html.Partial("~/Views/Report/TableRosterUpateView.cshtml");*@
-                        </div>
+              
 
                     </div>
 
 
+               
             </div>
+
+            
+
+            <div id="roster-table-display">
+
+                @Html.Action(BusinessExcel.Controllers.RosterController.TABLEROSTERUPATEVIEW, Model)
+            </div>
+
+
         </div>
 
 
@@ -83,11 +88,13 @@ new Roster()
 
 </section><!-- /.content -->
 
+
+
 <script>
 
 
 
-        var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
+        @*var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
     function refreshRosterList() {
         $('#roster-table-display').append(loadingelement);
             $.ajax({
@@ -106,7 +113,8 @@ new Roster()
                     // $('#role-table-display').modal('hide')
                 }
             });
-    }
+    }*@
 
+    
    
 </script>

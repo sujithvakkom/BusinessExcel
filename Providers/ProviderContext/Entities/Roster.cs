@@ -17,25 +17,25 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
 
         [Required]
-        [Key, Column(Order = 1)]
+       // [Key, Column(Order = 1)]
         [Display(Name = "User")]
-        public string user_id { get; set; }
+        public string user_name { get; set; }
 
 
         [Required]
-        [Key, Column(Order = 2)]
+       // [Key, Column(Order = 2)]
         [Display(Name = "Location")]
         public string location_id { get; set; }
 
 
         [Required]
-        [Key, Column(Order = 3)]
+       // [Key, Column(Order = 3)]
         [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
         public DateTime? start_date { get; set; }
 
         [Required]
-        [Key, Column(Order = 4)]
+      //  [Key, Column(Order = 4)]
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         public DateTime? end_date { get; set; }
@@ -43,7 +43,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
 
       
-        public string user_name { get; set; }
+        public string u_name { get; set; }
 
 
 

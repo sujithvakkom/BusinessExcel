@@ -9,13 +9,13 @@ namespace BusinessExcel.Models
     public partial class ActionViewFilters
     {
 
-      
 
-        [Display(Name = "UserID")]
+
+        [Display(Name = "User")]
         public string UserID { get; set; }
 
 
-        [Display(Name ="LocationID")]
+        [Display(Name = "Location")]
         public string LocationID { get; set; }
 
    

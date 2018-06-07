@@ -172,6 +172,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Content Include="Content\pace\themes\white\pace-theme-minimal.css" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.LocationAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Models\ConstantUsages.cs" />
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Models\DeliveryFilters.cs" />
     <Compile Include="Models\EditUserProfile.cs" />
     <Compile Include="Models\Index.cs" />
     <Compile Include="Models\JSONPagininationModel.cs" />
@@ -309,6 +311,13 @@
     <Content Include="Content\tether\tether.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="gs_icon.ico" />
+    <Content Include="Images\gs_icon.ico" />
+    <Content Include="Images\logo-light.svg" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\logo185x27.svg" />
+    <Content Include="Images\image2vector.svg" />
+    <Content Include="Images\logo185x77.png" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.css" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.standalone.css" />
@@ -598,6 +607,8 @@
     <Content Include="Views\Roster\RosterIndex.cshtml" />
     <Content Include="Views\Roster\TableRosterUpateView.cshtml" />
     <Content Include="Views\Roster\AjaxDeleteRoster.cshtml" />
+    <Content Include="Views\Delivery\TableDeliveryUpateView.cshtml" />
+    <Content Include="Views\Delivery\DeliveryIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -684,7 +695,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\business-excel-logo-dark.ico</ApplicationIcon>
+    <ApplicationIcon>gs_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
@@ -701,7 +712,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64892</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:3001/</IISUrl>
+          <IISUrl>http://localhost:3002/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
