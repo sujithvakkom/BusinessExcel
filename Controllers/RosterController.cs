@@ -188,7 +188,7 @@ namespace BusinessExcel.Controllers
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             //ViewBag.Title = ACTIONS_TITLE;
 
-            if (!string.IsNullOrEmpty(Filters.UserID))
+            if (!string.IsNullOrEmpty(Filters.UserName))
                 using (var db = new SalesManageDataContext())
                 {
                     ViewData[SELECTED_FILTED_USER] = db.getUserDetail(Filters.UserName);
@@ -197,7 +197,7 @@ namespace BusinessExcel.Controllers
             if (!string.IsNullOrEmpty(Filters.LocationID))
                 using (var db = new SalesManageDataContext())
                 {
-                    ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(Filters.Location);
+                    ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(Filters.LocationID);
                 }
 
 
