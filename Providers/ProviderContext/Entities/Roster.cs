@@ -41,8 +41,13 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         public DateTime? end_date { get; set; }
 
 
+       
+        // [Key, Column(Order = 1)]
+        [Display(Name = "Target")]
+        public string target_amt { get; set; }
 
-      
+
+
         public string u_name { get; set; }
 
 

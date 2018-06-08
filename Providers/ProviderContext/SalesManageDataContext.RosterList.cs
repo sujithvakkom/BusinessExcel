@@ -99,7 +99,7 @@ namespace BusinessExcel.Providers.ProviderContext
             var res = from x in this.Roster
                      // where (x.user_name==username)
                       //where (x.user_name == Filters.UserName && x.location_id == Filters.LocationID && x.start_date == Filters.StartDate && x.end_date == Filters.EndDate)
-                      select new { user_name= x.user_name , start_date = x.start_date.Value, end_date=x.end_date.Value, location_id=x.location_id, location_name=x.location_name };
+                      select new { user_name= x.user_name , start_date = x.start_date.Value, end_date=x.end_date.Value, location_id=x.location_id, location_name=x.location_name,target=x.target_amt };
             return res.ToList();
         }
     }

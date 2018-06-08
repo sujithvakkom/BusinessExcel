@@ -209,8 +209,10 @@ columns: new[] {
                 //grid.Column(columnName:"location_id",header:"Location ID",format:null,style:"location",canSort:false),
               grid.Column(null, null, format: @<input type="hidden" name="locationId"  class="hidlocationId"  value="@item.location_id" />),
 
-                grid.Column(columnName:"location_name",header:"Location Name",format:null,style:"location",canSort:false),
+                grid.Column(columnName:"location_name",header:"Location Name",format:null,style:"location",canSort:true),
                  grid.Column(null, null, format: @<input type="hidden" name="rosterID" class="hidRosterId" value="@item.roster_id" />),
+
+      grid.Column(columnName:"target_amt",header:"Target",format:null,style:"user-name1",canSort:true),
 
                 grid.Column("", style: "btn", format: @<text><div style="padding-left:10px;">
 
@@ -348,7 +350,7 @@ lastText: "LAST")
             var stdate = $(this).closest('tr').children("td:eq(2)").html();
             var eddate = $(this).closest('tr').children("td:eq(3)").html();
             var lname = $(this).closest('tr').children("td:eq(5)").html();
-          
+            var target = $(this).closest('tr').children("td:eq(7)").html();
            
             var ros = {
             
@@ -358,7 +360,8 @@ lastText: "LAST")
                 roster_id: roster_id,
                 location_name: lname,
                 location_id: loc_id,
-                u_name: uname
+                u_name: uname,
+                target_amt:target
             };
 
           

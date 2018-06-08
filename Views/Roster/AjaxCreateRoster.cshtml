@@ -13,20 +13,20 @@
 
 
 @using (Ajax.BeginForm(
-                           actionName: BusinessExcel.Controllers.RosterController.AJAXCREATEROSTER,
-                            routeValues: null,
-                            ajaxOptions: new AjaxOptions()
-                            {
-                                UpdateTargetId = "roster-creation-form",
-                                InsertionMode = InsertionMode.Replace,
-                                OnSuccess = "refreshRosterList"
-                            },
-                            htmlAttributes: new { @class = "form-inline" })
-                                                                                                                                                                )
+                                                   actionName: BusinessExcel.Controllers.RosterController.AJAXCREATEROSTER,
+                                                    routeValues: null,
+                                                    ajaxOptions: new AjaxOptions()
+                                                    {
+                                                        UpdateTargetId = "roster-creation-form",
+                                                        InsertionMode = InsertionMode.Replace,
+                                                        OnSuccess = "refreshRosterList"
+                                                    },
+                                                    htmlAttributes: new { @class = "form-inline" })
+                                                                                                                                                                                        )
 {
 
     <div class="row">
-        
+
 
         @Html.AdminLTEDropDownListFor(
                             m => m.user_name,
@@ -63,7 +63,7 @@
                  m => m.end_date,
                  "Date Range",
                  htmlLabelAttributes: null,
-                 htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } , { "autocomplete" ,"off"} },
+                 htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
                  htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
                        htmlGlyphiconsAttributes: null,
                        glyphiconsName: "fa fa-calendar",
@@ -71,8 +71,8 @@
                        hasValidation: true,
                        showGlyphicons: true)
         </div>
-       
-    
+
+
         @Html.AdminLTEDropDownListFor(
                             m => m.location_id,
                             htmlLabelAttributes: null,
@@ -96,7 +96,28 @@
                             },
                             showLabel: false)
 
-        <button type="submit" class="btn btn-primary col-md-1" style="margin-left:15px" id="btnAdd">Add New</button>
+       
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+
+            @Html.AdminLTETextBoxFor(m => m.target_amt,
+                       null,
+                       new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } , { "maxlength",10 }, { "onkeypress", "return isNumberKey(event)" } },
+                       null,
+                       null,
+                       "",
+                       false,
+                       true,
+                       true)
+
+        </div>
+
+
+
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary " id="btnAdd">Add New</button>
+        </div>
 
         @Html.HiddenFor(x => x.u_name, new { id = "u_name" })
         @Html.HiddenFor(x => x.location_name, new { id = "location_name" })
@@ -163,5 +184,10 @@
     }
    
    
-
+    function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }  
 </script>  

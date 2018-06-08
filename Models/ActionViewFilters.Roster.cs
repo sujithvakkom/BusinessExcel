@@ -18,7 +18,9 @@ namespace BusinessExcel.Models
         [Display(Name = "Location")]
         public string LocationID { get; set; }
 
-   
+
+        [Display(Name = "Target")]
+        public string Target { get; set; }
 
 
     }
