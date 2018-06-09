@@ -177,6 +177,7 @@
     <Compile Include="Controllers\JSON\JSON.LocationAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
+    <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RosterController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Models\RolesName.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\TargetAchievementView .cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemDetails.cs" />
     <Compile Include="Providers\ProviderContext\Entities\DailyUpateView.cs" />
     <Compile Include="Providers\ProviderContext\Entities\BrandDetail.cs" />
@@ -214,6 +216,8 @@
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetAchievement.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetAchievementView.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.RosterList.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Roster.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.BrandDetail.cs" />
@@ -609,6 +613,8 @@
     <Content Include="Views\Roster\AjaxDeleteRoster.cshtml" />
     <Content Include="Views\Delivery\TableDeliveryUpateView.cshtml" />
     <Content Include="Views\Delivery\DeliveryIndex.cshtml" />
+    <Content Include="Views\Report\TargetAchievementActions.cshtml" />
+    <Content Include="Views\Report\TargetAchievementView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

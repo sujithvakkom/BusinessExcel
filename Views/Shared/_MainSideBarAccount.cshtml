@@ -163,6 +163,31 @@
                    carrot: "fa fa-tasks")
                         </ul>
                     </li>
+
+
+                    <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,actions:currentAction,cssClass:"active")">
+                        <a href="#"><i class="fa fa-rss"></i><span>TargetAchievement Reports</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            @Ajax.AjaxAdminLTEActionLink(
+                   linkText: BusinessExcel.Controllers.ReportController.TARGETACHIEVEMENT_ACTIONS_TITLE,
+                   actionName: BusinessExcel.Controllers.ReportController.TARGETACHIEVEMENTACTIONS,
+                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success();{0}",
+                       OnComplete = "ajax_call_load_complete()",
+                       OnFailure = "loadin_failed"
+                   },
+                   isNavSideBar: true,
+                   carrot: "fa fa-tasks")
+                    
+                        </ul>
+                    </li>
+
+
+
                 </ul>
             </li>
 
