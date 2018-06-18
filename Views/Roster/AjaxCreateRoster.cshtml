@@ -19,7 +19,8 @@
                                                     {
                                                         UpdateTargetId = "roster-creation-form",
                                                         InsertionMode = InsertionMode.Replace,
-                                                        OnSuccess = "refreshRosterList"
+                                                        OnSuccess = "refreshRosterList",
+                                                        OnFailure=""
                                                     },
                                                     htmlAttributes: new { @class = "form-inline" })
                                                                                                                                                                                         )
@@ -99,6 +100,38 @@
        
     </div>
     <div class="row">
+        
+
+            @Html.AdminLTEDropDownListFor(
+                            m => m.target_id,
+                            htmlLabelAttributes: null,
+
+
+                              htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+
+                            },
+                            htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3 " } },
+                            //htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3 " }},
+                            autoCompleteOptions: new AutoCompleteOptions()
+                            {
+                                AjaxOptions = new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    Url = Url.Action(actionName: JSONController.TARGETAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                },
+                                DescriptionField = "description",
+                                IDField = "target_id",
+                                Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                SelectedItem = ViewData[RosterController.SELECTED_FILTED_TARTET],
+
+                                IsAutoComplete = true,
+                                SelectItems = null
+                            },
+                            showLabel: false)
+
+        
+
         <div class="col-md-3">
 
             @Html.AdminLTETextBoxFor(m => m.target_amt,
@@ -127,11 +160,14 @@
 
             <br />
             <div id="loadingMess" style="z-index: 999;position:relative; "></div>
+            <div id="ErrorMess" style="color:red"></div>
             <div style="color:red;font-size:large">
                 @ViewData[BusinessExcel.Controllers.RosterController.ROSTERCREATIONMESSAGE]
             </div>
 
 }
+
+
 
 <script>
 
@@ -157,24 +193,32 @@
 
     var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
     function refreshRosterList() {
-        $('#loadingMess').append(loadingelement);
-        $.ajax({
-            // edit to add steve's suggestion.
-            //url: "/ControllerName/ActionName",
-            url: '@Url.Action(BusinessExcel.Controllers.RosterController.TABLEROSTERUPATEVIEW, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
-            success: function (data) {
-                // your data could be a View or Json or what ever you returned in your action method
-                // parse your data here
-                //alert(data);
-                $('#roster-table-display').html(data)
-                $('#loadingMess').find("[id='loading-element']").remove();
+        
+       
+        var isValid = @Html.Raw(Json.Encode(ViewData.ModelState.IsValid));
+   
+        if(isValid)
+        {
+    
+            $('#loadingMess').append(loadingelement);
+            $.ajax({
+                // edit to add steve's suggestion.
+                //url: "/ControllerName/ActionName",
+                url: '@Url.Action(BusinessExcel.Controllers.RosterController.TABLEROSTERUPATEVIEW, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
+                success: function (data) {
+                    // your data could be a View or Json or what ever you returned in your action method
+                    // parse your data here
+                    //alert(data);
+                    $('#roster-table-display').html(data)
+                    $('#loadingMess').find("[id='loading-element']").remove();
 
-               // $('#roster-table-display').find("[id='loading-element']").remove();
-            },
-            begin: function () {
-                // $('#role-table-display').modal('hide')
-            }
-        });
+                    // $('#roster-table-display').find("[id='loading-element']").remove();
+                },
+                begin: function () {
+                    // $('#role-table-display').modal('hide')
+                }
+            });
+        }
     }
 
     var btnValue = document.getElementById("btnAdd").textContent;

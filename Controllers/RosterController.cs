@@ -13,6 +13,7 @@ using WebMatrix.WebData;
 
 using System.Data.Entity;
 using System.IO;
+using System.Net;
 
 namespace BusinessExcel.Controllers
 {
@@ -35,7 +36,9 @@ namespace BusinessExcel.Controllers
 
         
         public static string SELECTED_FILTED_USER = "SelectedFilteredUser";
-     
+
+        public static string SELECTED_FILTED_TARTET = "SelectedFilteredTarget";
+
         public static string SELECTED_FILTED_LOCATION = "SelectedFilteredLocation";
 
         // GET: /Admin/UserManagement
@@ -80,8 +83,12 @@ namespace BusinessExcel.Controllers
                 {
                     ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(ros.location_id);
                 }
+         
+                using (var db = new SalesManageDataContext())
+                {
+                    ViewData[SELECTED_FILTED_TARTET] = db.getTargetDetail(ros.target_id.ToString());
+                }
 
-            
 
             return  PartialView(AJAXCREATEROSTER, ros);
             //return Json(roster_Id, JsonRequestBehavior.AllowGet);
@@ -94,6 +101,7 @@ namespace BusinessExcel.Controllers
         [Authorize(Roles = "System Administrator")]
         public PartialViewResult AjaxCreateRoster(Roster Roster, ActionViewFilters Filters = null)
         {
+            
 
             ViewData.Add(ROSTERCREATIONMESSAGE, "");
             if (ModelState.IsValid)
@@ -113,18 +121,23 @@ namespace BusinessExcel.Controllers
                     {
                         if (Roster.roster_id <= 0)
                         {
-                            db.Roster.Add(Roster);
+                            //  db.Roster.Add(Roster);
+
+                            db.InsertUpdateRoster(Roster,true);
                         }
                         else
                         {
 
                             if (existdata != null)
                             {
-                                db.Entry(existdata).CurrentValues.SetValues(Roster);
+                                //db.Entry(existdata).CurrentValues.SetValues(Roster);
+                                db.InsertUpdateRoster(Roster, false);
+
                             }
                         }
 
-                        db.SaveChanges();
+
+                       // db.SaveChanges();
 
                         ModelState.Clear();
 
@@ -146,6 +159,7 @@ namespace BusinessExcel.Controllers
             }
             else
             {
+              
                 return PartialView(Roster);
             }
           
@@ -200,9 +214,13 @@ namespace BusinessExcel.Controllers
                     ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(Filters.LocationID);
                 }
 
+            if (!string.IsNullOrEmpty(Filters.TargetID))
+                using (var db = new SalesManageDataContext())
+                {
+                    ViewData[SELECTED_FILTED_TARTET] = db.getTargetDetail(Filters.TargetID);
+                }
 
-
-           // ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(Filters.Location);
+            // ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(Filters.Location);
 
             //if ((Filters.StartDate))
             //    using (var db = new SalesManageDataContext())
