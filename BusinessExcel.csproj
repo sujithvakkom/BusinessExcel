@@ -183,18 +183,6 @@
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\ActionViewFilters.Roster.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
-    <Compile Include="Models\ChartJs\Axes.cs" />
-    <Compile Include="Models\ChartJs\chart.cs" />
-    <Compile Include="Models\ChartJs\ChartType.cs" />
-    <Compile Include="Models\ChartJs\data.cs" />
-    <Compile Include="Models\ChartJs\datasets.cs" />
-    <Compile Include="Models\ChartJs\layout.cs" />
-    <Compile Include="Models\ChartJs\legend.cs" />
-    <Compile Include="Models\ChartJs\options.cs" />
-    <Compile Include="Models\ChartJs\padding.cs" />
-    <Compile Include="Models\ChartJs\scales.cs" />
-    <Compile Include="Models\ChartJs\ticks.cs" />
-    <Compile Include="Models\ChartJs\tooltips.cs" />
     <Compile Include="Models\ConstantUsages.cs" />
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
@@ -615,6 +603,7 @@
     <Content Include="Views\Delivery\DeliveryIndex.cshtml" />
     <Content Include="Views\Report\TargetAchievementActions.cshtml" />
     <Content Include="Views\Report\TargetAchievementView.cshtml" />
+    <Content Include="Views\Roster\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -679,6 +668,7 @@
     <Content Include="Views\Shared\_MainFooterAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="API\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
