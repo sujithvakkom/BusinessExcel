@@ -21,6 +21,12 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Display(Name = "User")]
         public string user_name { get; set; }
 
+        //[Required]
+        // [Key, Column(Order = 1)]
+        [Display(Name = "User ID")]
+        public int user_id { get; set; }
+
+
 
         [Required]
        // [Key, Column(Order = 2)]
@@ -43,7 +49,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
        
         // [Key, Column(Order = 1)]
-        [Display(Name = "Target")]
+        [Display(Name = "Target Amt")]
         public string target_amt { get; set; }
 
 
@@ -54,6 +60,13 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
        
         public string location_name { get; set; }
+
+
+        [Required]
+        // [Key, Column(Order = 1)]
+        [Display(Name = "Target Id")]
+        public Int32? target_id { get; set; }
+
 
     }
 }

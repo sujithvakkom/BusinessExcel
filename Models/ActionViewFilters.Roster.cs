@@ -23,5 +23,9 @@ namespace BusinessExcel.Models
         public string Target { get; set; }
 
 
+
+        [Display(Name = "Target ID")]
+        public string TargetID { get; set; }
+
     }
 }
