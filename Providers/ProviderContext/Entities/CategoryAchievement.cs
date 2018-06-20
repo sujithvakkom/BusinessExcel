@@ -20,22 +20,28 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Column("display_name", Order = 3)]
         public string display_name { get; set; }
 
-        [Column("target_id", Order = 4)]
+        [Column("location_name", Order = 4)]
+        public string location_name { get; set; }
+
+        [Column("date", Order = 5)]
+        public string date { get; set; }
+
+        [Column("target_id", Order = 6)]
         public int target_id { get; set; }
 
-        [Column("category_id", Order = 5)]
+        [Column("category_id", Order = 7)]
         public int category_id { get; set; }
 
-        [Column("description", Order = 6)]
+        [Column("description", Order = 8)]
         public string description { get; set; }
 
-        [Column("sum_value", Order = 7)]
+        [Column("sum_value", Order = 9)]
         public decimal sum_value { get; set; }
 
-        [Column("target_value", Order = 8)]
+        [Column("target_value", Order = 10)]
         public decimal target_value { get; set; }
 
-        [Column("achievent_pct", Order = 9)]
+        [Column("achievent_pct", Order = 11)]
         public decimal achievent_pct { get; set; }
     }
 }

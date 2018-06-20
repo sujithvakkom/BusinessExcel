@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BusinessExcel.Providers.ProviderContext
 {
-    public class UsersContext : DbContext
+    public partial class UsersContext : DbContext
     {
         public UsersContext() 
             : base("BusinessExcelData")
