@@ -23,11 +23,11 @@
 <section class="content">
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Merchant Actions</h3>
+            <h3 class="box-title">@ReportController.CATEGORYACHIEVEMENT_TITLE</h3>
         </div>
         <div class="box-body">
 
-            <div id="table-daily-upate-view" class="table-responsive">
+            <div id="table-cat_ach-view" class="table-responsive">
                 @{
 
                     using (var db = new SalesManageDataContext())
@@ -38,14 +38,15 @@
                         };
 
                         int count = 0;
-                        IQueryable<DailyUpateView> data = db.getCategoryAchievement(pageNumber: ViewBag.DailyUpateViewPage,
-                                    pageSize: 20,
-                                    sort: ViewBag.DailyUpateViewSort,
-                                    sortdir: ViewBag.DailyUpateViewDir,
-                                    count: out count
-                                    );
-                        var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
-                            ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 20
+                        List<CategoryAchievement> data = db.getCategoryAchievement(pageNumber: ViewBag.DailyUpateViewPage,
+                                            pageSize: 20,
+                                            sort: ViewBag.DailyUpateViewSort,
+                                            sortdir: ViewBag.DailyUpateViewDir,
+                                            count: out count
+                                            );
+                        var grid = new WebGrid(ajaxUpdateContainerId: "table-cat_ach-view",
+                            ajaxUpdateCallback: "load_script", 
+                            rowsPerPage: 20
                             );
                         grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                         @grid.GetHtml(
@@ -55,12 +56,22 @@
                                grid.Column(columnName:"user_name",
                                header:Html.AdminLTESorter("user_name","User",grid),
                                format:(item)=>@Html.AdminLTEParagraph((string)@item.user_name),
-                               style:"name",canSort:true),
+                               style:"user-name",canSort:true),
 
                                grid.Column(columnName:"display_name",
                                header:"User Name",
                                format:(item)=>@Html.AdminLTEParagraph((string)@item.display_name),
-                               style:"user-name",canSort:false),
+                               style:"name",canSort:false),
+
+                               grid.Column(columnName:"location_name",
+                               header:"Location Name",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.location_name),
+                               style:"name",canSort:false),
+
+                               grid.Column(columnName:"date",
+                               header:"Month/Year",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.date),
+                               style:"name",canSort:false),
 
                                grid.Column(columnName:"description",header:"Description",
                                format:(item)=>@Html.AdminLTEParagraph((string)@item.description),
@@ -77,8 +88,9 @@
 
                                grid.Column(columnName:"achievent_pct",
                                header:"Achievement (%)",
-                               format:x=>string.Format("{0:0.00}",x.achievent_pct),
-                               style:"values",canSort:false)
+                               format: @<span>@string.Format("{0:0.00}",item.achievent_pct)<input type="hidden" name="category_id" class="category_id" value="@item.category_id" /></span>,
+                               style: "values",
+                               canSort:false)
                            },
                            footerStyle: "extra-table-pager"
                            )
@@ -93,5 +105,30 @@
             </div>
         </div>
     </div>
+    <script>
 
+        $(document).ready(function () {
+
+            $("#table-cat_ach-view tbody tr").each(function (i, row) {
+                var $actualRow = $(row);
+                if ($actualRow.find('input.category_id[type=hidden]').val() == '-1') {
+                    $actualRow.css('background-color', '#918868');
+                    $actualRow.css('color', '#ffffff');
+                    $actualRow.css('font-weight', 'bold');
+                }
+
+            });
+        });
+        function load_script() {
+            $("#table-cat_ach-view tbody tr").each(function (i, row) {
+                var $actualRow = $(row);
+                if ($actualRow.find('input.category_id[type=hidden]').val() == '-1') {
+                    $actualRow.css('background-color', '#918868');
+                    $actualRow.css('color', '#ffffff');
+                    $actualRow.css('font-weight', 'bold');
+                }
+
+            });
+        }
+    </script>  
 </section><!-- /.content -->

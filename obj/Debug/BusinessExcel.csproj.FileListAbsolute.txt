@@ -218,6 +218,7 @@ C:\WORKS\BusinessExcel\bin\WebMatrix.WebData.xml
 C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.pdb
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\BusinessExcel.dll.config
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\BusinessExcel.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\BusinessExcel.pdb
@@ -266,6 +267,5 @@ C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\WebMatrix.Data.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\WebMatrix.WebData.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\HtmlAgilityPack.pdb
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\HtmlAgilityPack.xml
-C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.pdb
