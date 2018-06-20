@@ -1,0 +1,79 @@
+﻿
+@using BusinessExcel.Models
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+
+@model TargetViewFilters
+
+
+
+
+<section class="content-header">
+    <h1>
+        @BusinessExcel.Controllers.TargetController.TARGET_TITLE
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Manager</a></li>
+        <li class="active">Manager Panel</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Your Page Content Here -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" id="targer_master-form">
+                <div class="box-body" style="padding:10px">
+                    <div id="target-master-creation-form">
+                        @Html.Partial(BusinessExcel.Controllers.TargetController.AJAXCREATETARGETMASTER,
+                       new TargetMaster()
+                       {
+
+                           target_id = 0,
+                           description=null,
+                           incentive_pct=0
+
+
+                       })
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    @*<div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" id="target-detail-form">
+                <div class="box-body" style="padding:10px">
+                    <div id="target-details-creation-form">
+                        @Html.Action(BusinessExcel.Controllers.TargetController.TARGELIST
+                      )
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>*@
+
+    
+
+</section><!-- /.content -->
+
+
+

@@ -49,7 +49,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
        
         // [Key, Column(Order = 1)]
-        [Display(Name = "Target Amt")]
+        [Display(Name = "Roster Target Amt")]
         public string target_amt { get; set; }
 
 
@@ -64,7 +64,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
         [Required]
         // [Key, Column(Order = 1)]
-        [Display(Name = "Target Id")]
+        [Display(Name = "Target")]
         public Int32? target_id { get; set; }
 
 

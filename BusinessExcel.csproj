@@ -174,6 +174,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
+    <Compile Include="Controllers\JSON\JSON.CategoryAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.LocationAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RosterController.cs" />
+    <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\ActionViewFilters.Roster.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
@@ -207,9 +209,14 @@
     <Compile Include="Models\RoleContext.cs" />
     <Compile Include="Models\RoleDefine.cs" />
     <Compile Include="Models\RolesName.cs" />
+    <Compile Include="Models\TargetViewFilters.cs" />
+    <Compile Include="Models\TargetViewModel.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetDetails.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\TargetMasterDetails.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetAchievementView .cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemDetails.cs" />
     <Compile Include="Providers\ProviderContext\Entities\DailyUpateView.cs" />
@@ -218,6 +225,9 @@
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetAchievementView.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.RosterList.cs" />
@@ -617,6 +627,11 @@
     <Content Include="Views\Delivery\DeliveryIndex.cshtml" />
     <Content Include="Views\Report\TargetAchievementActions.cshtml" />
     <Content Include="Views\Report\TargetAchievementView.cshtml" />
+    <Content Include="Views\Target\Target.cshtml" />
+    <Content Include="Views\Target\TableTargetUpateView.cshtml" />
+    <Content Include="Views\Target\AjaxCreateTargetMaster.cshtml" />
+    <Content Include="Views\Target\AjaxCreateTargetDetails.cshtml" />
+    <Content Include="Views\Target\TargetList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

@@ -10,15 +10,16 @@ namespace BusinessExcel.Controllers.JSON
 {
     public partial class JSONController : Controller
     {
-        public static string TARGETAUTOCOMPLETER = "TargetAutoCompleter";
-        public JsonResult TargetAutoCompleter(String Search,int Page)
+        
+        public static string CATEGORYAUTOCOMPLETER = "CategoryAutoCompleter";
+        public JsonResult CategoryAutoCompleter(String Search,int Page)
         {
             JsonResult res = null;
             using (var db = new SalesManageDataContext()) {
                 int temp;
 
-                var items = db.getTargetDetails(search: Search, Page: Page,RowCount:out temp);
-                JSONPagininationModel<TargetMasterDetails> model = new JSONPagininationModel<TargetMasterDetails>();
+                var items = db.getCategoryDetails(search: Search, Page: Page,RowCount:out temp);
+                JSONPagininationModel<CategoryDetail> model = new JSONPagininationModel<CategoryDetail>();
                 model.CountPerPage = 20;
                 model.OutputList = items;
                 model.Count = temp;

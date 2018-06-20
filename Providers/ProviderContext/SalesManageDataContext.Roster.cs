@@ -94,7 +94,7 @@ where roster_id=@roster_id";
 
             return isInsertUpdate;
         }
-        public virtual TargetDetails getTargetDetail(string target_id)
+        public virtual TargetMasterDetails getTargetDetail(string target_id)
         {
             const string SELECT_TARGET = @"select target_id, 
                                                 description
@@ -106,15 +106,15 @@ where roster_id=@roster_id";
                   new SqlParameter("@target_id", target_id) :
                   new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            TargetDetails detail =
-                this.Database.SqlQuery<TargetDetails>(SELECT_TARGET, user_name).ToList()[0];
+            TargetMasterDetails detail =
+                this.Database.SqlQuery<TargetMasterDetails>(SELECT_TARGET, user_name).ToList()[0];
             return detail;
         }
 
 
-        public virtual List<TargetDetails> getTargetDetails(string search, int Page, out int RowCount)
+        public virtual List<TargetMasterDetails> getTargetDetails(string search, int Page, out int RowCount)
         {
-            List<TargetDetails> items = new List<TargetDetails>();
+            List<TargetMasterDetails> items = new List<TargetMasterDetails>();
             var description = search != null ?
                   new SqlParameter("@filter", search) :
                   new SqlParameter("@filter", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
@@ -136,7 +136,7 @@ where roster_id=@roster_id";
             row_count.Direction = System.Data.ParameterDirection.Output;
             try
             {
-                items = this.Database.SqlQuery<TargetDetails>(
+                items = this.Database.SqlQuery<TargetMasterDetails>(
                                                 "[sc_salesmanage_user].[getTargetDetails] @filter ,@page_number ,@page_size ,@row_count OUTPUT", description, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);

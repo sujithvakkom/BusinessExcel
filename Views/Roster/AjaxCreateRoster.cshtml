@@ -55,7 +55,7 @@
                                 IsAutoComplete = true,
                                 SelectItems = null
                             },
-                            showLabel: false)
+                            showLabel: true)
 
         <div class="col-md-4">
 
@@ -68,7 +68,7 @@
                  htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
                        htmlGlyphiconsAttributes: null,
                        glyphiconsName: "fa fa-calendar",
-                       showLabel: false,
+                       showLabel: true,
                        hasValidation: true,
                        showGlyphicons: true)
         </div>
@@ -95,7 +95,7 @@
                                 IsAutoComplete = true,
                                 SelectItems = null
                             },
-                            showLabel: false)
+                            showLabel: true)
 
        
     </div>
@@ -128,7 +128,7 @@
                                 IsAutoComplete = true,
                                 SelectItems = null
                             },
-                            showLabel: false)
+                            showLabel: true)
 
         
 
@@ -140,23 +140,29 @@
                        null,
                        null,
                        "",
-                       false,
+                       true,
                        true,
                        true)
 
+
         </div>
 
 
 
-        <div class="col-md-1">
-            <button type="submit" class="btn btn-primary " id="btnAdd">Add New</button>
-        </div>
+       
 
         @Html.HiddenFor(x => x.u_name, new { id = "u_name" })
         @Html.HiddenFor(x => x.location_name, new { id = "location_name" })
         @Html.HiddenFor(x => x.roster_id, new { id = "roster_id" })
     </div>
 
+    <div class="row">
+        <div class="col-md-1">
+
+            <button type="submit" class="btn btn-primary " id="btnAdd">Add New</button>
+
+        </div>
+    </div>
 
             <br />
             <div id="loadingMess" style="z-index: 999;position:relative; "></div>
