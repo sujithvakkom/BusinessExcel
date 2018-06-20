@@ -1,0 +1,97 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
+
+@model ActionViewFilters
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @BusinessExcel.Controllers.ReportController.ACTIONS_TITLE
+        <small>Report</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.ReportController.REPORTCONTROLLER</a></li>
+        <li class="active">@BusinessExcel.Controllers.ReportController.ACTIONS_TITLE</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Merchant Actions</h3>
+        </div>
+        <div class="box-body">
+
+            <div id="table-daily-upate-view" class="table-responsive">
+                @{
+
+                    using (var db = new SalesManageDataContext())
+                    {
+                        WebGridColumn col = new WebGridColumn()
+                        {
+
+                        };
+
+                        int count = 0;
+                        IQueryable<DailyUpateView> data = db.getCategoryAchievement(pageNumber: ViewBag.DailyUpateViewPage,
+                                    pageSize: 20,
+                                    sort: ViewBag.DailyUpateViewSort,
+                                    sortdir: ViewBag.DailyUpateViewDir,
+                                    count: out count
+                                    );
+                        var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
+                            ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 20
+                            );
+                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                        @grid.GetHtml(
+                           tableStyle: "table table-striped table-bordered be-pagination-spl",
+                           htmlAttributes: new { @id = "example" },
+                           columns: new[] {
+                               grid.Column(columnName:"user_name",
+                               header:Html.AdminLTESorter("user_name","User",grid),
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.user_name),
+                               style:"name",canSort:true),
+
+                               grid.Column(columnName:"display_name",
+                               header:"User Name",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.display_name),
+                               style:"user-name",canSort:false),
+
+                               grid.Column(columnName:"description",header:"Description",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.description),
+                               style:"location",canSort:false),
+
+                               grid.Column(columnName:"sum_value",header:"Achievement",
+                               format:x=>string.Format("{0:0.00}",x.sum_value),
+                               style:"quantity",canSort:false),
+
+                               grid.Column(columnName:"target_value",
+                               header:"Target",
+                               format:x=>string.Format("{0:0.00}",x.target_value),
+                               style:"values",canSort:false),
+
+                               grid.Column(columnName:"achievent_pct",
+                               header:"Achievement (%)",
+                               format:x=>string.Format("{0:0.00}",x.achievent_pct),
+                               style:"values",canSort:false)
+                           },
+                           footerStyle: "extra-table-pager"
+                           )
+
+                        @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                           nextText: "NEXT",
+                           firstText: "FIRST",
+                           previousText: "PREV.",
+                           lastText: "LAST")
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+</section><!-- /.content -->

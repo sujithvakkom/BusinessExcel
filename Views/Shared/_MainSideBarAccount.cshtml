@@ -1,4 +1,4 @@
-﻿@model UserProfile
+﻿    @model UserProfile
 
 @using BootstrapHtmlHelper
 @using BusinessExcel.Models
@@ -147,6 +147,23 @@
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-tasks")
+
+
+                            @Ajax.AjaxAdminLTEActionLink(
+                   linkText: BusinessExcel.Controllers.ReportController.CATEGORYACHIEVEMENT_TITLE,
+                   actionName: BusinessExcel.Controllers.ReportController.CATEGORYACHIEVEMENT,
+                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success();{0}",
+                       OnComplete = "ajax_call_load_complete()",
+                       OnFailure = "loadin_failed"
+                   },
+                   isNavSideBar: true,
+                   carrot: "fa fa-tasks")
+
                             @Ajax.AjaxAdminLTEActionLink(
                    linkText: "Loading Error.",
                    actionName: "Test",

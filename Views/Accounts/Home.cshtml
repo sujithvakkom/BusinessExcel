@@ -1,76 +1,85 @@
 ﻿@using BusinessExcel.Models
 @using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers
 @model UserProfile
 
 
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            @BusinessExcel.Controllers.AccountsController.WELCOME_TITLE
-            <small>Home</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Account</a></li>
-            <li class="active">Home</li>
-        </ol>
-    </section>
-    <!-- Main content -->
-    <section class="content">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @BusinessExcel.Controllers.AccountsController.WELCOME_TITLE
+        <small>Home</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Account</a></li>
+        <li class="active">Home</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
     <!-- Your Page Content Here -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.2/dist/Chart.bundle.min.js"></script>
-        <div class="col-lg-6">
-            <div class="box box-primary" id="change-user-name-form">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Summary</h3>
+    <div class="col-lg-6">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs pull-right">
+                <li class="active"><a href="#tab_qty_graph" data-toggle="tab">Graph</a></li>
+                <li>
+                    <a href="#tab_qty_data" data-toggle="tab">Data</a>
+                </li>
+                <li class="pull-left header"><i class="fa fa-bar-chart"></i>Quantity summary (current month)</li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_qty_graph">
+                    <canvas id="myQtyHomeChart"></canvas>
                 </div>
-                <div class="box-body">
-                    <canvas id="myChart"></canvas>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_qty_data">
+                    @Html.Partial(AccountsController.TABLE_FOR_CURRENT_MONTH_QUANTITY, new DateTimeSpan() { StartDate=ViewBag.StartDate, EndDate = ViewBag.EndDate })
                 </div>
+                <!-- /.tab-pane -->
             </div>
+            <!-- /.tab-content -->
         </div>
-    
-    <script>
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                datasets: [{
-                    label: 'Test 1',
-                    stack: 'A',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: ['rgba(255, 99, 132, 0.5)'],
-                    borderColor: ['rgba(255, 99, 132, 1)'],
-                    borderWidth: 1
-                },
-                {
-                    label: 'Test 2',
-                    stack: 'A',
-                    data: [15, 18, 10, 5, 4, 3],
-                    backgroundColor: ['rgba(255, 99, 132, 0.5)'],
-                    borderColor: ['rgba(255, 99, 132, 1)'],
-                    borderWidth: 1
-                },
-                {
-                    label: 'Test 3',
-                    stack: 'A',
-                    data: [8, 15, 6, 8, 7, 6],
-                    backgroundColor: ['rgba(255, 99, 132, 0.5)'],
-                    borderColor: ['rgba(255, 99, 132, 1)'],
-                    borderWidth: 1
-                }
-                ]
-            },
-            options: {
-            scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-            }
-            }
-        });
-    </script>
-</section><!-- /.content -->
+    </div>
 
+    <div class="col-lg-6">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs pull-right">
+                <li class="active"><a href="#tab_value_graph" data-toggle="tab">Graph</a></li>
+                <li><a href="#tab_valu_data" data-toggle="tab">Data</a></li>                        </li>
+                <li class="pull-left header"><i class="fa fa-pie-chart"></i>Value summary (current month)</li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_value_graph">
+                    <canvas id="myValueHomeChart"></canvas>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_valu_data">
+                    @Html.Partial(AccountsController.TABLE_FOR_CURRENT_MONTH_VALUE, new DateTimeSpan() { StartDate = ViewBag.StartDate, EndDate = ViewBag.EndDate })
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById("myQtyHomeChart").getContext('2d');
+        var graph =@Html.Raw(Json.Encode(ViewBag.QtyGraph));
+        var myChart = new Chart(ctx,
+            graph
+        );
+    </script>
+
+    <script>
+        var ctx = document.getElementById("myValueHomeChart").getContext('2d');
+        var graph =@Html.Raw(Json.Encode(ViewBag.ValueGraph));
+        var myChart = new Chart(ctx,
+            graph
+        );
+    </script>
+
+
+</section><!-- /.content -->
