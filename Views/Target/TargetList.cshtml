@@ -104,9 +104,11 @@
             </div>
           
             <div class="col-md-2" style="margin-top:2%">
-                <input id="btnAddBook" type="button"  class="btn  btn-info"
-                       onclick="addRow();" value="Add To List" />
-            </div>
+                <div class="pull-right">
+                    <input id="btnAddBook" type="button" class="btn  btn-info"
+                           onclick=" addRow();" value="Add To List" />
+                    </div>
+                </div>
 
             @*<div class="col-md-1" style="margin-top:2.4%">
 
@@ -122,22 +124,30 @@
             @*<input id="btnAddBook" type="button"
                    onclick="addRow();" value="Add" />*@
         </div>
-        <table id="Tabtarget"  >
-            <thead style="background-color:cornflowerblue">
-                <tr>
-                    <td>
-                        Category
-                    </td>
-                    <td>
-                        Target Amount
-                    </td>
-                    <td style="align-content:center">
-                       Has Bonus
-                    </td>
-                </tr>
-            </thead>
-            <tbody id="targetlist"></tbody>
-        </table>
+
+        <div class="row">  
+            <div class="col-md-10">
+                <table id="Tabtarget"  >
+                    <thead style="background-color:#a5a8ad;font-weight:bold">
+                        <tr>
+                            <td>
+                                Category
+                            </td>
+                            <td>
+                                Target Amount
+                            </td>
+                            <td >
+                               Has Bonus
+                            </td>
+                            <td style="width:10%">
+                        
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody id="targetlist"></tbody>
+                </table>
+                </div>
+            </div>
         @*<p>
             <input type="button" value="Sumbit"  class="create"/>
         </p>*@
@@ -173,25 +183,49 @@
 }
 
 <style type="text/css">
+
     #Tabtarget {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#Tabtarget td, #Tabtarget th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+
+
+/*#Tabtarget tr:hover {background-color: #ddd;}*/
+
+#Tabtarget th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+    /*#Tabtarget {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-   width:60%;
+   width:100%;
 }
 
 #Tabtarget  td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 2px;
-}
-
-/*#Tabtarget  tr:nth-child(even) {
-    background-color: #dddddd;
 }*/
+
 
 #Tabtarget input {
     border: 0;
 }
+
+
+
+
 </style>
 
 <script type="text/javascript">
@@ -210,10 +244,53 @@
 
     function addRow() {
        
-          @{
+        @{
             //  Model.TargetListsDetails.Add(new TargetDetails());
           }
+
+
+        var table = document.getElementById("targetlist");
+
+        var curOd = $('#category_id').val();
         var amt = $('#value').val();
+
+        if (curOd <= 0)
+        {
+            alert("Please select category");
+           
+            return false;
+        }
+       if (amt<=0)
+        {
+           alert("Please enter target amount");
+           $('#value').focus();
+            return false;
+        }
+       
+        for (var i = 0; i < table.rows.length; i++) {
+            if( table.rows[i].cells[1].childNodes[0].value==curOd )
+            {
+                alert("Given category already addedd");
+                return false;
+            }
+          
+           
+        }
+       
+        
+    
+        
+        //if (check_value == pid) {
+        //    console.log("ID exist")
+        //}
+        //else {
+        //    console.log("Not exist");
+        //}
+
+
+
+
+        //var amt = $('#value').val();
         // alert($('#has_bonus').is(':checked'));
         
     
@@ -247,6 +324,18 @@
         var newRow = "<tr id='trBook" + index + "'>" + indexCell + categoryIdCell + CategoryCell + amtCell + bonusCell + removeCell + "</tr>";
  
         $("#targetlist").append(newRow);
+
+
+       // $('#ctgName').val('');
+
+       
+        $('#value').val(0);
+
+        // i$('#has_bonus').val(false);
+
+       
+        //$('#category_id').val('-1');
+       // $('#category_id').selectedIndex = 1;
     }
 
     function removeRow(id) {
