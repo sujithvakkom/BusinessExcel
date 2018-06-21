@@ -88,7 +88,8 @@
 
                                grid.Column(columnName:"achievent_pct",
                                header:"Achievement (%)",
-                               format: @<span>@string.Format("{0:0.00}",item.achievent_pct)<input type="hidden" name="category_id" class="category_id" value="@item.category_id" /></span>,
+                               format: @<span>@string.Format("{0:0.00}",item.achievent_pct)<input type="hidden" name="category_id" class="category_id" value="@item.category_id" />
+                <input type="hidden" name="achievent_pct" class="achievent_pct" value="@item.achievent_pct" /></span>,
                                style: "values",
                                canSort:false)
                            },
@@ -108,16 +109,7 @@
     <script>
 
         $(document).ready(function () {
-
-            $("#table-cat_ach-view tbody tr").each(function (i, row) {
-                var $actualRow = $(row);
-                if ($actualRow.find('input.category_id[type=hidden]').val() == '-1') {
-                    $actualRow.css('background-color', '#918868');
-                    $actualRow.css('color', '#ffffff');
-                    $actualRow.css('font-weight', 'bold');
-                }
-
-            });
+            load_script();
         });
         function load_script() {
             $("#table-cat_ach-view tbody tr").each(function (i, row) {
@@ -126,6 +118,14 @@
                     $actualRow.css('background-color', '#918868');
                     $actualRow.css('color', '#ffffff');
                     $actualRow.css('font-weight', 'bold');
+                    $actualRow.css('border-bottom', '3px solid #247124');
+                }
+                if ($actualRow.find('input.achievent_pct[type=hidden]').val() < 100) {
+                    $actualRow.css('color', '#801515');
+                    $actualRow.css('font-weight', 'bold');
+                    $actualRow.css('font-style', 'italic');
+                }
+                else {
                 }
 
             });

@@ -216,6 +216,7 @@
     <Compile Include="Models\TargetViewModel.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetMaster.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetDetails.cs" />
