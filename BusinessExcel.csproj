@@ -184,6 +184,7 @@
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RosterController.cs" />
+    <Compile Include="Controllers\TargetController.TargetTemplet.cs" />
     <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\ActionViewFilters.Roster.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Models\TargetViewModel.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetMaster.cs" />
@@ -229,9 +231,11 @@
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetTemplet.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetAchievementView.cs" />
@@ -639,6 +643,8 @@
     <Content Include="Views\Target\TargetList.cshtml" />
     <Content Include="Views\Report\CategoryAchievement.cshtml" />
     <Content Include="Views\Report\TableCategoryAchievementView.cshtml" />
+    <Content Include="Views\Target\TargetTemplate.cshtml" />
+    <Content Include="Views\Target\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

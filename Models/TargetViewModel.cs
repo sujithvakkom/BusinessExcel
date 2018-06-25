@@ -9,7 +9,7 @@ namespace BusinessExcel.Models
 {
     public class TargetViewModel
     {
-        public List<TargetDetails> TargetListsDetails { get; set; }
+        public List<TargetDetail> TargetListsDetails { get; set; }
 
 
         [Display(Name = "Target Id")]

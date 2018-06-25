@@ -11,7 +11,7 @@
     <title>@ViewBag.Title</title>
     <link rel="shortcut icon" href="../../Images/gs_icon.ico" />
     <script>
-      var  paceOptions = {
+        var paceOptions = {
             ajax: true, // disabled
             document: false, // disabled
             eventLag: false, // disabled
@@ -156,7 +156,7 @@
                 lg: 1200
             }
         }
-        
+
     </script>
     @RenderSection("scripts", required: false)
     <script>
@@ -166,92 +166,106 @@
             }
         })
 
-       
-
         $(document).ajaxStart(function () {
             //Pace.restart();
         })
-        function ajax_call_load_success(data) {
-            }
+        function ajax_call_load_success(data, status, xhr, url) {
 
-        function ajax_call_load_complete(data) {
+            //xhr - the ajax response
+            //status - the response text, ex. "success"
+            //entityName - your custom argument, in this example 'Person'
+
+            //url is the var for the new URL we would normally be going to (if we wasnt AJAXING)
+
+            //get current URL and remove domain name.
+            nohttp = url.replace("http://", "").replace("https://", "");
+            firstsla = nohttp.indexOf("/");
+            pathpos = url.indexOf(nohttp);
+            path = url.substring(pathpos + firstsla);
+
+            //Create a state object for tracking the history (this is passed back later)
+            var stateObj = { foo: 1000 + Math.random() * 1001 };
+            history.pushState(stateObj, "ajax page loaded...", path);
             try {
                 viewInit();
             }
             catch (err) { }
         }
-        
-            function viewInit() {
-                $(window).trigger('resize');
-                $('.box').boxWidget();
-                $(":input").inputmask();
-                $.validator.unobtrusive.parse('form');
-            }
-            function move(myBar) {
-            
-            }
-            function loadin_failed(data) {
-                var style ='<style>'
-                    + '#server_error_message body {font-family:"Verdana";font-weight:normal;font-size: .7em;color:black;} '
-                    + '#server_error_message p {font-family:"Verdana";font-weight:normal;color:black;margin-top: -5px}'
-                    + '#server_error_message b {font-family:"Verdana";font-weight:bold;color:black;margin-top: -5px}'
-                    + '#server_error_message H1 { font-family:"Verdana";font-weight:normal;font-size:18pt;color:red }'
-                    + '#server_error_message H2 { font-family:"Verdana";font-weight:normal;font-size:14pt;color:maroon }'
-                    + '#server_error_message pre {font-family:"Consolas","Lucida Console",Monospace;font-size:11pt;margin:0;padding:0.5em;line-height:14pt}'
-                    + '#server_error_message .marker {font-weight: bold; color: black;text-decoration: none;}'
-                    + '#server_error_message .version {color: gray;}'
-                    + '#server_error_message .error {margin-bottom: 10px;}'
-                    + '#server_error_message .expandable { text-decoration:underline; font-weight:bold; color:navy; cursor:hand; }'
-                    + '@@media screen and (max-width: 639px) {'
-                    + 'pre { width: 440px; overflow: auto; white-space: pre-wrap; word-wrap: break-word; }'
-                    + '}'
-                    + '@@media screen and (max-width: 479px) {'
-                    + 'pre { width: 280px; }'
-                    + '}'
-                    + '</style>'
-                var responce =
-                    data.responseText.replace(/<style>[\s\S]*?<\/style>/g, style)
-                var message = '<div id="server_error_message"><p>'
-                    + '<a class="btn btn-link" data-toggle="collapse" href="#error-message-ajax" role="button" aria-expanded="false" aria-controls="collapseExample">'
-                    + data.status
-                    + ' '
-                    + data.statusText
-                    + '</a></p>'
-                    + '<div class="collapse" id="error-message-ajax">'
-                    + '<div class="card card-body">'
-                    + responce
-                    + '</div></div>'
-                    + '</div>'
-                $('#loading-failure-body').html(message)
-                //$('.collapse').collapse()
-                $('#loading-failure').modal();
-            }
 
-            function set_this_active(me) {
-                try {
-                    $('.sidebar li').each(function () {
-                            $(this).removeClass('active')
-                    })
-                }
-                catch (err) { }
-                $('#'+me).addClass('active')
-                try {
-                    $('.treeview').each(function (name, value) {
+        function ajax_call_load_complete(xhr, status) {
+        }
 
-                        var x = $(value).find('#' + me)
-                        if (x.length !== 0) {
-                            $(value).addClass('active')
-                            $(value).addClass('menu-open')
-                        }
-                        else {
-                            $(value).removeClass('menu-open')
-                        }
-                    })
-                }
-                catch (err) {
-                    alert("Error "+err)
-                }
+        function viewInit() {
+            $(window).trigger('resize');
+            $('.box').boxWidget();
+            $(":input").inputmask();
+            $.validator.unobtrusive.parse('form');
+        }
+        function move(myBar) {
+
+        }
+        function loadin_failed(data) {
+            var style = '<style>'
+                + '#server_error_message body {font-family:"Verdana";font-weight:normal;font-size: .7em;color:black;} '
+                + '#server_error_message p {font-family:"Verdana";font-weight:normal;color:black;margin-top: -5px}'
+                + '#server_error_message b {font-family:"Verdana";font-weight:bold;color:black;margin-top: -5px}'
+                + '#server_error_message H1 { font-family:"Verdana";font-weight:normal;font-size:18pt;color:red }'
+                + '#server_error_message H2 { font-family:"Verdana";font-weight:normal;font-size:14pt;color:maroon }'
+                + '#server_error_message pre {font-family:"Consolas","Lucida Console",Monospace;font-size:11pt;margin:0;padding:0.5em;line-height:14pt}'
+                + '#server_error_message .marker {font-weight: bold; color: black;text-decoration: none;}'
+                + '#server_error_message .version {color: gray;}'
+                + '#server_error_message .error {margin-bottom: 10px;}'
+                + '#server_error_message .expandable { text-decoration:underline; font-weight:bold; color:navy; cursor:hand; }'
+                + '@@media screen and (max-width: 639px) {'
+                + 'pre { width: 440px; overflow: auto; white-space: pre-wrap; word-wrap: break-word; }'
+                + '}'
+                + '@@media screen and (max-width: 479px) {'
+                + 'pre { width: 280px; }'
+                + '}'
+                + '</style>'
+            var responce =
+                data.responseText.replace(/<style>[\s\S]*?<\/style>/g, style)
+            var message = '<div id="server_error_message"><p>'
+                + '<a class="btn btn-link" data-toggle="collapse" href="#error-message-ajax" role="button" aria-expanded="false" aria-controls="collapseExample">'
+                + data.status
+                + ' '
+                + data.statusText
+                + '</a></p>'
+                + '<div class="collapse" id="error-message-ajax">'
+                + '<div class="card card-body">'
+                + responce
+                + '</div></div>'
+                + '</div>'
+            $('#loading-failure-body').html(message)
+            //$('.collapse').collapse()
+            $('#loading-failure').modal();
+        }
+
+        function set_this_active(me) {
+            try {
+                $('.sidebar li').each(function () {
+                    $(this).removeClass('active')
+                })
             }
+            catch (err) { }
+            $('#' + me).addClass('active')
+            try {
+                $('.treeview').each(function (name, value) {
+
+                    var x = $(value).find('#' + me)
+                    if (x.length !== 0) {
+                        $(value).addClass('active')
+                        $(value).addClass('menu-open')
+                    }
+                    else {
+                        $(value).removeClass('menu-open')
+                    }
+                })
+            }
+            catch (err) {
+                alert("Error " + err)
+            }
+        }
     </script>
 
     @RenderSection("extraScripts", false)
