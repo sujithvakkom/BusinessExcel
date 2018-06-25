@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace BusinessExcel.Controllers
 {
-    public class TargetController : Controller
+    public partial class TargetController : Controller
     {
         //
         // GET: /Target/
@@ -191,12 +191,12 @@ namespace BusinessExcel.Controllers
         //
         // GET: /Author/
         //[NonAction]
-        public static List<TargetDetails> TargetListD()
+        public static List<TargetDetail> TargetListD()
         {
-            List<TargetDetails> users = new List<TargetDetails>()
+            List<TargetDetail> users = new List<TargetDetail>()
             {
-              new TargetDetails (){ value=100,has_bonus=true },
-              new TargetDetails (){ value=600,has_bonus=true},
+              new TargetDetail (){ Value=100,HasBonus=true },
+              new TargetDetail (){ Value=600,HasBonus=true},
             };
             return users;
         }
@@ -206,13 +206,13 @@ namespace BusinessExcel.Controllers
         {
 
             TargetViewModel objstudentmodel = new TargetViewModel();
-            objstudentmodel.TargetListsDetails = new List<TargetDetails>();
+            objstudentmodel.TargetListsDetails = new List<TargetDetail>();
 
             //// List<TargetDetails> emp = new List<TargetDetails>();
             //// emp.Add(new TargetDetails { value = list.value, has_bonus = list.has_bonus, category_id = list.category_id, target_id = list.target_id, model_id = list.model_id, target_qty = list.target_qty, target_line_id = list.target_line_id,});
 
             //objstudentmodel.TargetListsDetails.Add(new TargetDetails { value = 100, has_bonus = true, category_id = 1, target_id = 1, model_id = 1, target_qty = 0, target_line_id = 1 });
-            objstudentmodel.TargetListsDetails.Add(new TargetDetails { value = 6002, has_bonus = true, category_id = 1, target_id = 1, model_id = 1, target_qty = 0, target_line_id = 1 });
+            objstudentmodel.TargetListsDetails.Add(new TargetDetail { Value = 6002, HasBonus = true, CategoryID = 1, Achievement = 1, ModelID = 1, TargetID = 0, TargetLineID = 1 });
             return View(objstudentmodel);
         }
 
@@ -235,7 +235,7 @@ namespace BusinessExcel.Controllers
 
                   
                     db.SaveChanges();
-                    isSave = master.target_id;
+                    isSave = master.TargetID;
                     ModelState.Clear();
 
 
@@ -252,7 +252,7 @@ namespace BusinessExcel.Controllers
         }
 
 
-        public int SaveMDetails(List<TargetDetails> list)
+        public int SaveMDetails(List<TargetDetail> list)
         {
             int isSave = 0;
 
@@ -291,7 +291,7 @@ namespace BusinessExcel.Controllers
 
 
         [HttpPost]
-        public JsonResult TargetAddToList(List<TargetDetails> list)
+        public JsonResult TargetAddToList(List<TargetDetail> list)
         {
             int detId = SaveMDetails(list);
             return Json(detId, JsonRequestBehavior.AllowGet);
