@@ -30,26 +30,29 @@ emp_code_lookup	varchar(6)
         [Column("user_id")]
         public int UserID { get; set; }
         [Column("user_name")]
-        public int UserName { get; set; }
+        public string UserName { get; set; }
         [Column("first_name")]
-        public int FirstName { get; set; }
+        public string FirstName { get; set; }
         [Column("second_name")]
-        public int SecondName { get; set; }
+        public string SecondName { get; set; }
         [Column("display_name")]
-        public int DisplayName { get; set; }
+        public string DisplayName { get; set; }
+
         [Column("create_date")]
-        public int CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
+
         [Column("is_active")]
         public int IsActive { get; set; }
+
         [Column("end_date")]
-        public int EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         [Column("email")]
-        public int Email { get; set; }
+        public string Email { get; set; }
         [Column("role_id")]
         public int RoleId { get; set; }
         [Column("contact_number")]
-        public int ContactNumber { get; set; }
+        public string ContactNumber { get; set; }
         [Column("emp_code_lookup")]
-        public int EmpCodeLookup { get; set; }
+        public string EmpCodeLookup { get; set; }
     }
 }

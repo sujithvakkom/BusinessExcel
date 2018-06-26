@@ -515,10 +515,13 @@ for the session state store provider):
                         db.Sessions.Remove(session);
                     }
                     db.SaveChanges();
-                    sessions = db.Sessions.Where(x => x.SessionId == id &&
-                          x.ApplicationName == ApplicationName &&
-                          x.LockId == (int)lockId).ToArray();
-
+                    try
+                    {
+                        sessions = db.Sessions.Where(x => x.SessionId == id &&
+                              x.ApplicationName == ApplicationName &&
+                              x.LockId == (int)lockId).ToArray();
+                    }
+                    catch (Exception) { newItem = true; }
                     if (newItem || sessions.Length == 0)
                     {
                         Session session = new Session()

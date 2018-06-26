@@ -172,12 +172,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Content Include="Content\pace\themes\white\pace-theme-minimal.css" />
     <Compile Include="Controllers\AccountsController.Chart.cs" />
+    <Compile Include="Controllers\AdminController.Users.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.CategoryAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.LocationAutoCompleter.cs" />
+    <Compile Include="Controllers\JSON\JSON.UserByOtherAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
     <Compile Include="Controllers\ReportController.CategoryAchievement.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="Controllers\TargetController.TargetTemplet.cs" />
     <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
+    <Compile Include="Models\UserViewFilters.cs" />
     <Compile Include="Models\ActionViewFilters.Roster.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
     <Compile Include="Models\ChartJs\Axes.cs" />
@@ -236,6 +239,7 @@
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.User.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetTemplet.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetMaster.cs" />
@@ -245,6 +249,8 @@
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Roster.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.BrandDetail.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.LocationDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserDetailsByOthers.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserDetailsList.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.ItemDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.DailyUpateView.cs" />
@@ -648,6 +654,7 @@
     <Content Include="Views\Target\TargetTemplate.cshtml" />
     <Content Include="Views\Target\_ViewStart.cshtml" />
     <Content Include="Views\Target\TargetLine.cshtml" />
+    <Content Include="Views\Admin\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
