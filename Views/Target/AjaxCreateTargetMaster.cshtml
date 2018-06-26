@@ -36,7 +36,7 @@
 
         <div class="col-md-3">
 
-            @Html.AdminLTETextBoxFor(m => m.description,
+            @Html.AdminLTETextBoxFor(m => m.Description,
                     null,
                     new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
                     null,
@@ -51,7 +51,7 @@
 
         <div class="col-md-3">
 
-            @Html.AdminLTETextBoxFor(m => m.incentive_pct,
+            @Html.AdminLTETextBoxFor(m => m.BaseIncentive,
                     null,
                     new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "maxlength", 5 }, { "onkeypress", "return isNumberKey(event)" }, { "onkeyup", "this.value = minmax(this.value, 0, 100)" } },
                     null,
