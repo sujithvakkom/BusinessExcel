@@ -20,13 +20,28 @@ namespace BusinessExcel.Providers.ProviderContext
                                                 from [sc_salesmanage_user].[user_m] 
                                             where 
                                                 user_name = @user_name";
-            
+
             var user_name = userName != null ?
                   new SqlParameter("@user_name", userName) :
                   new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
             UserDetail detail =
                 this.Database.SqlQuery<UserDetail>(SELECT_USER, user_name).ToList()[0];
+            return detail;
+        }
+        public virtual int getUserID(string userName)
+        {
+            const string SELECT_USER = @"select user_id
+                                                from [sc_salesmanage_user].[user_m] 
+                                            where 
+                                                user_name = @user_name";
+
+            var user_name = userName != null ?
+                  new SqlParameter("@user_name", userName) :
+                  new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            int detail =
+                this.Database.SqlQuery<int>(SELECT_USER, user_name).ToList()[0];
             return detail;
         }
 

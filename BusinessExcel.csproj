@@ -217,9 +217,11 @@
     <Compile Include="Models\TargetViewModel.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\BaseTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\LineTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetDetails.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetMasterDetails.cs" />
@@ -645,6 +647,7 @@
     <Content Include="Views\Report\TableCategoryAchievementView.cshtml" />
     <Content Include="Views\Target\TargetTemplate.cshtml" />
     <Content Include="Views\Target\_ViewStart.cshtml" />
+    <Content Include="Views\Target\TargetLine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
