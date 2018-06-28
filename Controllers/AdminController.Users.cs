@@ -32,13 +32,7 @@ namespace BusinessExcel.Controllers
         [HttpGet]
         public ActionResult UserList(string sort, string sortdir, int page = 1, UserViewFilters Filters = null)
         {
-            //ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERMANAGEMENT_TITLE;
-            //ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-            //ViewBag.Title = USERMANAGEMENT_TITLE;
-            //if (Request.IsAjaxRequest())
-            //    return PartialView();
-
-
+       
 
             ViewBag.UserUpateViewSort = sort;
             ViewBag.UserUpateViewDir = sortdir;
@@ -98,7 +92,36 @@ namespace BusinessExcel.Controllers
             return PartialView(USERUPDATEVIEW, Filters);
         }
 
+        [Authorize(Roles = "System Administrator")]
+        [HttpGet]
+        public ActionResult UserTree()
+        {
 
+
+            //ViewBag.UserUpateViewSort = sort;
+            //ViewBag.UserUpateViewDir = sortdir;
+            //ViewBag.UserUpateViewPage = page;
+            //ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERSLIST_TITLE;
+            //ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ////ViewBag.Title = ACTIONS_TITLE;
+
+            //if (!string.IsNullOrEmpty(Filters.user_name))
+            //    using (var db = new SalesManageDataContext())
+            //    {
+            //        ViewData[SELECTED_FILTED_USER] = db.getUserDetail(Filters.user_name);
+            //    }
+
+            //if (!string.IsNullOrEmpty(Filters.first_name))
+            //    using (var db = new SalesManageDataContext())
+            //    {
+            //        ViewData[SELECTED_FILTED_USER_FIRST_NAME] = db.getUserDetailByName(Filters.first_name);
+            //    }
+
+
+            return View();
+
+
+        }
 
     }
 }

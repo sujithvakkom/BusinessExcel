@@ -13,7 +13,7 @@ namespace BusinessExcel.Models
         public int user_id { get; set; }
 
         
-        [Display(Name = "User Name")]
+        [Display(Name = "Staff Code")]
         public string user_name { get; set; }
 
 
