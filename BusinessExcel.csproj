@@ -651,10 +651,12 @@
     <Content Include="Views\Target\TargetList.cshtml" />
     <Content Include="Views\Report\CategoryAchievement.cshtml" />
     <Content Include="Views\Report\TableCategoryAchievementView.cshtml" />
-    <Content Include="Views\Target\TargetTemplate.cshtml" />
+    <Content Include="Views\Target\_TargetTemplateCreateBlock.cshtml" />
     <Content Include="Views\Target\_ViewStart.cshtml" />
     <Content Include="Views\Target\TargetLine.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
+    <Content Include="Views\Target\TargetTemplate.cshtml" />
+    <Content Include="Views\Target\_TargetAssignBlock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

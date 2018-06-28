@@ -17,8 +17,12 @@ namespace BusinessExcel.Controllers
 
         public static string TARGETLINE = "TargetLine";
         public static string TARGETTEMPLATE_TITLE = "Target Template";
+        public static string TARGETASSIGN_TITLE = "Target Assign";
         public static string TARGETTEMPLATELINE_TITLE = "Target Lines";
         public static string TARGETTEMPLATE = "TargetTemplate";
+        public static string _TARGETTEMPLATECREATEBLOCK = "_TargetTemplateCreateBlock";
+        public static string _TARGETASSIGNBLOCK = "_TargetAssignBlock";
+        public static string TARGETTEMPLATECREATE = "TargetTemplateCreate";
         [HttpGet]
         public ActionResult TargetTemplate()
         {
@@ -52,15 +56,22 @@ namespace BusinessExcel.Controllers
         }
 
         [HttpPost]
-        public ActionResult TargetTemplate(BaseTarget target)
+        [ValidateAntiForgeryToken]
+        public ActionResult TargetTemplateCreate(BaseTarget target,ICollection<LineTarget> lineTarget)
         {
-            if (target != null)
+            int result = -1;
+            if (ModelState.IsValid)
             {
-                target.Save();
-            }
-            else
-            {
-                target = new BaseTarget();
+                target.LineTargets =
+                    lineTarget.ToArray();
+                try
+                {
+                    result = target.Save();
+                    target = new BaseTarget();
+                }
+                catch (Exception ex) {
+                    target.LineTargets = lineTarget.ToArray();
+                }
             }
             if (!Roles.RoleExists("System Administrator")) Roles.CreateRole("System Administrator");
             if (!Roles.GetRolesForUser().Contains("System Administrator") && WebSecurity.CurrentUserName == "sujithvakkom@gmail.com")
@@ -79,9 +90,10 @@ namespace BusinessExcel.Controllers
                     RedirectToAction(PublicController.WELCOME, PublicController.PUBLIC);
                 }
             }
+            ViewBag.Result = result;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (Request.IsAjaxRequest())
-                return PartialView(TARGETTEMPLATE, target);
+                return PartialView(_TARGETTEMPLATECREATEBLOCK, target);
             return View(target);
 
         }

@@ -12,16 +12,17 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         public LineTarget(){
             MinAchiveLimit = 100;
             IsBonusLine = false;
-
+            Target = null;
         }
-        [Display(Name = "Category")]
+        [Display(Name = "Category Line")]
         public string Catogery { get; set; }
 
         [Display(Name = "Min Achieve Limit")]
         public Decimal MinAchiveLimit { get; set; }
 
         [Display(Name = "Target")]
-        public Decimal Target { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal? Target { get; set; }
 
         [Display(Name = "Bonus")]
         public bool IsBonusLine { get; set; }
