@@ -223,6 +223,7 @@
     <Compile Include="Providers\ProviderContext\Entities\CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\UserTree.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetDetails.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetMasterDetails.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserTree.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.User.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetTemplet.cs" />
@@ -652,6 +654,7 @@
     <Content Include="Views\Target\TargetTemplate.cshtml" />
     <Content Include="Views\Target\_ViewStart.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
+    <Content Include="Views\Admin\UserTree.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

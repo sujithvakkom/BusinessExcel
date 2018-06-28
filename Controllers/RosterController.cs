@@ -72,10 +72,10 @@ namespace BusinessExcel.Controllers
         {
 
 
-            if (!string.IsNullOrEmpty(ros.user_name))
+            if (!string.IsNullOrEmpty(ros.name))
                 using (var db = new SalesManageDataContext())
                 {
-                    ViewData[SELECTED_FILTED_USER] = db.getUserDetail(ros.user_name);
+                    ViewData[SELECTED_FILTED_USER] = db.getUserDetail(ros.name);
                 }
 
             if (!string.IsNullOrEmpty(ros.location_id))
@@ -84,10 +84,10 @@ namespace BusinessExcel.Controllers
                     ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(ros.location_id);
                 }
          
-                using (var db = new SalesManageDataContext())
-                {
-                    ViewData[SELECTED_FILTED_TARTET] = db.getTargetDetail(ros.target_id.ToString());
-                }
+                //using (var db = new SalesManageDataContext())
+                //{
+                //    ViewData[SELECTED_FILTED_TARTET] = db.getTargetDetail(ros.target_id.ToString());
+                //}
 
 
             return  PartialView(AJAXCREATEROSTER, ros);
@@ -111,7 +111,7 @@ namespace BusinessExcel.Controllers
                 using (var db = new SalesManageDataContext())
                 {
 
-                 var data=   db.Roster.Where(u => u.user_name == Roster.user_name && ((u.start_date<=Roster.end_date && u.end_date >=Roster.start_date)  ) && u.roster_id != Roster.roster_id  ).FirstOrDefault();
+                 var data=   db.Roster.Where(u => u.name == Roster.name && ((u.start_date<=Roster.end_date && u.end_date >=Roster.start_date)  ) && u.roster_id != Roster.roster_id  ).FirstOrDefault();
 
                     var existdata = db.Roster.Where(u => u.roster_id == Roster.roster_id).FirstOrDefault();
 
@@ -146,7 +146,7 @@ namespace BusinessExcel.Controllers
                     }
                     else
                     {
-                        ViewData[ROSTERCREATIONMESSAGE] = "Given user ("+data.u_name+") already assigned to '" +data.location_name + "' ( "+(data.start_date).Value.ToString("dd/MMM/yyyy") + " - "+data.end_date.Value.ToString("dd/MMM/yyyy")+")";
+                        //ViewData[ROSTERCREATIONMESSAGE] = "Given user ("+data.name+") already assigned to '" +data.location_name + "' ( "+(data.start_date).Value.ToString("dd/MMM/yyyy") + " - "+data.end_date.Value.ToString("dd/MMM/yyyy")+")";
                         ModelState.AddModelError("RosterName", "Roster existing.");
                     }
 

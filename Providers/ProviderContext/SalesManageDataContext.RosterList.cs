@@ -24,7 +24,7 @@ namespace BusinessExcel.Providers.ProviderContext
            
           
             if (!string.IsNullOrEmpty(Filters.UserName))
-                res = res.Where(x => x.user_name == Filters.UserName);
+                res = res.Where(x => x.name == Filters.UserName);
 
           
 
@@ -48,7 +48,7 @@ namespace BusinessExcel.Providers.ProviderContext
             // return res.Skip(skippingRows).Take(pageSize);
             if (sort == null || sort == "")
             {
-                return res.OrderByDescending(x => x.location_name).Skip(skippingRows).Take(pageSize);
+                return res.OrderByDescending(x => x.name).Skip(skippingRows).Take(pageSize);
             }
             else
             {
@@ -89,9 +89,9 @@ namespace BusinessExcel.Providers.ProviderContext
 
             Expression<Func<Roster, bool>> username;
             if (Filters.UserName == null)
-                username = uname => uname.user_name == null;
+                username = uname => uname.name == null;
             else
-                username = uname => uname.user_name == Filters.UserName;
+                username = uname => uname.name == Filters.UserName;
 
 
             if (Filters == null)
@@ -99,7 +99,8 @@ namespace BusinessExcel.Providers.ProviderContext
             var res = from x in this.Roster
                      // where (x.user_name==username)
                       //where (x.user_name == Filters.UserName && x.location_id == Filters.LocationID && x.start_date == Filters.StartDate && x.end_date == Filters.EndDate)
-                      select new { user_name= x.user_name , start_date = x.start_date.Value, end_date=x.end_date.Value, location_id=x.location_id, location_name=x.location_name,target=x.target_amt };
+                      //select new { user_name= x.user_name , start_date = x.start_date.Value, end_date=x.end_date.Value, location_id=x.location_id, location_name=x.location_name,target=x.target_amt };
+            select new { start_date = x.start_date.Value, end_date = x.end_date.Value, location_id = x.location_id, location_name = x.name };
             return res.ToList();
         }
     }

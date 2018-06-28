@@ -35,22 +35,22 @@ where roster_id=@roster_id";
   new SqlParameter("@roster_id", System.Data.SqlDbType.NVarChar) { Value = 0 };
 
 
-            var user_name = roster.user_name != null ?
-                  new SqlParameter("@user_name", roster.user_name) :
+            var name = roster.name != null ?
+                  new SqlParameter("@user_name", roster.name) :
                   new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            var u_name = roster.u_name != null ?
-          new SqlParameter("@u_name", roster.u_name) :
-          new SqlParameter("@u_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+          //  var u_name = roster.u_name != null ?
+          //new SqlParameter("@u_name", roster.u_name) :
+          //new SqlParameter("@u_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
             var location_id = roster.location_id != null ?
           new SqlParameter("@location_id", roster.location_id) :
           new SqlParameter("@location_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            var location_name = roster.location_name != null ?
-          new SqlParameter("@location_name", roster.location_name) :
-          new SqlParameter("@location_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+          //  var location_name = roster.location_name != null ?
+          //new SqlParameter("@location_name", roster.location_name) :
+          //new SqlParameter("@location_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
             var start_date = roster.start_date != null ?
           new SqlParameter("@start_date", roster.start_date) :
@@ -62,23 +62,23 @@ where roster_id=@roster_id";
 
             //   int? page = null;
             //  var target_id = roster.target_id != null ?
-            var target_id = new SqlParameter("@target_id", roster.target_id);
-            //  new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            //var target_id = new SqlParameter("@target_id", roster.target_id);
+            ////  new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            var target_amt = roster.target_amt != null ?
-   new SqlParameter("@target_amt", roster.target_amt) :
-   new SqlParameter("@target_amt", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+   //         var target_amt = roster.target_amt != null ?
+   //new SqlParameter("@target_amt", roster.target_amt) :
+   //new SqlParameter("@target_amt", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
             System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
-            parameterList.Add(user_name);
-            parameterList.Add(u_name);
+            parameterList.Add(name);
+           // parameterList.Add(u_name);
             parameterList.Add(location_id);
-            parameterList.Add(location_name);
+          //  parameterList.Add(location_name);
             parameterList.Add(start_date);
             parameterList.Add(end_date);
-            parameterList.Add(target_id);
-            parameterList.Add(target_amt);
+         //   parameterList.Add(target_id);
+          //  parameterList.Add(target_amt);
 
             var isInsertUpdate = 0;
 
