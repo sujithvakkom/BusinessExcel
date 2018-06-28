@@ -61,12 +61,46 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-md-4 padding-label">
+                            Employ
+                        </div>
+                        <div class="col-md-6">
+
+                            @Html.AdminLTEDropDownListFor(
+                         m => m.TargetTemplate,
+                         htmlLabelAttributes: null,
+                         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                { "class", "form-control select2" }
+
+                                            },
+                         htmlGroupAttributes: new Dictionary<string, object>() { { "onchange", "target_templet_changed()" } },
+                         autoCompleteOptions: new AutoCompleteOptions()
+                         {
+                             AjaxOptions = new AjaxOptions()
+                             {
+                                 HttpMethod = "GET",
+                                 Url = Url.Action(actionName: JSONController.TARGETTEMPLETAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                             },
+                             DescriptionField = "description",
+                             IDField = "target_id",
+                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                             SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
+
+                             IsAutoComplete = true,
+                             SelectItems = null
+                         },
+                         showLabel: false)
+                        </div>
+                    </div>
+                </div>
                 <div class="box-header with-border">
                     <h3 class="box-title">@TargetController.TARGETTEMPLATELINE_TITLE</h3>
                 </div>
                 <div class="row" id="target-row">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" id="target-assign-line">
                             @{Html.RenderPartial(TargetController.TARGETLINE, Model.LineTargets);}
                         </div>
                     </div>
@@ -100,3 +134,16 @@
         </div>
     </div>
 </div>
+<script>
+    function target_templet_changed() {
+        //alert($(this).val()+"")
+        var target =$("#TargetTemplate").val()
+        $.ajax({
+            method: "POST",
+            url: "@Url.Action(actionName:TargetController._TEMPLETLINES, controllerName:TargetController.TARGET)",
+            data: { Target: target }
+        }).done(function( html ) {
+            $("#target-assign-line").html (html)
+        });
+    }
+</script>

@@ -23,6 +23,7 @@ namespace BusinessExcel.Controllers
         public static string _TARGETTEMPLATECREATEBLOCK = "_TargetTemplateCreateBlock";
         public static string _TARGETASSIGNBLOCK = "_TargetAssignBlock";
         public static string TARGETTEMPLATECREATE = "TargetTemplateCreate";
+        public static string _TEMPLETLINES = "_TempletLines";
         [HttpGet]
         public ActionResult TargetTemplate()
         {
@@ -50,14 +51,14 @@ namespace BusinessExcel.Controllers
             }
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (Request.IsAjaxRequest())
-                return PartialView(TARGETTEMPLATE,target);
+                return PartialView(TARGETTEMPLATE, target);
             return View(target);
 
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TargetTemplateCreate(BaseTarget target,ICollection<LineTarget> lineTarget)
+        public ActionResult TargetTemplateCreate(BaseTarget target, ICollection<LineTarget> lineTarget)
         {
             int result = -1;
             if (ModelState.IsValid)
@@ -69,7 +70,8 @@ namespace BusinessExcel.Controllers
                     result = target.Save();
                     target = new BaseTarget();
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     target.LineTargets = lineTarget.ToArray();
                 }
             }
@@ -96,6 +98,15 @@ namespace BusinessExcel.Controllers
                 return PartialView(_TARGETTEMPLATECREATEBLOCK, target);
             return View(target);
 
+        }
+
+        public PartialViewResult _TempletLines(int Target)
+        {
+            using (var db = new SalesManageDataContext())
+            {
+                var LineTargets = db.getTargetTempletLineDetails(Target).ToArray();
+                return PartialView(TARGETLINE, LineTargets);
+            }
         }
 
     }
