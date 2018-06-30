@@ -508,15 +508,21 @@ for the session state store provider):
                 {
                     var sessions = db.Sessions.Where(x => x.SessionId == id &&
                                x.ApplicationName == ApplicationName &&
-                               x.Expires< DateTime.Now).ToArray();
+                               x.Expires < DateTime.Now).ToArray();
 
                     foreach (var session in sessions)
                     {
                         db.Sessions.Remove(session);
                     }
                     db.SaveChanges();
-
-                    if(newItem)
+                    try
+                    {
+                        sessions = db.Sessions.Where(x => x.SessionId == id &&
+                              x.ApplicationName == ApplicationName &&
+                              x.LockId == (int)lockId).ToArray();
+                    }
+                    catch (Exception) { newItem = true; }
+                    if (newItem || sessions.Length == 0)
                     {
                         Session session = new Session()
                         {
@@ -536,12 +542,12 @@ for the session state store provider):
                     }
                     else
                     {
-                        sessions = db.Sessions.Where (x => x.SessionId == id &&
-                               x.ApplicationName == ApplicationName &&
-                               x.LockId == (int)lockId).ToArray();
-                        sessions[0].Expires = DateTime.Now.AddMinutes((Double)item.Timeout);
-                        sessions[0].SessionItems = sessItems;
-                        sessions[0].Locked = false;
+                        if (sessions.Length > 0)
+                        {
+                            sessions[0].Expires = DateTime.Now.AddMinutes((Double)item.Timeout);
+                            sessions[0].SessionItems = sessItems;
+                            sessions[0].Locked = false;
+                        }
                         db.SaveChanges();
                     }
                 }

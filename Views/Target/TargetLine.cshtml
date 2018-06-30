@@ -1,0 +1,132 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model  LineTarget[]
+<div class="row table-fields-header">
+    <div class="col-md-offset-1 col-md-2 table-fields">
+        Bonus
+    </div>
+    <div class="col-md-4 table-fields">
+        Category Line
+    </div>
+    @*<div class="col-md-2 table-fields">
+            Min. Achievement (%)
+        </div>*@
+    <div class="col-md-3 table-fields">
+        Target
+    </div>
+    @*<div class="col-md-2 table-fields">
+        Achievement
+    </div>
+    <div class="col-md-2 table-fields" ">
+        Achievement Confirmed
+    </div>
+    <div class="col-md-2 table-fields">
+        Achievement(%)
+    </div>*@
+</div>
+@for (int i = 0; i < Model.Length; i++)
+{
+    CategoryDetail selection = new CategoryDetail();
+    using (var db = new SalesManageDataContext())
+    {
+        selection = db.getCategoryDetails(Model[i].Catogery);
+    }
+    <div class="row">
+        <div class="col-md-offset-1 col-md-2 table-fields">
+            @Html.AdminLTECheckBoxFor(m => m[i].IsBonusLine,
+                        null,
+                        new Dictionary<string, object>() { { "class", "form-control pull-right" }, { "autocomplete", "off" } },
+                        null,
+                        null,
+                        false,
+                        true)
+        </div>
+        <div class="col-md-4 table-fields">
+            @Html.AdminLTEDropDownListFor(m => m[i].Catogery,
+           htmlLabelAttributes: null,
+           htmlDropDownAttributes: new Dictionary<string, object>() { { "class", "form-control select2" }, { "style", "border-style:none !important" } },
+           htmlGroupAttributes: new Dictionary<string, object>() { },
+           autoCompleteOptions: new AutoCompleteOptions() { AjaxOptions = new AjaxOptions() { HttpMethod = "GET",
+               Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER) },
+               DescriptionField = "description", IDField = "category_id",
+               Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+               SelectedItem = selection,  IsAutoComplete = true, SelectItems = null }, showLabel: false)
+        </div>
+        @*<div class="col-md-2 table-fields">
+
+                @Html.AdminLTETextBoxFor(m => m[i].MinAchiveLimit,
+                            null,
+                            new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" } },
+                            null,
+                            null,
+                            "fa-percent",
+                            false,
+                            true,
+                            true)
+            </div>*@
+        <div class="col-md-3 table-fields">
+            @Html.AdminLTETextBoxFor(m => m[i].Target,
+                        null,
+                        new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" }, { "onchange", "target_line_changed()" } },
+                        null,
+                        null,
+                        "",
+                        false,
+                        true,
+                        true)
+
+        </div>
+        @*<div class="col-md-2 table-fields">
+            @Html.AdminLTETextBoxFor(m => m[i].Achievement,
+                        null,
+                        new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" } },
+                        null,
+                        null,
+                        "",
+                        false,
+                        true,
+                        true)
+
+        </div>
+        <div class="col-md-2 table-fields">
+
+            @Html.AdminLTETextBoxFor(m => m[i].AchievementConfirmed,
+                        null,
+                        new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" } },
+                        null,
+                        null,
+                        "",
+                        false,
+                        true,
+                        true)
+        </div>
+        <div class="col-md-2 table-fields">
+
+            @Html.AdminLTETextBoxFor(m => m[i].AchievementPercentage,
+                        null,
+                        new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" } },
+                        null,
+                        null,
+                        "fa-percent",
+                        false,
+                        true,
+                        true)
+        </div>*@
+    </div>
+}
+<script>
+    function target_line_changed() {
+        var sum = Number(0);
+
+        $("#target-row").find("input[name*='].Target']").each(function () {
+            sum = sum + Number( $(this).val());
+        })
+        $("input[name='TotalTarget']").val(sum)
+    }
+</script>

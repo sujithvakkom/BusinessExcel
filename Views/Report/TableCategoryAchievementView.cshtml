@@ -1,0 +1,135 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
+
+@model ActionViewFilters
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @BusinessExcel.Controllers.ReportController.ACTIONS_TITLE
+        <small>Report</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.ReportController.REPORTCONTROLLER</a></li>
+        <li class="active">@BusinessExcel.Controllers.ReportController.ACTIONS_TITLE</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ReportController.CATEGORYACHIEVEMENT_TITLE</h3>
+        </div>
+        <div class="box-body">
+
+            <div id="table-cat_ach-view" class="table-responsive">
+                @{
+
+                    using (var db = new SalesManageDataContext())
+                    {
+                        WebGridColumn col = new WebGridColumn()
+                        {
+
+                        };
+
+                        int count = 0;
+                        List<CategoryAchievement> data = db.getCategoryAchievement(pageNumber: ViewBag.DailyUpateViewPage,
+                                            pageSize: 20,
+                                            sort: ViewBag.DailyUpateViewSort,
+                                            sortdir: ViewBag.DailyUpateViewDir,
+                                            count: out count
+                                            );
+                        var grid = new WebGrid(ajaxUpdateContainerId: "table-cat_ach-view",
+                            ajaxUpdateCallback: "load_script", 
+                            rowsPerPage: 20
+                            );
+                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                        @grid.GetHtml(
+                           tableStyle: "table table-striped table-bordered be-pagination-spl",
+                           htmlAttributes: new { @id = "example" },
+                           columns: new[] {
+                               grid.Column(columnName:"user_name",
+                               header:Html.AdminLTESorter("user_name","User",grid),
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.user_name),
+                               style:"user-name",canSort:true),
+
+                               grid.Column(columnName:"display_name",
+                               header:"User Name",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.display_name),
+                               style:"name",canSort:false),
+
+                               grid.Column(columnName:"location_name",
+                               header:"Location Name",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.location_name),
+                               style:"name",canSort:false),
+
+                               grid.Column(columnName:"date",
+                               header:"Month/Year",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.date),
+                               style:"name",canSort:false),
+
+                               grid.Column(columnName:"description",header:"Description",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.description),
+                               style:"location",canSort:false),
+
+                               grid.Column(columnName:"sum_value",header:"Achievement",
+                               format:x=>string.Format("{0:0.00}",x.sum_value),
+                               style:"quantity",canSort:false),
+
+                               grid.Column(columnName:"target_value",
+                               header:"Target",
+                               format:x=>string.Format("{0:0.00}",x.target_value),
+                               style:"values",canSort:false),
+
+                               grid.Column(columnName:"achievent_pct",
+                               header:"Achievement (%)",
+                               format: @<span>@string.Format("{0:0.00}",item.achievent_pct)<input type="hidden" name="category_id" class="category_id" value="@item.category_id" />
+                <input type="hidden" name="achievent_pct" class="achievent_pct" value="@item.achievent_pct" /></span>,
+                               style: "values",
+                               canSort:false)
+                           },
+                           footerStyle: "extra-table-pager"
+                           )
+
+                        @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                           nextText: "NEXT",
+                           firstText: "FIRST",
+                           previousText: "PREV.",
+                           lastText: "LAST")
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $(document).ready(function () {
+            load_script();
+        });
+        function load_script() {
+            $("#table-cat_ach-view tbody tr").each(function (i, row) {
+                var $actualRow = $(row);
+                if ($actualRow.find('input.category_id[type=hidden]').val() == '-1') {
+                    $actualRow.css('background-color', '#918868');
+                    $actualRow.css('color', '#ffffff');
+                    $actualRow.css('font-weight', 'bold');
+                    $actualRow.css('border-bottom', '3px solid #247124');
+                }
+                if ($actualRow.find('input.achievent_pct[type=hidden]').val() < 100) {
+                    $actualRow.css('color', '#801515');
+                    $actualRow.css('font-weight', 'bold');
+                    $actualRow.css('font-style', 'italic');
+                }
+                else {
+                }
+
+            });
+        }
+    </script>  
+</section>
+<!-- /.content -->

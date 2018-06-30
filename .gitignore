@@ -53,3 +53,9 @@ Temporary Items
 .cache
 .exe
 *.suo
+
+
+bin/
+obj/
+Debug/
+Release/

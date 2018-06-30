@@ -3,6 +3,7 @@
 @using BootstrapHtmlHelper
 @using BusinessExcel.Models
 @using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers
 @{
     ViewContext viewContext = Html.ViewContext;
     RouteValueDictionary routeValues = viewContext.RouteData.Values;
@@ -29,29 +30,31 @@
             <li class="header">USER CONTROLS</li>
 
             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: BusinessExcel.Controllers.AccountsController.WELCOME_TITLE,
-                   actionName: BusinessExcel.Controllers.AccountsController.WELCOME,
-                   controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
+                   linkText: AccountsController.WELCOME_TITLE,
+                   actionName: AccountsController.WELCOME,
+                   controllerName: AccountsController.ACCOUNTS,
                    ajaxOptions: new AjaxOptions()
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success();{0}",
-                       OnComplete = "ajax_call_load_complete()",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(AccountsController.WELCOME, AccountsController.ACCOUNTS, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-home")
             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: BusinessExcel.Controllers.AccountsController.MYPROFILE_TITLE,
-                   actionName: BusinessExcel.Controllers.AccountsController.MYPROFILE,
-                   controllerName: BusinessExcel.Controllers.AccountsController.ACCOUNTS,
+                   linkText: AccountsController.MYPROFILE_TITLE,
+                   actionName: AccountsController.MYPROFILE,
+                   controllerName: AccountsController.ACCOUNTS,
                    ajaxOptions: new AjaxOptions()
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success();{0}",
-                       OnComplete = "ajax_call_load_complete()",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(AccountsController.MYPROFILE, AccountsController.ACCOUNTS, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
                    isNavSideBar: true,
@@ -66,60 +69,110 @@
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">ADMIN CONTROLS</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.AdminController.ADMIN,actions:BusinessExcel.Controllers.AdminController.USERMANAGEMENT+","+BusinessExcel.Controllers.AdminController.VIEWMANAGEMENT,cssClass:"active")">
+                        <li class="treeview @Html.IsSelected(controllers:AdminController.ADMIN,actions:AdminController.USERMANAGEMENT+","+AdminController.VIEWMANAGEMENT,cssClass:"active")">
                             <a href="#"><i class="fa fa-user-secret"></i><span>Security</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
                                 @Ajax.AjaxAdminLTEActionLink(
-                   linkText: BusinessExcel.Controllers.AdminController.USERMANAGEMENT_TITLE,
-                   actionName: BusinessExcel.Controllers.AdminController.USERMANAGEMENT,
-                   controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
+                   linkText: AdminController.USERMANAGEMENT_TITLE,
+                   actionName: AdminController.USERMANAGEMENT,
+                   controllerName: AdminController.ADMIN,
                    ajaxOptions: new AjaxOptions()
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success();{0}",
-                       OnComplete = "ajax_call_load_complete()",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(AdminController.USERMANAGEMENT, AdminController.ADMIN, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-user-md")
                                 @Ajax.AjaxAdminLTEActionLink(
-                   linkText: BusinessExcel.Controllers.AdminController.VIEWMANAGER_TITLE,
-                   actionName: BusinessExcel.Controllers.AdminController.VIEWMANAGEMENT,
-                   controllerName: BusinessExcel.Controllers.AdminController.ADMIN,
+                   linkText: AdminController.VIEWMANAGER_TITLE,
+                   actionName: AdminController.VIEWMANAGEMENT,
+                   controllerName: AdminController.ADMIN,
                    ajaxOptions: new AjaxOptions()
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success();{0}",
-                       OnComplete = "ajax_call_load_complete()",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(AdminController.VIEWMANAGEMENT, AdminController.ADMIN, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-puzzle-piece")
                             </ul>
 
-                        <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER,actions: BusinessExcel.Controllers.RosterController.ROSTER_ACTION, cssClass:"active")">
+                        <li class="treeview @Html.IsSelected(controllers:RosterController.ROSTERCONTROLLER,actions: RosterController.ROSTER_ACTION, cssClass:"active")">
                             @*Rosters*@
                             <a href="#"><i class="fa fa-yelp"></i><span>Activities</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
 
+
                                 @Ajax.AjaxAdminLTEActionLink(
-                   linkText: BusinessExcel.Controllers.RosterController.ROSTER_TITLE,
-                   actionName: BusinessExcel.Controllers.RosterController.ROSTER_ACTION,
-                   controllerName: BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER,
+                   linkText: TargetController.TARGET_TITLE,
+                   actionName: TargetController.TARGET,
+                   controllerName: TargetController.TARGETCONTROLLER,
                    ajaxOptions: new AjaxOptions()
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
                        OnBegin = "move('#page-load')",
-                       OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       OnFailure = "loadin_failed"
+                   },
+                   carrot: "fa fa-rocket")
+
+
+
+
+                                @Ajax.AjaxAdminLTEActionLink(
+                   linkText: RosterController.ROSTER_TITLE,
+                   actionName: RosterController.ROSTER_ACTION,
+                   controllerName: RosterController.ROSTERCONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnBegin = "move('#page-load')",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       //OnComplete = "ajax_call_load_complete('#page-load')",
                        OnFailure = "loadin_failed"
                    },
                    carrot: "fa fa-user-md")
 
+
+                                @Ajax.AjaxAdminLTEActionLink(
+                   linkText: TargetController.TARGETTEMPLATE_TITLE,
+                   actionName: TargetController.TARGETTEMPLATE,
+                   controllerName: TargetController.TARGETCONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(TargetController.TARGETTEMPLATE, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnBegin = "move('#page-load')",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       //OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnFailure = "loadin_failed"
+                   },
+                   carrot: "fa fa-user-md")
+
+
+
                             </ul>
+
                         </li>
+
+
+
+
 
                 </li>
             </ul>
@@ -130,33 +183,36 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">REPORTS</li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,actions:currentAction,cssClass:"active")">
-                        <a href="#"><i class="fa fa-rss"></i><span>Action</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <li class="treeview @Html.IsSelected(controllers:ReportController.REPORTCONTROLLER,actions:currentAction,cssClass:"active")">
+                        <a href="#"><i class="fa fa-eye"></i><span>Action</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: BusinessExcel.Controllers.ReportController.ACTIONS_TITLE,
-                   actionName: BusinessExcel.Controllers.ReportController.ACTIONS,
-                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   linkText: ReportController.ACTIONS_TITLE,
+                   actionName: ReportController.ACTIONS,
+                   controllerName: ReportController.REPORTCONTROLLER,
                    ajaxOptions: new AjaxOptions()
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success();{0}",
-                       OnComplete = "ajax_call_load_complete()",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-tasks")
+
                             @Ajax.AjaxAdminLTEActionLink(
                    linkText: "Loading Error.",
                    actionName: "Test",
-                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   controllerName: ReportController.REPORTCONTROLLER,
                    ajaxOptions: new AjaxOptions()
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success();{0}",
-                       OnComplete = "ajax_call_load_complete()",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
                    isNavSideBar: true,
@@ -165,24 +221,42 @@
                     </li>
 
 
-                    <li class="treeview @Html.IsSelected(controllers:BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,actions:currentAction,cssClass:"active")">
-                        <a href="#"><i class="fa fa-rss"></i><span>TargetAchievement</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <li class="treeview @Html.IsSelected(controllers:ReportController.REPORTCONTROLLER,actions:currentAction,cssClass:"active")">
+                        <a href="#"><i class="fa fa-rss"></i><span>Target Achievement</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: BusinessExcel.Controllers.ReportController.TARGETACHIEVEMENT_ACTIONS_TITLE,
-                   actionName: BusinessExcel.Controllers.ReportController.TARGETACHIEVEMENTACTIONS,
-                   controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                   linkText: ReportController.TARGETACHIEVEMENT_ACTIONS_TITLE,
+                   actionName: ReportController.TARGETACHIEVEMENTACTIONS,
+                   controllerName: ReportController.REPORTCONTROLLER,
                    ajaxOptions: new AjaxOptions()
                    {
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success();{0}",
-                       OnComplete = "ajax_call_load_complete()",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-tasks")
-                    
+
+
+                            @Ajax.AjaxAdminLTEActionLink(
+                   linkText: ReportController.CATEGORYACHIEVEMENT_TITLE,
+                   actionName: ReportController.CATEGORYACHIEVEMENT,
+                   controllerName: ReportController.REPORTCONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       OnFailure = "loadin_failed"
+                   },
+                   isNavSideBar: true,
+                   carrot: "fa fa-tasks")
+
                         </ul>
                     </li>
 

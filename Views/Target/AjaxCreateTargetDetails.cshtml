@@ -1,0 +1,243 @@
+﻿
+
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
+
+
+@model TargetDetails
+
+
+
+
+
+@using (Ajax.BeginForm(
+                                                                                                   actionName: BusinessExcel.Controllers.TargetController.AJAXCREATETARGETDETAILS,
+                                                                                                    routeValues: null,
+                                                                                                    ajaxOptions: new AjaxOptions()
+                                                                                                    {
+                                                                                                        UpdateTargetId = "target-details-creation-form",
+                                                                                                        InsertionMode = InsertionMode.Replace,
+                                                                                                        OnSuccess = "refreshTargetList",
+                                                                                                        OnFailure = ""
+                                                                                                    },
+                                                                                                    htmlAttributes: new { @class = "form-inline" })
+                                                                                                                                                                                                                                        )
+{
+
+
+
+    @Html.ValidationSummary(true)
+
+
+    <fieldset>
+
+
+        <div class="row">
+
+
+
+            @Html.AdminLTEDropDownListFor(
+                         m => m.category_id,
+                         htmlLabelAttributes: null,
+
+
+                           htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+
+                            },
+                         htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3 " }, },
+                         //htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-3 " }},
+                         autoCompleteOptions: new AutoCompleteOptions()
+                         {
+                             AjaxOptions = new AjaxOptions()
+                             {
+                                 HttpMethod = "GET",
+                                 Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                             },
+
+                             DescriptionField = "description",
+                             IDField = "category_id",
+                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                             SelectedItem = ViewData[TargetController.SELECTED_FILTED_CATERGORY],
+
+                             IsAutoComplete = true,
+                             SelectItems = null
+                         },
+                         showLabel: true)
+
+
+
+            <div class="col-md-3">
+
+                @Html.AdminLTETextBoxFor(m => m.value,
+            null,
+            new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "maxlength", 10 }, { "onkeypress", "return isNumberKey(event)" } },
+            null,
+            null,
+            "",
+            true,
+            true,
+            true)
+
+            </div>
+
+            <div class="col-md-2" style="margin-top:3%">
+
+                @Html.AdminLTECheckBoxFor(m => m.has_bonus,
+                null,
+                new Dictionary<string, object>() { { "class", "form-control" } },
+                null,
+                null,
+                false,
+                true)
+
+
+            </div>
+
+            @*<div class="col-md-1" style="margin-top:2.4%">
+
+                    <button type="button" class="btn btn-primary addlist " id="btnAdd" onclick="addRow('grid')" >Add </button>
+
+                </div>*@
+
+
+
+        </div>
+
+        <div>
+            <input id="btnAddBook" type="button"
+                   onclick="addRow();" value="Add Book" />
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td>
+                        Title
+                    </td>
+                    <td>
+                        Published Date
+                    </td>
+                </tr>
+            </thead>
+            <tbody id="tbBooks"></tbody>
+        </table>
+        <p>
+            <input type="submit" value="Create"  />
+        </p>
+
+    </fieldset>
+
+    @*<div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" id="target-detail-form">
+                <div class="box-body" style="padding:10px">
+                    <div id="target-details-creation-form">
+                        @Html.Action(BusinessExcel.Controllers.TargetController.TARGELIST
+                      )
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>*@
+
+
+
+
+}
+
+
+<script type="text/javascript">
+
+    
+
+    function addRow() {
+            
+          @{
+            //  Model.TargetListsDetails.Add(new TargetDetails());
+          }
+
+        var index = $("#tbBooks").children("tr").length;
+
+        var indexCell = "<td style='display:none'><input name='Books.Index'  type='hidden' value='" + index + "' /></td>";
+        var titleCell = "<td><input id='Books_" + index + "__Title'  name='Books[" + index + "].Title' type='text' value='' /></td>";
+        var publishedCell = "<td><input id='Books_" + index + "__Title'  name='Books[" + index + "].PublishedDate' type='text' value='' /></td>";
+        var removeCell = "<td><input id='btnAddBook' type='button' value='Remove' onclick='removeRow(" + index + ");' /></td>";
+
+        var newRow = "<tr id='trBook" + index + "'>" +
+        indexCell + titleCell + publishedCell + removeCell + "</tr>";
+        $("#tbBooks").append(newRow);
+    }
+
+    function removeRow(id) {
+        var controlToBeRemoved = "#trBook" + id;
+        $(controlToBeRemoved).remove();
+    }
+
+
+
+
+
+
+
+    $(document).on('click', '.addtolist', function () {
+        var arr = {
+            value: 600, has_bonus: true, category_id: 1, target_id: 1, model_id: 1, target_qty: 0, target_line_id: 1
+
+        };
+            
+        var list = [];
+        list.push(arr)
+        list.push(arr)
+        list = JSON.stringify({ 'list': list });
+        $.ajax({
+
+            // edit to add steve's suggestion.
+            //url: "/ControllerName/ActionName",
+
+            url: '@Url.Action(BusinessExcel.Controllers.TargetController.TARGEADDLIST, BusinessExcel.Controllers.TargetController.TARGETCONTROLLER)',
+            // dataType: 'html',
+            type: "GET",
+            data: list,
+
+            //  contentType: 'application/json; charset=utf-8',
+            // dataType: 'json',
+              
+               
+
+
+            //data: ({
+            //    //insert your parameters to pass to controller
+            //    id: roster_id
+            //}),
+            success: function (data) {
+                // your data could be a View or Json or what ever you returned in your action method
+                // parse your data here
+                //alert(data);
+
+                if (data != 0) {
+
+                    // tr.css("background-color", "Red").delay(100).show().fadeOut('slow');;
+
+
+
+                    //  $('#successMessage').html("Roster deleted successfully").delay(2000).show().fadeOut('slow');
+                }
+            },
+            begin: function () {
+                // $('#role-table-display').modal('hide')
+            }
+        });
+
+    });
+
+</script>

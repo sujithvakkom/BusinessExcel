@@ -338,7 +338,10 @@ lastText: "LAST")
 
     $(document).on('click', ".edit-roster", function (event) {
 
+        event.stopPropagation();
         event.preventDefault();
+        event.stopImmediatePropagation();
+
         //if (confirm("Are you sure to delete this roster?")) {
 
         var tr = $(this).parents('tr:first');

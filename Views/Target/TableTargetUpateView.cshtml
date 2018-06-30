@@ -1,0 +1,211 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
+
+@model TargetViewFilters
+
+
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @BusinessExcel.Controllers.TargetController.TARGET_TITLE
+        <small>List</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.TargetController.TARGETCONTROLLER</a></li>
+        <li class="active">@BusinessExcel.Controllers.TargetController.TARGET_TITLE</li>
+    </ol>
+</section>
+
+
+
+
+<!-- Main content -->
+<section class="content">
+
+
+    <!-- Your Page Content Here -->
+    @using (Ajax.BeginForm(TargetController.TARGET,
+                                        TargetController.TARGETCONTROLLER,
+                                        new AjaxOptions()
+                                        {
+                                            HttpMethod = "Get",
+                                            UpdateTargetId = "target-table-display",
+                                            OnBegin = "move('#page-load')",
+                                            OnComplete = "ajax_call_load_complete('#page-load')",
+                                            OnFailure = "loadin_failed"
+                                        }))
+
+    {
+
+
+    }
+
+
+
+
+
+    <div class="box box-primary">
+
+        <div class="box-body">
+
+            <div class="row">
+
+            </div>
+           
+        </div>
+    </div>
+
+
+</section><!-- /.content -->
+
+
+
+<script>
+
+
+
+
+    $(document).on('click', '.filter', function () {
+
+
+    });
+
+    $(document).on('click', '.delete-roster', function () {
+        //if (confirm("Are you sure to delete this roster?")) {
+
+
+            $('#modalnew').modal('show');
+            var tr = $(this).parents('tr:first');
+            var UserID = $(this).prop('id');
+            var roster_id = tr.find('.hidRosterId').val();
+
+
+
+
+           // tr.on('click', function () {
+
+
+            var uname = $(this).closest('tr').children("td:eq(0)").html();
+            var name = $(this).closest('tr').children("td:eq(1)").html();
+                var stdate = $(this).closest('tr').children("td:eq(2)").html();
+                var eddate = $(this).closest('tr').children("td:eq(3)").html();
+                var lid = $(this).closest('tr').children("td:eq(4)").html();
+                var lname = $(this).closest('tr').children("td:eq(5)").html();
+
+
+
+            $('.modal-body').html("<style>#tabmodel th td { border: 1px solid black;border-collapse: collapse;} </style>" +
+                "<table style='width:100%' id='tabmodel'><tr><th>USERNAME</th> <th>START DATE</th> <th>END DATE</th> <th>LOCATION</th> </tr>" +
+                "<tr> <td>" + uname + "</td><td>" + stdate + "</td>  <td>" + eddate + "</td>   <td>" + lname + "</td>  </tr> </table>");
+           // });
+
+
+
+
+            $('#btnDeleteRoster').off().on('click', function (evt) {
+                //evt.stopPropagation();
+
+                $('#modalnew').modal('hide');
+                $.ajax({
+
+                    // edit to add steve's suggestion.
+                    //url: "/ControllerName/ActionName",
+
+                    url: '@Url.Action(BusinessExcel.Controllers.RosterController.AJAXDELETEROSTER, BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER)',
+                    dataType: 'html',
+                    data: ({
+                        //insert your parameters to pass to controller
+                        id:roster_id
+                    }),
+                    success: function (data) {
+                        // your data could be a View or Json or what ever you returned in your action method
+                        // parse your data here
+                        //alert(data);
+
+                        if (data != 0) {
+
+                            tr.css("background-color", "Red").delay(100).show().fadeOut('slow');;
+
+
+
+                          //  $('#successMessage').html("Roster deleted successfully").delay(2000).show().fadeOut('slow');
+                        }
+                    },
+                    begin: function () {
+                        // $('#role-table-display').modal('hide')
+                    }
+                });
+
+
+            });
+
+        //}
+    });
+
+
+
+    $(document).on('click', ".edit-roster", function (event) {
+
+        event.preventDefault();
+        //if (confirm("Are you sure to delete this roster?")) {
+
+        var tr = $(this).parents('tr:first');
+
+        var roster_id = tr.find('.hidRosterId').val();
+        var loc_id = tr.find('.hidlocationId').val();
+
+        var target_id = tr.find('.hidTargetId').val();
+
+
+            var username = $(this).closest('tr').children("td:eq(0)").html();
+            var uname = $(this).closest('tr').children("td:eq(1)").html();
+            var stdate = $(this).closest('tr').children("td:eq(2)").html();
+            var eddate = $(this).closest('tr').children("td:eq(3)").html();
+            var lname = $(this).closest('tr').children("td:eq(5)").html();
+            var target = $(this).closest('tr').children("td:eq(7)").html();
+            //var target_id = $(this).closest('tr').children("td:eq(8)").html();
+
+            var ros = {
+
+                user_Name: username,
+                start_date: stdate,
+                end_date: eddate,
+                roster_id: roster_id,
+                location_name: lname,
+                location_id: loc_id,
+                u_name: uname,
+                target_amt: target,
+                target_id: target_id
+            };
+
+
+
+
+            $.ajax({
+
+            url: '@Url.Action(BusinessExcel.Controllers.RosterController.ROSTER_EDIT)',
+                //dataType: "json",
+                type: "GET",
+                data: ros,
+                contentType: "application/json",
+                success: function (data) {
+
+                    $('#roster-creation-form').html(data);
+                },
+
+
+                begin: function () {
+                    // $('#role-table-display').modal('hide')
+                }
+            });
+
+
+    });
+</script>

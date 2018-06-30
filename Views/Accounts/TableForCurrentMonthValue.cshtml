@@ -1,0 +1,67 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext
+@using BootstrapHtmlHelper
+
+@model DateTimeSpan
+
+
+<div id="table-current-month-quantity" class="table-responsive">
+    @{
+
+        using (var db = new SalesManageDataContext())
+        {
+            var source = db.DailyUpateView
+                .Where(x => x.CreateTime > Model.StartDate && x.CreateTime < Model.EndDate)
+                .GroupBy(x => new { x.Item, x.Description, x.UserName, x.Name })
+                .Where(x => x.Sum(y => y.Quantity) > 0)
+                .Select(x =>
+                    new
+                    {
+                        User = x.Key.UserName.ToString(),
+                        UserName = x.Key.Name.ToString(),
+                        Item = x.Key.Item,
+                        ItemDescription = x.Key.Description,
+                        TotalValue = x.Sum(y => (decimal)y.TotalValue),
+                    });
+
+            var grid = new WebGrid(ajaxUpdateContainerId: "table-current-month-quantity",
+                rowsPerPage: 20
+                );
+
+            grid.Bind(source: source, autoSortAndPage: false, rowCount: source.Count());
+
+            @grid.GetHtml(
+                           tableStyle: "table table-striped table-bordered be-pagination-spl",
+                           columns: new[] {
+                               grid.Column(columnName:"User",
+                               header:Html.AdminLTESorter("User","User Code",grid),
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.User),
+                               style:"name",canSort:true),
+                               grid.Column(columnName:"UserName",
+                               header:Html.AdminLTESorter("UserName","User Name",grid),
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.UserName),
+                               style:"name",canSort:true),
+                               grid.Column(columnName:"Item",
+                               header:Html.AdminLTESorter("Item","Item Code",grid),
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Item),
+                               style:"name",canSort:true),
+                               grid.Column(columnName:"ItemDescription",
+                               header:Html.AdminLTESorter("ItemDescription","Item Description",grid),
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.ItemDescription),
+                               style:"name",canSort:true),
+                               grid.Column(columnName:"TotalValue",
+                               header:"Total Value",
+                               format:x=>string.Format("{0:0.00}",x.TotalValue),
+                               style:"values",canSort:false)
+                           },
+                           footerStyle: "extra-table-pager"
+                           )
+
+            @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                           nextText: "NEXT",
+                           firstText: "FIRST",
+                           previousText: "PREV.",
+                           lastText: "LAST")
+        }
+    }
+</div>

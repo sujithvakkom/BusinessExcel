@@ -1,0 +1,149 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model BaseTarget
+
+
+<div class="row">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">@TargetController.TARGETASSIGN_TITLE</h3>
+        </div>
+        <div class="box-body">
+            @using (Ajax.BeginForm(
+                    controllerName: TargetController.TARGET,
+                    actionName: TargetController.TARGETTEMPLATECREATE,
+                    ajaxOptions:
+                        new AjaxOptions()
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "Post",
+                            UpdateTargetId = "target-tamplet",
+                            OnBegin = "move('#page-load')",
+                            OnComplete = "ajax_call_load_complete('#page-load')",
+                            OnFailure = "loadin_failed"
+                        }))
+            {
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-md-4 padding-label">
+                            Employ
+                        </div>
+                        <div class="col-md-6">
+
+                            @Html.AdminLTEDropDownListFor(
+                         m => m.UserName,
+                         htmlLabelAttributes: null,
+                         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                { "class", "form-control select2" }
+                                            },
+                         htmlGroupAttributes: new Dictionary<string, object>() { },
+                         autoCompleteOptions: new AutoCompleteOptions()
+                         {
+                             AjaxOptions = new AjaxOptions()
+                             {
+                                 HttpMethod = "GET",
+                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                             },
+                             DescriptionField = "full_name",
+                             IDField = "user_name",
+                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                             SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
+
+                             IsAutoComplete = true,
+                             SelectItems = null
+                         },
+                         showLabel: false)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-md-4 padding-label">
+                            Employ
+                        </div>
+                        <div class="col-md-6">
+
+                            @Html.AdminLTEDropDownListFor(
+                         m => m.TargetTemplate,
+                         htmlLabelAttributes: null,
+                         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                { "class", "form-control select2" }
+
+                                            },
+                         htmlGroupAttributes: new Dictionary<string, object>() { { "onchange", "target_templet_changed()" } },
+                         autoCompleteOptions: new AutoCompleteOptions()
+                         {
+                             AjaxOptions = new AjaxOptions()
+                             {
+                                 HttpMethod = "GET",
+                                 Url = Url.Action(actionName: JSONController.TARGETTEMPLETAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                             },
+                             DescriptionField = "description",
+                             IDField = "target_id",
+                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                             SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
+
+                             IsAutoComplete = true,
+                             SelectItems = null
+                         },
+                         showLabel: false)
+                        </div>
+                    </div>
+                </div>
+                <div class="box-header with-border">
+                    <h3 class="box-title">@TargetController.TARGETTEMPLATELINE_TITLE</h3>
+                </div>
+                <div class="row" id="target-row">
+                    <div class="row">
+                        <div class="col-md-12" id="target-assign-line">
+                            @{Html.RenderPartial(TargetController.TARGETLINE, Model.LineTargets);}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-6 col-md-1 padding-label">
+                            Total
+                        </div>
+                        <div class="col-md-3 table-fields">
+
+                            @Html.AdminLTETextBoxFor(m => m.TotalTarget,
+                                                 null,
+                                                 new Dictionary<string, object>() {
+                                        { "class", "form-control numaric" }, { "readonly", "" }
+                                                 },
+                                                 null,
+                                                 null,
+                                                 "",
+                                                 false,
+                                                 true,
+                                                 true)
+                        </div>
+                    </div>
+                </div>
+                                if (ViewBag.Result != null)
+                                {
+                                    var className = ViewBag.Result == -1 ? @"alert alert-danger" : @"alert alert-success";
+                                    var message = ViewBag.Result == -1 ? "Cannot save." : "Successfully saved.";
+                                    <div class="@className" role="alert">@message</div>
+                                    }
+                                }
+        </div>
+    </div>
+</div>
+<script>
+    function target_templet_changed() {
+        //alert($(this).val()+"")
+        var target =$("#TargetTemplate").val()
+        $.ajax({
+            method: "POST",
+            url: "@Url.Action(actionName:TargetController._TEMPLETLINES, controllerName:TargetController.TARGET)",
+            data: { Target: target }
+        }).done(function( html ) {
+            $("#target-assign-line").html (html)
+        });
+    }
+</script>

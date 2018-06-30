@@ -171,20 +171,42 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Content Include="Content\pace\themes\white\pace-theme-minimal.css" />
+    <Compile Include="Controllers\AccountsController.Chart.cs" />
+    <Compile Include="Controllers\AdminController.Users.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
+    <Compile Include="Controllers\JSON\JSON.TargetTempletAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
+    <Compile Include="Controllers\JSON\JSON.CategoryAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.LocationAutoCompleter.cs" />
+    <Compile Include="Controllers\JSON\JSON.UserByOtherAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
+    <Compile Include="Controllers\ReportController.CategoryAchievement.cs" />
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RosterController.cs" />
+    <Compile Include="Controllers\TargetController.TargetTemplet.cs" />
+    <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
+    <Compile Include="Models\UserViewFilters.cs" />
     <Compile Include="Models\ActionViewFilters.Roster.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
+    <Compile Include="Models\ChartJs\Axes.cs" />
+    <Compile Include="Models\ChartJs\chart.cs" />
+    <Compile Include="Models\ChartJs\ChartType.cs" />
+    <Compile Include="Models\ChartJs\data.cs" />
+    <Compile Include="Models\ChartJs\datasets.cs" />
+    <Compile Include="Models\ChartJs\layout.cs" />
+    <Compile Include="Models\ChartJs\legend.cs" />
+    <Compile Include="Models\ChartJs\options.cs" />
+    <Compile Include="Models\ChartJs\padding.cs" />
+    <Compile Include="Models\ChartJs\scales.cs" />
+    <Compile Include="Models\ChartJs\ticks.cs" />
+    <Compile Include="Models\ChartJs\tooltips.cs" />
     <Compile Include="Models\ConstantUsages.cs" />
+    <Compile Include="Models\DateTimeSpan.cs" />
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Models\DeliveryFilters.cs" />
@@ -195,23 +217,42 @@
     <Compile Include="Models\RoleContext.cs" />
     <Compile Include="Models\RoleDefine.cs" />
     <Compile Include="Models\RolesName.cs" />
+    <Compile Include="Models\TargetViewFilters.cs" />
+    <Compile Include="Models\TargetViewModel.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\CategoryTarget.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\UserTree.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetDetails.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\TargetMasterDetails.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetAchievementView .cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemDetails.cs" />
     <Compile Include="Providers\ProviderContext\Entities\DailyUpateView.cs" />
     <Compile Include="Providers\ProviderContext\Entities\BrandDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LocationDetail.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\TargetTemplet.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserTree.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.User.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetTemplet.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetAchievementView.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.RosterList.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Roster.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.BrandDetail.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.LocationDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserDetailsByOthers.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserDetailsList.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.ItemDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.DailyUpateView.cs" />
@@ -498,7 +539,7 @@
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserProfile.cs" />
-    <Compile Include="Views\Accounts\UsersContext.cs" />
+    <Compile Include="Providers\ProviderContext\UsersContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Scripts\AdminLTE\plugins\select2\i18n\ar.js" />
     <Content Include="Scripts\AdminLTE\plugins\select2\i18n\az.js" />
@@ -605,7 +646,17 @@
     <Content Include="Views\Delivery\DeliveryIndex.cshtml" />
     <Content Include="Views\Report\TargetAchievementActions.cshtml" />
     <Content Include="Views\Report\TargetAchievementView.cshtml" />
-    <Content Include="Views\Roster\_ViewStart.cshtml" />
+    <Content Include="Views\Target\Target.cshtml" />
+    <Content Include="Views\Target\TableTargetUpateView.cshtml" />
+    <Content Include="Views\Target\AjaxCreateTargetMaster.cshtml" />
+    <Content Include="Views\Target\AjaxCreateTargetDetails.cshtml" />
+    <Content Include="Views\Target\TargetList.cshtml" />
+    <Content Include="Views\Report\CategoryAchievement.cshtml" />
+    <Content Include="Views\Report\TableCategoryAchievementView.cshtml" />
+    <Content Include="Views\Target\TargetTemplate.cshtml" />
+    <Content Include="Views\Target\_ViewStart.cshtml" />
+    <Content Include="Views\Admin\UserList.cshtml" />
+    <Content Include="Views\Admin\UserTree.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -670,7 +721,6 @@
     <Content Include="Views\Shared\_MainFooterAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="API\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

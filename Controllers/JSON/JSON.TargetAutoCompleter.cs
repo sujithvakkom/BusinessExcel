@@ -18,7 +18,7 @@ namespace BusinessExcel.Controllers.JSON
                 int temp;
 
                 var items = db.getTargetDetails(search: Search, Page: Page,RowCount:out temp);
-                JSONPagininationModel<TargetDetails> model = new JSONPagininationModel<TargetDetails>();
+                JSONPagininationModel<TargetMasterDetails> model = new JSONPagininationModel<TargetMasterDetails>();
                 model.CountPerPage = 20;
                 model.OutputList = items;
                 model.Count = temp;

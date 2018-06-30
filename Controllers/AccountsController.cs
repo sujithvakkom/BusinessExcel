@@ -14,7 +14,7 @@ namespace BusinessExcel.Controllers
 {
     //[Authorize]
     //[InitializeSimpleMembership]
-    public class AccountsController : Controller
+    public partial class AccountsController : Controller
     {
         public const string ACCOUNTS = "Accounts";
 
@@ -42,8 +42,13 @@ namespace BusinessExcel.Controllers
                 }
             }
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.QtyGraph = GetGraphForCurrentMonthQuantity();
+            ViewBag.ValueGraph = GetGraphForCurrentMonthValue();
+            ViewBag.StartDate = startDate;
+            ViewBag.EndDate = endDate;
             if (Request.IsAjaxRequest())
                 return PartialView(WELCOME);
+
             return View();
         }
 

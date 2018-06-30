@@ -1,43 +1,4 @@
-﻿@*
-    @if (ViewBag.SuccessFlag) {
-    <div class="form-group has-success">
-        <label class="control-label"><i class="fa fa-check"></i> @ViewBag.Message </label>
-    </div>
-    }
-    else {
-    <div class="form-group has-error">
-        <label class="control-label">
-            <i class="fa fa-times-circle-o"></i> @ViewBag.Message
-        </label>
-    </div>
-    }
-
-    @if (ViewBag.Errors.Count > 0) {
-        <div class="box box-warning collapsed-box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Errors</h3>
-
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                        <i class="fa fa-plus"></i>
-                    </button>
-                </div>
-                <!-- /.box-tools -->
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <ul>
-                @foreach (var error in ViewBag.Errors)
-                {
-                    <li>
-                        @error
-                    </li>
-                }
-                    </ul>
-            </div>
-        </div>
-    }
-*@
+﻿
 @using BusinessExcel.Models
 @using BootstrapHtmlHelper
 @model  EditUserProfile
