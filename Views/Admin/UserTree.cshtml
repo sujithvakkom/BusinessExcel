@@ -1,17 +1,181 @@
-﻿@{
-    Layout = null;
+﻿
+@using BusinessExcel.Models
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+
+
+
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0" />
+
+@*@model IEnumerable<BusinessExcel.Models.UserTreeViewModel>*@
+
+
+    <script src="~/Scripts/jsTree3/jstree.min.js"></script>
+    <script>
+
+        $(function () {
+            var selectedData;
+            $('#jstree').jstree({
+                "core": {
+                    "multiple": true,
+                    "check_callback": false,
+                    'themes': {
+                        "responsive": true,
+                        'variant': 'larg',
+                        'stripes': false,
+                        'dots': false
+                    }
+                },
+                "types": {
+                    "default": {
+                        "icon": "fa fa-user icon-state-warning icon-lg"
+                    },
+                    "file": {
+                        "icon": "fa fa-file icon-state-warning icon-lg"
+                    }
+                },
+
+             
+                "plugins": ["dnd", "state", "types", "sort", "checkbox", "search"],
+
+
+
+            });
+
+
+            
+
+            var to = false;
+            $('#search_field').keyup(function () {
+
+                if ($('#search_field').val().length <= 1)
+                {
+                  
+
+                    $('#jstree').jstree('close_all');
+                }
+
+                if (to) { clearTimeout(to); }
+                to = setTimeout(function () {
+                    var v = $('#search_field').val();
+                    $('#jstree').jstree(true).search(v);
+                }, 250);
+            });
+
+            $('#jstree')
+    .on('changed.jstree', function (e, data) {
+
+        $('#parent').html('');
+
+        var i, j, r = [];
+        for (i = 0, j = data.selected.length; i < j; i++) {
+           // r.push(data.instance.get_node(data.selected[i]).text);
+
+            $('#parent').html('Parent: ' + data.instance.get_node(data.node.parent).text);
+
+       
+          //  alert( data.node.a_attr.href);
+
+        }
+      // $('#event_result').html('Selected: ' + r.join(', '));
+    }).jstree();
+
+
+
+           
+
+
+
+        });
+
+        
+
+    </script>
+
+
+<style type="text/css">
+
+    .jstree-default a.jstree-search { color:green;     font-style:normal; 
+ 
 }
 
-<!DOCTYPE html>
+</style>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>UserTree</title>
-</head>
-<body>
-    <div>
-        
+ 
+
+
+
+@model IEnumerable<UserTree>
+
+
+
+@*@using (Ajax.BeginForm(@BusinessExcel.Controllers.AdminController.USERSTREE,
+                                            @BusinessExcel.Controllers.AdminController.ADMIN,
+                                            new AjaxOptions()
+                                            {
+                                                HttpMethod = "Get",
+                                                UpdateTargetId = "main-body",
+                                                OnBegin = "move('#page-load')",
+                                                OnComplete = "ajax_call_load_complete('#page-load')",
+                                                OnFailure = "loadin_failed"
+                                            }))
+
+{*@
+
+
+<section class="content-header">
+    <h1>
+        @BusinessExcel.Controllers.AdminController.USERSTREE_TITLE
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Manager</a></li>
+        <li class="active">Manager Panel</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-6">
+            @*<h2>TreeView</h2>*@
+            <link href="~/Content/jsTree/themes/default/style.min.css" rel="stylesheet" />
+            <div class="form-body">
+                <div id="jstree">
+                        @(Html.TreeView(Model)
+              .EmptyContent("GS")
+              .Children(m => m.Childs)
+              .HtmlAttributes(new { id = "tree" })
+          .ChildrenHtmlAttributes(new { @class = "subItem" })
+              .ItemText(m => m.user_id.ToString())
+              .ItemTemplate(
+                    @<text>
+                        <a href="@item.user_id.ToString()" desc="@item.u_name" oncontextmenu="return false;">@item.u_name (@item.user_name)</a>
+                    </text>)
+                        )
+                    </div>
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            <fieldset id="search">
+
+               @*<input type="text" name="search_field" id="search_field" value="" placeholder="Search"/>*@
+               
+
+             
+                    <div class="form-group">
+                        <label for="search">Search:</label>
+                        <input type="text" class="form-control" id="search_field">
+                    </div>
+
+                <div id="parent"></div>
+                <div id="event_result"></div>
+               
+</fieldset>
+        </div>
     </div>
-</body>
-</html>
+
+</section>
+

@@ -72,16 +72,16 @@ namespace BusinessExcel.Controllers
         {
 
 
-            if (!string.IsNullOrEmpty(ros.name))
-                using (var db = new SalesManageDataContext())
-                {
-                    ViewData[SELECTED_FILTED_USER] = db.getUserDetail(ros.name);
-                }
+            //if (!string.IsNullOrEmpty(ros.name))
+            //    using (var db = new SalesManageDataContext())
+            //    {
+            //        ViewData[SELECTED_FILTED_USER] = db.getUserDetail(ros.name);
+            //    }
 
-            if (!string.IsNullOrEmpty(ros.location_id))
+            if (!string.IsNullOrEmpty(ros.location_id.ToString()))
                 using (var db = new SalesManageDataContext())
                 {
-                    ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(ros.location_id);
+                    ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(ros.location_id.ToString());
                 }
          
                 //using (var db = new SalesManageDataContext())

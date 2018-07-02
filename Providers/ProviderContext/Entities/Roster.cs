@@ -16,22 +16,11 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         public Int32 roster_id { get; set; }
 
 
-       // [Required]
-       //// [Key, Column(Order = 1)]
-       // [Display(Name = "User")]
-       // public string user_name { get; set; }
-
-       // //[Required]
-       // // [Key, Column(Order = 1)]
-       // [Display(Name = "User ID")]
-       // public int user_id { get; set; }
-
-
 
         [Required]
        // [Key, Column(Order = 2)]
         [Display(Name = "Location")]
-        public string location_id { get; set; }
+        public int location_id { get; set; }
 
 
         [Required]
@@ -47,7 +36,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         public DateTime? end_date { get; set; }
 
 
-       
+
         //// [Key, Column(Order = 1)]
         //[Display(Name = "Roster Target Amt")]
         //public string target_amt { get; set; }
@@ -58,8 +47,11 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
 
 
-       
+        [Display(Name = "Name")]
         public string name { get; set; }
+
+        //[NotMapped]
+        //public string location_name { get; set; }
 
 
         //[Required]

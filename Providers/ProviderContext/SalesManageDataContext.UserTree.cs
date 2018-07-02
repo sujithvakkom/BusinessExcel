@@ -17,7 +17,30 @@ namespace BusinessExcel.Providers.ProviderContext
         // public DbSet<Roster> RosterList { get; set; }
 
         //public DbSet<ItemDetails> ItemDetails { get; set; }
-        
-        
+        public virtual List<UserTree> getUserTree()
+        {
+            List<UserTree> users = new List<UserTree>();
+            //var description = search != null ?
+            //      new SqlParameter("@filter", search) :
+            //      new SqlParameter("@filter", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            //int? page = null;
+            //var page_size = page != null ?
+            //    new SqlParameter("@page_size", page) :
+            //    new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+           
+            try
+            {
+                users = this.Database.SqlQuery<UserTree>("[db_salesmanage_user].[getUserTree]").ToList();
+               
+            }
+            catch (Exception ex)
+            {
+               
+            }
+            return users;
+        }
+
     }
 }
