@@ -12,7 +12,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
     public partial class SalesManageDataContext : DbContext
     {
-
+     
         public DbSet<Roster> Roster { get; set; }
         // public DbSet<Roster> RosterList { get; set; }
 
@@ -21,12 +21,12 @@ namespace BusinessExcel.Providers.ProviderContext
 
         public int InsertUpdateRoster(Roster roster, bool isInsert)
         {
-            const string INSERT_ROSTER = @"insert into db_salesmanage_user.roster (user_id,user_name,u_name,location_id,location_name,start_date,end_date,target_id,target_amt) 
-                                                 values((SELECT [db_salesmanage_user].[get_user_id] (@user_name)),@user_name,@u_name,@location_id,@location_name,@start_date,@end_date,@target_id,@target_amt)";
+            const string INSERT_ROSTER = @"insert into db_salesmanage_user.roster (name,location_id,start_date,end_date) 
+                                                 values(@name,@location_id,@start_date,@end_date)";
 
-            const string UPDATE_ROSTER = @" update db_salesmanage_user.roster set user_id=(SELECT [db_salesmanage_user].[get_user_id] (@user_name)),
+            const string UPDATE_ROSTER = @" update db_salesmanage_user.roster set 
 
-user_name=@user_name,u_name=@u_name,location_id=@location_id,location_name=@location_name,start_date=@start_date,end_date=@end_date,target_id=@target_id,target_amt=@target_amt
+name=@name,location_id=@location_id,start_date=@start_date,end_date=@end_date
 
 where roster_id=@roster_id";
 
@@ -35,13 +35,13 @@ where roster_id=@roster_id";
   new SqlParameter("@roster_id", System.Data.SqlDbType.NVarChar) { Value = 0 };
 
 
-            var name = roster.name != null ?
-                  new SqlParameter("@user_name", roster.name) :
-                  new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            //var name = roster.name != null ?
+            //      new SqlParameter("@user_name", roster.name) :
+            //      new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-          //  var u_name = roster.u_name != null ?
-          //new SqlParameter("@u_name", roster.u_name) :
-          //new SqlParameter("@u_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            var name = roster.name != null ?
+          new SqlParameter("@name", roster.name) :
+          new SqlParameter("@name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
             var location_id = roster.location_id != null ?

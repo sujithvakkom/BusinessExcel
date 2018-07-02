@@ -7,6 +7,7 @@ using BusinessExcel.Providers.ProviderContext.Entities;
 using BusinessExcel.Models;
 using BusinessExcel.Extentions;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 
 namespace BusinessExcel.Providers.ProviderContext
 {
@@ -14,13 +15,27 @@ namespace BusinessExcel.Providers.ProviderContext
     public partial class SalesManageDataContext : DbContext
     {
 
-        public IQueryable<Roster> RosterUpateViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count, 
+        public IQueryable<RosterViewModel> RosterUpateViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count, 
             ActionViewFilters Filters)
         {
             int skippingRows = (pageNumber - 1) * pageSize;
-           
 
-            var res = this.Roster.Select(x=>x);
+
+            const string SELECT_ROSTERS = @"select [roster_id], 
+                                               loc.[location_id],[start_date],[end_date],[name] ,description as location_name
+                                                from db_salesmanage_user.roster ros  inner join sc_salesmanage_user.location_m loc on ros.location_id=loc.location_id";
+
+            //var user_name = userName != null ?
+            //      new SqlParameter("@user_name", userName) :
+            //      new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+           var  res = this.Database.SqlQuery<RosterViewModel>(SELECT_ROSTERS).ToList().AsQueryable();
+            
+
+
+
+
+         //   var res = this.Roster.Select(x=>x);
            
           
             if (!string.IsNullOrEmpty(Filters.UserName))
@@ -31,7 +46,7 @@ namespace BusinessExcel.Providers.ProviderContext
             if (!string.IsNullOrEmpty(Filters.LocationID))
             {
                 var temp = this.getLocationDetail(Filters.LocationID).location_id;
-                res = res.Where(x => x.location_id == temp.ToString());
+                res = res.Where(x => x.location_id.ToString() == temp.ToString());
             }
 
             if (Filters.StartDate != default(DateTime))

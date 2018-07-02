@@ -87,6 +87,25 @@
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-user-md")
+
+                                @Ajax.AjaxAdminLTEActionLink(
+                   linkText: AdminController.USERSTREE_TITLE,
+                   actionName: AdminController.USERSTREE,
+                   controllerName: AdminController.ADMIN,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(AdminController.USERSTREE, AdminController.ADMIN, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       OnFailure = "loadin_failed"
+                   },
+                   isNavSideBar: true,
+                   carrot: "fa fa-sitemap")
+
+
+
                                 @Ajax.AjaxAdminLTEActionLink(
                    linkText: AdminController.VIEWMANAGER_TITLE,
                    actionName: AdminController.VIEWMANAGEMENT,
