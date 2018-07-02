@@ -186,6 +186,7 @@
     <Compile Include="Controllers\AdminController.Users.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
+    <Compile Include="Controllers\JSON\JSON.TargetTempletAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.CategoryAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetAutoCompleter.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Providers\ProviderContext\Entities\DailyUpateView.cs" />
     <Compile Include="Providers\ProviderContext\Entities\BrandDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LocationDetail.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\TargetTemplet.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />

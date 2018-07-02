@@ -24,9 +24,13 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
             EndDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
             this.Description = null;
             this.BaseIncentive = null;
+            this.TargetTemplate = null;
         }
 
         public LineTarget[] LineTargets { get; set; }
+
+        [Display(Name = "Target Template")]
+        public string TargetTemplate { get; set; }
 
         [Display(Name = "User Name")]
         public string UserName { get; set; }

@@ -32,6 +32,11 @@
 </div>
 @for (int i = 0; i < Model.Length; i++)
 {
+    CategoryDetail selection = new CategoryDetail();
+    using (var db = new SalesManageDataContext())
+    {
+        selection = db.getCategoryDetails(Model[i].Catogery);
+    }
     <div class="row">
         <div class="col-md-offset-1 col-md-2 table-fields">
             @Html.AdminLTECheckBoxFor(m => m[i].IsBonusLine,
@@ -47,7 +52,11 @@
            htmlLabelAttributes: null,
            htmlDropDownAttributes: new Dictionary<string, object>() { { "class", "form-control select2" }, { "style", "border-style:none !important" } },
            htmlGroupAttributes: new Dictionary<string, object>() { },
-           autoCompleteOptions: new AutoCompleteOptions() { AjaxOptions = new AjaxOptions() { HttpMethod = "GET", Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER) }, DescriptionField = "description", IDField = "category_id", Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'", SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],  IsAutoComplete = true, SelectItems = null }, showLabel: false)
+           autoCompleteOptions: new AutoCompleteOptions() { AjaxOptions = new AjaxOptions() { HttpMethod = "GET",
+               Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER) },
+               DescriptionField = "description", IDField = "category_id",
+               Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+               SelectedItem = selection,  IsAutoComplete = true, SelectItems = null }, showLabel: false)
         </div>
         @*<div class="col-md-2 table-fields">
 
