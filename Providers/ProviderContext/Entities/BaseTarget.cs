@@ -59,7 +59,6 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [DataType(DataType.Currency)]
         public Decimal TotalTarget { get; set; }
 
-        [Required]
         [Display(Name = "Base Incentive")]
         [DataType(DataType.Currency)]
         public decimal? BaseIncentive { get; set; }

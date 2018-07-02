@@ -221,9 +221,11 @@
     <Compile Include="Models\TargetViewModel.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\BaseTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\LineTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserTree.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetDetails.cs" />
@@ -353,6 +355,7 @@
     <Content Include="Images\logo185x27.svg" />
     <Content Include="Images\image2vector.svg" />
     <Content Include="Images\logo185x77.png" />
+    <Content Include="Images\progress.gif" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.css" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.standalone.css" />
@@ -657,6 +660,10 @@
     <Content Include="Views\Target\_ViewStart.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
     <Content Include="Views\Admin\UserTree.cshtml" />
+    <Content Include="Views\Target\_TargetAssignBlock.cshtml" />
+    <Content Include="Views\Target\_TargetTemplateCreateBlock.cshtml" />
+    <Content Include="Views\Shared\_Progress.cshtml" />
+    <Content Include="Views\Target\TargetLine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

@@ -9,15 +9,17 @@
 @model BaseTarget
 
 
-    <div class="row">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">@TargetController.TARGETTEMPLATE_TITLE</h3>
-            </div>
-            <div class="box-body" >
-                @using (Ajax.BeginForm(
+<div class="row">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">@TargetController.TARGETTEMPLATE_TITLE</h3>
+        </div>
+        <div class="box-body">
+            @using (Ajax.BeginForm(
                     controllerName: TargetController.TARGET,
                     actionName: TargetController.TARGETTEMPLATECREATE,
+                    htmlAttributes: new { id = "target-create-form" },
+                    routeValues: null,
                     ajaxOptions:
                         new AjaxOptions()
                         {
@@ -26,18 +28,19 @@
                             UpdateTargetId = "target-tamplet",
                             OnBegin = "move('#page-load')",
                             OnComplete = "ajax_call_load_complete('#page-load')",
-                            OnFailure = "loadin_failed"
+                            OnFailure = "loadin_failed",
+                            LoadingElementId = "target-create-progress"
                         }))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-4 padding-label">
-                                Description
-                            </div>
-                            <div class="col-md-6">
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4 padding-label">
+                            Description
+                        </div>
+                        <div class="col-md-6">
 
-                                @Html.AdminLTETextBoxFor(m => m.Description,
+                            @Html.AdminLTETextBoxFor(m => m.Description,
                                     null,
                                     new Dictionary<string, object>() {
                                         { "class", "form-control" }, { "autocomplete", "off" }
@@ -48,17 +51,17 @@
                                     false,
                                     true,
                                     true)
-                            </div>
                         </div>
                     </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-4 padding-label">
-                                        Base Incentive
-                                    </div>
-                                    <div class="col-md-6">
+                </div>
+                @*<div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4 padding-label">
+                                Base Incentive
+                            </div>
+                            <div class="col-md-6">
 
-                                        @Html.AdminLTETextBoxFor(m => m.BaseIncentive,
+                                @Html.AdminLTETextBoxFor(m => m.BaseIncentive,
                                     null,
                                     new Dictionary<string, object>() {
                                         { "class", "form-control numaric" }, { "autocomplete", "off" }
@@ -69,16 +72,16 @@
                                     false,
                                     true,
                                     true)
-                                    </div>
-                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="col-md-4 padding-label">
-                                        Period
-                                    </div>
-                                    <div class="col-md-6">
-                                        @Html.AdminLTEDateRangePickerFor(
+                        </div>
+                    </div>*@
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4 padding-label">
+                            Period
+                        </div>
+                        <div class="col-md-6">
+                            @Html.AdminLTEDateRangePickerFor(
                                 m => m.StartDate,
                                 m => m.EndDate,
                                 "Date Range",
@@ -90,10 +93,10 @@
                                 showLabel: false,
                                 hasValidation: true,
                                 showGlyphicons: true)
-                                    </div>
-                                </div>
-                            </div>
-                            
+                        </div>
+                    </div>
+                </div>
+
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="col-md-4 padding-label">
@@ -116,7 +119,7 @@
                                         },
                                         DescriptionField = "description",
                                         IDField = "location_id",
-                                        Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                        Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
                                         IsAutoComplete = true,
                                         SelectItems = null
                                     },
@@ -125,6 +128,38 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-md-4 padding-label">
+                                        Employ
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        @Html.AdminLTEDropDownListFor(
+                         m => m.UserName,
+                         htmlLabelAttributes: null,
+                         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                { "class", "form-control select2" }
+                                            },
+                         htmlGroupAttributes: new Dictionary<string, object>() { },
+                         autoCompleteOptions: new AutoCompleteOptions()
+                         {
+                             AjaxOptions = new AjaxOptions()
+                             {
+                                 HttpMethod = "GET",
+                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                             },
+                             DescriptionField = "full_name",
+                             IDField = "user_name",
+                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                             SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
+                             IsAutoComplete = true,
+                             SelectItems = null
+                         },
+                         showLabel: false)
+                                    </div>
+                                </div>
+                            </div>
                             <div class="box-header with-border">
                                 <h3 class="box-title">@TargetController.TARGETTEMPLATELINE_TITLE</h3>
                             </div>
@@ -157,13 +192,20 @@
                                             if (ViewBag.Result != null)
                                             {
                                                 var className = ViewBag.Result == -1 ? @"alert alert-danger" : @"alert alert-success";
-                                                var message = ViewBag.Result == -1 ? "Cannot save." : "Successfully saved.";
-                                                <div class="@className" role="alert">@message</div>
+                                                var message = ViewBag.Result == -1 ? "<b>Cannot save.</b>" : "<b>Successfully saved.</b>";
+                                                if (ViewBag.ModelErrors != null)
+                                                {
+                                                    foreach (var err in ((string)ViewBag.ModelErrors).Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+                                                    { message += ("<p>" + Environment.NewLine + ViewBag.ModelErrors + "</p>"); }
+                                                }
+                                                <div class="@className" role="alert">@Html.Raw(message)</div>
                                             }
-
 
                                             <input class="btn btn-primary pull-right" type="submit" value="Save" />
-                                            }
-            </div>
+
+
+                                            Html.RenderPartial("_Progress", "target-create-progress");
+                                                }
         </div>
     </div>
+</div>

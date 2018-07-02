@@ -55,7 +55,7 @@
            autoCompleteOptions: new AutoCompleteOptions() { AjaxOptions = new AjaxOptions() { HttpMethod = "GET",
                Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER) },
                DescriptionField = "description", IDField = "category_id",
-               Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+               Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
                SelectedItem = selection,  IsAutoComplete = true, SelectItems = null }, showLabel: false)
         </div>
         @*<div class="col-md-2 table-fields">
