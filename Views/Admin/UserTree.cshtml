@@ -66,13 +66,13 @@
             $('#jstree')
     .on('changed.jstree', function (e, data) {
 
-        $('#parent').html('');
+       // $('#parent').html('');
 
         var i, j, r = [];
         for (i = 0, j = data.selected.length; i < j; i++) {
            // r.push(data.instance.get_node(data.selected[i]).text);
 
-            $('#parent').html('Parent: ' + data.instance.get_node(data.node.parent).text);
+           // $('#parent').html('Parent: ' + data.instance.get_node(data.node.parent).text);
 
        
           //  alert( data.node.a_attr.href);
@@ -159,23 +159,30 @@
             </div>
         </div>
         <div class="col-md-3">
-            <fieldset id="search">
 
-               @*<input type="text" name="search_field" id="search_field" value="" placeholder="Search"/>*@
+
                
 
-             
-                    <div class="form-group">
-                        <label for="search">Search:</label>
-                        <input type="text" class="form-control" id="search_field">
+
+
+
+                        <fieldset id="search">
+
+                            @*<input type="text" name="search_field" id="search_field" value="" placeholder="Search"/>*@
+
+
+
+                            <div class="form-group">
+                                <label for="search">Search:</label>
+                                <input type="text" class="form-control" id="search_field">
+                            </div>
+
+                            <div id="parent"></div>
+                            <div id="event_result"></div>
+
+                        </fieldset>
                     </div>
-
-                <div id="parent"></div>
-                <div id="event_result"></div>
-               
-</fieldset>
-        </div>
-    </div>
+                </div>
 
 </section>
 
