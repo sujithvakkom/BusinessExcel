@@ -52,29 +52,27 @@ namespace BusinessExcel.Providers.ProviderContext
         {
             List<CategoryDetail> category = new List<CategoryDetail>();
 
-            var filter = search != null ?
-                new SqlParameter("@filter", search) :
-                new SqlParameter("@filter", System.Data.SqlDbType.NVarChar);
-            filter.Value = DBNull.Value;
+            var filter = string.IsNullOrEmpty(search) ?
+                new SqlParameter("@filter", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value } :
+                new SqlParameter("@filter", search);
+            //filter.Value = DBNull.Value;
 
             int? page = null;
             var page_size = page != null ?
                 new SqlParameter("@page_size", page) :
-                new SqlParameter("@page_size", System.Data.SqlDbType.BigInt);
-            page_size.Value = DBNull.Value;
+                new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value=DBNull.Value};
+            //page_size.Value = DBNull.Value;
 
             int? page_num = Page;
             var page_number = page_num != null ?
                 new SqlParameter("@page_number", page_num) :
-                new SqlParameter("@page_number", System.Data.SqlDbType.BigInt);
-            page_size.Value = DBNull.Value;
+                new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value=DBNull.Value};
+            //page_size.Value = DBNull.Value;
 
             int? row = null;
             var row_count = row != null ?
-                new SqlParameter("@row_count", row) :
-                new SqlParameter("@row_count", System.Data.SqlDbType.BigInt);
-            row_count.Value = DBNull.Value;
-            row_count.Direction = System.Data.ParameterDirection.Output;
+                new SqlParameter("@row_count", row) { Direction = System.Data.ParameterDirection.Output } :
+                new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value, Direction = System.Data.ParameterDirection.Output };
             //db.getItemDetailsImport(null, null, null);
             try
             {

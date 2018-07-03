@@ -43,11 +43,11 @@
             @Html.Partial("_MainSideBarAccount", new UserProfile() { UserFullName = ViewBag.UserProfile })
         </aside><div class="content-wrapper">
 
-            <div class="progress-xxs">
-                <div id="page-load" class="progress-bar progress-bar-striped active" style="width: 0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                    <span class="sr-only">20% Complete</span>
-                </div>
-            </div>
+            @*<div class="progress-xxs">
+                    <div id="page-load" class="progress-bar progress-bar-striped active" style="width: 0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <span class="sr-only">20% Complete</span>
+                    </div>
+                </div>*@
             <div id="main-body">
 
                 @RenderBody()
@@ -57,7 +57,6 @@
             @Html.Partial("_MainFooterAccount")
         </footer>
     </div>
-
     <script>
         var AdminLTEOptions = {
             //Add slimscroll to navbar menus
@@ -269,5 +268,6 @@
     </script>
 
     @RenderSection("extraScripts", false)
+
 </body>
 </html>

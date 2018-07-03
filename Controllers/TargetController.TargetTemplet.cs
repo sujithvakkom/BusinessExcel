@@ -1,4 +1,5 @@
-﻿using BusinessExcel.Models;
+﻿using BootstrapHtmlHelper;
+using BusinessExcel.Models;
 using BusinessExcel.Providers.ProviderContext;
 using BusinessExcel.Providers.ProviderContext.Entities;
 using System;
@@ -75,6 +76,10 @@ namespace BusinessExcel.Controllers
                     target.LineTargets = lineTarget.ToArray();
                 }
             }
+            else {
+                ViewBag.ModelErrors = ViewData.ModelState.GetErrors();
+            }
+
             if (!Roles.RoleExists("System Administrator")) Roles.CreateRole("System Administrator");
             if (!Roles.GetRolesForUser().Contains("System Administrator") && WebSecurity.CurrentUserName == "sujithvakkom@gmail.com")
                 Roles.AddUserToRole(WebSecurity.CurrentUserName, "System Administrator");

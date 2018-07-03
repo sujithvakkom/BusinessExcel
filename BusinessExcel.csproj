@@ -370,6 +370,7 @@
     <Content Include="Images\logo185x27.svg" />
     <Content Include="Images\image2vector.svg" />
     <Content Include="Images\logo185x77.png" />
+    <Content Include="Images\progress.gif" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.css" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.standalone.css" />
@@ -679,6 +680,10 @@
     <Content Include="Views\Shared\_jsTreeDemo.cshtml" />
     <Content Include="Views\jsTree3\Demo.cshtml" />
     <Content Include="Views\jsTree3\AJAXDemo.cshtml" />
+    <Content Include="Views\Target\_TargetAssignBlock.cshtml" />
+    <Content Include="Views\Target\_TargetTemplateCreateBlock.cshtml" />
+    <Content Include="Views\Shared\_Progress.cshtml" />
+    <Content Include="Views\Target\TargetLine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

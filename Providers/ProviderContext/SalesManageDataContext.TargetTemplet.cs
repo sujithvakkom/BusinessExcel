@@ -59,7 +59,10 @@ GO
                 new SqlParameter("@description_in", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value }:
                 new SqlParameter("@description_in", target.Description) ;
 
-            var base_incentive_in = new SqlParameter("@base_incentive_in", target.BaseIncentive);
+            var base_incentive_in =
+                target.BaseIncentive == null ?
+                new SqlParameter("@base_incentive_in", SqlDbType.Decimal) { Value = DBNull.Value } :
+                new SqlParameter("@base_incentive_in", target.BaseIncentive);
 
             var data = target.getTargetLine();
             data.TableName = "target_line_in";
