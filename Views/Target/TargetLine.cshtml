@@ -35,11 +35,13 @@
     CategoryDetail selection = new CategoryDetail();
     using (var db = new SalesManageDataContext())
     {
-        selection = db.getCategoryDetails(Model[i].Catogery);
+        int id = 0;
+        int.TryParse(Model[i].Catogery, out id);
+        selection = db.getCategoryDetails(id);
     }
     <div class="row">
         <div class="col-md-offset-1 col-md-2 table-fields">
-            @Html.AdminLTECheckBoxFor(m => m[i].IsBonusLine,
+            @Html.AdminLTECheckBoxFor(m => Model[i].IsBonusLine,
                         null,
                         new Dictionary<string, object>() { { "class", "form-control pull-right" }, { "autocomplete", "off" } },
                         null,
@@ -48,7 +50,7 @@
                         true)
         </div>
         <div class="col-md-4 table-fields">
-            @Html.AdminLTEDropDownListFor(m => m[i].Catogery,
+            @Html.AdminLTEDropDownListFor(m => Model[i].Catogery,
            htmlLabelAttributes: null,
            htmlDropDownAttributes: new Dictionary<string, object>() { { "class", "form-control select2" }, { "style", "border-style:none !important" } },
            htmlGroupAttributes: new Dictionary<string, object>() { },
@@ -71,7 +73,7 @@
                             true)
             </div>*@
         <div class="col-md-3 table-fields">
-            @Html.AdminLTETextBoxFor(m => m[i].Target,
+            @Html.AdminLTETextBoxFor(m => Model[i].Target,
                         null,
                         new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" }, { "onchange", "target_line_changed()" } },
                         null,

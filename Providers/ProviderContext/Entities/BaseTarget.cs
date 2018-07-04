@@ -35,14 +35,13 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-        [Required]
         [DataType(DataType.Text)]
         [MaxLength(50)]
         [Display(Name = "Description")]
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Location")]
+        [Display(Name = "Site")]
         public string Location { get; set; }
 
         [Required]
@@ -63,11 +62,11 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [DataType(DataType.Currency)]
         public decimal? BaseIncentive { get; set; }
 
-        internal int Save()
+        internal int Save(out string Message)
         {
             using (var db = new SalesManageDataContext())
             {
-                return db.createUpdateTarget(target: this);
+                return db.createUpdateTarget(this,out Message);
             }
         }
         /*

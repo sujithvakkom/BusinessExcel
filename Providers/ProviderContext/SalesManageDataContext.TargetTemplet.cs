@@ -36,12 +36,10 @@ GO
          private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date,@end_date,@location_in,@user_in,@description_in,@base_incentive_in,@target_line_in";
 
          */
-         private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @target_line_in";
-        public virtual int createUpdateTarget(BaseTarget target)
+         private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
+        public virtual int createUpdateTarget(BaseTarget target, out string Message)
         {
             int result = -1;
-
-            var returnParameter = new SqlParameter("@ReturnVal", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue };
 
             var start_date = new SqlParameter("@start_date", target.StartDate);
 
@@ -68,22 +66,30 @@ GO
             data.TableName = "target_line_in";
             var target_line_in = new SqlParameter("@target_line_in", System.Data.SqlDbType.Structured) { Value = data, TypeName = "target_category_line" };
 
+            var message =
+                new SqlParameter("@message", SqlDbType.NVarChar,-1) { Value = DBNull.Value ,Direction=ParameterDirection.Output};
+
+            var curr_target_id = new SqlParameter("@curr_target_id", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
             try
             {
                 result = this.Database.ExecuteSqlCommand(cmd, 
-                    returnParameter,
                     start_date, 
                     end_date, 
                     location_in, 
                     user_in, 
                     description_in, 
                     base_incentive_in, 
-                    target_line_in);
+                    target_line_in,
+                    message, 
+                    curr_target_id);
+                Message = message.Value.ToString();
+                result = int.Parse(curr_target_id.Value.ToString());
             }
             catch (Exception ex) {
                 result = -1;
+                Message = ex.Message;
             }
-            result = int.Parse(returnParameter.Value.ToString());
             return result;
         }
 

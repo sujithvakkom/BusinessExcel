@@ -80,38 +80,38 @@ tfoot tr td{
     padding-left:5px;
 }
 
-#target-tamplet #target-row{
+.table-form .table-form-row{
     padding:10px;
      margin: 5px !important;
 }
-#target-tamplet .field-validation-valid{
+.table-form .field-validation-valid{
     margin:0px !important;
 }
-#target-tamplet .form-group {
+.table-form .form-group {
     margin:0px !important;
 }
-#target-tamplet .checkbox {    
+.table-form .checkbox {    
     padding: 6px 0px 6px 10px !important;
     margin: 0px !important;    
     border: 1px solid #ccc;
 }
 
-#target-tamplet .padding-label {
+.table-form .padding-label {
     text-align:right;
     padding: 6px 10px 6px 10px !important;
     font-weight:bold;
 }
 
-#target-tamplet .numaric{
+.table-form .numaric{
     text-align:right;
 }
-.table-fields {
+.table-form .table-fields {
     padding-left:0px !important;
     padding-bottom:0px !important;
     padding-top:0px !important;
     padding-right:0px !important
 }
-.table-fields-header div {
+.table-form .table-fields-header div {
     font-weight:bold;
     padding:10px !important;
     border: 1px solid #ccc;

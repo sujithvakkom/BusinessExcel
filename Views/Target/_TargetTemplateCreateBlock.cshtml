@@ -9,6 +9,15 @@
 @model BaseTarget
 
 
+@{
+    LocationDetail selectionLocation = new LocationDetail();
+    UserDetail selectionUser = new UserDetail();
+    using (var db = new SalesManageDataContext())
+    {
+        selectionLocation = db.getLocationDetail(Model.Location);
+        selectionUser = db.getUserDetail(Model.UserName);
+    }
+}
 <div class="row">
     <div class="box box-primary">
         <div class="box-header with-border">
@@ -33,7 +42,7 @@
                         }))
             {
                 @Html.AntiForgeryToken()
-                <div class="row">
+                @*<div class="row">
                     <div class="col-md-12">
                         <div class="col-md-4 padding-label">
                             Description
@@ -53,7 +62,7 @@
                                     true)
                         </div>
                     </div>
-                </div>
+                </div>*@
                 @*<div class="row">
                         <div class="col-md-12">
                             <div class="col-md-4 padding-label">
@@ -82,8 +91,8 @@
                         </div>
                         <div class="col-md-6">
                             @Html.AdminLTEDateRangePickerFor(
-                                m => m.StartDate,
-                                m => m.EndDate,
+                                m => Model.StartDate,
+                                m => Model.EndDate,
                                 "Date Range",
                                 htmlLabelAttributes: null,
                                 htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
@@ -104,7 +113,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         @Html.AdminLTEDropDownListFor(
-                                    m => m.Location,
+                                    m => Model.Location,
                                     htmlLabelAttributes: null,
                                     htmlDropDownAttributes: new Dictionary<string, object>() {
                                         { "class", "form-control select2" }
@@ -121,7 +130,7 @@
                                         IDField = "location_id",
                                         Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
                                         IsAutoComplete = true,
-                                        SelectItems = null
+                                        SelectedItem = selectionLocation
                                     },
                                     showLabel: false)
                                     </div>
@@ -136,7 +145,7 @@
                                     <div class="col-md-6">
 
                                         @Html.AdminLTEDropDownListFor(
-                         m => m.UserName,
+                         m => Model.UserName,
                          htmlLabelAttributes: null,
                          htmlDropDownAttributes: new Dictionary<string, object>() {
                                                 { "class", "form-control select2" }
@@ -152,9 +161,8 @@
                              DescriptionField = "full_name",
                              IDField = "user_name",
                              Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                             SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
                              IsAutoComplete = true,
-                             SelectItems = null
+                             SelectedItem = selectionUser
                          },
                          showLabel: false)
                                     </div>
@@ -163,7 +171,7 @@
                             <div class="box-header with-border">
                                 <h3 class="box-title">@TargetController.TARGETTEMPLATELINE_TITLE</h3>
                             </div>
-                            <div class="row" id="target-row">
+                            <div class="row table-form-row" id="target-row" >
                                 <div class="row">
                                     <div class="col-md-12">
                                         @{Html.RenderPartial(TargetController.TARGETLINE, Model.LineTargets);}
@@ -196,7 +204,11 @@
                                                 if (ViewBag.ModelErrors != null)
                                                 {
                                                     foreach (var err in ((string)ViewBag.ModelErrors).Split(new[] { Environment.NewLine }, StringSplitOptions.None))
-                                                    { message += ("<p>" + Environment.NewLine + ViewBag.ModelErrors + "</p>"); }
+                                                    { message += ("<p>"  + err + "</p>"); }
+                                                }
+                                                if (ViewBag.Message != null)
+                                                {
+                                                    message += ("<p>" + ViewBag.Message + "</p>");
                                                 }
                                                 <div class="@className" role="alert">@Html.Raw(message)</div>
                                             }

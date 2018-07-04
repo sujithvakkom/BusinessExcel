@@ -17,7 +17,7 @@ namespace BusinessExcel.Controllers
     {
 
         public static string TARGETLINE = "TargetLine";
-        public static string TARGETTEMPLATE_TITLE = "Target Template";
+        public static string TARGETTEMPLATE_TITLE = "Target Creation";
         public static string TARGETASSIGN_TITLE = "Target Assign";
         public static string TARGETTEMPLATELINE_TITLE = "Target Lines";
         public static string TARGETTEMPLATE = "TargetTemplate";
@@ -61,6 +61,7 @@ namespace BusinessExcel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult TargetTemplateCreate(BaseTarget target, ICollection<LineTarget> lineTarget)
         {
+            string Message="";
             int result = -1;
             if (ModelState.IsValid)
             {
@@ -68,12 +69,13 @@ namespace BusinessExcel.Controllers
                     lineTarget.ToArray();
                 try
                 {
-                    result = target.Save();
-                    target = new BaseTarget();
+                    result = target.Save(out Message);
+                    if (result != -1)
+                        target = new BaseTarget();
                 }
                 catch (Exception ex)
                 {
-                    target.LineTargets = lineTarget.ToArray();
+                    ViewBag.Message = Message;
                 }
             }
             else {
@@ -98,6 +100,8 @@ namespace BusinessExcel.Controllers
                 }
             }
             ViewBag.Result = result;
+            if (!string.IsNullOrEmpty(Message))
+                ViewBag.Message = Message;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (Request.IsAjaxRequest())
                 return PartialView(_TARGETTEMPLATECREATEBLOCK, target);
