@@ -1,0 +1,180 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@model BaseTarget
+
+<div class="row box-body ">
+    @if (Model.LineTargets.Length > 0)
+    {
+        @*TO DO*@
+        using (Ajax.BeginForm(
+controllerName: TargetController.TARGET,
+actionName: TargetController.TARGETDISTRIBUTION,
+htmlAttributes: new { id = "target-distribute-form" },
+routeValues: null,
+ajaxOptions:
+new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "Post",
+    UpdateTargetId = "",
+    OnBegin = "move('#page-load')",
+    OnComplete = "ajax_call_load_complete('#page-load')",
+    OnFailure = "loadin_failed",
+    LoadingElementId = "target-assing-traget-progress"
+}))
+        {
+            <div class="row table-form">
+                <div class="col-lg-12">
+                    <div class="col-md-1 padding-label">
+                        Employ
+                    </div>
+                    <div class="col-md-3">
+
+                        @Html.AdminLTEDropDownListFor(
+        expression: m => Model.UserName,
+        htmlLabelAttributes: null,
+        htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                { "class", "form-control select2" }
+                           },
+        htmlGroupAttributes: new Dictionary<string, object>() { },
+        autoCompleteOptions: new AutoCompleteOptions()
+        {
+            AjaxOptions = new AjaxOptions()
+            {
+                HttpMethod = "GET",
+                Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+            },
+            DescriptionField = "full_name",
+            IDField = "user_name",
+            Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+            SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
+
+            IsAutoComplete = true,
+            SelectItems = null
+        },
+        showLabel: false,
+        hasValidation: true
+        )
+                    </div>
+                </div>
+            </div>
+            <div>
+
+                @Html.HiddenFor(m => Model.TargetTemplate)
+                @Html.HiddenFor(m => Model.Location)
+
+            </div>
+            <div class="table-form" style="padding: 0px 30px 0px 30px">
+                <div class="row table-fields-header">
+                    <div class="col-md-1 table-fields">
+                        Bonus
+                    </div>
+                    <div class="col-md-3 table-fields">
+                        Category Line
+                    </div>
+                    <div class="col-md-3 table-fields">
+                        Available Target
+                    </div>
+                    <div class="col-md-2 table-fields">
+                        Allocation
+                    </div>
+                    <div class="col-md-3 table-fields">
+                        Target
+                    </div>
+                </div>
+                @for (int i = 0; i < Model.LineTargets.Length; i++)
+                {
+                    CategoryDetail selection = new CategoryDetail();
+                    using (var db = new SalesManageDataContext())
+                    {
+                        int id = 0;
+                        selection = db.getCategoryDetails(Model.LineTargets[i].Catogery);
+                    }
+                    <div class="row">
+                        <div class="col-md-1 table-fields">
+                            @Html.AdminLTECheckBoxFor(m => Model.LineTargets[i].IsBonusLine,
+                          null,
+                          new Dictionary<string, object>() { { "class", "form-control pull-right" }, { "autocomplete", "off" } },
+                          null,
+                          null,
+                          false,
+                          true)
+                        </div>
+                        <div class="col-md-3 table-fields">
+                            @Html.AdminLTEDropDownListFor(m => Model.LineTargets[i].Catogery,
+             htmlLabelAttributes: null,
+             htmlDropDownAttributes: new Dictionary<string, object>() { { "class", "form-control select2" }, { "style", "border-style:none !important" }, { "disabled", "true" } },
+             htmlGroupAttributes: new Dictionary<string, object>() { },
+             autoCompleteOptions: new AutoCompleteOptions()
+             {
+                 AjaxOptions = new AjaxOptions()
+                 {
+                     HttpMethod = "GET",
+                     Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                 },
+                 DescriptionField = "description",
+                 IDField = "category_id",
+                 Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+                 SelectedItem = selection,
+                 IsAutoComplete = true,
+                 SelectItems = null
+             }, showLabel: false)
+                        </div>
+                        <div class="col-md-3 table-fields">
+                            <div class="form-control"> @Model.LineTargets[i].Target</div>
+                        </div>
+                        <div class="col-md-2 table-fields">
+
+                            @Html.AdminLTETextBox("LineTargets[" + i.ToString() + "].Allocation",
+                          null,
+                          new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" } },
+                          null,
+                          null,
+                          "",
+                          false,
+                          true,
+                          true)
+                        </div>
+                        <div class="col-md-3 table-fields">
+                            @Html.AdminLTETextBoxFor(m => Model.LineTargets[i].Target,
+                          null,
+                          new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" } },
+                          null,
+                          null,
+                          "",
+                          false,
+                          true,
+                          true)
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="container sp">
+                <div class="row box-body">
+                    <div class="col-md-2 pull-right">
+                        @{
+                            Html.RenderPartial("_Progress", "target-assing-traget-progress");
+                        }
+                        <input type="submit" class="btn btn-primary" value="Assign Targets" />
+                    </div>
+                </div>
+            </div>
+                            }
+        <script>
+            function target_line_changed() {
+                var sum = Number(0);
+
+                $("#target-row").find("input[name*='].Target']").each(function () {
+                    sum = sum + Number($(this).val());
+                })
+                $("input[name='TotalTarget']").val(sum)
+            }
+        </script>
+    }
+</div>

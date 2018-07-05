@@ -93,22 +93,25 @@ GO
             return result;
         }
 
-        public virtual List<TargetTemplet> getTargetTempletDetails(string search, int Page, out int RowCount)
+        public virtual List<TargetTemplet> getTargetTempletDetails(string search, int? PageNum, int? PageSize, out int RowCount, int? LocationID = null)
         {
 
             List<TargetTemplet> items = new List<TargetTemplet>();
+
             var filter = search != null ?
                   new SqlParameter("@filter", search) :
                   new SqlParameter("@filter", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            int? page = null;
-            var page_size = page != null ?
-                new SqlParameter("@page_size", page) :
+            var location_id = LocationID != null ?
+                  new SqlParameter("@location_id", LocationID) :
+                  new SqlParameter("@location_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            var page_size = PageSize != null ?
+                new SqlParameter("@page_size", PageSize) :
                 new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
 
-            int? page_num = Page;
-            var page_number = page_num != null ?
-                new SqlParameter("@page_number", page_num) :
+            var page_number = PageNum != null ?
+                new SqlParameter("@page_number", PageNum) :
                 new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
 
             int? row = null;
@@ -116,10 +119,16 @@ GO
                 new SqlParameter("@row_count", row) :
                 new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
             row_count.Direction = System.Data.ParameterDirection.Output;
+
             try
             {
                 items = this.Database.SqlQuery<TargetTemplet>(
-                                                "[sc_salesmanage_vansale].[getTargetTempletDetails]  @filter ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
+                                                "[sc_salesmanage_vansale].[getTargetTempletDetails]  @filter ,@location_id ,@page_number ,@page_size ,@row_count OUTPUT",
+                                                filter,
+                                                location_id,
+                                                page_number,
+                                                page_size,
+                                                row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }

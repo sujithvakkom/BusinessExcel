@@ -60,12 +60,13 @@ namespace BusinessExcel.Controllers
             target.LineTargets =
                 lineTarget.ToArray();
             bool IsModelValid = true;
-            IsModelValid = IsModelValid & target.StartDate == null;
-            IsModelValid = IsModelValid & target.EndDate == null;
-            IsModelValid = IsModelValid & target.Location == null;
-            IsModelValid = IsModelValid & (from x in lineTarget
-                                           where x.Target != null
-                                           select x).Count() > 0;
+            IsModelValid = IsModelValid & target.StartDate != null;
+            IsModelValid = IsModelValid & target.EndDate != null;
+            IsModelValid = IsModelValid & target.Location != null;
+            var temp = from x in lineTarget
+                       where x.Target != null
+                       select x;
+            IsModelValid = IsModelValid & temp.Count() > 0;
             if (IsModelValid)
             {
                 try
@@ -91,5 +92,6 @@ namespace BusinessExcel.Controllers
         public ActionResult _ViewLocationTarget() {
             return View();
         }
+
     }
 }

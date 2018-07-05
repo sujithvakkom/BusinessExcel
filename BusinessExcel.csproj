@@ -186,6 +186,7 @@
     <Compile Include="Controllers\AdminController.Users.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
+    <Compile Include="Controllers\JSON\JSON.Extra.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetTempletAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.CategoryAutoCompleter.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RosterController.cs" />
+    <Compile Include="Controllers\TargetController.TargetDistribution.cs" />
     <Compile Include="Controllers\TargetController.LocationTarget.cs" />
     <Compile Include="Controllers\TargetController.EditViewTarget.cs" />
     <Compile Include="Controllers\TargetController.TargetTemplet.cs" />
@@ -691,6 +693,9 @@
     <Content Include="Views\Target\LocationTarget.cshtml" />
     <Content Include="Views\Target\_LocationTargetEditCreate.cshtml" />
     <Content Include="Views\Target\_ViewLocationTarget.cshtml" />
+    <Content Include="Views\Target\TargetDistribution.cshtml" />
+    <Content Include="Views\Target\_TargetDistributionAssign.cshtml" />
+    <Content Include="Views\Target\_GetLocationAlocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

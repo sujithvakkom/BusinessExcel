@@ -148,7 +148,7 @@
 
 
 
-                                                                @Ajax.AjaxAdminLTEActionLink(
+                                @Ajax.AjaxAdminLTEActionLink(
                    linkText: RosterController.ROSTER_TITLE,
                    actionName: RosterController.ROSTER_ACTION,
                    controllerName: RosterController.ROSTERCONTROLLER,
@@ -166,7 +166,7 @@
                    carrot: "fa fa-user-md")
 
 
-                                                                @Ajax.AjaxAdminLTEActionLink(
+                                @Ajax.AjaxAdminLTEActionLink(
                    linkText: TargetController.TARGETTEMPLATE_TITLE,
                    actionName: TargetController.TARGETTEMPLATE,
                    controllerName: TargetController.TARGETCONTROLLER,
@@ -204,6 +204,35 @@
                        OnFailure = "loadin_failed"
                    },
                    carrot: "fa fa-user-md")
+
+
+
+
+
+
+
+
+                                @Ajax.AjaxAdminLTEActionLink(
+                   linkText: TargetController.TARGETDISTRIBUTION_TITLE,
+                   actionName: TargetController.TARGETDISTRIBUTION,
+                   controllerName: TargetController.TARGETCONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(TargetController.TARGETDISTRIBUTION, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnBegin = "move('#page-load')",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       //OnComplete = "ajax_call_load_complete('#page-load')",
+                       OnFailure = "loadin_failed"
+                   },
+                   carrot: "fa fa-user-md")
+
+
+
+
+
 
 
 
