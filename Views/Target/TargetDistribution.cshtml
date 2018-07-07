@@ -120,6 +120,22 @@ new AjaxOptions()
                             <div class="container sp">
                                 <div class="row box-body">
                                     <div class="col-md-2 pull-right">
+                                        @if (ViewBag.Result != null)
+                                        {
+                                            var className = ViewBag.Result == -1 ? @"alert alert-danger" : @"alert alert-success";
+                                            var message = ViewBag.Result == -1 ? "<b>Cannot save.</b>" : "<b>Successfully saved.</b>";
+                                            if (ViewBag.ModelErrors != null)
+                                            {
+                                                foreach (var err in ((string)ViewBag.ModelErrors).Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+                                                { message += ("<p>" + err + "</p>"); }
+                                            }
+                                            if (ViewBag.Message != null)
+                                            {
+                                                message += ("<p>" + ViewBag.Message + "</p>");
+                                            }
+                                        <div class="@className" role="alert">@Html.Raw(message)</div>
+                                        }
+
                                         @{
                                             Html.RenderPartial("_Progress", "target-load-progress");
                                         }

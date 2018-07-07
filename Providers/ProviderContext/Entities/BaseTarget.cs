@@ -12,6 +12,10 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
     public class BaseTarget
     {
         public BaseTarget() {
+        }
+
+        public BaseTarget(bool check)
+        {
             LineTargets = new LineTarget[] {
                 new LineTarget(),
                 new LineTarget(),

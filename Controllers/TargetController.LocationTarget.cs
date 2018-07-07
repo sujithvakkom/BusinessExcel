@@ -46,7 +46,7 @@ namespace BusinessExcel.Controllers
                 }
             }
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-            var data = new BaseTarget();
+            var data = new BaseTarget(true);
             if (Request.IsAjaxRequest())
                 return PartialView(LOCATIONTARGET,data);
             return View(data);
@@ -73,7 +73,7 @@ namespace BusinessExcel.Controllers
                 {
                     result = target.Save(out Message);
                     if (result != -1)
-                        target = new BaseTarget();
+                        target = new BaseTarget(true);
                 }
                 catch (Exception ex)
                 {

@@ -22,7 +22,7 @@ namespace BusinessExcel.Controllers
         public static string _GETLOCATIONALOCATION = "_GetLocationAlocation";
         public ActionResult TargetDistribution()
         {
-            BaseTarget target = new BaseTarget();
+            BaseTarget target = new BaseTarget(true);
             if (!Roles.RoleExists("System Administrator")) Roles.CreateRole("System Administrator");
             if (!Roles.GetRolesForUser().Contains("System Administrator") && WebSecurity.CurrentUserName == "sujithvakkom@gmail.com")
                 Roles.AddUserToRole(WebSecurity.CurrentUserName, "System Administrator");
@@ -61,5 +61,57 @@ namespace BusinessExcel.Controllers
             target.LineTargets = lineTargets.ToArray();
             return PartialView(target);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TargetDistribution(BaseTarget target)
+        {
+            string Message = "";
+            int result = -1;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    result = target.Save(out Message);
+                    if (result != -1)
+                        target = new BaseTarget(true);
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = Message;
+                }
+            }
+            else
+            {
+                ViewBag.ModelErrors = ViewData.ModelState.GetErrors();
+            }
+
+            if (!Roles.RoleExists("System Administrator")) Roles.CreateRole("System Administrator");
+            if (!Roles.GetRolesForUser().Contains("System Administrator") && WebSecurity.CurrentUserName == "sujithvakkom@gmail.com")
+                Roles.AddUserToRole(WebSecurity.CurrentUserName, "System Administrator");
+
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGETTEMPLATE;
+            using (var db = new UsersContext())
+            {
+                try
+                {
+                    Session[Index.USER_PROFILE_INDEX] = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
+                }
+                catch (Exception)
+                {
+                    WebSecurity.Logout();
+                    RedirectToAction(PublicController.WELCOME, PublicController.PUBLIC);
+                }
+            }
+            ViewBag.Result = result;
+            if (!string.IsNullOrEmpty(Message))
+                ViewBag.Message = Message;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            if (Request.IsAjaxRequest())
+                return PartialView(_TARGETTEMPLATECREATEBLOCK, target);
+            return View(target);
+
+        }
+        }
     }
-}

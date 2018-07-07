@@ -31,7 +31,7 @@ namespace BusinessExcel.Controllers
             BaseTarget target = null;
             if (target == null)
             {
-                target = new BaseTarget();
+                target = new BaseTarget(true);
             }
             if (!Roles.RoleExists("System Administrator")) Roles.CreateRole("System Administrator");
             if (!Roles.GetRolesForUser().Contains("System Administrator") && WebSecurity.CurrentUserName == "sujithvakkom@gmail.com")
@@ -71,7 +71,7 @@ namespace BusinessExcel.Controllers
                 {
                     result = target.Save(out Message);
                     if (result != -1)
-                        target = new BaseTarget();
+                        target = new BaseTarget(true);
                 }
                 catch (Exception ex)
                 {

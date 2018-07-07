@@ -36,14 +36,21 @@ GO
          private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date,@end_date,@location_in,@user_in,@description_in,@base_incentive_in,@target_line_in";
 
          */
-         private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
+         private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @target_teplat_id, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
         public virtual int createUpdateTarget(BaseTarget target, out string Message)
         {
             int result = -1;
 
-            var start_date = new SqlParameter("@start_date", target.StartDate);
+            var start_date =
+                target.StartDate == DateTime.MinValue?
+                new SqlParameter("@start_date", SqlDbType.DateTime) { Value = DBNull.Value } :
+                new SqlParameter("@start_date", target.StartDate);
+            
 
-            var end_date = new SqlParameter("@end_date", target.EndDate);
+            var end_date = 
+                target.EndDate == DateTime.MinValue?
+                new SqlParameter("@end_date", SqlDbType.DateTime) { Value = DBNull.Value } :
+                    new SqlParameter("@end_date", target.EndDate);
 
             var location_in = String.IsNullOrEmpty(target.Location) ?
                 new SqlParameter("@location_in", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value } :
@@ -55,12 +62,17 @@ GO
 
             var description_in = String.IsNullOrEmpty(target.Description) ?
                 new SqlParameter("@description_in", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value }:
-                new SqlParameter("@description_in", target.Description) ;
+                new SqlParameter("@description_in", target.Description);
 
             var base_incentive_in =
                 target.BaseIncentive == null ?
                 new SqlParameter("@base_incentive_in", SqlDbType.Decimal) { Value = DBNull.Value } :
                 new SqlParameter("@base_incentive_in", target.BaseIncentive);
+
+            var target_teplat_id =
+                target.TargetTemplate == null ?
+                new SqlParameter("@target_teplat_id", SqlDbType.Int) { Value = DBNull.Value } :
+                new SqlParameter("@target_teplat_id", target.TargetTemplate);
 
             var data = target.getTargetLine();
             data.TableName = "target_line_in";
@@ -80,6 +92,7 @@ GO
                     user_in, 
                     description_in, 
                     base_incentive_in, 
+                    target_teplat_id,
                     target_line_in,
                     message, 
                     curr_target_id);

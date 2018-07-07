@@ -41,7 +41,7 @@ namespace BusinessExcel.Controllers
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (Request.IsAjaxRequest())
                 return PartialView(EDITVIEWTARGET_TITLE);
-            return View(new BaseTarget());
+            return View(new BaseTarget(true));
         }
     }
 }
