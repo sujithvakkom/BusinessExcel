@@ -11,22 +11,26 @@
 @model UserTargetDetailsView
 
 <div id="userData">
+
+  
     <div class="box">
 
-      
-        <div class="box-header with-border">
-            <section class="content-header">
-            <h1>
-                @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_TITLE
-                <small>Control panel</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Manager</a></li>
-                <li class="active">Manager Panel</li>
-            </ol>
-        </section>
-        </div>
+        
+            <div class="box-header with-border">
+                <section class="content-header">
+                    <h1>
+                        @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_TITLE
+                        <small>Control panel</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Manager</a></li>
+                        <li class="active">Manager Panel</li>
+                    </ol>
+                </section>
 
+
+            </div>
+          
             @*<section class="content-header">
                 <h1>
                     @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_TITLE
@@ -55,19 +59,21 @@ ajaxOptions: new AjaxOptions()
     OnFailure = ""
 },
 htmlAttributes: new { @class = "form-inline" })
-                                                                                                                )
+                                                                                                        )
                     {
 
 
 
                         <div id="usrDet">
 
-                            <div class="row">
+                            <div id="usrHead" style="padding:2%;background-color:#d7d9db ;border-radius:5px">
+
+                                <div class="row">
 
 
-                                <div class="col-md-3">
+                                    <div class="col-md-3">
 
-                                    @Html.AdminLTETextBoxFor(m => m.Type,
+                                        @Html.AdminLTETextBoxFor(m => m.Type,
 null,
 new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Type } },
 null,
@@ -78,10 +84,10 @@ true,
 true)
 
 
-                                </div>
-                                <div class="col-md-3">
+                                    </div>
+                                    <div class="col-md-3">
 
-                                    @Html.AdminLTETextBoxFor(m => m.Quarter_Name,
+                                        @Html.AdminLTETextBoxFor(m => m.Quarter_Name,
 null,
 new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Quarter_Name } },
 null,
@@ -92,11 +98,11 @@ true,
 true)
 
 
-                                </div>
+                                    </div>
 
-                                <div class="col-md-3">
+                                    <div class="col-md-3">
 
-                                    @Html.AdminLTETextBoxFor(m => m.Account,
+                                        @Html.AdminLTETextBoxFor(m => m.Account,
 null,
 new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Account } },
 null,
@@ -107,33 +113,33 @@ true,
 true)
 
 
-                                </div>
-
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-md-3">
-
-                                    @*@Html.AdminLTETextBoxFor(m => m.UserName,
-                                    null,
-                                    new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.UserName } },
-                                    null,
-                                    null,
-                                    "",
-                                    true,
-                                    true,
-                                    true)*@
-                                    <div class="form-group has-feedback" name="form-group-staffcode">
-
-
-                                        <label for="staffcode">Staff Code</label>
-                                        <input type="text" class="form-control " id="staffcode" readonly value=@Model.UserName />
                                     </div>
-                                </div>
-                                <div class="col-md-3">
 
-                                    @Html.AdminLTETextBoxFor(m => m.SalesMan,
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-3">
+
+                                        @*@Html.AdminLTETextBoxFor(m => m.UserName,
+                    null,
+                    new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.UserName } },
+                    null,
+                    null,
+                    "",
+                    true,
+                    true,
+                    true)*@
+                                        <div class="form-group has-feedback" name="form-group-staffcode">
+
+
+                                            <label for="staffcode">Staff Code</label>
+                                            <input type="text" class="form-control " id="staffcode" readonly value=@Model.UserName />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+
+                                        @Html.AdminLTETextBoxFor(m => m.SalesMan,
 null,
 new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.SalesMan } },
 null,
@@ -142,10 +148,10 @@ null,
 true,
 true,
 true)
-                                </div>
-                                <div class="col-md-3">
+                                    </div>
+                                    <div class="col-md-3">
 
-                                    @Html.AdminLTETextBoxFor(m => m.FieldMan,
+                                        @Html.AdminLTETextBoxFor(m => m.FieldMan,
 null,
 new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.FieldMan } },
 null,
@@ -154,13 +160,13 @@ null,
 true,
 true,
 true)
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                @{ if (User.IsInRole("User"))
-                                    {
-                                        @Html.AdminLTEDropDownListFor(
+                                <div class="row">
+                                    @{ if (User.IsInRole("User"))
+                                        {
+                                            @Html.AdminLTEDropDownListFor(
                                                                         m => m.UserName,
                                                                         htmlLabelAttributes: null,
                                                                         htmlDropDownAttributes: new Dictionary<string, object>() {
@@ -184,7 +190,7 @@ true)
                                                                         showLabel: true)
 
 
-                                        @Html.AdminLTEDropDownListFor(
+                                            @Html.AdminLTEDropDownListFor(
                                                                         m => m.Location_Id,
                                                                         htmlLabelAttributes: null,
                                                                         htmlDropDownAttributes: new Dictionary<string, object>() {
@@ -207,11 +213,11 @@ true)
                                                                         },
                                                                         showLabel: true)
 
-                                    }
-                                    else
-                                    {
+                                        }
+                                        else
+                                        {
 
-                                        @Html.AdminLTEDropDownListFor(
+                                            @Html.AdminLTEDropDownListFor(
                                                                         m => m.UserName,
                                                                         htmlLabelAttributes: null,
                                                                         htmlDropDownAttributes: new Dictionary<string, object>() {
@@ -235,7 +241,7 @@ true)
                                                                         showLabel: true)
 
 
-                                        @Html.AdminLTEDropDownListFor(
+                                            @Html.AdminLTEDropDownListFor(
                                                                         m => m.Location_Id,
                                                                         htmlLabelAttributes: null,
                                                                         htmlDropDownAttributes: new Dictionary<string, object>() {
@@ -258,51 +264,51 @@ true)
                                                                         },
                                                                         showLabel: true)
 
-                                        <div class="col-md-1" style="padding-top: 2.5%">
+                                            <div class="col-md-1" style="padding-top: 2.5%">
 
-                                            <button type="submit" class="btn btn-primary " id="btnAdd">Search</button>
+                                                <button type="submit" class="btn btn-primary " id="btnAdd">Search</button>
+
+                                            </div>
+
+                                        }
+                                    }
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                                </div>
+
+
+
+                                <div style="margin-top:15px" id="target-achievement-display">
+
+                                    @foreach (var month in Model.QuarterMonths)
+                                    {
+
+
+
+                                        <div id="target-achievement-display_@month" class="well well-sm">
+
+                                            @Html.Action(BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW, new TargetAchievementView { Month = month, user_id = Model.UserID })
 
                                         </div>
-
                                     }
-                                }
 
-
-
-
-
-
-
-
+                                </div>
 
 
 
 
                             </div>
-
-
-
-
-                            <div style="margin-top:15px" id="target-achievement-display">
-
-                                @foreach (var month in Model.QuarterMonths)
-                                {
-
-
-
-                                    <div id="target-achievement-display_@month" class="well well-sm">
-
-                                        @Html.Action(BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW, new TargetAchievementView { Month = month, user_id = Model.UserID })
-
-                                    </div>
-                                }
-
-                            </div>
-
-
-
-
-                        </div>
                                     }
                 </section><!-- /.content -->
             </div>
@@ -310,12 +316,16 @@ true)
 
 
         </div>
+
 </div>
 <style>
-    .well-sm {
+    .well-sm{
         padding: 0px,0px,0px,9px;
         border: 1px solid #cacab8;
     }
+            .content{
+                padding:0px;
+            }
     /*#target-achievement-display_JAN {
 
             background-color:#4f7a9a
