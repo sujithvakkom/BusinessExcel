@@ -203,6 +203,7 @@
     <Compile Include="Controllers\TargetController.TargetDistribution.cs" />
     <Compile Include="Controllers\TargetController.LocationTarget.cs" />
     <Compile Include="Controllers\TargetController.EditViewTarget.cs" />
+    <Compile Include="Controllers\TargetController.TargetTemplet - Copy.cs" />
     <Compile Include="Controllers\TargetController._LocationTargetEditCreate.cs" />
     <Compile Include="Controllers\TargetController._ViewLocationTarget.cs" />
     <Compile Include="Controllers\TargetController.TargetTemplet.cs" />

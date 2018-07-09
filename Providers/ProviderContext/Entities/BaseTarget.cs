@@ -63,9 +63,22 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
+        private decimal? _TotalTarget;
         [Display(Name = "Total Target")]
         [DataType(DataType.Currency)]
-        public Decimal TotalTarget { get; set; }
+        public decimal? TotalTarget
+        {
+            get
+            {
+                try
+                {
+                    _TotalTarget = this.LineTargets.Sum(x => x.Target);
+                }
+                catch (Exception) { _TotalTarget = 0; }
+                return _TotalTarget == null ? 0 : _TotalTarget;
+            }
+            set { _TotalTarget = value == null ? 0 : value; }
+        }
 
         [Display(Name = "Base Incentive")]
         [DataType(DataType.Currency)]

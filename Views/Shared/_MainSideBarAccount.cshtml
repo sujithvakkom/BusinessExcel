@@ -60,9 +60,6 @@
                    isNavSideBar: true,
                    carrot: "fa fa-user")
 
-
-
-
             @if (User.IsInRole(BERoleDetails.SYSTEM_ADMINISTRATOR))
             {
                 <li>
@@ -129,7 +126,7 @@
                             <ul class="treeview-menu">
 
 
-                                @Ajax.AjaxAdminLTEActionLink(
+                                @*@Ajax.AjaxAdminLTEActionLink(
                    linkText: TargetController.TARGET_TITLE,
                    actionName: TargetController.TARGET,
                    controllerName: TargetController.TARGETCONTROLLER,
@@ -143,7 +140,7 @@
                        OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
-                   carrot: "fa fa-rocket")
+                   carrot: "fa fa-rocket")*@
 
 
 
@@ -166,7 +163,7 @@
                    carrot: "fa fa-user-md")
 
 
-                                @Ajax.AjaxAdminLTEActionLink(
+                                @*@Ajax.AjaxAdminLTEActionLink(
                    linkText: TargetController.TARGETTEMPLATE_TITLE,
                    actionName: TargetController.TARGETTEMPLATE,
                    controllerName: TargetController.TARGETCONTROLLER,
@@ -181,7 +178,7 @@
                        //OnComplete = "ajax_call_load_complete('#page-load')",
                        OnFailure = "loadin_failed"
                    },
-                   carrot: "fa fa-user-md")
+                   carrot: "fa fa-user-md")*@
 
 
 
@@ -206,12 +203,6 @@
                    carrot: "fa fa-bullseye")
 
 
-
-
-
-
-
-
                                 @Ajax.AjaxAdminLTEActionLink(
                    linkText: TargetController.TARGETDISTRIBUTION_TITLE,
                    actionName: TargetController.TARGETDISTRIBUTION,
@@ -228,25 +219,8 @@
                        OnFailure = "loadin_failed"
                    },
                    carrot: "fa fa-random")
-
-
-
-
-
-
-
-
-
-
-
                             </ul>
-
                         </li>
-
-
-
-
-
                 </li>
             </ul>
             </li>
@@ -268,7 +242,7 @@
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
                        OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                            + this.Url.Action(ReportController.ACTIONS, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
                        OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
@@ -284,7 +258,7 @@
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
                        OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                            + this.Url.Action(ReportController.ACTIONS, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
                        OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
@@ -353,10 +327,8 @@
                     </li>
 
 
-
                 </ul>
             </li>
-
             </ul>
         </section>
 
