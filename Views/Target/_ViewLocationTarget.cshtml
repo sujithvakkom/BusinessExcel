@@ -22,18 +22,30 @@
         <table class="table table-bordered">
             @foreach (var lineTarget in lineTargets)
             {
+                <thead>
+                    <tr class= "border-top-2">
+                        <th scope="row" width="100px" class="danger">Period</th>
+                        <td colspan="2" class="text-info text-bold danger">@lineTarget.name</td>
+                        <td class="info">
+                            @Ajax.ActionLink("Edit", TargetController._LOCATIONTARGETEDITCREATE,
+                           TargetController.TARGET,
+                           new { @TargetTempletID = lineTarget.target_id},
+                           new AjaxOptions() {
+                               HttpMethod="GET",
+                               InsertionMode=InsertionMode.Replace
 
-                <thead class="thead-light">
-                    <tr><th scope="row" width="100px">Period</th><td colspan="3">@lineTarget.description</td></tr>
+                           },new {@class= "btn-link pull-right" }
+                           )</td>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr class="warning"><th scope="row" width="100px">Site</th><td colspan="3" class="text-primary text-bold">@lineTarget.description</td></tr>
                 </thead>
                 <thead class="thead-light">
-                    <tr><th scope="row" width="100px">Start Date</th><td colspan="3">@lineTarget.start_date</td></tr>
+                    <tr><th scope="row" width="100px">Start Date</th><td colspan="3">@lineTarget.start_date.ToShortDateString()</td></tr>
                 </thead>
                 <thead class="thead-light">
-                    <tr><th scope="row" width="100px">End Date</th><td colspan="3">@lineTarget.end_date</td></tr>
-                </thead>
-                <thead class="thead-light">
-                    <tr><th scope="row" width="100px">Site</th><td colspan="3">@lineTarget.description</td></tr>
+                    <tr><th scope="row" width="100px">End Date</th><td colspan="3">@lineTarget.end_date.ToShortDateString()</td></tr>
                 </thead>
                 var lines =
                 db.Database.SqlQuery
@@ -68,12 +80,14 @@ GROUP BY row_num ,
                     new System.Data.SqlClient.SqlParameter("@deleted", System.Data.SqlDbType.BigInt) { Value = 0 },
                     new System.Data.SqlClient.SqlParameter("@target_id", System.Data.SqlDbType.BigInt) { Value = lineTarget.target_id });
                 <tr><th scope="col">No.</th><th scope="col">Bonus</th><th>Line</th><th>Target</th></tr>
+                decimal sum = 0;
                 foreach (var l in lines)
                 {
                     <tr><td>@l.row_num</td><td>@(l.has_bonus?"Yes":"No")</td><td>@l.category</td><td class="text-right">@l.value</td></tr>
+                    sum += l.value;
                 }
 
-                <tr><td class="no-border" colspan="4"></td></tr>
+                <tr><td class="text-danger text-bold" colspan="3">Total</td><td class="text-right text-danger text-bold">@sum.ToString("0.00")</td></tr>
             }
         </table>
     }

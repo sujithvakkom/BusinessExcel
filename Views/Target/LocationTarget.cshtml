@@ -28,11 +28,44 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">@TargetController.LOCATIONTARGET_TITLE</h3>
                 </div>
-                <div class="box-body table-form" style="max-height: 480px;overflow-y: scroll;">
+                <div class="box-body">
+                    
+                    <div class="row">
+                            <div class="col-md-2 padding-label">
+                                Site
+                            </div>
+                            <div class="col-md-7">
+                                @Html.AdminLTEDropDownListFor(
+                                    m => Model.Location,
+                                    htmlLabelAttributes: null,
+                                    htmlDropDownAttributes: new Dictionary<string, object>() {
+                                        { "class", "form-control select2" }
+                                    },
+                                    htmlGroupAttributes: new Dictionary<string, object>() { },
+                                    autoCompleteOptions: new AutoCompleteOptions()
+                                    {
+                                        AjaxOptions = new AjaxOptions()
+                                        {
+                                            HttpMethod = "GET",
+                                            Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                        },
+                                        DescriptionField = "description",
+                                        IDField = "location_id",
+                                        Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+                                        IsAutoComplete = true,
+                                        SelectedItem = Model.Location
+                                    },
+                                    showLabel: false)
+                            </div>
+                        <div class="col-md-3">
 
-                    @{
-                        Html.RenderPartial(TargetController._VIEWLOCATIONTARGET, Model);
-                    }
+                        </div>
+                    </div>
+                    <div class="table-form" style="max-height: 480px;overflow-y: scroll;">
+                        @{
+                            Html.RenderPartial(TargetController._VIEWLOCATIONTARGET, Model);
+                        }
+                    </div>
                 </div>
             </div>
         </div>

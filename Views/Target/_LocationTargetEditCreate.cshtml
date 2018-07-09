@@ -43,10 +43,10 @@
             @Html.AntiForgeryToken()
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-4 padding-label">
+                    <div class="col-md-3 padding-label">
                         Period
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         @Html.AdminLTEDateRangePickerFor(
                                 m => Model.StartDate,
                                 m => Model.EndDate,
@@ -65,10 +65,10 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="col-md-4 padding-label">
+                        <div class="col-md-3 padding-label">
                             Site
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             @Html.AdminLTEDropDownListFor(
                                     m => Model.Location,
                                     htmlLabelAttributes: null,
