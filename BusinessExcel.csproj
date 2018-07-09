@@ -186,6 +186,7 @@
     <Compile Include="Controllers\AdminController.Users.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
+    <Compile Include="Controllers\JSON\JSON.Extra.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetTempletAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.CategoryAutoCompleter.cs" />
@@ -199,6 +200,9 @@
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RosterController.cs" />
+    <Compile Include="Controllers\TargetController.TargetDistribution.cs" />
+    <Compile Include="Controllers\TargetController.LocationTarget.cs" />
+    <Compile Include="Controllers\TargetController.EditViewTarget.cs" />
     <Compile Include="Controllers\TargetController.TargetTemplet.cs" />
     <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
@@ -242,6 +246,7 @@
     <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LineTarget.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\LocationTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserTree.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetDetails.cs" />
@@ -685,6 +690,13 @@
     <Content Include="Views\Target\_TargetTemplateCreateBlock.cshtml" />
     <Content Include="Views\Shared\_Progress.cshtml" />
     <Content Include="Views\Target\TargetLine.cshtml" />
+    <Content Include="Views\Target\EditViewTarget.cshtml" />
+    <Content Include="Views\Target\LocationTarget.cshtml" />
+    <Content Include="Views\Target\_LocationTargetEditCreate.cshtml" />
+    <Content Include="Views\Target\_ViewLocationTarget.cshtml" />
+    <Content Include="Views\Target\TargetDistribution.cshtml" />
+    <Content Include="Views\Target\_TargetDistributionAssign.cshtml" />
+    <Content Include="Views\Target\_GetLocationAlocation.cshtml" />
     <Content Include="Views\Report\UserTargetDetailsIndex.cshtml" />
     <Content Include="Views\Report\UserTargetAchievementView.cshtml" />
     <Content Include="Views\Report\UserDetails.cshtml" />

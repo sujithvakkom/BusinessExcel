@@ -15,18 +15,17 @@ namespace BusinessExcel.Providers.ProviderContext
     {
         public virtual LocationDetail getLocationDetail(string locationId)
         {
-            const string SELECT_USER = @"select location_id, 
+            const string SELECT_LOCATION = @"select location_id, 
                                                 description
                                                 from [sc_salesmanage_user].[location_m] 
                                             where 
                                                 location_id = @location_id";
-            
+
             var user_name = locationId != null ?
                   new SqlParameter("@location_id", locationId) :
                   new SqlParameter("@location_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
-
-            LocationDetail detail =
-                this.Database.SqlQuery<LocationDetail>(SELECT_USER, user_name).ToList()[0];
+            var locations = this.Database.SqlQuery<LocationDetail>(SELECT_LOCATION, user_name).ToList();
+            LocationDetail detail = locations.Count > 0 ? locations[0] : null;
             return detail;
         }
 

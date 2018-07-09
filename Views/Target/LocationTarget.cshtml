@@ -1,0 +1,48 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model BaseTarget
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @TargetController.TARGET
+        <small>@TargetController.TARGETTEMPLATE_TITLE</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="#"><i class="fa fa-dashboard"></i>@TargetController.LOCATIONTARGET_TITLE</a>
+        </li>
+        <li class="active">@AccountsController.WELCOME_TITLE</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@TargetController.LOCATIONTARGET_TITLE</h3>
+                </div>
+                <div class="box-body table-form" style="max-height: 480px;overflow-y: scroll;">
+
+                    @{
+                        Html.RenderPartial(TargetController._VIEWLOCATIONTARGET, Model);
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" id="target-location-create">
+
+            @{
+                Html.RenderPartial(TargetController._LOCATIONTARGETEDITCREATE, Model);
+            }
+        </div>
+
+    </div>
+</section>

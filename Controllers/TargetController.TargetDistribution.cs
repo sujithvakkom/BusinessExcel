@@ -15,24 +15,14 @@ namespace BusinessExcel.Controllers
 {
     public partial class TargetController : Controller
     {
+        public static string TARGETDISTRIBUTION = "TargetDistribution";
+        public static string _TARGETDISTRIBUTIONASSIGN = "_TargetDistributionAssign";
+        public static string TARGETDISTRIBUTION_TITLE = "Target Distribution";
 
-        public static string TARGETLINE = "TargetLine";
-        public static string TARGETTEMPLATE_TITLE = "Target Creation";
-        public static string TARGETASSIGN_TITLE = "Target Assign";
-        public static string TARGETTEMPLATELINE_TITLE = "Target Lines";
-        public static string TARGETTEMPLATE = "TargetTemplate";
-        public static string _TARGETTEMPLATECREATEBLOCK = "_TargetTemplateCreateBlock";
-        public static string _TARGETASSIGNBLOCK = "_TargetAssignBlock";
-        public static string TARGETTEMPLATECREATE = "TargetTemplateCreate";
-        public static string _TEMPLETLINES = "_TempletLines";
-        [HttpGet]
-        public ActionResult TargetTemplate()
+        public static string _GETLOCATIONALOCATION = "_GetLocationAlocation";
+        public ActionResult TargetDistribution()
         {
-            BaseTarget target = null;
-            if (target == null)
-            {
-                target = new BaseTarget(true);
-            }
+            BaseTarget target = new BaseTarget(true);
             if (!Roles.RoleExists("System Administrator")) Roles.CreateRole("System Administrator");
             if (!Roles.GetRolesForUser().Contains("System Administrator") && WebSecurity.CurrentUserName == "sujithvakkom@gmail.com")
                 Roles.AddUserToRole(WebSecurity.CurrentUserName, "System Administrator");
@@ -52,21 +42,35 @@ namespace BusinessExcel.Controllers
             }
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (Request.IsAjaxRequest())
-                return PartialView(TARGETTEMPLATE, target);
+                return PartialView(TARGETDISTRIBUTION, target);
             return View(target);
-
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult TargetTemplateCreate(BaseTarget target, ICollection<LineTarget> lineTarget)
+        public ActionResult _GetLocationAlocation(BaseTarget target)
         {
-            string Message="";
+            List<LineTarget> lineTargets = new List<LineTarget>();
+            using (var db = new SalesManageDataContext())
+            {
+                try
+                {
+                    lineTargets = db.getTargetTempletLineDetails(int.Parse(target.TargetTemplate));
+                }
+                catch (Exception) { }
+            }
+            target.LineTargets = lineTargets.ToArray();
+            return PartialView(target);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TargetDistribution(BaseTarget target)
+        {
+            string Message = "";
             int result = -1;
             if (ModelState.IsValid)
             {
-                target.LineTargets =
-                    lineTarget.ToArray();
                 try
                 {
                     result = target.Save(out Message);
@@ -78,7 +82,8 @@ namespace BusinessExcel.Controllers
                     ViewBag.Message = Message;
                 }
             }
-            else {
+            else
+            {
                 ViewBag.ModelErrors = ViewData.ModelState.GetErrors();
             }
 
@@ -108,15 +113,5 @@ namespace BusinessExcel.Controllers
             return View(target);
 
         }
-
-        public PartialViewResult _TempletLines(int Target)
-        {
-            using (var db = new SalesManageDataContext())
-            {
-                var LineTargets = db.getTargetTempletLineDetails(Target).ToArray();
-                return PartialView(TARGETLINE, LineTargets);
-            }
         }
-
     }
-}

@@ -12,10 +12,10 @@ namespace BusinessExcel.Providers.ProviderContext
 {
 
     public partial class SalesManageDataContext : DbContext
-    {
-      
+    {      
         public virtual CategoryDetail getCategoryDetails(string serarch)
         {
+            CategoryDetail result = null;
             if (!String.IsNullOrEmpty(serarch))
             {
                 var filter = serarch != null ?
@@ -41,12 +41,11 @@ namespace BusinessExcel.Providers.ProviderContext
                 var items = this.Database.SqlQuery<CategoryDetail>(
                                                 "[sc_salesmanage_vansale].[getCategoryDetails]  @filter ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
                                                 .ToList();
-
-                return items[0];
+                if (items.Count > 0)
+                    result = items[0];
             }
-            return null;
+            return result;
         }
-
 
         public virtual List<CategoryDetail> getCategoryDetails(string search, int Page, out int RowCount)
         {
@@ -87,5 +86,24 @@ namespace BusinessExcel.Providers.ProviderContext
             }
             return category;
         }
+
+
+        public virtual CategoryDetail getCategoryDetails(int CategoryID)
+        {
+            CategoryDetail result = null;
+            
+            var category_id =
+                new SqlParameter("@category_id", CategoryID);
+
+            var items = this.Database.SqlQuery<CategoryDetail>(
+                                                "SELECT category_id ,description FROM [sc_salesmanage_merchant].[category] WHERE category_id = @category_id",
+                                                category_id)
+                                                .ToList();
+                if (items.Count > 0)
+                    result = items[0];
+            return result;
+
+        }
+
     }
 }

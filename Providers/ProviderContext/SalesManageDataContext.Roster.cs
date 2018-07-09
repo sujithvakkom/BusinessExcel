@@ -112,21 +112,24 @@ where roster_id=@roster_id";
         }
 
 
-        public virtual List<TargetMasterDetails> getTargetDetails(string search, int Page, out int RowCount)
+        public virtual List<TargetMasterDetails> getTargetDetails(string search, int? PageNum, int? PageSize, out int RowCount, int? LocationID= null)
         {
             List<TargetMasterDetails> items = new List<TargetMasterDetails>();
-            var description = search != null ?
+
+            var filter = search != null ?
                   new SqlParameter("@filter", search) :
                   new SqlParameter("@filter", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            int? page = null;
-            var page_size = page != null ?
-                new SqlParameter("@page_size", page) :
+            var location_id = LocationID != null ?
+                  new SqlParameter("@location_id", LocationID) :
+                  new SqlParameter("@location_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            
+            var page_size = PageSize != null ?
+                new SqlParameter("@page_size", PageSize) :
                 new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
-
-            int? page_num = Page;
-            var page_number = page_num != null ?
-                new SqlParameter("@page_number", page_num) :
+            
+            var page_number = PageNum != null ?
+                new SqlParameter("@page_number", PageNum) :
                 new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
 
             int? row = null;
@@ -137,7 +140,12 @@ where roster_id=@roster_id";
             try
             {
                 items = this.Database.SqlQuery<TargetMasterDetails>(
-                                                "[sc_salesmanage_user].[getTargetDetails] @filter ,@page_number ,@page_size ,@row_count OUTPUT", description, page_number, page_size, row_count)
+                                                "[sc_salesmanage_user].[getTargetDetails] @filter ,@location_id ,@page_number ,@page_size ,@row_count OUTPUT",
+                                                filter, 
+                                                location_id,
+                                                page_number, 
+                                                page_size, 
+                                                row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }

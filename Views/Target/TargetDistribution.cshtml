@@ -1,0 +1,154 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model BaseTarget
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @TargetController.TARGET
+        <small>@TargetController.TARGETDISTRIBUTION_TITLE</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>@TargetController.TARGETDISTRIBUTION_TITLE</a></li>
+        <li class="active">@AccountsController.WELCOME_TITLE</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row" style="margin:10px">
+        <div class="col-md-12">
+            <div id="target-distribution">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@TargetController.TARGETDISTRIBUTION_TITLE</h3>
+                    </div>
+                    <div class="box-body">
+                        @using (Ajax.BeginForm(
+controllerName: TargetController.TARGET,
+actionName: TargetController._GETLOCATIONALOCATION,
+htmlAttributes: new { id = "target-location-create-form" },
+routeValues: null,
+ajaxOptions:
+new AjaxOptions()
+{
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "Post",
+    UpdateTargetId = "location-target-allocation",
+    OnBegin = "move('#page-load')",
+    OnComplete = "ajax_call_load_complete('#page-load')",
+    OnFailure = "loadin_failed",
+    LoadingElementId = "target-load-progress"
+}))
+                        {
+                            <div class="table-form">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-md-4 padding-label">
+                                            Site
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            @Html.AdminLTEDropDownListFor(
+                          expression: m => Model.Location,
+                          htmlLabelAttributes: null,
+                          htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                { "class", "form-control select2" }
+                                             },
+                          htmlGroupAttributes: new Dictionary<string, object>() { },
+                          autoCompleteOptions: new AutoCompleteOptions()
+                          {
+                              AjaxOptions = new AjaxOptions()
+                              {
+                                  HttpMethod = "GET",
+                                  Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                              },
+                              DescriptionField = "description",
+                              IDField = "location_id",
+                              Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                              SelectedItem = null,
+                              IsAutoComplete = true,
+                              SelectItems = null
+                          },
+                          showLabel: false,
+                          hasValidation: true
+                          )
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-md-4 padding-label">
+                                            Period
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            @Html.AdminLTEDropDownListFor(
+                          m => m.TargetTemplate,
+                          htmlLabelAttributes: null,
+                          htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                { "class", "form-control select2" }
+                          },
+                          htmlGroupAttributes: new Dictionary<string, object>() { },
+                          autoCompleteOptions: new AutoCompleteOptions()
+                          {
+                              AjaxOptions = new AjaxOptions()
+                              {
+                                  HttpMethod = "GET",
+                                  Url = Url.Action(actionName: JSONController.TARGETTEMPLETAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                              },
+                              DescriptionField = "description",
+                              IDField = "target_id",
+                              Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+                              SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
+
+                              IsAutoComplete = true,
+                              SelectItems = null
+                          },
+                          showLabel: false,
+                          hasValidation: true,
+                          extras: new System.Linq.Expressions.Expression<Func<BaseTarget, Object>>[] { m => Model.Location }
+                          )
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="container sp">
+                                <div class="row box-body">
+                                    <div class="col-md-2 pull-right">
+                                        @if (ViewBag.Result != null)
+                                        {
+                                            var className = ViewBag.Result == -1 ? @"alert alert-danger" : @"alert alert-success";
+                                            var message = ViewBag.Result == -1 ? "<b>Cannot save.</b>" : "<b>Successfully saved.</b>";
+                                            if (ViewBag.ModelErrors != null)
+                                            {
+                                                foreach (var err in ((string)ViewBag.ModelErrors).Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+                                                { message += ("<p>" + err + "</p>"); }
+                                            }
+                                            if (ViewBag.Message != null)
+                                            {
+                                                message += ("<p>" + ViewBag.Message + "</p>");
+                                            }
+                                        <div class="@className" role="alert">@Html.Raw(message)</div>
+                                        }
+
+                                        @{
+                                            Html.RenderPartial("_Progress", "target-load-progress");
+                                        }
+                                        <input type="submit" class="btn btn-primary" value="Load Details" />
+                                    </div>
+                                </div>
+                            </div>
+                                            }
+                        <div id="location-target-allocation"/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -25,8 +25,8 @@ namespace BusinessExcel.Providers.ProviderContext
                   new SqlParameter("@user_name", userName) :
                   new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            UserDetail detail =
-                this.Database.SqlQuery<UserDetail>(SELECT_USER, user_name).ToList()[0];
+            var users = this.Database.SqlQuery<UserDetail>(SELECT_USER, user_name).ToList();
+            UserDetail detail = users.Count > 0 ? users[0] : null;
             return detail;
         }
         public virtual int getUserID(string userName)
