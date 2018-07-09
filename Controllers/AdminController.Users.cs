@@ -150,19 +150,9 @@ namespace BusinessExcel.Controllers
             return View(data);
         }
 
-        private void getParent(int userId, List<UserTree> catList)
-        {
-            int pid= catList.Where(c => c.user_id ==userId).Select(a => a.parent_id).Single();
-            int left_v = catList.Where(c => c.user_id == userId).Select(a => a.left_v).Single();
-            int right_v = catList.Where(c => c.user_id == userId).Select(a => a.right_v).Single();
 
-            var  parents= catList.Where(c => c.left_v < left_v && c.right_v >right_v).OrderBy(x=>x.left_v).ThenBy(x=>x.right_v).LastOrDefault();
 
-            if(parents!=null)
-            {
-               
-            }
-        }
+      
       
         private void SetChildren(UserTree model, List<UserTree> catList)
         {

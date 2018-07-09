@@ -1,0 +1,318 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
+
+@model TargetAchievementView
+
+
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header month">
+    <h4>
+        @Model.Month
+       
+    </h4>
+    @*<ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER</a></li>
+        <li class="active">@BusinessExcel.Controllers.RosterController.RosterActions_TITLE</li>
+    </ol>*@
+</section>
+
+
+
+
+    <div class="box box-primary">
+
+        <div class="box-body">
+
+            <div id="target-achievement-view" class="table-responsive">
+                @{
+
+                    using (var db = new SalesManageDataContext())
+                    {
+                        WebGridColumn col = new WebGridColumn()
+                        {
+
+                        };
+
+                        int count = 0;
+                        IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
+                                    pageSize: 6,
+                                    sort: ViewBag.UserTargetViewSort,
+                                    sortdir: ViewBag.UserTargetViewDir,
+                                    count: out count,Filters:Model
+                                    );
+
+                        var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
+                                            ajaxUpdateCallback: "targetachievementviewcallBack", 
+                                            rowsPerPage: 6
+                                            );
+                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                        @grid.GetHtml(
+    tableStyle: "table table-striped table-bordered be-pagination-spl",
+
+    //headerStyle: "webgrid-header",
+
+    alternatingRowStyle: "webgrid-alternating-row",
+    selectedRowStyle: "webgrid-selected-row",
+    rowStyle: "webgrid-row-style",
+
+htmlAttributes: new { @id = "Tsheet"+Model.Month },
+
+columns: new[] {
+
+
+
+                        grid.Column(columnName: "Category", header: "Category", format: null, style: "Category", canSort: false),
+                        grid.Column(columnName: "has_bonus", header: "Bonus Line", format: @<text>
+                    @(item.has_bonus ? "1" : "0" )
+                        </text>, style: "Category", canSort: false),
+                       grid.Column(columnName: "Target_amt", header: "Target", format: null, style: "Target_amt", canSort: false),
+                        grid.Column(columnName: "Achieved_Amt", header: "Achieved", format: null, style: "Achieved_Amt", canSort: false),
+                         grid.Column(null, null, format: @<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive" value="@item.Base_Incentive" />),
+
+
+
+
+    }
+//footerStyle: "extra-table-pager"
+)
+
+                        @*@grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+nextText: "NEXT",
+firstText: "FIRST",
+previousText: "PREV.",
+lastText: "LAST")*@
+
+                                @*<input type = "text" class="form-control extrainfo" value=@data.Sum(o=>Convert.ToInt64(o.Base_Incentive))/>*@
+
+                        @*<input type="text" class="form-control extrainfo" value='@data.Sum(x => int.Parse(x.Base_Incentive))'/>*@
+
+                    }
+
+
+                }
+            </div>
+
+          
+
+        </div>
+        <div class="container-fluid">
+            <div id="totalvaluerow">
+                <div class="row">
+                    <div class="col-md-4">
+
+                       
+                            <div class="input-group">
+
+                                <input type="text" class="form-control extrainfo" value="Base Incentive"  />
+                                <span class="input-group-addon extrainfo"></span>
+                                <input type="text" class="form-control extrainfo" value="" id="base_incentive_@Model.Month" />
+
+                            </div>
+                          
+
+                        </div>
+                </div>
+                <hr class="col-md-12" size="20" style="margin:2px;border-top:0">
+                    <div class="row">
+                        <div class="col-md-4">
+
+
+                            <div class="input-group">
+                                <input type="text" class="form-control extrainfo" value="Target %" />
+                                <span class="input-group-addon extrainfo"></span>
+                                <input type="text" class="form-control extrainfo" value="0.00" />
+                                <span class="input-group-addon extrainfo"></span>
+                                <input type="text" class="form-control extrainfo" value="0.00" />
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4">
+
+
+                            <div class="input-group">
+                                <input type="text" class="form-control extrainfo" value="Line Achv %" />
+                                <span class="input-group-addon extrainfo"></span>
+                                <input type="text" class="form-control extrainfo" value="0.00" />
+                                <span class="input-group-addon extrainfo"></span>
+                                <input type="text" class="form-control extrainfo" value="0.00" />
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-md-4">
+
+
+                            <div class="input-group">
+                                <input type="text" class="form-control extrainfo" value="Bonus Lines" />
+                                <span class="input-group-addon extrainfo"></span>
+                                <input type="text" class="form-control extrainfo" value="0.00" />
+                                <span class="input-group-addon extrainfo"></span>
+                                <input type="text" class="form-control extrainfo" value="0.00" />
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+
+
+<style>
+
+    .totControls{
+        width:40%
+    }
+    .input-group-addon
+    {
+        padding:0;
+        border:0;
+        width:0;
+    }
+    #totalvaluerow{
+        margin-bottom:.5%;
+        margin-top:2%;
+    }
+    .month
+    {
+        padding:0px;
+    }
+    .box{
+        margin-bottom:0px
+    }
+    .extrainfo
+    {
+        /*font-weight:bold;*/
+        background-color:#5c6a73;
+        color:white;
+    }
+
+
+     .webgrid-table {
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        width: 650px;
+        display: table;
+        border-collapse: collapse;
+        border: solid 1px #C5C5C5;
+        background-color: white;
+    }
+	.webgrid-table td, th {
+		border: 1px solid #C5C5C5;
+		padding: 3px 7px 2px;
+	}
+    .webgrid-header, .webgrid-header a {
+        background-color: #375d7d;
+        color:#ffffff;
+        text-align: left;
+        text-decoration: none;
+    }
+    .webgrid-footer {
+    }
+    .webgrid-row-style {
+        padding: 3px 7px 2px;
+    }
+    .webgrid-alternating-row {
+        background-color:white;
+        padding: 3px 7px 2px;
+    }
+    .col1Width {
+        width: 55px;
+    }
+    .col2Width {
+        width: 220px;
+    }
+ 
+    
+    td:nth-child(5),th:nth-child(5){
+            display:none
+        }
+</style>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var model = @Html.Raw(Json.Encode(Model.Month));
+
+
+        var total = 0;
+        var targetTotal = 0;
+        var AchAmtTotal = 0;
+        
+
+        $('#Tsheet'+model+'  .hid_Base_Incentive').each(function () {
+
+        
+            total = total + parseFloat($(this).val());
+
+        });
+
+        $('#Tsheet'+model+' .Target_amt').each(function () {
+
+            targetTotal = targetTotal + parseFloat($(this)[0].innerHTML.toLocaleString());
+ 
+        });
+
+        $('#Tsheet'+model+' .Achieved_Amt').each(function () {
+
+            AchAmtTotal = AchAmtTotal + parseFloat($(this)[0].innerHTML.toLocaleString());
+ 
+        });
+
+
+        $('#base_incentive_'+model).val(total.toFixed(2));
+        $('#Tsheet'+model+ ' tbody').append('<tr><td><b>Total</b></td><td></td><td><b>' + targetTotal.toFixed(2) + '</b></td><td><b>' + AchAmtTotal.toFixed(2) + '</b></td> </tr>');
+
+    });
+
+    @*$(document).ready(function () {
+
+        var total = 0;
+        var targetTotal = 0;
+        var AchAmtTotal = 0;
+      
+        var model = @Html.Raw(Json.Encode(Model.Month));
+
+
+      
+        var totRows = 0;
+        //$('#Tsheet .hid_Base_Incentive').each(function () {
+
+        //  //  targetTotal = total + parseFloat($(this)[0].innerHTML.toLocaleString());
+        //    //totRows++;
+
+        //    total = total + parseFloat($(this).val());
+
+        //});
+      
+        $('#TsheetJUL .Target_amt').each(function () {
+
+            targetTotal = targetTotal + parseFloat($(this)[0].innerHTML.toLocaleString());
+            alert('');
+        });
+
+        //$('#Tsheet .Achieved_Amt').each(function () {
+
+        //    AchAmtTotal = AchAmtTotal + parseFloat($(this)[0].innerHTML.toLocaleString());
+
+        //});
+
+
+      //  $('#base_incentive').val(total.toFixed(2));
+        
+       // $('#TsheetJUL').append($('tbody').append('<tr><td><b>Total</b></td><td><b>' + targetTotal.toFixed(2) + '</b></td></tr>'));
+    });*@
+</script>

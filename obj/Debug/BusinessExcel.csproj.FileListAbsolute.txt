@@ -1,3 +1,4 @@
+C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\WORKS\BusinessExcel\bin\BusinessExcel.dll.config
 C:\WORKS\BusinessExcel\bin\BusinessExcel.dll
 C:\WORKS\BusinessExcel\bin\BusinessExcel.pdb
@@ -37,7 +38,8 @@ C:\WORKS\BusinessExcel\bin\System.Web.WebPages.Razor.xml
 C:\WORKS\BusinessExcel\bin\Microsoft.Web.Infrastructure.xml
 C:\WORKS\BusinessExcel\bin\WebMatrix.Data.xml
 C:\WORKS\BusinessExcel\bin\WebMatrix.WebData.xml
-C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
+C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.pdb
+C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.xml
 C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.pdb
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\BusinessExcel.dll.config

@@ -209,6 +209,7 @@
     <Compile Include="Models\jsTree3Node.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
     <Compile Include="Models\Tree.cs" />
+    <Compile Include="Models\UserDetailsView.cs" />
     <Compile Include="Models\UserViewFilters.cs" />
     <Compile Include="Models\ActionViewFilters.Roster.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
@@ -696,6 +697,10 @@
     <Content Include="Views\Target\TargetDistribution.cshtml" />
     <Content Include="Views\Target\_TargetDistributionAssign.cshtml" />
     <Content Include="Views\Target\_GetLocationAlocation.cshtml" />
+    <Content Include="Views\Report\UserTargetDetailsIndex.cshtml" />
+    <Content Include="Views\Report\UserTargetAchievementView.cshtml" />
+    <Content Include="Views\Report\UserDetails.cshtml" />
+    <Content Include="Views\Report\UserTargetDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

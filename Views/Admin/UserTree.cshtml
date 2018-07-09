@@ -4,6 +4,11 @@
 @using BusinessExcel.Providers.ProviderContext.Entities
 @using BusinessExcel.Providers.ProviderContext
 
+@using BusinessExcel.Controllers.JSON
+
+@model IEnumerable<UserTree>
+
+
 
 
 <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0" />
@@ -33,12 +38,13 @@
                     },
                     "file": {
                         "icon": "fa fa-file icon-state-warning icon-lg"
-                    }
+                    },
+                 
                 },
 
              
-                "plugins": ["dnd", "state", "types", "sort", "checkbox", "search"],
-
+                //"plugins": ["dnd", "state", "types", "sort", "checkbox", "search"],
+                "plugins": ["dnd", "state", "types", "sort",  "search"],
 
 
             });
@@ -106,10 +112,6 @@
 
 
 
-@model IEnumerable<UserTree>
-
-
-
 @*@using (Ajax.BeginForm(@BusinessExcel.Controllers.AdminController.USERSTREE,
                                             @BusinessExcel.Controllers.AdminController.ADMIN,
                                             new AjaxOptions()
@@ -158,31 +160,97 @@
 
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
 
 
-               
+            <div class="row">
+                <div class="container-fluid">
+                    <fieldset id="search">
+
+                        <label for="Seach" class="col-form-label">Search</label>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" placeholder="Search for..." id="search_field">
+
+                        </div>
 
 
 
-
-                        <fieldset id="search">
-
-                            @*<input type="text" name="search_field" id="search_field" value="" placeholder="Search"/>*@
-
-
-
-                            <div class="form-group">
-                                <label for="search">Search:</label>
-                                <input type="text" class="form-control" id="search_field">
-                            </div>
-
-                            <div id="parent"></div>
-                            <div id="event_result"></div>
-
-                        </fieldset>
+                    </fieldset>
                     </div>
                 </div>
+            <div class="row">
+
+                <div class="container-fluid">
+                    <div class="form-group">
+                        <label for="user" class="col-form-label">Add staff to under selected node</label>
+                        <div class="input-group">
+                            @*<input type="text" class="form-control" placeholder="Add to selected node">*@
+
+                            @Html.AdminLTEDropDownListFor(
+                            m => Model.First().user_id,
+                            htmlLabelAttributes: null,
+                            htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2 " }
+                            },
+                            htmlGroupAttributes: null,
+                            autoCompleteOptions: new AutoCompleteOptions()
+                            {
+                                AjaxOptions = new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                },
+                                DescriptionField = "full_name",
+                                IDField = "user_name",
+                                Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                SelectedItem = ViewData[@BusinessExcel.Controllers.AdminController.SELECTED_FILTED_USER],
+                                IsAutoComplete = true,
+                                SelectItems = null
+                            },
+                            showLabel: false)
+
+
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit" style="margin-bottom:50%">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                </div>
+
+
+            <div class="row">
+
+                <div class="container-fluid">
+                    <div class="form-group">
+
+                        <button type="submit" class="btn btn-danger " id="btnAdd">Delete selected child node</button>
+                        @*<div class="input-group">*@
+                            @*<label for="delete" class="col-form-label">Delete selected child node</label>*@
+                            @*<input type="text" class="form-control" placeholder="Delete selected child node" readonly>*@
+
+
+                            @*<span class="input-group-btn">*@
+                                @*<button class="btn btn-danger" type="submit" disabled style="margin-bottom:50%">
+                                    <i class="fa fa-minus"></i>
+                                </button>*@
+                            @*</span>*@
+                        @*</div>*@
+                    </div>
+
+                  </div>
+
+                </div>
+
+       </div>
+
+
+   </div>
 
 </section>
 

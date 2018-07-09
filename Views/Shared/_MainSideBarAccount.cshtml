@@ -297,6 +297,7 @@
                     <li class="treeview @Html.IsSelected(controllers:ReportController.REPORTCONTROLLER,actions:currentAction,cssClass:"active")">
                         <a href="#"><i class="fa fa-rss"></i><span>Target Achievement</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
+
                             @Ajax.AjaxAdminLTEActionLink(
                    linkText: ReportController.TARGETACHIEVEMENT_ACTIONS_TITLE,
                    actionName: ReportController.TARGETACHIEVEMENTACTIONS,
@@ -329,6 +330,24 @@
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-tasks")
+
+
+                            @Ajax.AjaxAdminLTEActionLink(
+                   linkText: ReportController.USER_TARGET_ACHIEVEMENT_TITLE,
+                   actionName: ReportController.USER_TARGET_DETAILS,
+                   controllerName: ReportController.REPORTCONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(ReportController.USER_TARGET_DETAILS, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       OnFailure = "loadin_failed"
+                   },
+                   isNavSideBar: true,
+                   carrot: "fa fa-tasks")
+
 
                         </ul>
                     </li>

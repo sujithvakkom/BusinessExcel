@@ -6,58 +6,44 @@ using System.Linq;
 using BusinessExcel.Providers.ProviderContext.Entities;
 using BusinessExcel.Models;
 using BusinessExcel.Extentions;
+using System.Data.SqlClient;
+using System.Collections.Generic;
+using System.Globalization;
+
 namespace BusinessExcel.Providers.ProviderContext
 {
 
     public partial class SalesManageDataContext : DbContext
     {
 
-        public IQueryable<TargetAchievementView> TargetAchievementViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count, 
-            ActionViewFilters Filters)
+        public IQueryable<TargetAchievementView> TargetAchievementViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count,
+            TargetAchievementView Filters)
         {
             int skippingRows = (pageNumber - 1) * pageSize;
-            if (Filters == null)
-                Filters = new Models.ActionViewFilters() { ItemCode = "" };
+          
+             //var res = this.TargetAchievementView.Select(x=>x);
 
-            var res = this.TargetAchievementView.Select(x=>x);
-            //if (!String.IsNullOrEmpty(Filters.ItemCode)) {
-            //    res = res.Where(x => x.Item == Filters.ItemCode);
-            //}
+            var res = this.Database.SqlQuery<TargetAchievementView>("[db_salesmanage_user].[User_Target_Achieved_Data]").ToList().AsQueryable();
 
-            if (Filters.StartDate != default(DateTime))
+            if (Filters.user_id !=null)
             {
-                res = res.Where(x => x.fromdate == Filters.StartDate);
-            }
-            if (Filters.EndDate != default(DateTime))
-            {
-                res = res.Where(x => x.todate == Filters.EndDate);
-
+                res = res.Where(x => x.user_id == Filters.user_id);
+             
             }
 
-            //if (Filters.StartDate.Date != DateTime.MinValue.Date)
-            //    if (Filters.EndDate.Date != DateTime.MinValue.Date)
-            //        res = res.Where(x => x.CreateTime >= Filters.StartDate && x.CreateTime < Filters.EndDate);
-            //    else
-            //        res = res.Where(x => x.CreateTime > Filters.StartDate);
-
-            if (!string.IsNullOrEmpty(Filters.UserName))
-                res = res.Where(x => x.UserName == Filters.UserName);
-
-            //if (!string.IsNullOrEmpty(Filters.BrandID))
-            //    res = res.Where(x => x.BrandId.ToString() == Filters.BrandID);
-
-
-            if (!string.IsNullOrEmpty(Filters.Location))
+            if(Filters.Month !=null)
             {
-                var temp = this.getLocationDetail(Filters.Location).description;
-                res = res.Where(x => x.Location.ToString() == temp);
+                int month = DateTime.ParseExact(Filters.Month, "MMM", CultureInfo.InvariantCulture).Month;
+
+                 res = res.Where(x =>  month<= x.start_date.Value.Month && month >= x.start_date.Value.Month);
             }
 
+          
             count = res.Count();
 
             if (sort == null || sort == "")
             {
-                return res.OrderByDescending(x => x.fromdate)
+                return res.OrderByDescending(x => x.Target_amt)
                     .Skip(skippingRows).Take(pageSize);
             }
             else {
@@ -95,57 +81,100 @@ namespace BusinessExcel.Providers.ProviderContext
         {
             int skippingRows = (pageNumber - 1) * pageSize;
 
+            //var res = this.TargetAchievementView.Select(x => x);
+
+            var res = this.Database.SqlQuery<TargetAchievementView>("[db_salesmanage_user].[User_Target_Achieved_Data]").ToList().AsQueryable();
+
             switch (sort)
             {
                 case "CreateTime":
                     count = this.TargetAchievementView.Count();
                     if (sortdir == "ASC")
-                        return this.TargetAchievementView.OrderBy(x => x.fromdate)
+                        return this.TargetAchievementView.OrderBy(x => x.Target_amt)
                             .Skip(skippingRows).Take(pageSize);
-                    return this.TargetAchievementView.OrderByDescending(x => x.fromdate)
+                    return this.TargetAchievementView.OrderByDescending(x => x.Target_amt)
                         .Skip(skippingRows).Take(pageSize);
                 default:
                     count = this.TargetAchievementView.Count();
-                    return this.TargetAchievementView.OrderBy(x => x.UserName)
+                    return this.TargetAchievementView.OrderBy(x => x.Target_amt)
                         .Skip(skippingRows).Take(pageSize);
             }
         }
 
-        internal object GetTargetAchievementViewPagingExport(ActionViewFilters Filters)
+
+        public virtual UserTargetDetailsView getUserTargetDetails(UserTargetDetailsView users )
         {
-            // var res = this.TargetAchievementView.Select(x => x);
+           
 
-
-            var res = this.TargetAchievementView.Select(x => new { Name = x.Name, USER_NAME = x.UserName, Location = x.Location, FromDate = x.fromdate, ToDate = x.todate, Target = x.target_amt, Achieved = x.achieved_amt });
-      
-
-            if (Filters.StartDate != default(DateTime))
+            if (users.UserID <=0)
             {
-                res = res.Where(x => x.FromDate == Filters.StartDate);
-            }
-            if (Filters.EndDate != default(DateTime))
-            {
-                res = res.Where(x => x.ToDate == Filters.EndDate);
-
+                users.UserID = 228;
             }
 
-            if (!string.IsNullOrEmpty(Filters.UserName))
-                res = res.Where(x => x.USER_NAME == Filters.UserName);
+            if (users.UserName != null)
+                users.UserID = getUserID(users.UserName);
 
-       
+            users.start_date = Convert.ToDateTime("01-jul-2018");
+                var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails]").ToList().AsQueryable();
 
-            if (!string.IsNullOrEmpty(Filters.Location))
+          //  var res = this.DailyUpateView.Select(x => x);
+            if (users.UserID != 0)
             {
-                var temp = this.getLocationDetail(Filters.Location).description;
-                res = res.Where(x => x.Location.ToString() == temp);
+                res = res.Where(x => x.UserID == users.UserID && users.start_date<= x.start_date && users.start_date >= users.start_date);
             }
 
-            //if (Filters == null)
-            //    Filters = new Models.ActionViewFilters() { ItemCode = "" };
-            //var res = from x in this.TargetAchievementView
-            //              where ( x.UserName==Filters.UserName || x.Location==Filters.Location)
-            //          select new { Name=x.Name, USER_NAME = x.UserName,Location=x.Location,FromDate=x.fromdate,ToDate=x.todate,Target=x.target_amt, Achieved=x.achieved_amt };
-            return res.ToList();
+
+                
+               //if(users.Location_Id !=0)
+               // {
+                    
+               //     res = res.Where(x =>x.Location_Id==users.Location_Id);
+               // }
+
+            return res.FirstOrDefault();
         }
+
+        public virtual IEnumerable< UserTargetDetailsView> getAllUserTargetDetails(UserTargetDetailsView users)
+        {
+
+
+
+            var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails]").ToList().AsQueryable();
+
+            //  var res = this.DailyUpateView.Select(x => x);
+            if (users.UserID != 0)
+            {
+                res = res.Where(x => x.UserID == users.UserID);
+            }
+
+
+
+            if (users.Location_Id != 0)
+            {
+
+                res = res.Where(x => x.Location_Id == users.Location_Id);
+            }
+
+            return res;
+        }
+
+
+        public List<TargetMaster> TargetMasterViewPage(int user_Id,int roster_id)
+        {
+    
+
+            var res = this.TargetMaster.Select(x => x);
+
+
+            if (user_Id >0)
+            {
+                res = res.Where(x => x.UserID == user_Id && x.RosterID ==roster_id);
+            }
+
+
+            return res.ToList();
+      
+        }
+
     }
 }
