@@ -74,8 +74,8 @@ htmlAttributes: new { @class = "form-inline" })
                                     <div class="col-md-3">
 
                                         @Html.AdminLTETextBoxFor(m => m.Type,
-null,
-new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Type } },
+new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
+new Dictionary<string, object>() { { "class", "form-control col-md-6" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Type } },
 null,
 null,
 "",
@@ -88,8 +88,8 @@ true)
                                     <div class="col-md-3">
 
                                         @Html.AdminLTETextBoxFor(m => m.Quarter_Name,
-null,
-new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Quarter_Name } },
+new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
+new Dictionary<string, object>() { { "class", "form-control col-md-6" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Quarter_Name } },
 null,
 null,
 "",
@@ -103,8 +103,8 @@ true)
                                     <div class="col-md-3">
 
                                         @Html.AdminLTETextBoxFor(m => m.Account,
-null,
-new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Account } },
+new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
+new Dictionary<string, object>() { { "class", "form-control col-md-6" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Account } },
 null,
 null,
 "",
@@ -133,15 +133,15 @@ true)
                                         <div class="form-group has-feedback" name="form-group-staffcode">
 
 
-                                            <label for="staffcode">Staff Code</label>
-                                            <input type="text" class="form-control " id="staffcode" readonly value=@Model.UserName />
+                                            <label for="staffcode" class="control-label col-md-6">Staff Code</label>
+                                            <input type="text" class="form-control col-md-6" id="staffcode" readonly value=@Model.UserName />
                                         </div>
                                     </div>
                                     <div class="col-md-3">
 
                                         @Html.AdminLTETextBoxFor(m => m.SalesMan,
-null,
-new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.SalesMan } },
+new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
+new Dictionary<string, object>() { { "class", "form-control col-md-6" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.SalesMan } },
 null,
 null,
 "",
@@ -152,8 +152,8 @@ true)
                                     <div class="col-md-3">
 
                                         @Html.AdminLTETextBoxFor(m => m.FieldMan,
-null,
-new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.FieldMan } },
+new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
+new Dictionary<string, object>() { { "class", "form-control col-md-6" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.FieldMan } },
 null,
 null,
 "",
@@ -168,7 +168,7 @@ true)
                                         {
                                             @Html.AdminLTEDropDownListFor(
                                                                         m => m.UserName,
-                                                                        htmlLabelAttributes: null,
+                                                                        htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
                                                                         htmlDropDownAttributes: new Dictionary<string, object>() {
                                 { "class", "form-control select2" },{ "disabled","true"}
                                                                         },
@@ -192,7 +192,7 @@ true)
 
                                             @Html.AdminLTEDropDownListFor(
                                                                         m => m.Location_Id,
-                                                                        htmlLabelAttributes: null,
+                                                                        htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
                                                                         htmlDropDownAttributes: new Dictionary<string, object>() {
                                 { "class", "form-control select2 " },{ "disabled","true"}
                                                                         },
@@ -219,7 +219,7 @@ true)
 
                                             @Html.AdminLTEDropDownListFor(
                                                                         m => m.UserName,
-                                                                        htmlLabelAttributes: null,
+                                                                        htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
                                                                         htmlDropDownAttributes: new Dictionary<string, object>() {
                                 { "class", "form-control select2" }
                                                                         },
@@ -243,7 +243,7 @@ true)
 
                                             @Html.AdminLTEDropDownListFor(
                                                                         m => m.Location_Id,
-                                                                        htmlLabelAttributes: null,
+                                                                        htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
                                                                         htmlDropDownAttributes: new Dictionary<string, object>() {
                                 { "class", "form-control select2" }
                                                                         },
@@ -264,7 +264,7 @@ true)
                                                                         },
                                                                         showLabel: true)
 
-                                            <div class="col-md-1" style="padding-top: 2.5%">
+                                            <div class="col-md-1" style="padding-top: 3.5%">
 
                                                 <button type="submit" class="btn btn-primary " id="btnAdd">Search</button>
 
@@ -326,6 +326,10 @@ true)
             .content{
                 padding:0px;
             }
+    .control-label
+    {
+        padding:15px 0px 0px 0px;
+    }
     /*#target-achievement-display_JAN {
 
             background-color:#4f7a9a
