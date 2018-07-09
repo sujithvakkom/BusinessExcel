@@ -102,36 +102,39 @@ namespace BusinessExcel.Providers.ProviderContext
         }
 
 
-        public virtual UserTargetDetailsView getUserTargetDetails(UserTargetDetailsView users )
+        public virtual UserTargetDetailsView getUserTargetDetails(UserTargetDetailsView users)
         {
-           
 
-            if (users.UserID <=0)
+            try
             {
-                users.UserID = 228;
-            }
+                if (string.IsNullOrEmpty(users.UserName))
+                {
+                    users.UserID = 60;
+                }
 
-            if (users.UserName != null)
-                users.UserID = getUserID(users.UserName);
+                if (users.UserName != null)
+                    users.UserID = getUserID(users.UserName);
 
-            users.start_date = Convert.ToDateTime("01-jul-2018");
+                users.start_date = Convert.ToDateTime("01-jul-2018");
                 var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails]").ToList().AsQueryable();
 
-          //  var res = this.DailyUpateView.Select(x => x);
-            if (users.UserID != 0)
-            {
-                res = res.Where(x => x.UserID == users.UserID && users.start_date<= x.start_date && users.start_date >= users.start_date);
+                //res = res.Where(x => x.UserID == users.UserID && users.start_date<= x.start_date && users.start_date >= users.start_date);
+
+                if (res.Any())
+                {
+                    var target = res.Where(x => x.UserID == users.UserID).OrderByDescending(x => x.start_date).First();
+
+
+
+                    return target;
+                }
+                else
+                    return null;
             }
-
-
-                
-               //if(users.Location_Id !=0)
-               // {
-                    
-               //     res = res.Where(x =>x.Location_Id==users.Location_Id);
-               // }
-
-            return res.FirstOrDefault();
+            catch
+            {
+                return null;
+            }
         }
 
         public virtual IEnumerable< UserTargetDetailsView> getAllUserTargetDetails(UserTargetDetailsView users)

@@ -19,6 +19,7 @@ namespace BusinessExcel.Controllers
         public static string TARGETACHIEVEMENT_ACTIONS_TITLE = "Target & Achievement (Roster)";
 
         public static string USER_TARGET_ACHIEVEMENT_TITLE = "Target & Achievement (User) ";
+        public static string USER_TARGET_ACHIEVEMENT_PAGE_TITLE = "Target & Achievement";
         public static string USER_TARGET_ACHIEVEMENT_DETAILS = "UserTargetAchievementDetails";
 
         public static string USER_TARGET_ACHIEVEMENT_ACTION = "UserTargertAchievement";
@@ -222,7 +223,7 @@ namespace BusinessExcel.Controllers
         [HttpPost]
         // [Authorize(Roles = "manager")]
         [Authorize(Roles = "System Administrator")]
-        public ActionResult UserTargetDetailsAction(UserTargetDetailsView usr)
+        public ActionResult UserTargetDetailsAction(UserTargetDetailsView usr=null)
         {
 
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
@@ -309,7 +310,7 @@ namespace BusinessExcel.Controllers
                         if (usr.SuperVisorId > 0)
                             usr.FieldMan = db.getUserFullNameByID(usr.SuperVisorId);
 
-                        usr.SalesMan = db.getUserFullNameByID(db.getParent(usr.UserID));
+                        usr.SalesMan = db.getUserFullNameByID( db.getParent(usr.UserID)  );
                     }
                 }
             }

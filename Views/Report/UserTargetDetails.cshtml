@@ -19,7 +19,7 @@
             <div class="box-header with-border">
                 <section class="content-header">
                     <h1>
-                        @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_TITLE
+                        @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_PAGE_TITLE (@Model.UserName)
                         <small>Control panel</small>
                     </h1>
                     <ol class="breadcrumb">
@@ -134,7 +134,7 @@ true)
 
 
                                             <label for="staffcode" class="control-label col-md-6">Staff Code</label>
-                                            <input type="text" class="form-control col-md-6" id="staffcode" readonly value=@Model.UserName />
+                                            <input type="text" class="form-control col-md-6" id="staffcode" readonly value=@Model.UserName >
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -164,8 +164,59 @@ true)
                                 </div>
 
                                 <div class="row">
+
+                                    @Html.AdminLTEDropDownListFor(
+                                                                        m => m.Location_Id,
+                                                                        htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
+                                                                        htmlDropDownAttributes: new Dictionary<string, object>() {
+                                { "class", "form-control select2 " },{ "disabled","true"}
+                                                                        },
+                                                                        htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
+                                                                        autoCompleteOptions: new AutoCompleteOptions()
+                                                                        {
+                                                                            AjaxOptions = new AjaxOptions()
+                                                                            {
+                                                                                HttpMethod = "GET",
+                                                                                Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                                                            },
+                                                                            DescriptionField = "description",
+                                                                            IDField = "location_id",
+                                                                            Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                                                            SelectedItem = ViewData[ReportController.SELECTED_FILTED_LOCATION],
+                                                                            IsAutoComplete = true,
+                                                                            SelectItems = null
+                                                                        },
+                                                                        showLabel: true)
+
                                     @{ if (User.IsInRole("User"))
                                         {
+                                           
+
+
+                                            @*@Html.AdminLTEDropDownListFor(
+                                                                        m => m.Location_Id,
+                                                                        htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
+                                                                        htmlDropDownAttributes: new Dictionary<string, object>() {
+                                { "class", "form-control select2 " },{ "disabled","true"}
+                                                                        },
+                                                                        htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
+                                                                        autoCompleteOptions: new AutoCompleteOptions()
+                                                                        {
+                                                                            AjaxOptions = new AjaxOptions()
+                                                                            {
+                                                                                HttpMethod = "GET",
+                                                                                Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                                                            },
+                                                                            DescriptionField = "description",
+                                                                            IDField = "location_id",
+                                                                            Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                                                            SelectedItem = ViewData[ReportController.SELECTED_FILTED_LOCATION],
+                                                                            IsAutoComplete = true,
+                                                                            SelectItems = null
+                                                                        },
+                                                                        showLabel: true)*@
+
+
                                             @Html.AdminLTEDropDownListFor(
                                                                         m => m.UserName,
                                                                         htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
@@ -189,12 +240,18 @@ true)
                                                                         },
                                                                         showLabel: true)
 
+                                        }
+                                        else
+                                        {
 
-                                            @Html.AdminLTEDropDownListFor(
+                                          
+
+
+                                            @*@Html.AdminLTEDropDownListFor(
                                                                         m => m.Location_Id,
                                                                         htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
                                                                         htmlDropDownAttributes: new Dictionary<string, object>() {
-                                { "class", "form-control select2 " },{ "disabled","true"}
+                                { "class", "form-control select2" }
                                                                         },
                                                                         htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
                                                                         autoCompleteOptions: new AutoCompleteOptions()
@@ -211,11 +268,8 @@ true)
                                                                             IsAutoComplete = true,
                                                                             SelectItems = null
                                                                         },
-                                                                        showLabel: true)
+                                                                        showLabel: true)*@
 
-                                        }
-                                        else
-                                        {
 
                                             @Html.AdminLTEDropDownListFor(
                                                                         m => m.UserName,
@@ -235,30 +289,6 @@ true)
                                                                             IDField = "user_name",
                                                                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
                                                                             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
-                                                                            IsAutoComplete = true,
-                                                                            SelectItems = null
-                                                                        },
-                                                                        showLabel: true)
-
-
-                                            @Html.AdminLTEDropDownListFor(
-                                                                        m => m.Location_Id,
-                                                                        htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
-                                                                        htmlDropDownAttributes: new Dictionary<string, object>() {
-                                { "class", "form-control select2" }
-                                                                        },
-                                                                        htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
-                                                                        autoCompleteOptions: new AutoCompleteOptions()
-                                                                        {
-                                                                            AjaxOptions = new AjaxOptions()
-                                                                            {
-                                                                                HttpMethod = "GET",
-                                                                                Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                                                            },
-                                                                            DescriptionField = "description",
-                                                                            IDField = "location_id",
-                                                                            Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                                                            SelectedItem = ViewData[ReportController.SELECTED_FILTED_LOCATION],
                                                                             IsAutoComplete = true,
                                                                             SelectItems = null
                                                                         },

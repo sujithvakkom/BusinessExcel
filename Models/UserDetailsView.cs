@@ -15,7 +15,7 @@ namespace BusinessExcel.Models
         public int UserID { get; set; }
 
         [Column("user_name")]
-        [Display(Name = "Staff Code")]
+        [Display(Name = "Staff Name")]
         public string UserName { get; set; }
  
 
