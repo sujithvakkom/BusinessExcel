@@ -29,41 +29,56 @@
                     <h3 class="box-title">@TargetController.LOCATIONTARGET_TITLE</h3>
                 </div>
                 <div class="box-body">
-                    
+                   @using (Ajax.BeginForm(
+                       actionName:TargetController._VIEWLOCATIONTARGET,
+                       controllerName:TargetController.TARGET,
+                       ajaxOptions: new AjaxOptions()
+                       {
+                           HttpMethod = "GET",
+                           InsertionMode = InsertionMode.Replace,
+                           LoadingElementId = "location-target-view-search",
+                           UpdateTargetId = "location-target-view"
+                       }
+                       ))
+                   {
                     <div class="row">
                             <div class="col-md-2 padding-label">
                                 Site
                             </div>
                             <div class="col-md-7">
                                 @Html.AdminLTEDropDownListFor(
-                                    m => Model.Location,
-                                    htmlLabelAttributes: null,
-                                    htmlDropDownAttributes: new Dictionary<string, object>() {
+         m => Model.Location,
+         htmlLabelAttributes: null,
+         htmlDropDownAttributes: new Dictionary<string, object>() {
                                         { "class", "form-control select2" }
                                     },
-                                    htmlGroupAttributes: new Dictionary<string, object>() { },
-                                    autoCompleteOptions: new AutoCompleteOptions()
-                                    {
-                                        AjaxOptions = new AjaxOptions()
-                                        {
-                                            HttpMethod = "GET",
-                                            Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                        },
-                                        DescriptionField = "description",
-                                        IDField = "location_id",
-                                        Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
-                                        IsAutoComplete = true,
-                                        SelectedItem = Model.Location
-                                    },
-                                    showLabel: false)
+         htmlGroupAttributes: new Dictionary<string, object>() { },
+         autoCompleteOptions: new AutoCompleteOptions()
+         {
+             AjaxOptions = new AjaxOptions()
+             {
+                 HttpMethod = "GET",
+                 Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+             },
+             DescriptionField = "description",
+             IDField = "location_id",
+             Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+             IsAutoComplete = true,
+             SelectedItem = Model.Location
+         },
+         showLabel: false)
                             </div>
                         <div class="col-md-3">
-
+                            <input type="submit" value="Search" class="btn btn-default"/>
+                            @{
+                                Html.RenderPartial("_Progress", "location-target-view-search");
+                            }
                         </div>
                     </div>
-                    <div class="table-form" style="max-height: 480px;overflow-y: scroll;">
+                    }
+                    <div id="location-target-view" class="table-form" style="max-height: 480px;overflow-y: scroll;">
                         @{
-                            Html.RenderPartial(TargetController._VIEWLOCATIONTARGET, Model);
+                            Html.RenderPartial(TargetController._VIEWLOCATIONTARGET,-1);
                         }
                     </div>
                 </div>

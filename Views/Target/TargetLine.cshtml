@@ -35,9 +35,16 @@
     CategoryDetail selection = new CategoryDetail();
     using (var db = new SalesManageDataContext())
     {
-        int id = 0;
-        int.TryParse(Model[i].Catogery, out id);
-        selection = db.getCategoryDetails(id);
+        try
+        {
+            int id = int.Parse(Model[i].Catogery);
+            selection = db.getCategoryDetails(id);
+        }
+        catch (ArgumentNullException) { }
+        catch (Exception)
+        {
+            selection = db.getCategoryDetails(Model[i].Catogery);
+        }
     }
     <div class="row">
         <div class="col-md-offset-1 col-md-2 table-fields">

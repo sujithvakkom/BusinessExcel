@@ -33,6 +33,11 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
         public LineTarget[] LineTargets { get; set; }
 
+        public static explicit operator BaseTarget(TargetMasterDetails v)
+        {
+            return new BaseTarget() { TargetTemplate = v.target_id.ToString(), Description = v.description };
+        }
+
         [Display(Name = "Target Template")]
         public string TargetTemplate { get; set; }
 
@@ -84,6 +89,18 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
                 where (decimal)(x.Target == null ? 0 : x.Target) != 0
                 select new { category = x.Catogery, is_bonus = Convert.ToInt32(x.IsBonusLine), target_val = (decimal)(x.Target == null ? 0 : x.Target) };
             return data.ToList().ToDataTable();
+        }
+
+        public static explicit operator BaseTarget(_BaseTarget v)
+        {
+            return new BaseTarget() {
+                TargetTemplate = v.TargetTemplate.ToString(),
+                Description = v.Description,
+                BaseIncentive = v.BaseIncentive,
+                EndDate = v.EndDate,
+                Location = v.Location.ToString(),
+                StartDate = v.StartDate
+            };
         }
     }
 }

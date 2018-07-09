@@ -203,6 +203,8 @@
     <Compile Include="Controllers\TargetController.TargetDistribution.cs" />
     <Compile Include="Controllers\TargetController.LocationTarget.cs" />
     <Compile Include="Controllers\TargetController.EditViewTarget.cs" />
+    <Compile Include="Controllers\TargetController._LocationTargetEditCreate.cs" />
+    <Compile Include="Controllers\TargetController._ViewLocationTarget.cs" />
     <Compile Include="Controllers\TargetController.TargetTemplet.cs" />
     <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
@@ -260,6 +262,7 @@
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\_BaseTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryDetails.cs" />

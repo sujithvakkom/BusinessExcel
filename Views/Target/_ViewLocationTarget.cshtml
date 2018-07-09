@@ -4,7 +4,7 @@
 @using BusinessExcel.Controllers.JSON
 @using BusinessExcel.Controllers
 @using BootstrapHtmlHelper
-
+@model Int32
 @{
     using (var db = new SalesManageDataContext())
     {
@@ -16,9 +16,12 @@
                    FROM[db_salesmanage_user].[target_m] AS t INNER JOIN[db_salesmanage_user].[roster] AS r ON t.roster_id = r.roster_id
                                                               INNER JOIN[sc_salesmanage_user].[location_m] AS l ON r.location_id = l.location_id
                    WHERE l.deleted = @deleted
+                         AND r.location_id = ISNULL(@location_id, r.location_id)
                          AND
-                         t.user_id IS NULL",
-             new System.Data.SqlClient.SqlParameter("@deleted", System.Data.SqlDbType.BigInt) { Value = 0 });
+                         t.user_id IS NULL
+                    ORDER BY r.start_date DESC",
+             new System.Data.SqlClient.SqlParameter("@deleted", System.Data.SqlDbType.BigInt) { Value = 0 },
+             new System.Data.SqlClient.SqlParameter("@location_id", System.Data.SqlDbType.BigInt) { Value = Model==-1?(object)System.DBNull.Value:(object)Model });
         <table class="table table-bordered">
             @foreach (var lineTarget in lineTargets)
             {
@@ -32,7 +35,8 @@
                            new { @TargetTempletID = lineTarget.target_id},
                            new AjaxOptions() {
                                HttpMethod="GET",
-                               InsertionMode=InsertionMode.Replace
+                               InsertionMode=InsertionMode.Replace,
+                               UpdateTargetId= "target-location-create"
 
                            },new {@class= "btn-link pull-right" }
                            )</td>
