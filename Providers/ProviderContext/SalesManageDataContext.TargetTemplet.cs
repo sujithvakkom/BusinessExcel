@@ -152,18 +152,22 @@ GO
             return items;
         }
 
-
-        public virtual List<LineTarget> getTargetTempletLineDetails(int? search)
+        public virtual List<LineTarget> getTargetTempletLineDetails(int? search, bool isBalance = true)
         {
             int result = -1;
             List<LineTarget> items = new List<LineTarget>();
             var target_id = search != null ?
                   new SqlParameter("@target_id", search) :
                   new SqlParameter("@target_id", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+            var balance =
+                  new SqlParameter("@balance", Convert.ToInt32(isBalance));
             try
             {
                 items = this.Database.SqlQuery<LineTarget>(
-                                                " [sc_salesmanage_vansale].[getTargetTempletLineDetails]  @target_id", target_id)
+                                                " [sc_salesmanage_vansale].[getTargetTempletLineDetails]  @target_id, @balance", 
+                                                target_id,
+                                                balance)
                                                 .ToList();
             }
             catch (Exception ex)
@@ -173,5 +177,35 @@ GO
             return items;
         }
 
+        public virtual BaseTarget getTargetTemplet(int? TargetTempletID) {
+            BaseTarget result = null;
+            
+            var target_id = TargetTempletID != null ?
+                new SqlParameter("@target_id", TargetTempletID) :
+                new SqlParameter("@target_id", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+
+            try
+            {
+                result = (BaseTarget)(this.Database.SqlQuery<_BaseTarget>(
+                                                @"SELECT t.[target_id] AS    TargetTemplate ,
+       NULL AS             UserName ,
+       t.[description] AS  Description ,
+       r.location_id AS    Location ,
+       r.start_date AS     StartDate ,
+       r.end_date AS       EndDate ,
+       NULL AS             TotalTarget ,
+       t.base_incentive AS BaseIncentive
+FROM [db_salesmanage_user].[target_m] AS t INNER JOIN [db_salesmanage_user].[roster] AS r ON t.roster_id = r.roster_id
+WHERE t.target_id = @target_id",
+                                                target_id).FirstOrDefault());
+            }
+            catch (Exception ex)
+            {
+                result = null;
+            }
+
+            return result;
+        }
     }
 }

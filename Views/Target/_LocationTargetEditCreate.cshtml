@@ -41,6 +41,7 @@
     }))
         {
             @Html.AntiForgeryToken()
+            @Html.HiddenFor(m=>Model.TargetTemplate)
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-3 padding-label">
