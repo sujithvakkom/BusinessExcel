@@ -22,7 +22,7 @@ new AjaxOptions()
 {
 InsertionMode = InsertionMode.Replace,
 HttpMethod = "Post",
-UpdateTargetId = "",
+UpdateTargetId = "target-distribution-assign",
 OnBegin = "move('#page-load')",
 OnComplete = "ajax_call_load_complete('#page-load')",
 OnFailure = "loadin_failed",
@@ -221,8 +221,8 @@ autoCompleteOptions: new AutoCompleteOptions()
                                             break;
                                     }
                                 }
-                                function user_changed() {
-                                    alert(val.val());
+                                function user_changed(val) {
+                                    //alert(val.value);
                                 }
                             </script>
                             }
