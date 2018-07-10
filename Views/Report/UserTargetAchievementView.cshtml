@@ -72,8 +72,8 @@ columns: new[] {
                         grid.Column(columnName: "has_bonus", header: "Bonus Line", format: @<text>
                     @(item.has_bonus ? "1" : "0" )
                         </text>, style: "Category", canSort: false),
-                       grid.Column(columnName: "Target_amt", header: "Target", format: null, style: "Target_amt", canSort: false),
-                        grid.Column(columnName: "Achieved_Amt", header: "Achieved", format: null, style: "Achieved_Amt", canSort: false),
+                       grid.Column(columnName: "Target_amt", header: "Target", format: null, style: "Target_amt numeric", canSort: false),
+                        grid.Column(columnName: "Achieved_Amt", header: "Achieved", format: null, style: "Achieved_Amt numeric", canSort: false),
                          grid.Column(null, null, format: @<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive" value="@item.Base_Incentive" />),
 
 
