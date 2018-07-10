@@ -320,6 +320,7 @@ true)
 
 
                                 <div style="margin-top:15px" id="target-achievement-display">
+                                  
 
                                 @if (Model.QuarterMonths.Count > 0)
                                 {
@@ -411,6 +412,16 @@ true)
 
 <script>
 
+    $('#btnAdd').click(function () {
+        var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
+        
+        $('#target-achievement-display').empty();
+        $('#target-achievement-display').append(loadingelement);
+
+        
+    })
+
+        
 
     //   $('staffcode').val($("#UserName option:selected").val());
 
@@ -444,14 +455,8 @@ true)
     //    $("#location_name").val(username);
 
     //}
-    function RefreshTargetList() {
-
-        @*var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
-
-$('#userData').html(loadingelement);*@
-
-
-    }
+   
+    //--userData
 
 
 </script>
