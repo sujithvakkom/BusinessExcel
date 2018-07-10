@@ -62,7 +62,6 @@ namespace BusinessExcel.Controllers
             return PartialView(target);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult TargetDistribution(BaseTarget target)
@@ -109,9 +108,9 @@ namespace BusinessExcel.Controllers
                 ViewBag.Message = Message;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (Request.IsAjaxRequest())
-                return PartialView(_TARGETTEMPLATECREATEBLOCK, target);
+                return PartialView(_TARGETDISTRIBUTIONASSIGN, target);
             return View(target);
 
         }
-        }
     }
+}

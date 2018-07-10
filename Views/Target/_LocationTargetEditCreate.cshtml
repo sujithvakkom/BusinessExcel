@@ -125,8 +125,24 @@
                     </div>
                                     if (ViewBag.Result != null)
                                     {
-                                        var className = ViewBag.Result == -1 ? @"alert alert-danger" : @"alert alert-success";
-                                        var message = ViewBag.Result == -1 ? "<b>Cannot save.</b>" : "<b>Successfully saved.</b>";
+                                        var message = "";
+                                        var className = @"";
+                                        switch ((int)ViewBag.Result)
+                                        {
+                                            case -1:
+                                                className = @"alert alert-danger";
+                                                message = "<b>Cannot save.</b>";
+                                                break;
+                                            case -2:
+                                                className = @"alert alert-warning";
+                                                message = "<b>Updated.</b>";
+                                                break;
+                                            default:
+                                                className = @"alert alert-success";
+                                                message = "<b>Successfully saved.</b>";
+                                                break;
+                                        }
+
                                         if (ViewBag.ModelErrors != null)
                                         {
                                             foreach (var err in ((string)ViewBag.ModelErrors).Split(new[] { Environment.NewLine }, StringSplitOptions.None))
