@@ -36,3 +36,38 @@
         </div>
     </div>
 </section>
+
+
+<script>
+                                function target_line_changed(val) {
+                                    var sum = Number(0);
+
+                                    $("#target-row").find("input[name*='].Target']").each(function () {
+                                        sum = sum + Number($(this).val());
+                                    })
+                                    $("input[name='TotalTarget']").val(sum)
+                                    var prefix = val.getAttribute("name").split(".")[0] + "_";
+                                    var source = val.getAttribute("name").split(".")[1];
+                                    var temp = ('#' + prefix + "AvilableTarget").replace('[', '_').replace(']', '_')
+                                    var avilableTarget = Number($(temp).text())
+                                    var allocation = Number(0);
+                                    var target = Number(0);
+                                    switch (source) {
+                                        case 'Allocation':
+                                            var temp = ("#" + prefix + "Allocation").replace('[', '_').replace(']', '_')
+                                            allocation = Number($(temp).val())
+                                            var temp = ("#" + prefix + "Target").replace('[', '_').replace(']', '_')
+                                            $(temp).val(avilableTarget * allocation / 100)
+                                            break;
+                                        case 'Target':
+                                            var temp = ("#" + prefix + "Target").replace('[', '_').replace(']', '_')
+                                            target = Number($(temp).val())
+                                            var temp = ("#" + prefix + "Allocation").replace('[', '_').replace(']', '_')
+                                            $(temp).val((target / avilableTarget) * 100)
+                                            break;
+                                    }
+                                }
+                                function user_changed(val) {
+                                    //alert(val.value);
+                                }
+</script>

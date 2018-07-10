@@ -8,21 +8,21 @@
 @model BaseTarget
 
 @using (Ajax.BeginForm(
-                                    controllerName: TargetController.TARGET,
-                                    actionName: TargetController._GETLOCATIONALOCATION,
-                                    htmlAttributes: new { id = "target-location-create-form" },
-                                    routeValues: null,
-                                    ajaxOptions:
-                                    new AjaxOptions()
-                                    {
-                                        InsertionMode = InsertionMode.Replace,
-                                        HttpMethod = "Post",
-                                        UpdateTargetId = "location-target-allocation",
-                                        OnBegin = "move('#page-load')",
-                                        OnComplete = "ajax_call_load_complete('#page-load')",
-                                        OnFailure = "loadin_failed",
-                                        LoadingElementId = "target-load-progress"
-                                    }))
+                                                            controllerName: TargetController.TARGET,
+                                                            actionName: TargetController._GETLOCATIONALOCATION,
+                                                            htmlAttributes: new { id = "target-location-create-form" },
+                                                            routeValues: null,
+                                                            ajaxOptions:
+                                                            new AjaxOptions()
+                                                            {
+                                                                InsertionMode = InsertionMode.Replace,
+                                                                HttpMethod = "Post",
+                                                                UpdateTargetId = "location-target-allocation",
+                                                                OnBegin = "move('#page-load')",
+                                                                OnComplete = "ajax_call_load_complete('#page-load')",
+                                                                OnFailure = "loadin_failed",
+                                                                LoadingElementId = "target-load-progress"
+                                                            }))
 {
     <div class="table-form">
         <div class="row">
@@ -95,7 +95,42 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-4 padding-label">
+                    Employ
+                </div>
+                <div class="col-md-6">
 
+                    @Html.AdminLTEDropDownListFor(
+        expression: m => Model.UserName,
+        htmlLabelAttributes: null,
+        htmlDropDownAttributes: new Dictionary<string, object>() {
+            { "class", "form-control select2" } ,
+            { "onchange", "user_changed(this)" }
+        },
+        htmlGroupAttributes: new Dictionary<string, object>() { },
+        autoCompleteOptions: new AutoCompleteOptions()
+        {
+            AjaxOptions = new AjaxOptions()
+            {
+                HttpMethod = "GET",
+                Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+            },
+            DescriptionField = "full_name",
+            IDField = "user_name",
+            Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+            SelectedItem = ViewData[RosterController.SELECTED_FILTED_USER],
+
+            IsAutoComplete = true,
+            SelectItems = null
+        },
+        showLabel: false,
+        hasValidation: true
+        )
+                </div>
+            </div>
+        </div>
     </div>
     <div class="container sp">
         <div class="row box-body">
