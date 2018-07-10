@@ -66,6 +66,15 @@ namespace BusinessExcel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult TargetDistribution(BaseTarget target)
         {
+            using(var db = new SalesManageDataContext())
+            foreach (var cat in target.LineTargets)
+            {
+                    try
+                    {
+                        cat.Catogery = db.getCategoryDetails(cat.Catogery).category_id.ToString();
+                    }
+                    catch (Exception) { }
+            }
             string Message = "";
             int result = -1;
             if (ModelState.IsValid)

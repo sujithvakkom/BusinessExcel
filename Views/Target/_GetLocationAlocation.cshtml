@@ -111,6 +111,7 @@ false,
 true)
                             </div>
                             <div class="col-md-3 table-fields">
+                                @Html.HiddenFor(m => Model.LineTargets[i].Catogery)
                                 @Html.AdminLTEDropDownListFor(m => Model.LineTargets[i].Catogery,
 htmlLabelAttributes: null,
 htmlDropDownAttributes: new Dictionary<string, object>() { { "class", "form-control select2" }, { "style", "border-style:none !important" }, { "disabled", "true" } },
