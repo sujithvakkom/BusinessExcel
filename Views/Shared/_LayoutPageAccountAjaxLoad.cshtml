@@ -265,6 +265,26 @@
                 alert("Error " + err)
             }
         }
+    
+        function numberWithCommas(number) {
+            var parts = number.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return parts.join(".");
+        }
+        $(document).ready(function () {
+        });
+        function numberFormater() {
+            $(".numaric").each(function () {
+                try {
+                    var num = Number($(this).text());
+                    var commaNum = numberWithCommas(num);
+                    if(!isNaN(commaNum)){
+                        $(this).text(commaNum);
+                    }
+                }
+                catch (err) { }
+            });
+        }
     </script>
 
     @RenderSection("extraScripts", false)

@@ -152,7 +152,7 @@ GO
             return items;
         }
 
-        public virtual List<LineTarget> getTargetTempletLineDetails(int? search, bool isBalance = true)
+        public virtual List<LineTarget> getTargetTempletLineDetails(int? search, bool isBalance = true, int? userID=null)
         {
             int result = -1;
             List<LineTarget> items = new List<LineTarget>();
@@ -162,12 +162,17 @@ GO
 
             var balance =
                   new SqlParameter("@balance", Convert.ToInt32(isBalance));
+
+            var user_id = userID != null ?
+                  new SqlParameter("@user_id", userID) :
+                  new SqlParameter("@user_id", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
             try
             {
                 items = this.Database.SqlQuery<LineTarget>(
-                                                " [sc_salesmanage_vansale].[getTargetTempletLineDetails]  @target_id, @balance", 
+                                                " [sc_salesmanage_vansale].[getTargetTempletLineDetails]  @target_id, @balance, @user_id", 
                                                 target_id,
-                                                balance)
+                                                balance,
+                                                user_id)
                                                 .ToList();
             }
             catch (Exception ex)

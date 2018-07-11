@@ -39,35 +39,36 @@
 
 
 <script>
-                                function target_line_changed(val) {
-                                    var sum = Number(0);
-
-                                    $("#target-row").find("input[name*='].Target']").each(function () {
-                                        sum = sum + Number($(this).val());
-                                    })
-                                    $("input[name='TotalTarget']").val(sum)
-                                    var prefix = val.getAttribute("name").split(".")[0] + "_";
-                                    var source = val.getAttribute("name").split(".")[1];
-                                    var temp = ('#' + prefix + "AvilableTarget").replace('[', '_').replace(']', '_')
-                                    var avilableTarget = Number($(temp).text())
-                                    var allocation = Number(0);
-                                    var target = Number(0);
-                                    switch (source) {
-                                        case 'Allocation':
-                                            var temp = ("#" + prefix + "Allocation").replace('[', '_').replace(']', '_')
-                                            allocation = Number($(temp).val())
-                                            var temp = ("#" + prefix + "Target").replace('[', '_').replace(']', '_')
-                                            $(temp).val(avilableTarget * allocation / 100)
-                                            break;
-                                        case 'Target':
-                                            var temp = ("#" + prefix + "Target").replace('[', '_').replace(']', '_')
-                                            target = Number($(temp).val())
-                                            var temp = ("#" + prefix + "Allocation").replace('[', '_').replace(']', '_')
-                                            $(temp).val((target / avilableTarget) * 100)
-                                            break;
-                                    }
-                                }
-                                function user_changed(val) {
-                                    //alert(val.value);
-                                }
+    function target_line_changed(val, formID) {
+        var sum = Number(0);
+        var prefix = val.getAttribute("name").split(".")[0] + "_";
+        var source = val.getAttribute("name").split(".")[1];
+        var temp = ('#' + prefix + "AvilableTarget").replace('[', '_').replace(']', '_')
+        var avilableTarget = Number($("#" + formID).find(temp).text())
+        var allocation = Number(0);
+        var target = Number(0);
+        switch (source) {
+            case 'Allocation':
+                var temp = ("#" + prefix + "Allocation").replace('[', '_').replace(']', '_')
+                allocation = Number($("#" + formID).find(temp).val())
+                var temp = ("#" + prefix + "TotalTarget").replace('[', '_').replace(']', '_')
+                $("#" + formID).find(temp).val(avilableTarget * allocation / 100)
+                break;
+            case 'Target':
+                var temp = ("#" + prefix + "TotalTarget").replace('[', '_').replace(']', '_')
+                target = Number($("#" + formID).find(temp).val())
+                var temp = ("#" + prefix + "Allocation").replace('[', '_').replace(']', '_')
+                $("#" + formID).find(temp).val((target / avilableTarget) * 100)
+                break;
+        }
+        $("#" + formID).find('input[name ^=LineTargets][name $=Target]').each(function () {
+            sum = sum + Number($(this).val());
+        })
+        $("#" + formID).find("input[name='TotalTarget']").val(sum)
+    }
+    function user_changed(val) {
+        //alert(val.value);LineTargets[0].Target
+        //"input[name*='].Target']"
+        //$('input[name ^=LineTargets][name $=Target]')
+    }
 </script>

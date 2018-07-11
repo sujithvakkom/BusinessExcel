@@ -35,5 +35,8 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
         [Display(Name = "Achievement (%)")]
         public Decimal AchievementPercentage { get; set; }
+
+        public decimal? TotalTarget { get; set; }
+        public decimal? AssignedForCurrentUser { get; set; }
     }
 }

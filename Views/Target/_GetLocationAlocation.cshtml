@@ -9,33 +9,33 @@
 <div class="row box-body ">
     @if (Model.LineTargets.Length > 0)
     {
-    var total = Model.LineTargets.Sum(x => x.Target);
-
-    using (Ajax.BeginForm(
-controllerName: TargetController.TARGET,
-actionName: TargetController.TARGETDISTRIBUTION, 
-htmlAttributes: new { id = "target-distribute-form" },
-routeValues: null,
-ajaxOptions:
-new AjaxOptions()
-{
-InsertionMode = InsertionMode.Replace,
-HttpMethod = "Post",
-UpdateTargetId = "target-distribution-assign",
-OnBegin = "move('#page-load')",
-OnComplete = "ajax_call_load_complete('#page-load')",
-OnFailure = "loadin_failed",
-LoadingElementId = "target-assing-traget-progress"
-}))
+        var total = Model.LineTargets.Sum(x => x.Target);
+        var formID = "target-distribute-form-" + Model.TargetTemplate + "-" + Model.Location + "-" + Model.UserName;
+        using (Ajax.BeginForm(
+    controllerName: TargetController.TARGET,
+    actionName: TargetController.TARGETDISTRIBUTION,
+    htmlAttributes: new { id = formID },
+    routeValues: null,
+    ajaxOptions:
+    new AjaxOptions()
     {
-        @Html.AntiForgeryToken()
-        <div class="row table-form">
-        </div>
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "Post",
+        UpdateTargetId = "target-distribution-assign",
+        OnBegin = "move('#page-load')",
+        OnComplete = "ajax_call_load_complete('#page-load')",
+        OnFailure = "loadin_failed",
+        LoadingElementId = "target-assing-traget-progress"
+    }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row table-form">
+            </div>
             <div>
 
-                                @Html.HiddenFor(m => Model.TargetTemplate)
-                                                @Html.HiddenFor(m => Model.Location)
-                                                @Html.HiddenFor(m => Model.UserName)
+                @Html.HiddenFor(m => Model.TargetTemplate)
+                @Html.HiddenFor(m => Model.Location)
+                @Html.HiddenFor(m => Model.UserName)
 
             </div>
             <div class="table-form" style="padding: 0px 30px 0px 30px">
@@ -44,16 +44,22 @@ LoadingElementId = "target-assing-traget-progress"
                     <div class="col-md-1 table-fields">
                         Bonus
                     </div>
-                    <div class="col-md-3 table-fields">
+                    <div class="col-md-2 table-fields">
                         Category Line
                     </div>
-                    <div class="col-md-3 table-fields">
-                        Available Target
+                    <div class="col-md-2 table-fields">
+                        Total Target
                     </div>
                     <div class="col-md-2 table-fields">
+                        Assigned Target
+                    </div>
+                    <div class="col-md-2 table-fields">
+                        Available Target
+                    </div>
+                    <div class="col-md-1 table-fields">
                         Allocation
                     </div>
-                    <div class="col-md-3 table-fields">
+                    <div class="col-md-2 table-fields">
                         Target
                     </div>
                 </div>
@@ -76,7 +82,7 @@ null,
 false,
 true)
                             </div>
-                            <div class="col-md-3 table-fields">
+                            <div class="col-md-2 table-fields">
                                 @Html.HiddenFor(m => Model.LineTargets[i].Catogery)
                                 @Html.AdminLTEDropDownListFor(m => Model.LineTargets[i].Catogery,
 htmlLabelAttributes: null,
@@ -97,32 +103,41 @@ autoCompleteOptions: new AutoCompleteOptions()
     SelectItems = null
 }, showLabel: false)
                             </div>
-                            <div class="col-md-3 table-fields">
-                                @{var idAvilable = "LineTargets_" + i.ToString() + "__AvilableTarget";}
-                                <div id="@idAvilable" class="form-control"> @Model.LineTargets[i].Target</div>
+                            <div class="col-md-2 table-fields">
+                                @{var idTotalTarget = "LineTargets_" + i.ToString() + "__TotalTarget";}
+                                <div id="@idTotalTarget" class="form-control text-info numaric"> @Model.LineTargets[i].TotalTarget</div>
                             </div>
                             <div class="col-md-2 table-fields">
+                                @{var idAssignedForCurrentUser = "LineTargets_" + i.ToString() + "__AssignedForCurrentUser";}
+                                <div id="@idAssignedForCurrentUser" class="form-control text-info numaric"> @Model.LineTargets[i].AssignedForCurrentUser</div>
+                            </div>
+                            <div class="col-md-2 table-fields">
+                                @{var idAvilable = "LineTargets_" + i.ToString() + "__AvilableTarget";}
+                                <div id="@idAvilable" class="form-control text-info numaric"> @Model.LineTargets[i].Target</div>
+                            </div>
+                            <div class="col-md-1 table-fields">
                                 @Html.AdminLTETextBox("LineTargets[" + i.ToString() + "].Allocation",
                           null,
                           new Dictionary<string, object>() {
                               { "class", "form-control numaric" },
                               { "autocomplete", "off" } ,
-                              { "onchange", "target_line_changed(this)" } },
+                              { "onchange", "target_line_changed(this,'"+formID+"')" } },
                           null,
                           null,
                           "fa-percent",
                           false,
                           true,
                           true,
-                          100)
+                         (Model.LineTargets[i].AssignedForCurrentUser / Model.LineTargets[i].TotalTarget) * 100
+                                )
                             </div>
-                            <div class="col-md-3 table-fields">
+                            <div class="col-md-2 table-fields">
                                 @Html.AdminLTETextBoxFor(m => Model.LineTargets[i].Target,
                           null,
                           new Dictionary<string, object>() {
                               { "class", "form-control numaric" },
                               { "autocomplete", "off" } ,
-                              { "onchange", "target_line_changed(this)" } },
+                              { "onchange", "target_line_changed(this,'"+formID+"')" } },
                           null,
                           null,
                           "",
@@ -133,7 +148,7 @@ autoCompleteOptions: new AutoCompleteOptions()
                         </div>
                                     }
                     <div class="row">
-                        <div class="col-lg-offset-9 col-md-3 table-fields">
+                        <div class="col-lg-offset-10 col-md-2 table-fields">
                             @Html.AdminLTETextBox("TotalTarget",
                           null,
                           new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" }, { "disabled", "true" } },
@@ -150,7 +165,7 @@ autoCompleteOptions: new AutoCompleteOptions()
             </div>
             <div class="container sp">
                 <div class="row box-body">
-                    <div class="col-md-2 pull-right">
+                    <div class="col-lg-offset-10 col-md-2">
                         @{
                             Html.RenderPartial("_Progress", "target-assing-traget-progress");
                         }
@@ -158,6 +173,6 @@ autoCompleteOptions: new AutoCompleteOptions()
                     </div>
                 </div>
             </div>
-                            }
+                                }
                             }
 </div>
