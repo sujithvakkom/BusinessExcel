@@ -19,15 +19,15 @@
             restartOnPushState: false
         };
     </script>
-    @Scripts.Render("~/bundles/all")
-    @Scripts.Render("~/bundles/pace")
-    @Styles.Render("~/Content/themes/select2")
-    @Styles.Render("~/bundles/inputmask")
+    @System.Web.Optimization.Scripts.Render("~/bundles/all")
+    @System.Web.Optimization.Scripts.Render("~/bundles/pace")
+    @System.Web.Optimization.Styles.Render("~/Content/themes/select2")
+    @System.Web.Optimization.Styles.Render("~/bundles/inputmask")
 
-    @Styles.Render("~/Content/themes/table-daily-upate-view")
-    @Styles.Render("~/Content/themes/base/css")
-    @Styles.Render("~/Content/themes/adminlte/css")
-    @Styles.Render("~/Content/css")
+    @System.Web.Optimization.Styles.Render("~/Content/themes/table-daily-upate-view")
+    @System.Web.Optimization.Styles.Render("~/Content/themes/base/css")
+    @System.Web.Optimization.Styles.Render("~/Content/themes/adminlte/css")
+    @System.Web.Optimization.Styles.Render("~/Content/css")
     @RenderSection("extraStyles", false)
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

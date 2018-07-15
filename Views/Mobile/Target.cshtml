@@ -1,0 +1,96 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@{
+    Layout = null;
+    WebGrid grid = null;
+    UserDetail user=null;
+    using (var db = new SalesManageDataContext())
+    {
+         user = db.getUserDetail(ViewBag.UserName);
+
+        var user_name = new System.Data.SqlClient.SqlParameter("@user_name", ViewBag.UserName);
+        var LocationAchievement =
+            db.Database.SqlQuery<TargetAchievementView>(MobileController.ACHIEVEMENT_CMD,
+            user_name).ToList();
+
+        grid = new WebGrid(
+                source: LocationAchievement,
+                canPage: true,
+                rowsPerPage: 10
+                );
+        grid.Pager(WebGridPagerModes.NextPrevious);
+
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="SHORTCUT ICON" href="~/Content/Images/gs_logo.ico" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    @System.Web.Optimization.Scripts.Render("~/bundle/jquery_validation")
+    @System.Web.Optimization.Scripts.Render("~/bundles/jquery_datetimepicker")
+    <script src="~/Scripts/Custom/Chart.js"></script>
+    <title>Target</title>
+    <style>
+        .pagination {
+            margin: 0px;
+        }
+    </style>
+
+</head>
+<body>
+    <h4>Target and Achievement</h4>
+    <div>
+        <span>@user.full_name</span>
+        <span>(@user.user_name)</span>
+    </div>
+    <div>
+        @grid.GetHtml(
+                           tableStyle: "table table-striped table-bordered be-pagination-spl",
+                           columns: new[] {
+                               new WebGridColumn() {
+                                   ColumnName = "Category",
+                                  Header="Category",
+                                  CanSort = false,
+                                  Style=""
+                               },
+                               new WebGridColumn() {
+                                   ColumnName = "start_date",
+                                  Header="Period",
+                                  Format=(item)=>@Html.AdminLTEParagraph(((DateTime)@item["start_date"]).ToString("MMMM yyyy")),
+                                  CanSort = false,
+                                  Style=""
+                               },
+                               new WebGridColumn() {
+                                   ColumnName = "Target_amt",
+                                  Header="Target",
+                                  CanSort = false,
+                                  Style=""
+                               },
+                               new WebGridColumn() {
+                                   ColumnName = "Target_amt",
+                                  Header="Target",
+                                  CanSort = false,
+                                  Style=""
+                               },
+                               new WebGridColumn() {
+                                   ColumnName = "Achieved_Amt",
+                                  Header="Achieved",
+                                  CanSort = false,
+                                  Style=""
+                               }
+
+                           })
+    </div>
+</body>
+</html>
+
