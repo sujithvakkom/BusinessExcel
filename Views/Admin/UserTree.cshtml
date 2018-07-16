@@ -23,7 +23,7 @@
             var selectedData;
             $('#jstree').jstree({
                 "core": {
-                    "multiple": true,
+                    "multiple": false,
                     "check_callback": false,
                     'themes': {
                         "responsive": true,
@@ -43,7 +43,7 @@
                 },
 
              
-                //"plugins": ["dnd", "state", "types", "sort", "checkbox", "search"],
+               // "plugins": ["dnd", "state", "types", "sort", "checkbox", "search"],
                 "plugins": ["dnd", "state", "types", "sort",  "search"],
 
 
@@ -72,10 +72,43 @@
             $('#jstree')
     .on('changed.jstree', function (e, data) {
 
-       // $('#parent').html('');
+      
+        if (data.node.children.length == 0)
+        {
+           
+            $("#btnDelete").removeClass("disabled");
+        }
+        else {
+          
+            $("#btnDelete").addClass("disabled");
+        }
 
+      
+        if (data.selected.length > 0)
+        {
+            
+            $("#user_id").removeAttr('disabled', 'false');
+        }
+        else {
+          
+            $("#user_id").attr('disabled','true');
+        }
+      //  alert(data.node.children.length);
+
+        //for (var i in data.node.children) {
+            
+
+        //   // var curChildren = tree_data.instance.get_node(data.node.children[i]).original;
+        //}
+
+        
+        
+       // $('#parent').html('');
+      //  alert(data.selected.length);
         var i, j, r = [];
         for (i = 0, j = data.selected.length; i < j; i++) {
+
+           
            // r.push(data.instance.get_node(data.selected[i]).text);
 
            // $('#parent').html('Parent: ' + data.instance.get_node(data.node.parent).text);
@@ -85,27 +118,82 @@
 
         }
       // $('#event_result').html('Selected: ' + r.join(', '));
-    }).jstree();
+    }
 
 
 
-           
+    ).jstree();
 
 
 
+         
         });
 
-        
+        $(document).on('click', '#btnAdd', function () {
+          
 
+            if ($("#user_id option:selected").text().length > 0) {
+
+                var ParentuserName = $('#jstree').jstree().get_selected(true)[0].a_attr.href;
+                var ParentName = $('#jstree').jstree().get_selected(true)[0].text;
+
+                var childName = $("#user_id option:selected").text();
+                var childuserName = $("#user_id option:selected").val();
+
+                if (ParentuserName != childuserName) {
+                    $('#modalnew').modal('show');
+
+                    $('.modal-title').html("<h3>Adding new child</h3>");
+
+                    $('.modal-body').html("<h4> Adding  <b>" + childName + " </b> to under <b> " + ParentName + "</h4>");
+                }
+                else
+                {
+                   
+                    popup('Parent and child is same name');
+                }
+            }
+            else {
+             
+                popup('Please select user from list');
+            }
+
+          
+
+        });
+     
+        function popup(info){
+
+           // $(".modal-content").css({ "width": "50%", "margin": "auto" });
+          //  $("#btnSubmit").css({ "display": "none" });
+           // $(".modal-title").css({ "color": "red" });
+            //$(".modal-header").css({ "padding": "5px 15px 0px 5px", "background-color": "#bbbaba" });
+           // $(".modal-content").Remove('btnSubmit')
+
+
+            $('#modalnew').modal('show');
+
+            $('.modal-title').html("<h4>Error</h3>");
+
+            $('.modal-body').html("<h4> " + info + "  </h4>");
+
+           
+        }
     </script>
 
 
 <style type="text/css">
 
     .jstree-default a.jstree-search { color:green;     font-style:normal; 
- 
-}
 
+}
+    
+
+.modal-header
+{
+    padding:15px 15px 0px;
+    background-color: #d2cece;
+}
 </style>
 
  
@@ -153,7 +241,7 @@
               .ItemText(m => m.user_id.ToString())
               .ItemTemplate(
                     @<text>
-                        <a href="@item.user_id.ToString()" desc="@item.u_name" oncontextmenu="return false;">@item.u_name (@item.user_name)</a>
+                        <a href="@item.user_name.ToString()" desc="@item.u_name" oncontextmenu="return false;">@item.u_name (@item.user_name)</a>
                     </text>)
                         )
                     </div>
@@ -191,7 +279,7 @@
                             m => Model.First().user_id,
                             htmlLabelAttributes: null,
                             htmlDropDownAttributes: new Dictionary<string, object>() {
-                                                                    { "class", "form-control select2 " }
+                                                                    { "class", "form-control select2 " },{ "disabled","true"}
                             },
                             htmlGroupAttributes: null,
                             autoCompleteOptions: new AutoCompleteOptions()
@@ -212,7 +300,7 @@
 
 
                             <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit" style="margin-bottom:50%">
+                                <button class="btn btn-primary" type="submit" style="margin-bottom:50%" id="btnAdd">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </span>
@@ -229,7 +317,7 @@
                 <div class="container-fluid">
                     <div class="form-group">
 
-                        <button type="submit" class="btn btn-danger " id="btnAdd">Delete selected child node</button>
+                        <button type="submit" class="btn btn-danger disabled" id="btnDelete" >Delete selected child node</button>
                         @*<div class="input-group">*@
                             @*<label for="delete" class="col-form-label">Delete selected child node</label>*@
                             @*<input type="text" class="form-control" placeholder="Delete selected child node" readonly>*@
@@ -246,11 +334,27 @@
                   </div>
 
                 </div>
-
+            
        </div>
 
 
    </div>
+    <div class="modal fade" id="modalnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <div class="modal-body">
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnSubmit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
