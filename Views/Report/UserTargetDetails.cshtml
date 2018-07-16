@@ -458,5 +458,86 @@ true)
    
     //--userData
 
+    
+    $(document).ready(function () {
+        var models = [];
+        @foreach (var d in Model.QuarterMonths)
+        {
+            @:models.push("@d");
+        }
+        var total
+        var targetTotal = Number(0);
+        var AchAmtTotal = Number( 0);
+        var temp = Number(0);
 
+        $.each(models, function (key, model) {
+            $('#Tsheet' + model + '  .hid_Base_Incentive').each(function () {
+                total = $(this).val();
+            });
+
+            $('#Tsheet' + model + ' .Target_amt p').each(function () {
+                try {
+                    //alert($(this)[0].innerHTML.replace(/\,/g, ""));
+                    temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                    targetTotal = targetTotal + temp;
+                }
+                catch (err) { }
+            });
+
+            $('#Tsheet' + model + ' .Achieved_Amt p').each(function () {
+
+                try {
+                    temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                    AchAmtTotal = AchAmtTotal + temp;
+                }
+                catch (err) { }
+            });
+
+            $('#base_incentive_' + model).val(numberWithCommas(total));
+            //$('#Tsheet'+model+ ' tbody').append('<tr><td><b>Total</b></td><td></td><td class="numaric"><b>' + targetTotal.toFixed(2) + '</b></td><td class="numaric"><b>' + AchAmtTotal.toFixed(2) + '</b></td> </tr>');
+            $('#Tsheet' + model + ' tbody').append(
+                '<tr><td><b>Total</b></td><td></td><td class="numaric"><b>' +
+                numberWithCommas(targetTotal) +
+                '</b></td><td class="numaric"><b>' +
+                numberWithCommas(AchAmtTotal) + '</b></td> </tr>');
+        });
+    });
+
+    @*$(document).ready(function () {
+
+        var total = 0;
+        var targetTotal = 0;
+        var AchAmtTotal = 0;
+
+        var model = @Html.Raw(Json.Encode(Model.Month));
+
+
+
+        var totRows = 0;
+        //$('#Tsheet .hid_Base_Incentive').each(function () {
+
+        //  //  targetTotal = total + parseFloat($(this)[0].innerHTML.toLocaleString());
+        //    //totRows++;
+
+        //    total = total + parseFloat($(this).val());
+
+        //});
+
+        $('#TsheetJUL .Target_amt').each(function () {
+
+            targetTotal = targetTotal + parseFloat($(this)[0].innerHTML.toLocaleString());
+            alert('');
+        });
+
+        //$('#Tsheet .Achieved_Amt').each(function () {
+
+        //    AchAmtTotal = AchAmtTotal + parseFloat($(this)[0].innerHTML.toLocaleString());
+
+        //});
+
+
+      //  $('#base_incentive').val(total.toFixed(2));
+
+       // $('#TsheetJUL').append($('tbody').append('<tr><td><b>Total</b></td><td><b>' + targetTotal.toFixed(2) + '</b></td></tr>'));
+    });*@
 </script>

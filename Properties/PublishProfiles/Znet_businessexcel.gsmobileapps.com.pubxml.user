@@ -581,22 +581,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Content/themes/fonts/fontawesome-webfont.eot">
-      <publishTime>06/25/2018 20:53:10</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Content/themes/fonts/fontawesome-webfont.svg">
-      <publishTime>06/25/2018 20:53:10</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Content/themes/fonts/fontawesome-webfont.ttf">
-      <publishTime>06/25/2018 20:53:10</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Content/themes/fonts/fontawesome-webfont.woff">
-      <publishTime>06/25/2018 20:53:10</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Content/themes/fonts/fontawesome-webfont.woff2">
-      <publishTime>06/25/2018 20:53:10</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Content/themes/fonts/FontAwesome.otf">
-      <publishTime>06/25/2018 20:53:10</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="fonts/fontawesome-webfont.eot">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -2903,10 +2903,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Accounts/TableForCurrentMonthQuantity.cshtml">
-      <publishTime>06/20/2018 15:23:18</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Accounts/TableForCurrentMonthValue.cshtml">
-      <publishTime>06/20/2018 15:25:44</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Accounts/_ChangePasswordPartialAccounts.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -2918,13 +2918,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Accounts/_MainFooterAccount.cshtml">
-      <publishTime>08/07/2016 17:40:49</publishTime>
+      <publishTime>07/08/2016 17:40:49</publishTime>
     </File>
     <File Include="Views/Accounts/_MainHeaderAccount.cshtml">
-      <publishTime>08/07/2016 17:40:50</publishTime>
+      <publishTime>07/08/2016 17:40:50</publishTime>
     </File>
     <File Include="Views/Accounts/_MainSideBarAccount.cshtml">
-      <publishTime>08/07/2016 17:40:50</publishTime>
+      <publishTime>07/08/2016 17:40:50</publishTime>
     </File>
     <File Include="Views/Accounts/_ResultMessage.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -2979,6 +2979,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/jsTree3/Demo.cshtml">
       <publishTime>02/07/2018 18:05:23</publishTime>
+    </File>
+    <File Include="Views/Mobile/Target.cshtml">
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/PLRegister/photography_live.html">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -3119,7 +3122,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/06/2018 10:35:41</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutPageAccountAjaxLoad.cshtml">
-      <publishTime>07/14/2018 13:05:19</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutPagePublic.cshtml">
       <publishTime>12/06/2018 10:35:42</publishTime>
@@ -3131,7 +3134,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/06/2018 10:35:42</publishTime>
     </File>
     <File Include="Views/Shared/_MainHeaderAccount.cshtml">
-      <publishTime>07/14/2018 13:13:27</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Shared/_MainSideBarAccount.cshtml">
       <publishTime>09/07/2018 21:52:37</publishTime>
@@ -3194,7 +3197,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/14/2018 13:19:34</publishTime>
+      <publishTime>07/15/2018 11:51:06</publishTime>
     </File>
   </ItemGroup>
 </Project>

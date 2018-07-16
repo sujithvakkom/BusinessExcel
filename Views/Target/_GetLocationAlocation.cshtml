@@ -42,7 +42,7 @@
 
                 <div class="row table-fields-header">
                     <div class="col-md-1 table-fields">
-                        Bonus
+                        Has Bonus 
                     </div>
                     <div class="col-md-2 table-fields">
                         Category Line
@@ -105,15 +105,21 @@ autoCompleteOptions: new AutoCompleteOptions()
                             </div>
                             <div class="col-md-2 table-fields">
                                 @{var idTotalTarget = "LineTargets_" + i.ToString() + "__TotalTarget";}
-                                <div id="@idTotalTarget" class="form-control text-info numaric"> @Model.LineTargets[i].TotalTarget</div>
+                                <div id="@idTotalTarget" class="form-control text-info numaric">
+                                    @Html.AdminLTEParagraph(Model.LineTargets[i].TotalTarget, new Dictionary<string, object> { { "class", "numaric" } })
+                                </div>
                             </div>
                             <div class="col-md-2 table-fields">
                                 @{var idAssignedForCurrentUser = "LineTargets_" + i.ToString() + "__AssignedForCurrentUser";}
-                                <div id="@idAssignedForCurrentUser" class="form-control text-info numaric"> @Model.LineTargets[i].AssignedForCurrentUser</div>
+                                <div id="@idAssignedForCurrentUser" class="form-control text-info numaric">
+                                    @Html.AdminLTEParagraph(Model.LineTargets[i].AssignedForCurrentUser, new Dictionary<string, object> { { "class", "numaric" } })
+                                </div>
                             </div>
                             <div class="col-md-2 table-fields">
                                 @{var idAvilable = "LineTargets_" + i.ToString() + "__AvilableTarget";}
-                                <div id="@idAvilable" class="form-control text-info numaric"> @Model.LineTargets[i].Target</div>
+                                <div id="@idAvilable" class="form-control text-info numaric">
+                                    @Html.AdminLTEParagraph(Model.LineTargets[i].Target, new Dictionary<string, object> { { "class", "numaric" } })
+                                </div>
                             </div>
                             <div class="col-md-1 table-fields">
                                 @Html.AdminLTETextBox("LineTargets[" + i.ToString() + "].Allocation",

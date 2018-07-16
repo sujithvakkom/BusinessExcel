@@ -8,8 +8,6 @@
 @{
     using (var db = new SalesManageDataContext())
     {
-
-
         var lineTargets =
         db.Database.SqlQuery<LocationTarget>(
              @"SELECT t.target_id, r.name, r.start_date, r.end_date, r.location_id, l.description
@@ -82,15 +80,22 @@ GROUP BY row_num ,
          category",
                     new System.Data.SqlClient.SqlParameter("@deleted", System.Data.SqlDbType.BigInt) { Value = 0 },
                     new System.Data.SqlClient.SqlParameter("@target_id", System.Data.SqlDbType.BigInt) { Value = lineTarget.target_id });
-                <tr><th scope="col">No.</th><th scope="col">Bonus</th><th>Line</th><th>Target</th></tr>
+                <tr><th scope="col">No.</th><th scope="col">Has Bonus</th><th>Line</th><th>Target</th></tr>
                 decimal sum = 0;
                 foreach (var l in lines)
                 {
-                    <tr><td>@l.row_num</td><td>@(l.has_bonus?"Yes":"No")</td><td>@l.category</td><td class="text-right">@l.value</td></tr>
+                    <tr>
+                        <td>@l.row_num</td>
+                        <td>@(l.has_bonus?"Yes":"No")</td>
+                        <td>@l.category</td>
+                        <td class="text-right">@Html.AdminLTEParagraph( l.value,new Dictionary<string, object> { { "class","numaric"} })
+                        </td>
+                    </tr>
                     sum += l.value;
                 }
 
-                <tr><td class="text-danger text-bold" colspan="3">Total</td><td class="text-right text-danger text-bold">@sum.ToString("0.00")</td></tr>
+                <tr><td class="text-danger text-bold" colspan="3">Total</td><td class="text-right text-danger text-bold">
+                    @Html.AdminLTEParagraph(sum, new Dictionary<string, object> { { "class", "numaric" } })</td></tr>
             }
         </table>
     }

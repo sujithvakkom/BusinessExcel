@@ -24,7 +24,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [DataType(DataType.Currency)]
         public decimal? Target { get; set; }
 
-        [Display(Name = "Bonus")]
+        [Display(Name = "Has Bonus")]
         public bool IsBonusLine { get; set; }
 
         [Display(Name = "Achievement")]

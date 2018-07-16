@@ -9,7 +9,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link rel="shortcut icon" href="../../Images/gs_icon.ico" />
+    <link rel="shortcut icon" href="@Url.Content("~/Images/gs_icon.ico")" />   
     <script>
         var paceOptions = {
             ajax: true, // disabled
@@ -284,6 +284,22 @@
                 }
                 catch (err) { }
             });
+        }
+        function numberWithCommas(number) {
+            //Globalize.culture("en-US");
+
+            //if (isNaN(number))
+            //    return ('Number not valid');
+
+            //return (Globalize.format(number, "n2"));
+
+            var parts = number.toString().split(".");
+            //
+            parts[0] = parts[0].replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+            if (parts.length == 1) {
+                parts.push("00");
+            }
+            return parts.join(".");
         }
     </script>
 
