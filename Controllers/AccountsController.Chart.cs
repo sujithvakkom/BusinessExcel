@@ -27,14 +27,14 @@ namespace BusinessExcel.Controllers
                 var chartType = ChartType.bar;
                 var source = db.DailyUpateView
                     .Where(x => x.CreateTime > startDate && x.CreateTime < endDate)
-                    .GroupBy(x => new { x.Item, x.UserName, x.Name })
+                    .GroupBy(x => new { x.Category })
                     .Where(x => x.Sum(y => y.Quantity) > 0)
                     .Select(x =>
                         new graph()
                         {
                             Value = x.Sum(y => (decimal)y.Quantity),
-                            XValues = x.Key.Item,
-                            Label = x.Key.UserName.ToString() + " " + x.Key.Name.ToString()
+                            XValues = x.Key.Category,
+                            Label = x.Key.Category
                         });
                 var data = new data<graph>(
                     chartType,
@@ -63,25 +63,27 @@ namespace BusinessExcel.Controllers
                 var chartType = ChartType.pie;
                 var source = db.DailyUpateView
                     .Where(x => x.CreateTime > startDate && x.CreateTime < endDate)
-                    .GroupBy(x => new { x.Item, x.UserName, x.Name })
+                    .GroupBy(x => new { x.Category ,x.UserName})
                     .Where(x => x.Sum(y => y.Quantity) > 0)
                     .Select(x =>
                         new graph()
                         {
                             Value = x.Sum(y => (decimal)y.TotalValue),
-                            XValues = x.Key.Item,
-                            Label = x.Key.UserName.ToString() + " " + x.Key.Name.ToString()
+                            XValues = x.Key.UserName,
+                            Label = x.Key.Category
                         });
                 var data = new data<graph>(
                     chartType,
                     source,
-                    x => x.XValues.ToString(),
-                    x => x.Label,
-                    x => new PointPair { Key = x.XValues.ToString(), Value = (decimal)x.Value }
+                    x => x.Label.ToString(),
+                    x => x.XValues,
+                    x => new PointPair {
+                        Key = x.Label, 
+                        Value = (decimal)x.Value }
                     );
                 var options = new options()
                 {
-
+                    
                 };
                 var chart = new chart<graph>(chartType,
                     data,

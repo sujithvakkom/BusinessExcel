@@ -54,7 +54,10 @@ namespace BusinessExcel.Controllers
             {
                 try
                 {
-                    lineTargets = db.getTargetTempletLineDetails(int.Parse(target.TargetTemplate));
+                    int? userId = null;
+                    try { userId = db.getUserID(target.UserName); }
+                    catch (Exception) { }
+                    lineTargets = db.getTargetTempletLineDetails(int.Parse(target.TargetTemplate),userID:userId);
                 }
                 catch (Exception) { }
             }
@@ -66,6 +69,15 @@ namespace BusinessExcel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult TargetDistribution(BaseTarget target)
         {
+            using(var db = new SalesManageDataContext())
+            foreach (var cat in target.LineTargets)
+            {
+                    try
+                    {
+                        cat.Catogery = db.getCategoryDetails(cat.Catogery).category_id.ToString();
+                    }
+                    catch (Exception) { }
+            }
             string Message = "";
             int result = -1;
             if (ModelState.IsValid)
@@ -73,7 +85,7 @@ namespace BusinessExcel.Controllers
                 try
                 {
                     result = target.Save(out Message);
-                    if (result != -1)
+                    if (result > 0)
                         target = new BaseTarget(true);
                 }
                 catch (Exception ex)

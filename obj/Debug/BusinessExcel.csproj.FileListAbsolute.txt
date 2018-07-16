@@ -91,3 +91,7 @@ C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\HtmlAgilityPack.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.pdb
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\MvcSiteMapProvider.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\MvcSiteMapProvider.WebActivator.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\MvcSiteMapProvider.xml
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\MvcSiteMapProvider.WebActivator.xml

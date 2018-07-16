@@ -24,7 +24,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [DataType(DataType.Currency)]
         public decimal? Target { get; set; }
 
-        [Display(Name = "Bonus")]
+        [Display(Name = "Has Bonus")]
         public bool IsBonusLine { get; set; }
 
         [Display(Name = "Achievement")]
@@ -35,5 +35,8 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
         [Display(Name = "Achievement (%)")]
         public Decimal AchievementPercentage { get; set; }
+
+        public decimal? TotalTarget { get; set; }
+        public decimal? AssignedForCurrentUser { get; set; }
     }
 }

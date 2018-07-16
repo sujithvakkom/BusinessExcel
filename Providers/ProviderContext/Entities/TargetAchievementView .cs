@@ -57,12 +57,12 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         // [Key, Column(Order = 1)]
         [Column("Target_Amt")]
         [Display(Name = "Target")]
-        public string Target_amt { get; set; }
+        public decimal? Target_amt { get; set; }
 
 
         [Column("Achieved_Amt")]
         [Display(Name = "Achieved")]
-        public string Achieved_Amt { get; set; }
+        public decimal? Achieved_Amt { get; set; }
 
 
         [Column("has_bonus")]
@@ -85,7 +85,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
         [Column("Base_Incentive")]
         [Display(Name = "Base Incentive")]
-        public string Base_Incentive { get; set; }
+        public decimal? Base_Incentive { get; set; }
 
 
         //[Column("Target_Per")]
