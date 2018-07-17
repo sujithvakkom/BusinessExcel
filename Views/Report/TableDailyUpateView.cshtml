@@ -40,8 +40,10 @@
                 <h3 class="box-title">Filters</h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-                </div><!-- /.box-tools -->
-            </div><!-- /.box-header -->
+                </div>
+                <!-- /.box-tools -->
+            </div>
+    <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
                     @Html.AntiForgeryToken()
@@ -170,7 +172,8 @@
                        showGlyphicons: true)
                         </div>
                 </div>
-            </div>            <!-- /.box-body -->
+            </div>            
+    <!-- /.box-body -->
             <div class="box-footer">
                 <div class="row">
                     <div class="col-lg-2">
@@ -195,7 +198,6 @@
             <h3 class="box-title">Merchant Actions</h3>
         </div>
         <div class="box-body">
-
             <div id="table-daily-upate-view" class="table-responsive">
                 @{
 
@@ -257,7 +259,9 @@
                                format:x=>string.Format("{0:0.00}",x.Quantity),
                                style:"quantity",canSort:false),
 
-                               grid.Column(columnName:"TotalValue",header:"Value",      format:x=>string.Format("{0:0.00}",x.TotalValue),   style:"values",canSort:false)
+                               grid.Column(columnName:"TotalValue",header:"Value",
+                               format:(item)=>@Html.AdminLTEParagraph((object)@item.TotalValue,new Dictionary<string,object>() { { "class","numaric"} }),
+                               style:"values",canSort:false)
                            },
                            footerStyle: "extra-table-pager"
                            )
@@ -273,4 +277,11 @@
         </div>
     </div>
 
-</section><!-- /.content -->
+</section>
+<!-- /.content -->
+
+<script>
+    $(document).ready(function () {
+        viewInit()
+    });
+</script>
