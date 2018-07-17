@@ -24,6 +24,8 @@ namespace BusinessExcel.Controllers
 
         public static string USER_TARGET_ACHIEVEMENT_ACTION = "UserTargertAchievement";
 
+        public static string USER_TARGET_UPDATE_ACHIEVEMENT = "UpdateAcheivedAmt";
+
         // public static string REPORTCONTROLLER = "Report";
         public static string TARGETACHIEVEMENTACTIONS = "TargetAchievementActions";
         public static string USER_TARGET_DETAILS = "UserTargetDetails";
@@ -403,7 +405,31 @@ namespace BusinessExcel.Controllers
 
             return months.ToList();
         }
+        public JsonResult UpdateAcheivedAmt(TargetAchievementView targetModel)
 
+        {
+
+            // Update model to your db
+            var  result = 0;
+
+            using (var db = new SalesManageDataContext())
+            {
+                if (db.UpdateTargetAchievementAmt(targetModel) > 0)
+                {
+                    result = 1;
+                }
+                else
+                {
+                    result = 0;
+                }
+
+            }
+
+               
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
 
         private string GEtAccountName(string location)
         {

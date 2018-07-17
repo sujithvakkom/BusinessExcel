@@ -32,44 +32,47 @@
 
         <div id="target-achievement-view" class="table-responsive">
             @{
-
-                using (var db = new SalesManageDataContext())
+                if (User.IsInRole("User"))
                 {
-                    WebGridColumn col = new WebGridColumn()
+
+
+                    using (var db = new SalesManageDataContext())
                     {
+                        WebGridColumn col = new WebGridColumn()
+                        {
 
-                    };
+                        };
 
-                    int count = 0;
-                    IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
-                                pageSize: 6,
-                                sort: ViewBag.UserTargetViewSort,
-                                sortdir: ViewBag.UserTargetViewDir,
-                                count: out count, Filters: Model
-                                );
+                        int count = 0;
+                        IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
+                                    pageSize: 6,
+                                    sort: ViewBag.UserTargetViewSort,
+                                    sortdir: ViewBag.UserTargetViewDir,
+                                    count: out count, Filters: Model
+                                    );
 
-                    var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
-                                        ajaxUpdateCallback: "targetachievementviewcallBack",
-                                        rowsPerPage: 6
-                                        );
-                    grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                        var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
+                                            ajaxUpdateCallback: "targetachievementviewcallBack",
+                                            rowsPerPage: 6
+                                            );
+                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                     @grid.GetHtml(
-                   tableStyle: "table table-striped table-bordered be-pagination-spl",
-                   //headerStyle: "webgrid-header",
-                   alternatingRowStyle: "webgrid-alternating-row",
-                   selectedRowStyle: "webgrid-selected-row",
-                   rowStyle: "webgrid-row-style",
-                   htmlAttributes: new { @id = "Tsheet" + Model.Month },
-                   columns: new[] {
+                                             tableStyle: "table table-striped table-bordered be-pagination-spl",
+                                             //headerStyle: "webgrid-header",
+                                             alternatingRowStyle: "webgrid-alternating-row",
+                                             selectedRowStyle: "webgrid-selected-row",
+                                             rowStyle: "webgrid-row-style",
+                                             htmlAttributes: new { @id = "Tsheet" + Model.Month },
+                                             columns: new[] {
                        grid.Column(
-                           columnName: "Category", 
-                           header: "Category", 
-                           format: null, 
-                           style: "Category", 
+                           columnName: "Category",
+                           header: "Category",
+                           format: null,
+                           style: "Category",
                            canSort: false),
                        grid.Column(
-                           columnName: "has_bonus", 
-                           header: "Bonus Line", 
+                           columnName: "has_bonus",
+                           header: "Bonus Line",
                            format: @<text>@(item.has_bonus ? "1" : "0" )</text>, style: "Category", canSort: false),
                        grid.Column(
                            columnName: "Target_amt",
@@ -80,23 +83,118 @@
                            columnName: "Achieved_Amt",
                            header: "Achieved",
                            format: null, style: "Achieved_Amt numaric", canSort: false),
+
+                         grid.Column(
+                           columnName: "Entered_Amt",
+                           header: "Entered",
+                           format: null, style: "Entered_Amt numaric", canSort: false),
+
                        grid.Column(
-                           null, 
+                           null,
                            null,
                            format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive" value="@(String.Format("{0:n}",item.Base_Incentive))" />),
-                   }
-                   //footerStyle: "extra-table-pager"
-                   )
-                    @*@grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
-                        nextText: "NEXT",
-                        firstText: "FIRST",
-                        previousText: "PREV.",
-                        lastText: "LAST")*@
-                    @*<input type = "text" class="form-control extrainfo" value=@data.Sum(o=>Convert.ToInt64(o.Base_Incentive))/>*@
+                                             }
+                                             //footerStyle: "extra-table-pager"
+                                             )
 
-                    @*<input type="text" class="form-control extrainfo" value='@data.Sum(x => int.Parse(x.Base_Incentive))'/>*@
+                    }
                 }
-                }
+                else
+                {
+                    using (var db = new SalesManageDataContext())
+                    {
+                        WebGridColumn col = new WebGridColumn()
+                        {
+
+                        };
+
+                        int count = 0;
+                        IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
+                                    pageSize: 6,
+                                    sort: ViewBag.UserTargetViewSort,
+                                    sortdir: ViewBag.UserTargetViewDir,
+                                    count: out count, Filters: Model
+                                    );
+
+                        var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
+                                            ajaxUpdateCallback: "targetachievementviewcallBack",
+                                            rowsPerPage: 6
+                                            );
+                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                        @grid.GetHtml(
+                                         tableStyle: "table table-striped table-bordered be-pagination-spl",
+                                         //headerStyle: "webgrid-header",
+                                         alternatingRowStyle: "webgrid-alternating-row",
+                                         selectedRowStyle: "webgrid-selected-row",
+                                         rowStyle: "webgrid-row-style",
+                                         htmlAttributes: new { @id = "Tsheet" + Model.Month },
+                                         columns: new[] {
+                       grid.Column(
+                           columnName: "Category",
+                           header: "Category",
+                           format: null,
+                           style: "Category",
+                           canSort: false),
+                       grid.Column(
+                           columnName: "has_bonus",
+                           header: "Bonus Line",
+                           format: @<text>@(item.has_bonus ? "1" : "0" )</text>, style: "Category ", canSort: false),
+                       grid.Column(
+                           columnName: "Target_amt",
+                           header: "Target",
+                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Target_amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           style: "Target_amt numaric", canSort: false),
+                       grid.Column(
+                           columnName: "Achieved_Amt",
+                           header: "Achieved",
+                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Achieved_Amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           style: "Achieved_Amt numaric", canSort: false),
+
+                         @*grid.Column("Entered_Amt", "Entered_Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),*@
+
+                       grid.Column("Entered_Amt", "Entered Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),
+
+
+                          grid.Column("", format: @<text>
+
+                <button class="edit-amt display-mode">Edit</button>
+
+                <button class="save-amt edit-mode">Save</button>
+
+                <button class="cancel-amt edit-mode">Cancel</button>
+
+                        </text>,  style: "col3Width" , canSort: false),
+
+
+                       grid.Column(
+                           null,
+                           null,
+                           format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive_@Model.Month" value="@(String.Format("{0:n}",item.Base_Incentive))" />),
+
+                       grid.Column(
+                           null,
+                           null,
+                           format:@<input type="hidden" name="user_id" id="hid_user_id" value="@item.user_id" />),
+
+                           grid.Column(
+                           null,
+                           null,
+                           format:@<input type="hidden" name="category_id" id="hid_category_id" value="@item.category_id" />),
+
+
+  grid.Column(null, null, format: @<input type="hidden" name="target_id" id="hid_target_id" value="@item.target_id" />),
+
+
+
+                                         }
+                                         //footerStyle: "extra-table-pager"
+                                         )
+        }
+    }
+
+
+
+}
         </div>
 
 
@@ -219,7 +317,7 @@
     .webgrid-header, .webgrid-header a {
         background-color: #375d7d;
         color: #ffffff;
-        text-align: left;
+        text-align: right;
         text-decoration: none;
     }
 
@@ -243,9 +341,98 @@
         width: 220px;
     }
 
-
-    td:nth-child(5), th:nth-child(5) {
+    th:nth-child(n+2) {
+       text-align:right
+    }
+    
+    td:nth-child(n+7), th:nth-child(n+7) {
         display: none;
     }
+
+
+
+  
 </style>
 
+<script>
+
+
+    var month = '@Html.Raw(Model.Month)';
+
+    $('.edit-mode').hide();
+   // $('.edit-mode' + '_' + month).hide();
+   // $('.save-amt' + '_' + month).hide();
+
+
+
+    //$(document).on('click', ".edit-amt", function (event) {
+
+
+    //    event.stopPropagation();
+    //    event.preventDefault();
+    //    event.stopImmediatePropagation();
+    
+    //    var tr = $(this).parents('tr:first');
+
+    //    tr.find('.edit-mode', '.display-mode').toggle();
+
+    //});
+
+    $(function (event) {
+       //var Qmonth = '@Html.Raw(Model.Month)';
+       
+      
+        $('.edit-mode').hide();
+        $('.edit-amt, .cancel-amt').on('click', function (event) {
+
+            event.stopPropagation();
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            var tr = $(this).parents('tr:first');
+            tr.find('.edit-mode, .display-mode').toggle();
+        });
+
+        $('.save-amt').on('click', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            event.stopImmediatePropagation();
+          
+            var tr = $(this).parents('tr:first');
+            var ent_amt = tr.find("#Entered_Amt").val();
+            var cat_id = tr.find("#hid_category_id").val();
+            var user_id = tr.find("#hid_user_id").val();
+            var target_id = tr.find("#hid_target_id").val();
+
+          
+           
+           
+            var targetModel =
+            {
+                "user_id": user_id,
+                "category_id": cat_id,
+                "target_id": target_id,
+                "Entered_Amt": ent_amt
+            };
+            $.ajax({
+                url: '@Url.Action(BusinessExcel.Controllers.ReportController.USER_TARGET_UPDATE_ACHIEVEMENT)',
+                data: JSON.stringify(targetModel),
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    if(data == 1)
+                    {
+                        tr.find("#lblEntered_Amt").text(numberWithCommas(ent_amt));
+                        tr.find('.edit-mode, .display-mode').toggle();
+                        alert('Updated successfully');
+                    }
+                    else {
+                        alert('Error occured');
+                    }
+                }
+            });
+
+        });
+    })
+
+</script>
