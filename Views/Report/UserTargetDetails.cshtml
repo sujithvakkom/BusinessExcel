@@ -429,13 +429,13 @@ true)
         {
             @:models.push("@d");
         }
-        var total
-        var targetTotal = Number(0);
-        var AchAmtTotal = Number(0);
-        var EnteredAmtTotal = Number(0);
-        var temp = Number(0);
 
         $.each(models, function (key, model) {
+            var total
+            var targetTotal = Number(0);
+            var AchAmtTotal = Number(0);
+            var EnteredAmtTotal = Number(0);
+            var temp = Number(0);
             $('#Tsheet' + model + '  .hid_Base_Incentive').each(function () {
                 total = $(this).val();
             });
@@ -479,7 +479,8 @@ true)
                 '<tr><td><b>Total</b></td><td></td><td class="numaric"><b>' +
                 numberWithCommas(targetTotal) +
                 '</b></td><td class="numaric"><b>' +
-                numberWithCommas(AchAmtTotal) + '</b></td> </tr>');
+                numberWithCommas(AchAmtTotal) + '</b></td>   <td class="numaric totEnt" id="totEnt"><b>' +
+                numberWithCommas(EnteredAmtTotal) + '</b></td>              </tr>');
         });
     });
 
