@@ -218,7 +218,7 @@
                         var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
                             ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 20
                             );
-                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                        grid.Bind(source: data.ToList(), autoSortAndPage: false, rowCount: count);
                         @grid.GetHtml(
                            tableStyle: "table table-striped table-bordered be-pagination-spl",
                            htmlAttributes: new { @id = "example" },
