@@ -31,6 +31,15 @@ namespace BusinessExcel
             bundles.Add(new ScriptBundle("~/bundles/pace").Include(
                         "~/Scripts/AdminLTE/plugins/pace/pace.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/cldr").Include(
+                        "~/Scripts/cldr.js",
+                        "~/Scripts/cldr/event.js",
+                        "~/Scripts/cldr/supplemental.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/globalize").Include(
+                        "~/Scripts/globalize.js",
+                        "~/Scripts/globalize/number.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/bootstrap.min.js"));

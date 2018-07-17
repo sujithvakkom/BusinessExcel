@@ -21,9 +21,11 @@
     </script>
     @System.Web.Optimization.Scripts.Render("~/bundles/all")
     @System.Web.Optimization.Scripts.Render("~/bundles/pace")
+    @System.Web.Optimization.Scripts.Render("~/bundles/cldr")
+    @System.Web.Optimization.Scripts.Render("~/bundles/globalize")
+
     @System.Web.Optimization.Styles.Render("~/Content/themes/select2")
     @System.Web.Optimization.Styles.Render("~/bundles/inputmask")
-
     @System.Web.Optimization.Styles.Render("~/Content/themes/table-daily-upate-view")
     @System.Web.Optimization.Styles.Render("~/Content/themes/base/css")
     @System.Web.Optimization.Styles.Render("~/Content/themes/adminlte/css")
@@ -58,6 +60,70 @@
         </footer>
     </div>
     <script>
+
+        Globalize.load({
+            "main": {
+                "en": {
+                    "numbers": {
+                        "defaultNumberingSystem": "latn",
+                        "symbols-numberSystem-latn": {
+                            "decimal": ".",
+                            "exponential": "E",
+                            "group": ",",
+                            "infinity": "∞",
+                            "minusSign": "-",
+                            "nan": "NaN",
+                            "percentSign": "%",
+                            "perMille": "‰",
+                            "plusSign": "+",
+                            "timeSeparator": ":"
+                        },
+                        "decimalFormats-numberSystem-latn": {
+                            "standard": "##,##,##0.00"
+                        }
+                    }
+                }
+            },
+            "supplemental": {
+                "version": {
+                    "_cldrVersion": "25",
+                    "_number": "$Revision: 91 $"
+                },
+                "currencyData": {
+                    "fractions": {
+                        "DEFAULT": {
+                            "_rounding": "0",
+                            "_digits": "2"
+                        }
+                    }
+                },
+                "likelySubtags": {
+                    "en": "en-Latn-US",
+                },
+                "metaZones": {
+                    "metazoneInfo": {
+                        "timezone": {
+                            "America": {
+                                "Sao_Paulo": [
+                                  {
+                                      "usesMetazone": {
+                                          "_mzone": "Brasilia"
+                                      }
+                                  }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "plurals-type-cardinal": {
+                    "en": {
+                        "pluralRule-count-one": "i = 1 and v = 0 @@integer 1",
+                        "pluralRule-count-other": " @@integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, … @@decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, …"
+                    }
+                }
+            }
+        });
+
         var AdminLTEOptions = {
             //Add slimscroll to navbar menus
             //This requires you to load the slimscroll plugin
@@ -154,7 +220,7 @@
                 md: 992,
                 lg: 1200
             }
-        }
+        };
 
     </script>
     @RenderSection("scripts", required: false)
@@ -164,18 +230,12 @@
                 ajax: true
             }
         })
-
-        $(document).ajaxStart(function () {
-            //Pace.restart();
-        })
         function ajax_call_load_success(data, status, xhr, url) {
 
             //xhr - the ajax response
             //status - the response text, ex. "success"
             //entityName - your custom argument, in this example 'Person'
-
             //url is the var for the new URL we would normally be going to (if we wasnt AJAXING)
-
             //get current URL and remove domain name.
             nohttp = url.replace("http://", "").replace("https://", "");
             firstsla = nohttp.indexOf("/");
@@ -200,9 +260,11 @@
             $(":input").inputmask();
             $.validator.unobtrusive.parse('form');
         }
+
         function move(myBar) {
 
         }
+
         function loadin_failed(data) {
             var style = '<style>'
                 + '#server_error_message body {font-family:"Verdana";font-weight:normal;font-size: .7em;color:black;} '
@@ -266,40 +328,24 @@
             }
         }
     
-        function numberWithCommas(number) {
-            var parts = number.toString().split(".");
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            return parts.join(".");
-        }
-        $(document).ready(function () {
-        });
-        function numberFormater() {
-            $(".numaric").each(function () {
-                try {
-                    var num = Number($(this).text());
-                    var commaNum = numberWithCommas(num);
-                    if(!isNaN(commaNum)){
-                        $(this).text(commaNum);
-                    }
+        function numberWithCommas(num) {
+            try {
+                var en, like, number;
+                // Instantiate "en".
+                en = window.Globalize("en");
+                // Use Globalize to format numbers.
+                number = en.numberFormatter();
+                return number(num);
+            } catch (err) {
+                //alert(err)
+                var parts = String(num).split(".");
+                //
+                parts[0] = parts[0].replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+                if (parts.length == 1) {
+                    parts.push("00");
                 }
-                catch (err) { }
-            });
-        }
-        function numberWithCommas(number) {
-            //Globalize.culture("en-US");
-
-            //if (isNaN(number))
-            //    return ('Number not valid');
-
-            //return (Globalize.format(number, "n2"));
-
-            var parts = number.toString().split(".");
-            //
-            parts[0] = parts[0].replace(/\B(?=(\d{2})+(?!\d))/g, ",");
-            if (parts.length == 1) {
-                parts.push("00");
+                return parts.join(".");
             }
-            return parts.join(".");
         }
     </script>
 
