@@ -347,6 +347,14 @@
                 return parts.join(".");
             }
         }
+    
+        function convertNumber(val) {
+            try{
+                return Number(val.replace(',', ''))
+            } catch (err) {
+                return 0
+            }
+        }
     </script>
 
     @RenderSection("extraScripts", false)

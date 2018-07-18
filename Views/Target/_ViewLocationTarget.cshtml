@@ -34,8 +34,8 @@
                            new AjaxOptions() {
                                HttpMethod="GET",
                                InsertionMode=InsertionMode.Replace,
-                               UpdateTargetId= "target-location-create"
-
+                               UpdateTargetId= "target-location-create",
+                               OnComplete="change_edit_tab"
                            },new {@class= "btn-link pull-right" }
                            )</td>
                     </tr>

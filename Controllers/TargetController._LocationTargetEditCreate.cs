@@ -15,6 +15,10 @@ namespace BusinessExcel.Controllers
 {
     public partial class TargetController : Controller
     {
+
+        public static string _LOCATIONTARGETEDITCREATE = "_LocationTargetEditCreate";
+
+        public static string _NEWLOCATIONTARGETEDITCREATE = "_NewLocationTargetEditCreate";
         //_LocationTargetEditCreate
         [HttpGet]
         public PartialViewResult _LocationTargetEditCreate(int TargetTempletID)
@@ -35,6 +39,13 @@ namespace BusinessExcel.Controllers
                 catch (Exception) { }
             }
             return PartialView(target);
+        }
+
+        [HttpGet]
+        public ActionResult _NewLocationTargetEditCreate()
+        {
+            var target = new BaseTarget(true);
+            return PartialView(_LOCATIONTARGETEDITCREATE, target);
         }
     }
 }

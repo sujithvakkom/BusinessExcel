@@ -17,148 +17,153 @@
     }
 }
 
-
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title">@TargetController.CREATELOCATIONTARGET_TITLE</h3>
-    </div>
-    <div class="box-body table-form">
-        @using (Ajax.BeginForm(
-    controllerName: TargetController.TARGET,
-    actionName: TargetController.LOCATIONTARGET,
-    htmlAttributes: new { id = "target-location-create-form" },
-    routeValues: null,
-    ajaxOptions:
-    new AjaxOptions()
+<div class="table-form">
+    @using (Ajax.BeginForm(
+                                                controllerName: TargetController.TARGET,
+                                                actionName: TargetController.LOCATIONTARGET,
+                                                htmlAttributes: new { id = "target-location-create-form" },
+                                                routeValues: null,
+                                                ajaxOptions:
+                                                new AjaxOptions()
+                                                {
+                                                    InsertionMode = InsertionMode.Replace,
+                                                    HttpMethod = "Post",
+                                                    UpdateTargetId = "target-location-create",
+                                                    OnBegin = "move('#page-load')",
+                                                    OnComplete = "ajax_call_load_complete('#page-load')",
+                                                    OnFailure = "loadin_failed",
+                                                    LoadingElementId = "target-create-progress"
+                                                }))
     {
-        InsertionMode = InsertionMode.Replace,
-        HttpMethod = "Post",
-        UpdateTargetId = "target-location-create",
-        OnBegin = "move('#page-load')",
-        OnComplete = "ajax_call_load_complete('#page-load')",
-        OnFailure = "loadin_failed",
-        LoadingElementId = "target-create-progress"
-    }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m=>Model.TargetTemplate)
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-3 padding-label">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => Model.TargetTemplate)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-1 padding-label">
                         Period
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-3">
                         @Html.AdminLTEDateRangePickerFor(
-                                m => Model.StartDate,
-                                m => Model.EndDate,
-                                "Date Range",
-                                htmlLabelAttributes: null,
-                                htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
-                                htmlGroupAttributes: null,
-                                htmlGlyphiconsAttributes: null,
-                                glyphiconsName: "fa fa-calendar",
-                                showLabel: false,
-                                hasValidation: true,
-                                showGlyphicons: true)
+             m => Model.StartDate,
+             m => Model.EndDate,
+             "Date Range",
+             htmlLabelAttributes: null,
+             htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
+             htmlGroupAttributes: null,
+             htmlGlyphiconsAttributes: null,
+             glyphiconsName: "fa fa-calendar",
+             showLabel: false,
+             hasValidation: true,
+             showGlyphicons: true)
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="col-md-3 padding-label">
-                            Site
-                        </div>
-                        <div class="col-md-7">
-                            @Html.AdminLTEDropDownListFor(
-                                    m => Model.Location,
-                                    htmlLabelAttributes: null,
-                                    htmlDropDownAttributes: new Dictionary<string, object>() {
+                    <div class="col-md-1 padding-label">
+                        Site
+                    </div>
+                    <div class="col-md-3">
+                        @Html.AdminLTEDropDownListFor(
+                 m => Model.Location,
+                 htmlLabelAttributes: null,
+                 htmlDropDownAttributes: new Dictionary<string, object>() {
                                         { "class", "form-control select2" }
-                                    },
-                                    htmlGroupAttributes: new Dictionary<string, object>() { },
-                                    autoCompleteOptions: new AutoCompleteOptions()
-                                    {
-                                        AjaxOptions = new AjaxOptions()
-                                        {
-                                            HttpMethod = "GET",
-                                            Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                        },
-                                        DescriptionField = "description",
-                                        IDField = "location_id",
-                                        Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
-                                        IsAutoComplete = true,
-                                        SelectedItem = selectionLocation
-                                    },
-                                    showLabel: false)
-                        </div>
+                 },
+                 htmlGroupAttributes: new Dictionary<string, object>() { },
+                 autoCompleteOptions: new AutoCompleteOptions()
+                 {
+                     AjaxOptions = new AjaxOptions()
+                     {
+                         HttpMethod = "GET",
+                         Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                     },
+                     DescriptionField = "description",
+                     IDField = "location_id",
+                     Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+                     IsAutoComplete = true,
+                     SelectedItem = selectionLocation
+                 },
+                 showLabel: false)
                     </div>
                 </div>
-                <div class="box-header with-border">
-                    <h3 class="box-title">@TargetController.TARGETTEMPLATELINE_TITLE</h3>
+            </div>
+        </div>
+        <div class="box-header with-border">
+            <h3 class="box-title">@TargetController.TARGETTEMPLATELINE_TITLE</h3>
+        </div>
+        <div class="row table-form-row" id="target-row">
+            <div class="row">
+                <div class="col-md-12">
+                    @{Html.RenderPartial(TargetController.TARGETLINE, Model.LineTargets);}
                 </div>
-                    <div class="row table-form-row" id="target-row">
-                        <div class="row">
-                            <div class="col-md-12">
-                                @{Html.RenderPartial(TargetController.TARGETLINE, Model.LineTargets);}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-offset-6 col-md-1 padding-label">
-                                Total
-                            </div>
-                            <div class="col-md-3 table-fields">
+            </div>
+            <div class="row">
+                <div class="col-md-offset-5 col-md-1 padding-label">
+                    Total
+                </div>
+                <div class="col-md-3 table-fields">
 
-                                @Html.AdminLTETextBoxFor(m => m.TotalTarget,
-                                    null,
-                                    new Dictionary<string, object>() {
+                    @Html.AdminLTETextBoxFor(m => m.TotalTarget,
+                     null,
+                     new Dictionary<string, object>() {
                                         { "class", "form-control numaric" }, { "readonly", "" }
-                                    },
-                                    null,
-                                    null,
-                                    "",
-                                    false,
-                                    true,
-                                    true)
-                            </div>
-                        </div>
+                     },
+                     null,
+                     null,
+                     "",
+                     false,
+                     true,
+                     true)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @if (ViewBag.Result != null)
+            {
+                var message = "";
+                var className = @"";
+                switch ((int)ViewBag.Result)
+                {
+                    case -1:
+                        className = @"alert alert-danger";
+                        message = "<b>Cannot save.</b>";
+                        break;
+                    case -2:
+                        className = @"alert alert-warning";
+                        message = "<b>Updated.</b>";
+                        break;
+                    default:
+                        className = @"alert alert-success";
+                        message = "<b>Successfully saved.</b>";
+                        break;
+                }
+
+                if (ViewBag.ModelErrors != null)
+                {
+                    foreach (var err in ((string)ViewBag.ModelErrors).Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+                    { message += ("<p>" + err + "</p>"); }
+                }
+                if (ViewBag.Message != null)
+                {
+                    message += ("<p>" + ViewBag.Message + "</p>");
+                }
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-8">
+                        <div class="@className" role="alert">@Html.Raw(message)</div>
                     </div>
-                                    if (ViewBag.Result != null)
-                                    {
-                                        var message = "";
-                                        var className = @"";
-                                        switch ((int)ViewBag.Result)
-                                        {
-                                            case -1:
-                                                className = @"alert alert-danger";
-                                                message = "<b>Cannot save.</b>";
-                                                break;
-                                            case -2:
-                                                className = @"alert alert-warning";
-                                                message = "<b>Updated.</b>";
-                                                break;
-                                            default:
-                                                className = @"alert alert-success";
-                                                message = "<b>Successfully saved.</b>";
-                                                break;
-                                        }
+                </div>
+            }
 
-                                        if (ViewBag.ModelErrors != null)
-                                        {
-                                            foreach (var err in ((string)ViewBag.ModelErrors).Split(new[] { Environment.NewLine }, StringSplitOptions.None))
-                                            { message += ("<p>" + err + "</p>"); }
-                                        }
-                                        if (ViewBag.Message != null)
-                                        {
-                                            message += ("<p>" + ViewBag.Message + "</p>");
-                                        }
-                                        <div class="@className" role="alert">@Html.Raw(message)</div>
-                                    }
-
-                                    <input class="btn btn-primary pull-right" type="submit" value="Save" />
-
-
-                                        Html.RenderPartial("_Progress", "target-create-progress");
-                                    }
-    </div>
+            <div class="row">
+                <div class="col-md-offset-1 col-md-8">
+                    <input class="btn btn-primary pull-right" type="submit" value="Save" />
+                    @{Html.RenderPartial("_Progress", "target-create-progress");}
+                </div>
+            </div>
+        </div>
+                    }
 </div>

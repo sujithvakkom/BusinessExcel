@@ -725,6 +725,9 @@
     <Content Include="Views\Accounts\TableForCurrentMonthQuantity.cshtml" />
     <Content Include="Views\Accounts\TableForCurrentMonthValue.cshtml" />
     <Content Include="Views\Mobile\Target.cshtml" />
+    <Content Include="Views\Target\_LocationTargetEditCreate_Backup.cshtml" />
+    <Content Include="Views\Target\LocationTarget_Backup.cshtml" />
+    <Content Include="Views\Target\_LocationTargetEditCreate - Copy %282%29.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
