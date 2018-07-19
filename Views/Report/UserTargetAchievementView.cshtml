@@ -9,27 +9,15 @@
 @model TargetAchievementView
 
 
-
-
-<!-- Content Header (Page header) -->
-<section class="content-header month">
-    <h4>
-        @Model.Month
-
-    </h4>
-    @*<ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.RosterController.ROSTERCONTROLLER</a></li>
-            <li class="active">@BusinessExcel.Controllers.RosterController.RosterActions_TITLE</li>
-        </ol>*@
-</section>
-
-
-
-
-<div class="box box-primary">
-
+<div class="box box-primary" style="margin-top:3%">
+    <div class="box-header with-border">
+        <strong>
+            @Model.Month @Model.start_date.Value.ToString(" yyyy")
+             @*@Model.start_date.Value.ToString("MMMM yyyy")*@
+        </strong>
+    </div>
     <div class="box-body">
-
+        @Html.HiddenFor(x => x.Month, new { id = "month" })
         <div id="target-achievement-view" class="table-responsive">
             @{
                 if (User.IsInRole("User"))
@@ -57,9 +45,13 @@
                                             );
                         grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                     @grid.GetHtml(
-                                             tableStyle: "table table-striped table-bordered be-pagination-spl",
-                                             //headerStyle: "webgrid-header",
-                                             alternatingRowStyle: "webgrid-alternating-row",
+                       //tableStyle: "table table-striped table-bordered be-pagination-spl",
+                       ////headerStyle: "webgrid-header",
+                       //alternatingRowStyle: "webgrid-alternating-row",
+
+                       tableStyle: "webgrid",
+    headerStyle: "gridheader",
+
                                              selectedRowStyle: "webgrid-selected-row",
                                              rowStyle: "webgrid-row-style",
                                              htmlAttributes: new { @id = "Tsheet" + Model.Month },
@@ -122,11 +114,16 @@
                                             );
                         grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                         @grid.GetHtml(
-                                         tableStyle: "table table-striped table-bordered be-pagination-spl",
-                                         //headerStyle: "webgrid-header",
-                                         alternatingRowStyle: "webgrid-alternating-row",
-                                         selectedRowStyle: "webgrid-selected-row",
-                                         rowStyle: "webgrid-row-style",
+
+                       tableStyle: "webgrid",
+    headerStyle: "gridheader",
+
+
+                                         //tableStyle: "table table-striped table-bordered be-pagination-spl",
+                                         ////headerStyle: "webgrid-header",
+                                         //alternatingRowStyle: "webgrid-alternating-row",
+                                         //selectedRowStyle: "webgrid-selected-row",
+                                         //rowStyle: "webgrid-row-style",
                                          htmlAttributes: new { @id = "Tsheet" + Model.Month },
                                          columns: new[] {
                        grid.Column(
@@ -152,24 +149,26 @@
 
                          @*grid.Column("Entered_Amt", "Entered_Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),*@
 
-                       grid.Column("Entered_Amt", "Entered Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),
+                       grid.Column("Entered_Amt", "Entered Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt" style="font-weight:normal">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),
 
 
                           grid.Column("", format: @<text>
+            
 
-                <button class="edit-amt display-mode">Edit</button>
+            <button class="edit-amt display-mode">Edit</button>
 
                 <button class="save-amt edit-mode">Save</button>
 
                 <button class="cancel-amt edit-mode">Cancel</button>
-
+          
                         </text>,  style: "col3Width" , canSort: false),
 
 
                        grid.Column(
                            null,
                            null,
-                           format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive_@Model.Month" value="@(String.Format("{0:n}",item.Base_Incentive))" />),
+                           //format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive_@Model.Month" value="@item.Base_Incentive" />),
+                            format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive" value="@(String.Format("{0:n}",item.Base_Incentive))" />),
 
                        grid.Column(
                            null,
@@ -200,6 +199,7 @@
 
 
     </div>
+
     <div class="container-fluid">
         <div id="totalvaluerow">
             <div class="row">
@@ -210,7 +210,7 @@
 
                         <input type="text" class="form-control extrainfo" value="Base Incentive" />
                         <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="" id="base_incentive_@Model.Month" />
+                        <input type="text" class="form-control extrainfo" value="" id="base_incentive_@Model.Month" style="text-align:right"/>
 
                     </div>
 
@@ -218,7 +218,47 @@
                 </div>
             </div>
             <hr class="col-md-12" size="20" style="margin:2px;border-top:0">
+
             <div class="row">
+                <div class="col-md-3">
+                    <table class="table tottable">
+
+                        <tbody>
+
+                            <tr>
+
+                                @*<td ><input class="form-control extrainfo tottableinput"/>Target % </td>*@
+                                <td><input class="form-control extrainfo tottableinputLabel" value="Target % " /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Target_Perc_@Model.Month"  /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Target_Amt_@Model.Month" /></td>
+                            </tr>
+
+                          <tr>
+
+                              <td><input class="form-control extrainfo tottableinputLabel" value="Line Achv %" /></td>
+                              <td><input class="form-control extrainfo tottableinput" value="0.00" id="Lines_Ach_Perc_@Model.Month" /></td>
+                              <td><input class="form-control extrainfo tottableinput" value="0.00" id="Lines_Ach_Amt_@Model.Month" /></td>
+                            </tr>
+                            <tr>
+
+                                <td><input class="form-control extrainfo tottableinputLabel" value="Bonus Lines" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Bonus_Lines_Perc_@Model.Month" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Bonus_Lines_Amt_@Model.Month" /></td>
+                            </tr>
+
+                            <tr>
+
+                                <td><input class="form-control extrainfo tottableinputLabel" value="" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Tot_Perc_@Model.Month" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Tot_Amt_@Model.Month" /></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @*<div class="row">
                 <div class="col-md-4">
 
 
@@ -259,7 +299,7 @@
 
 
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
@@ -268,6 +308,62 @@
 
 
 <style>
+
+    .tottable tr, .tottable td{
+   padding:0px !important;
+}
+    .tottableinput{
+        border:0;
+        text-align:right;
+    }
+     .tottableinputLabel
+     {
+           border:0;
+        text-align:left;
+        font-weight:bold;
+     }
+
+        .tottable {
+    border-collapse: collapse;
+      border-top:0;
+  }
+ .tottable th , .tottable td  {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    min-width:4em;
+  
+  }
+
+ 
+
+
+     .webgrid {
+        margin: 4px;
+        border-collapse: collapse;
+        width: 90%;
+    }
+    
+    .gridheader {
+        padding: 6px 5px;
+        text-align: center;
+        background-color: #e8eef4;
+        /*border-bottom: 2px solid #3966A2;*/
+        height: 40px;
+        font-weight: bold;
+        border-top: 2px solid #D6E8FF;
+        border-left: 2px solid #D6E8FF;
+        border-right: 2px solid #D6E8FF;
+    }
+
+    .webgrid th, .webgrid td {
+        border: 1px solid #C0C0C0;
+        padding: 5px;
+    }
+
+
+
+
     .totControls {
         width: 40%;
     }
@@ -280,7 +376,7 @@
 
     #totalvaluerow {
         margin-bottom: .5%;
-        margin-top: 2%;
+       
     }
 
     .month {
@@ -292,13 +388,14 @@
     }
 
     .extrainfo {
-        /*font-weight:bold;*/
-        background-color: #5c6a73;
-        color: white;
+
+        /*background-color: #5c6a73;*/
+        color: black;
+        font-weight:bold;
     }
 
 
-    .webgrid-table {
+    /*.webgrid-table {
         font-family: Arial,Helvetica,sans-serif;
         font-size: 14px;
         font-weight: normal;
@@ -321,8 +418,6 @@
         text-decoration: none;
     }
 
-    .webgrid-footer {
-    }
 
     .webgrid-row-style {
         padding: 3px 7px 2px;
@@ -339,7 +434,7 @@
 
     .col2Width {
         width: 220px;
-    }
+    }*/
 
     th:nth-child(n+3) {
        text-align:right
@@ -348,8 +443,6 @@
     td:nth-child(n+7), th:nth-child(n+7) {
         display: none;
     }
-
-
 
   
 </style>
@@ -360,38 +453,25 @@
     var month = '@Html.Raw(Model.Month)';
 
     $('.edit-mode').hide();
-   // $('.edit-mode' + '_' + month).hide();
-   // $('.save-amt' + '_' + month).hide();
 
-
-
-    //$(document).on('click', ".edit-amt", function (event) {
-
-
-    //    event.stopPropagation();
-    //    event.preventDefault();
-    //    event.stopImmediatePropagation();
-    //    alert($('#TsheetJUL tr:last').find('td:last b').html());
-    //    //var tr = $(this).parents('tr:first');
-
-    //    //tr.find('.edit-mode', '.display-mode').toggle();
-
-    //});
-
+   
     $(function (event) {
-       //var Qmonth = '@Html.Raw(Model.Month)';
-       
-        //  alert(Qmonth);
+    
 
         $('.edit-mode').hide();
         $('.edit-amt, .cancel-amt').on('click', function (event) {
-
+          
             event.stopPropagation();
             event.preventDefault();
             event.stopImmediatePropagation();
+
+       
+
             var tr = $(this).parents('tr:first');
             tr.find('.edit-mode, .display-mode').toggle();
+            tr.find("#Entered_Amt").focus();
         });
+
 
         $('.save-amt').on('click', function (event) {
             event.stopPropagation();
@@ -404,7 +484,11 @@
             var user_id = tr.find("#hid_user_id").val();
             var target_id = tr.find("#hid_target_id").val();
 
+            var gridid = $(this).closest('table').attr('id');
+           
+            
 
+           
            
            
             var targetModel =
@@ -426,18 +510,22 @@
                         tr.find("#lblEntered_Amt").text(numberWithCommas(ent_amt));
                         tr.find('.edit-mode, .display-mode').toggle();
 
-                      
-                        //alert($('#TsheetJUL tr:last').find('td:last b').html());
+                    
+                        var tot = Number(0);
+                        var temp = Number(0);
                        
-                        //$("#TsheetJUL tr").each(function () {
-
-                        //    var get_id = $(this).find('td:eq(4) label ').html();
-                        //    alert(get_id);
-
-                        //});
-
-
-                        alert("Updated Succesfully")
+                        $("#" + gridid + " tr").not(':first').not(':last').each(function () {
+                        
+                            temp = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+                            tot = tot + temp;
+                          
+                        });
+                     
+                        //Update total
+                        $("#" + gridid + " tr:last").find('td:eq(4) b').text(numberWithCommas(tot));
+               
+                        TotalTargetPerc(gridid);
+                    
                     }
                     else {
                         alert('Error occured');
@@ -448,6 +536,64 @@
         });
     })
 
+    function TotalTargetPerc(obj) {
 
 
+
+        var TemplinEnt = Number(0);
+        var TemplinAch = Number(0);
+        var TotAchEdited = Number(0);
+
+     
+        $("#" + obj + " tr").not(':first').not(':last').each(function () {
+            
+            TemplinEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+            TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));
+
+           // TemplinEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+         
+         
+            if (TemplinEnt > 0)
+            {
+                TotAchEdited = TotAchEdited + TemplinEnt;
+            }
+            else {
+
+                TotAchEdited = TotAchEdited + TemplinAch;
+            }
+            
+        });
+
+
+
+       // var totEnt = $("#" + obj + " tr:last").find('td:eq(4) b').html();
+        //var totAch = $("#" + obj + " tr:last").find('td:eq(3) b').html();
+        var totTarget = $("#" + obj + " tr:last").find('td:eq(2) b').html();
+        var period_month = $('#month').val();
+
+
+        //totEnt = Number(totEnt.replace(/\,/g, ""));
+       // totAch = Number(totAch.replace(/\,/g, ""));
+        totTarget = Number(totTarget.replace(/\,/g, ""));
+
+       
+        var totTargetPer = Number(0);
+      
+        //if (totEnt > 0) {
+        //    totTargetPer = ((totEnt * 100) / totTarget).toFixed(2);
+        //}
+        //else {
+        //    totTargetPer = ((totAch * 100) / totTarget).toFixed(2);
+        //}
+
+        totTargetPer = ((TotAchEdited * 100) / totTarget).toFixed(2);
+
+       // $('#Target_Perc_' + period_month + '').val(!isNaN(totAchPer) ? totAchPer.toFixed(2) + "%" : "");
+
+        $('#Target_Perc_' + period_month + '').val(totTargetPer + "%" );
+
+
+    }
+
+    
 </script>

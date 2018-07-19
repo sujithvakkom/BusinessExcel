@@ -12,26 +12,26 @@
 
 <div id="userData">
 
-  
+
     <div class="box">
 
-        
-            <div class="box-header with-border">
-                <section class="content-header">
-                    <h1>
-                        @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_PAGE_TITLE (@Model.UserName)
-                        <small>Control panel</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Manager</a></li>
-                        <li class="active">Manager Panel</li>
-                    </ol>
-                </section>
+
+        <div class="box-header with-border">
+            <section class="content-header">
+                <h1>
+                    @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_PAGE_TITLE (@Model.UserName)
+                    <small>Control panel</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Manager</a></li>
+                    <li class="active">Manager Panel</li>
+                </ol>
+            </section>
 
 
-            </div>
-          
-            @*<section class="content-header">
+        </div>
+
+        @*<section class="content-header">
                 <h1>
                     @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_TITLE
                     <small>Control panel</small>
@@ -41,325 +41,432 @@
                     <li class="active">Manager Panel</li>
                 </ol>
             </section>*@
-            <div class="box-body">
-
-                <section class="content">
-
-                    @using (Ajax.BeginForm(
-
-actionName: BusinessExcel.Controllers.ReportController.USER_TARGET_DETAILS,
-routeValues: null,
-
-ajaxOptions: new AjaxOptions()
-{
-    HttpMethod = "Get",
-    UpdateTargetId = "userData",
-    InsertionMode = InsertionMode.Replace,
-    OnSuccess = "RefreshTargetList",
-    OnFailure = ""
-},
-htmlAttributes: new { @class = "form-inline" })
-                                                                                                        )
-                    {
-
-
-
-                        <div id="usrDet">
-
-                            <div id="usrHead" style="padding:2%;background-color:#d7d9db ;border-radius:5px">
-
-                                     <div class="row">
-                                         @{ if (User.IsInRole("User"))
-                                             {
-
-
-
-
-
-                                                 @Html.AdminLTEDropDownListFor(
-                                                                        m => m.UserName,
-                                                                        htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
-                                                                        htmlDropDownAttributes: new Dictionary<string, object>() {
-                                { "class", "form-control select2" },{ "disabled","true"}
-                                                                        },
-                                                                        htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
-                                                                        autoCompleteOptions: new AutoCompleteOptions()
-                                                                        {
-                                                                            AjaxOptions = new AjaxOptions()
-                                                                            {
-                                                                                HttpMethod = "GET",
-                                                                                Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                                                            },
-                                                                            DescriptionField = "full_name",
-                                                                            IDField = "user_name",
-                                                                            Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                                                            SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
-                                                                            IsAutoComplete = true,
-                                                                            SelectItems = null
-                                                                        },
-                                                                        showLabel: true)
-
-                                             }
-                                             else
-                                             {
-
-                                                 
-
-
-                                                 @Html.AdminLTEDropDownListFor(
-                                                                        m => m.UserName,
-                                                                        htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
-                                                                        htmlDropDownAttributes: new Dictionary<string, object>() {
-                                { "class", "form-control select2" }
-                                                                        },
-                                                                    htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4  " } },
-                                                                        autoCompleteOptions: new AutoCompleteOptions()
-                                                                        {
-                                                                            AjaxOptions = new AjaxOptions()
-                                                                            {
-                                                                                HttpMethod = "GET",
-                                                                                Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                                                            },
-                                                                            DescriptionField = "full_name",
-                                                                            IDField = "user_name",
-                                                                            Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                                                            SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
-                                                                            IsAutoComplete = true,
-                                                                            SelectItems = null
-                                                                        },
-                                                                        showLabel: true)
-
-                                                 <div class="col-md-1" style="padding-top: 2.5em">
-
-                                                     <button type="submit" class="btn btn-primary " id="btnAdd">Search</button>
-
-                                                 </div>
-
-                                             }
-                                         }
-
-                                    </div>
-
-
-                                    <div class="row">
-
-
-                                        <div class="col-md-3">
-
-                                            @Html.AdminLTETextBoxFor(m => m.Type,
-new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
-new Dictionary<string, object>() { { "class", "form-control col-md-6" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Type } },
-null,
-null,
-"",
-true,
-true,
-true)
-
-
-                                        </div>
-                                        <div class="col-md-3">
-
-                                            @Html.AdminLTETextBoxFor(m => m.Quarter_Name,
-new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
-new Dictionary<string, object>() { { "class", "form-control col-md-6" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Quarter_Name } },
-null,
-null,
-"",
-true,
-true,
-true)
-
-
-                                        </div>
-
-                                        <div class="col-md-3">
-
-                                            @Html.AdminLTETextBoxFor(m => m.Account,
-new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
-new Dictionary<string, object>() { { "class", "form-control col-md-6" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.Account } },
-null,
-null,
-"",
-true,
-true,
-true)
-
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="col-md-3">
-
-                                            @*@Html.AdminLTETextBoxFor(m => m.UserName,
-                    null,
-                    new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.UserName } },
-                    null,
-                    null,
-                    "",
-                    true,
-                    true,
-                    true)*@
-                                            <div class="form-group has-feedback" name="form-group-staffcode">
-
-
-                                                <label for="staffcode" class="control-label col-md-6">Staff Code</label>
-                                                <input type="text" class="form-control col-md-6" id="staffcode" readonly value=@Model.UserName>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-
-                                            @Html.AdminLTETextBoxFor(m => m.SalesMan,
-new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
-new Dictionary<string, object>() { { "class", "form-control col-md-6" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.SalesMan } },
-null,
-null,
-"",
-true,
-true,
-true)
-                                        </div>
-                                        <div class="col-md-3">
-
-                                            @Html.AdminLTETextBoxFor(m => m.FieldMan,
-new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
-new Dictionary<string, object>() { { "class", "form-control col-md-6" }, { "autocomplete", "off" }, { "readonly", "readonly" }, { "Value", Model.FieldMan } },
-null,
-null,
-"",
-true,
-true,
-true)
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-
-                                        @Html.AdminLTEDropDownListFor(
-                                                                        m => m.Location_Id,
-                                                                        htmlLabelAttributes: new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
-                                                                        htmlDropDownAttributes: new Dictionary<string, object>() {
-                                { "class", "form-control select2 " },{ "disabled","true"}
-                                                                        },
-                                                                        htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
-                                                                        autoCompleteOptions: new AutoCompleteOptions()
-                                                                        {
-                                                                            AjaxOptions = new AjaxOptions()
-                                                                            {
-                                                                                HttpMethod = "GET",
-                                                                                Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                                                            },
-                                                                            DescriptionField = "description",
-                                                                            IDField = "location_id",
-                                                                            Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                                                            SelectedItem = ViewData[ReportController.SELECTED_FILTED_LOCATION],
-                                                                            IsAutoComplete = true,
-                                                                            SelectItems = null
-                                                                        },
-                                                                        showLabel: true)
-
-                                        
-
-
-
-
-
-
-
-
-
-
-
-
-                                    </div>
-                                </div>
-
-
-
-
-
-
-
-                                <div style="margin-top:15px" id="target-achievement-display">
-                                  
-
-                                @if (Model.QuarterMonths.Count > 0)
-                                {
-                                    foreach (var month in Model.QuarterMonths)
-                                    {
-
-
-
-                                        <div id="target-achievement-display_@month" class="well well-sm">
-
-                                            @Html.Action(BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW, new TargetAchievementView { Month = month, user_id = Model.UserID })
-
-                                        </div>
-                                    }
-                                }
-                                else
-                                {
+        <div class="box-body table-form">
+
+            <section class="content">
+
+                @using (Ajax.BeginForm(
+        actionName: BusinessExcel.Controllers.ReportController.USER_TARGET_DETAILS,
+        routeValues: null,
+        ajaxOptions: new AjaxOptions()
+        {
+            HttpMethod = "Get",
+            UpdateTargetId = "userData",
+            InsertionMode = InsertionMode.Replace,
+            OnSuccess = "RefreshTargetList",
+            OnFailure = ""
+        },
+        htmlAttributes: new { @class = "form-inline" })
+        )
+                {
+                    <div id="usrDet">
+                        <div id="usrHead" style="padding:2%">
+
+                            <div class="row" style="margin-bottom:1%">
 
                                
-                                    <div class="modal fade" id="modalnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content" style="width:50%;margin: auto;">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                   
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h4 class="modal-title" id="myModalLabel">Target not assigned</h4>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
 
-                                  
 
-                                   
+                                <div class="col-md-1" style="font-weight:bold;">Name</div>
+                                <div class="col-md-5">
 
+                                                @{ if (User.IsInRole("User"))
+                                                    {
+                                                        @Html.AdminLTEDropDownListFor(
+                                         m => m.UserName,
+                                         htmlLabelAttributes: null,
+                                         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                             { "class", "form-control select2" },{ "disabled","true"}
+                                         },
+                                         htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-8" } },
+                                         autoCompleteOptions: new AutoCompleteOptions()
+                                         {
+                                             AjaxOptions = new AjaxOptions()
+                                             {
+                                                 HttpMethod = "GET",
+                                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                             },
+                                             DescriptionField = "full_name",
+                                             IDField = "user_name",
+                                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                                             IsAutoComplete = true,
+                                             SelectItems = null
+                                         },
+                                         showLabel: false)
 
-                                }
+                                                    }
+                                                    else
+                                                    {
 
+                                                        @Html.AdminLTEDropDownListFor(
+                                         m => m.UserName,
+                                         htmlLabelAttributes: null,
+                                         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                             { "class", "form-control select2" }
+                                         },
+                                         htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-8 " } },
+                                         autoCompleteOptions: new AutoCompleteOptions()
+                                         {
+                                             AjaxOptions = new AjaxOptions()
+                                             {
+                                                 HttpMethod = "GET",
+                                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                             },
+                                             DescriptionField = "full_name",
+                                             IDField = "user_name",
+                                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                                             IsAutoComplete = true,
+                                             SelectItems = null
+                                         },
+                                         showLabel: false)
+
+                                                        <div class="col-md-1">
+                                                            <button type="submit" class="btn btn-primary " id="btnAdd">Search</button>
+                                                        </div>
+
+                                                    }
+                                                }
+
+                                      
+                 
 
                                 </div>
 
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <table class="table usrtable">
+                                       
+                                      
+                                        
+                                        <tbody>
+                                               
+                                                <tr >
+
+                                                    <td class="tablab">TYPE</td>
+                                                    <td>
+                                                        @Model.Type
+
+                                                </td>
+                                                <td class="tablab">SalesMan</td>
+                                                <td>
+                                                    @Model.SalesMan
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+
+                                                <td class="tablab">PERIOD</td>
+                                                <td>
+                                                  @Model.Quarter_Name
+                                            </td>
+                                            <td class="tablab">Filedman</td>
+                                            <td>
+                                               @Model.FieldMan
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+
+                                            <td class="tablab">ACCOUNT</td>
+                                            <td>
+                                               @Model.Account
+                                        </td>
+
+                                        <td class="tablab">Site</td>
+                                        <td>
+                                           @Model.Location_Name
+                                        </td>
+
+                                    </tr>
+                                                <tr>
+                                                    <td class="tablab">Code</td>
+                                                            <td>
+                                                                @Model.UserName
+                                                            </td>
+                                                    <td colspan="1"></td>
+                                                    <td></td>
+                                                    
+                                                </tr>
+                                    </tbody>
+</table>
+                                </div>
+                            </div>
 
 
+
+
+                            @* User Selection Area *@
+                            @*<div class="row">
+                              
+                                <div class="col-md-2 padding-label ">
+                                   Name
+                                    
+                                </div>
+                                @{ if (User.IsInRole("User"))
+                                    {
+                                        @Html.AdminLTEDropDownListFor(
+                                         m => m.UserName,
+                                         htmlLabelAttributes: null,
+                                         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                             { "class", "form-control select2" },{ "disabled","true"}
+                                         },
+                                         htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
+                                         autoCompleteOptions: new AutoCompleteOptions()
+                                         {
+                                             AjaxOptions = new AjaxOptions()
+                                             {
+                                                 HttpMethod = "GET",
+                                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                             },
+                                             DescriptionField = "full_name",
+                                             IDField = "user_name",
+                                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                                             IsAutoComplete = true,
+                                             SelectItems = null
+                                         },
+                                         showLabel: false)
+
+                                    }
+                                    else
+                                    {
+
+                                        @Html.AdminLTEDropDownListFor(
+                                         m => m.UserName,
+                                         htmlLabelAttributes: null,
+                                         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                             { "class", "form-control select2" }
+                                         },
+                                         htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4  " } },
+                                         autoCompleteOptions: new AutoCompleteOptions()
+                                         {
+                                             AjaxOptions = new AjaxOptions()
+                                             {
+                                                 HttpMethod = "GET",
+                                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                             },
+                                             DescriptionField = "full_name",
+                                             IDField = "user_name",
+                                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                                             IsAutoComplete = true,
+                                             SelectItems = null
+                                         },
+                                         showLabel: false)
+
+                                        <div class="col-md-1">
+                                            <button type="submit" class="btn btn-primary " id="btnAdd">Search</button>
+                                        </div>
+
+                                    }
+                                }
 
                             </div>
+
+
+                            <div class="row" style="padding-top:10px !important">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-3 padding-label">
+                                            Type
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.AdminLTETextBoxFor(m => m.Type,
+                                               null,
+                                               new Dictionary<string, object>() {
+                                                   { "class", "form-control col-md-6" },
+                                                   { "autocomplete", "off" },
+                                                   { "readonly", "readonly" },
+                                                   { "Value", Model.Type } },
+                                               null,
+                                               null,
+                                               "",
+                                               false,
+                                               true,
+                                               true)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 padding-label">
+                                            Period
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.AdminLTETextBoxFor(m => m.Quarter_Name,
+                                           null,
+                                           new Dictionary<string, object>() {
+                                               { "class", "form-control col-md-6" },
+                                               { "autocomplete", "off" },
+                                               { "readonly", "readonly" },
+                                               { "Value", Model.Quarter_Name }
+                                           },
+                                           null,
+                                           null,
+                                           "",
+                                           false,
+                                           true,
+                                           true)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 padding-label">
+                                            Account
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.AdminLTETextBoxFor(m => m.Account,
+                                           null,
+                                           new Dictionary<string, object>() {
+                                               { "class", "form-control col-md-6" },
+                                               { "autocomplete", "off" },
+                                               { "readonly", "readonly" },
+                                               { "Value", Model.Account }
+                                           },
+                                           null,
+                                           null,
+                                           "",
+                                           false,
+                                           true,
+                                           true)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 padding-label">
+                                            Staff Code
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group has-feedback" name="form-group-staffcode">
+                                                <input type="text" class="form-control " id="staffcode" readonly value=@Model.UserName>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-3 padding-label">
+                                            SalesMan
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.AdminLTETextBoxFor(m => m.SalesMan,
+                                                null,
+                                                new Dictionary<string, object>() {
+                                                    { "class", "form-control col-md-6" },
+                                                    { "autocomplete", "off" },
+                                                    { "readonly", "readonly" },
+                                                    { "Value", Model.SalesMan } },
+                                                null,
+                                                null,
+                                                "",
+                                                false,
+                                                true,
+                                                true)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 padding-label">
+                                            FieldMan
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.AdminLTETextBoxFor(m => m.FieldMan,
+                                                null,
+                                                new Dictionary<string, object>() {
+                                                    { "class", "form-control col-md-6" },
+                                                    { "autocomplete", "off" },
+                                                    { "readonly", "readonly" },
+                                                    { "Value", Model.FieldMan }
+                                                },
+                                                null,
+                                                null,
+                                                "",
+                                                false,
+                                                true,
+                                                true)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 padding-label">
+                                            Location
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.AdminLTETextBoxFor(m => m.Location_Name,
+                                               new Dictionary<string, object>() { { "class", "control-label col-md-6" } },
+                                               new Dictionary<string, object>() {
+                                                   { "class", "form-control col-md-6" },
+                                                   { "autocomplete", "off" },
+                                                   { "readonly", "readonly" },
+                                                   { "Value", Model.Location_Name } },
+                                               null,
+                                               null,
+                                               "",
+                                               false,
+                                               true,
+                                               true)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+
+
+                        </div>
+                    </div>
+                    <div style="margin-top:15px" id="target-achievement-display">
+                        @if (Model.QuarterMonths.Count > 0)
+                        {
+                            foreach (var month in Model.QuarterMonths)
+                            {
+                                <div id="target-achievement-display_@month">
+                                    @Html.Action(
+         BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW,
+         new TargetAchievementView { Month = month, user_id = Model.UserID, start_date = Model.start_date })
+                                </div>
+                            }
+                        }
+                        else
+                        {
+
+                            
+                                <div class="modal fade" id="modalnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content" style="width:50%;margin: auto;">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4 class="modal-title" id="myModalLabel">Target not assigned</h4>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+
+
+                        }
+                    </div>
                                     }
-                </section><!-- /.content -->
-            </div>
-
-
-
+            </section>
         </div>
 
+    </div>
 </div>
-
-
-
 <style>
-    .well-sm{
+    .well-sm {
         padding: 0px,0px,0px,9px;
         border: 1px solid #cacab8;
     }
-            .content{
-                padding:0px;
-            }
-    .control-label
-    {
-        padding:15px 0px 0px 0px;
+
+    .content {
+        padding: 0px;
+    }
+
+    .control-label {
+        padding: 15px 0px 0px 0px;
     }
     /*#target-achievement-display_JAN {
 
@@ -369,23 +476,46 @@ true)
             #target-achievement-display_JUL {
 
             background-color:#4f7a9a
+            .table-form .padding-label .mainlabel {
+                text-align: left;
+            }
             }*/
+
+    .tablab{
+        font-weight:bold;
+    }
+     .usrtable {
+    border-collapse: collapse;
+      border-top:0;
+  }
+ .usrtable th , .usrtable td  {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    min-width:4em;
+  
+  }
+
+  .usrtable tr {
+    border-top: 1px solid #ff0000;
+
+  
+  }
+      
+    .table > tbody > tr > td{
+        border-top: 1px solid #81817d;
+}
+   
 </style>
-
-
-
 <script>
 
     $('#btnAdd').click(function () {
         var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
-        
         $('#target-achievement-display').empty();
         $('#target-achievement-display').append(loadingelement);
-
-        
     })
 
-        
+
 
     //   $('staffcode').val($("#UserName option:selected").val());
 
@@ -419,25 +549,34 @@ true)
     //    $("#location_name").val(username);
 
     //}
-   
+
     //--userData
 
-    
+
     $(document).ready(function () {
+
+      
+
+
         var models = [];
         @foreach (var d in Model.QuarterMonths)
         {
             @:models.push("@d");
-        }
+                                        }
 
         $.each(models, function (key, model) {
-            var total
+            var total = Number(0);
             var targetTotal = Number(0);
             var AchAmtTotal = Number(0);
             var EnteredAmtTotal = Number(0);
             var temp = Number(0);
+
             $('#Tsheet' + model + '  .hid_Base_Incentive').each(function () {
+
+
                 total = $(this).val();
+
+
             });
 
             $('#Tsheet' + model + ' .Target_amt p').each(function () {
@@ -452,7 +591,7 @@ true)
             $('#Tsheet' + model + ' .Achieved_Amt p').each(function () {
 
                 try {
-                  
+
                     temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
                     AchAmtTotal = AchAmtTotal + temp;
                 }
@@ -463,7 +602,7 @@ true)
             $('#Tsheet' + model + ' .Entered_Amt label').each(function () {
 
                 try {
-                  
+
                     $(this)[0].innerHTML = numberWithCommas($(this)[0].innerHTML)
 
                     temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
@@ -480,7 +619,35 @@ true)
                 numberWithCommas(targetTotal) +
                 '</b></td><td class="numaric"><b>' +
                 numberWithCommas(AchAmtTotal) + '</b></td>   <td class="numaric totEnt" id="totEnt"><b>' +
-                numberWithCommas(EnteredAmtTotal) + '</b></td>              </tr>');
+                numberWithCommas(EnteredAmtTotal) + '</b></td>        <td></td>      </tr>');
+
+
+         
+            ///Total Target Percentage calculation
+            var linetempEnt = Number(0);
+            var linetempAch = Number(0);
+            var TotAchEdited = Number(0);
+
+            $("#Tsheet" + model + " tr").not(':first').not(':last').each(function () {
+                linetempEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+                TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));       
+                if (linetempEnt > 0) {
+                    TotAchEdited = TotAchEdited + linetempEnt;
+                }
+                else {
+                    TotAchEdited = TotAchEdited + TemplinAch;
+                }
+            });
+
+            var totTargetPer = Number(0);
+            totTargetPer = ((TotAchEdited * 100) / targetTotal).toFixed(2);
+          
+            $('#Target_Perc_' + model + '').val(isNaN(totTargetPer) ? '0.00' + '%' : totTargetPer + "%");
+
+
+
+
+
         });
     });
 
