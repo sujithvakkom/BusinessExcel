@@ -151,7 +151,7 @@
                                                         @Model.Type
 
                                                 </td>
-                                                <td class="tablab">SalesMan</td>
+                                                <td class="tablab">SALESMAN</td>
                                                 <td>
                                                     @Model.SalesMan
                                                 </td>
@@ -163,7 +163,7 @@
                                                 <td>
                                                   @Model.Quarter_Name
                                             </td>
-                                            <td class="tablab">Filedman</td>
+                                            <td class="tablab">FIELDMAN</td>
                                             <td>
                                                @Model.FieldMan
                                             </td>
@@ -176,14 +176,14 @@
                                                @Model.Account
                                         </td>
 
-                                        <td class="tablab">Site</td>
+                                        <td class="tablab">SITE</td>
                                         <td>
                                            @Model.Location_Name
                                         </td>
 
                                     </tr>
                                                 <tr>
-                                                    <td class="tablab">Code</td>
+                                                    <td class="tablab">CODE</td>
                                                             <td>
                                                                 @Model.UserName
                                                             </td>
@@ -571,12 +571,37 @@
             var EnteredAmtTotal = Number(0);
             var temp = Number(0);
 
+            var targetid = Number(0);
+
+            var userid = Number(0);
+         
+          
+
+            $('#Tsheet' + model + '  .hid_target_id_cls').each(function () {
+
+
+                targetid = $(this).val();
+                return;
+
+            });
+
+
+
+            $('#Tsheet' + model + '  .hid_user_id_cls').each(function () {
+
+
+                userid = $(this).val();
+                return;
+
+            });
+
+        
             $('#Tsheet' + model + '  .hid_Base_Incentive').each(function () {
 
 
                 total = $(this).val();
 
-
+                return;
             });
 
             $('#Tsheet' + model + ' .Target_amt p').each(function () {
@@ -623,32 +648,37 @@
 
 
          
-            ///Total Target Percentage calculation
-            var linetempEnt = Number(0);
-            var linetempAch = Number(0);
-            var TotAchEdited = Number(0);
+            /////Total Target Percentage calculation
+            //var linetempEnt = Number(0);
+            //var linetempAch = Number(0);
+            //var TotAchEdited = Number(0);
 
-            $("#Tsheet" + model + " tr").not(':first').not(':last').each(function () {
-                linetempEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
-                TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));       
-                if (linetempEnt > 0) {
-                    TotAchEdited = TotAchEdited + linetempEnt;
-                }
-                else {
-                    TotAchEdited = TotAchEdited + TemplinAch;
-                }
-            });
+            //$("#Tsheet" + model + " tr").not(':first').not(':last').each(function () {
+            //    linetempEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+            //    TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));       
+            //    if (linetempEnt > 0) {
+            //        TotAchEdited = TotAchEdited + linetempEnt;
+            //    }
+            //    else {
+            //        TotAchEdited = TotAchEdited + TemplinAch;
+            //    }
+            //});
 
-            var totTargetPer = Number(0);
-            totTargetPer = ((TotAchEdited * 100) / targetTotal).toFixed(2);
+            //var totTargetPer = Number(0);
+            //totTargetPer = ((TotAchEdited * 100) / targetTotal).toFixed(2);
           
-            $('#Target_Perc_' + model + '').val(isNaN(totTargetPer) ? '0.00' + '%' : totTargetPer + "%");
+            //$('#Target_Perc_' + model + '').val(isNaN(totTargetPer) ? '0.00' + '%' : totTargetPer + "%");
 
-
-
-
-
+           // TotalTargetPerc('Tsheet' + model, model);
+           // FooterTotals('tottable_' + model, model);
+            if (userid > 0) {
+                setTargetTotals('tottable_' + model, userid, targetid)
+            }
         });
+
+
+
+       
     });
 
     @*$(document).ready(function () {

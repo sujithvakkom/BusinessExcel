@@ -6,6 +6,7 @@ using System.Linq;
 using BusinessExcel.Providers.ProviderContext.Entities;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using BusinessExcel.Models;
 
 namespace BusinessExcel.Providers.ProviderContext
 {
@@ -70,5 +71,40 @@ where target_id=@target_id and user_id=@user_id  and  category_id=@category_id "
             }
             
         }
+
+        public virtual List<TargetTotalView> getUsertargetTotalDetails(int userId,int TargetId)
+        {
+            List<TargetTotalView> items = new List<TargetTotalView>();   
+            var user_id = userId >0 ?
+                new SqlParameter("@user_id", userId) :
+                new SqlParameter("@user_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+       
+            var target_id = TargetId>0 ?
+                new SqlParameter("@target_id", TargetId) :
+                new SqlParameter("@target_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+
+            System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+            parameterList.Add(user_id);
+            parameterList.Add(target_id);
+
+            try
+            {
+          
+                items = this.Database.SqlQuery<TargetTotalView>("[db_salesmanage_user].[User_Target_Achieved_Total_Values] @user_id,@target_id", parameterList.ToArray()).ToList();
+
+
+                //this.Database.SqlQuery<UserDetail>(
+                //                                "[sc_salesmanage_user].[User_Target_Achieved_Total_Values] @user_id ,@target_id", user_id, target_id)
+                //                                .ToList();
+          
+            }
+            catch (Exception ex)
+            {
+                items = null;
+            }
+            return items;
+        }
+
     }
 }

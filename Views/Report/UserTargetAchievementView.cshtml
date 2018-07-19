@@ -8,7 +8,6 @@
 
 @model TargetAchievementView
 
-
 <div class="box box-primary" style="margin-top:3%">
     <div class="box-header with-border">
         <strong>
@@ -17,7 +16,9 @@
         </strong>
     </div>
     <div class="box-body">
-        @Html.HiddenFor(x => x.Month, new { id = "month" })
+      
+     
+
         <div id="target-achievement-view" class="table-responsive">
             @{
                 if (User.IsInRole("User"))
@@ -170,10 +171,10 @@
                            //format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive_@Model.Month" value="@item.Base_Incentive" />),
                             format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive" value="@(String.Format("{0:n}",item.Base_Incentive))" />),
 
-                       grid.Column(
+                                             grid.Column(
                            null,
                            null,
-                           format:@<input type="hidden" name="user_id" id="hid_user_id" value="@item.user_id" />),
+                           format:@<input type="hidden" name="user_id" id="hid_user_id" class="hid_user_id_cls" value="@item.user_id" />),
 
                            grid.Column(
                            null,
@@ -181,9 +182,9 @@
                            format:@<input type="hidden" name="category_id" id="hid_category_id" value="@item.category_id" />),
 
 
-  grid.Column(null, null, format: @<input type="hidden" name="target_id" id="hid_target_id" value="@item.target_id" />),
+  grid.Column(null, null, format: @<input type="hidden" name="target_id" id="hid_target_id"  class="hid_target_id_cls" value="@item.target_id" />),
 
-
+  grid.Column(null, null, format: @<input type="hidden" name="month_id" id="hid_month_id" class="hid_month_id_cls" value="@Model.Month" />),
 
                                          }
                                          //footerStyle: "extra-table-pager"
@@ -221,10 +222,15 @@
 
             <div class="row">
                 <div class="col-md-3">
-                    <table class="table tottable">
+                    <table class="table tottable" id="tottable_@Model.Month">
 
                         <tbody>
 
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align:center;font-weight:bold">Incentive</td>
+                            </tr>
                             <tr>
 
                                 @*<td ><input class="form-control extrainfo tottableinput"/>Target % </td>*@
@@ -235,7 +241,7 @@
 
                           <tr>
 
-                              <td><input class="form-control extrainfo tottableinputLabel" value="Line Achv %" /></td>
+                              <td><input class="form-control extrainfo tottableinputLabel" value="Line Achv" /></td>
                               <td><input class="form-control extrainfo tottableinput" value="0.00" id="Lines_Ach_Perc_@Model.Month" /></td>
                               <td><input class="form-control extrainfo tottableinput" value="0.00" id="Lines_Ach_Amt_@Model.Month" /></td>
                             </tr>
@@ -482,14 +488,15 @@
             var ent_amt = tr.find("#Entered_Amt").val();
             var cat_id = tr.find("#hid_category_id").val();
             var user_id = tr.find("#hid_user_id").val();
-            var target_id = tr.find("#hid_target_id").val();
-
+  
             var gridid = $(this).closest('table').attr('id');
            
-            
+            var model_month = tr.find("#hid_month_id").val();
 
-           
-           
+            var target_id = tr.find("#hid_target_id").val();
+         
+
+          
            
             var targetModel =
             {
@@ -509,23 +516,47 @@
                     {
                         tr.find("#lblEntered_Amt").text(numberWithCommas(ent_amt));
                         tr.find('.edit-mode, .display-mode').toggle();
-
-                    
-                        var tot = Number(0);
-                        var temp = Number(0);
-                       
-                        $("#" + gridid + " tr").not(':first').not(':last').each(function () {
-                        
-                            temp = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
-                            tot = tot + temp;
-                          
-                        });
                      
-                        //Update total
-                        $("#" + gridid + " tr:last").find('td:eq(4) b').text(numberWithCommas(tot));
-               
-                        TotalTargetPerc(gridid);
+                        setTargetTotals('tottable_' + model_month, user_id, target_id)
                     
+                        @*var targetTotal =
+                           {
+                               "user_id": user_id,
+                               "target_id": target_id,
+                           };
+                        $.ajax({
+                            url: '@Url.Action(BusinessExcel.Controllers.ReportController.USER_TARGET_UPDATED_TOTAL)',
+                            data: JSON.stringify(targetTotal),
+                            type: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (totdata) {
+                                
+                                //alert(Object.keys(totdata).length);
+                               
+                                if (totdata.length>0) {
+                                 
+                                    setTargetTotals('tottable_' + model_month, user_id, target_id)
+                                }
+                            }
+                        });*@
+
+
+                        //var tot = Number(0);
+                        //var temp = Number(0);
+                       
+                        //$("#" + gridid + " tr").not(':first').not(':last').each(function () {
+                        
+                        //    temp = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+                        //    tot = tot + temp;
+                          
+                        //});
+                     
+                        //$("#" + gridid + " tr:last").find('td:eq(4) b').text(numberWithCommas(tot));
+               
+                        
+                        //TotalTargetPerc(gridid, $('#month').val())
+                     
+
                     }
                     else {
                         alert('Error occured');
@@ -536,64 +567,153 @@
         });
     })
 
-    function TotalTargetPerc(obj) {
 
 
+    function setTargetTotals(model_table, user_id, target_id)
+    {
+        
+        var targetTotal =
+                         {
+                             "user_id": user_id,
+                             "target_id": target_id,
+                         };
+        $.ajax({
+            url: '@Url.Action(BusinessExcel.Controllers.ReportController.USER_TARGET_UPDATED_TOTAL)',
+            data: JSON.stringify(targetTotal),
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                if (data.length > 0) {
+
+                    
+                    var Templine = Number(0);
+                    var Totvalue = Number(0);
+
+                    $("#" + model_table + " tr:eq(1)").find('td:eq(1) input').val(data[0].TotalTargetPerc+"%");
+                    $("#" + model_table + " tr:eq(1)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalIncAmt));
+                    $("#" + model_table + " tr:eq(2)").find('td:eq(1) input').val(data[0].LineAch);
+                  
+
+                    $("#" + model_table + " tr").not(':last').each(function () {
+
+                        Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
+
+                        Totvalue = Totvalue + Templine;
+                    });
+
+                    $("#" + model_table + " tr:last").find('td:eq(2) input').val(numberWithCommas(Totvalue));
+                }
+            }
+        });
+
+    }
+    function TotalTargetPerc(model_grid, model_month) {
+
+        var BaseIncentive = $('#base_incentive_' + model_month).val();
+
+    
 
         var TemplinEnt = Number(0);
         var TemplinAch = Number(0);
         var TotAchEdited = Number(0);
 
-     
-        $("#" + obj + " tr").not(':first').not(':last').each(function () {
-            
+        $("#" + model_grid + " tr").not(':first').not(':last').each(function () {
+
             TemplinEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
             TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));
-
-           // TemplinEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
-         
-         
-            if (TemplinEnt > 0)
-            {
+            if (TemplinEnt > 0) {
                 TotAchEdited = TotAchEdited + TemplinEnt;
             }
             else {
-
                 TotAchEdited = TotAchEdited + TemplinAch;
             }
-            
         });
 
+        var totTarget = $("#" + model_grid + " tr:last").find('td:eq(2) b').html();
 
 
-       // var totEnt = $("#" + obj + " tr:last").find('td:eq(4) b').html();
-        //var totAch = $("#" + obj + " tr:last").find('td:eq(3) b').html();
-        var totTarget = $("#" + obj + " tr:last").find('td:eq(2) b').html();
-        var period_month = $('#month').val();
-
-
-        //totEnt = Number(totEnt.replace(/\,/g, ""));
-       // totAch = Number(totAch.replace(/\,/g, ""));
         totTarget = Number(totTarget.replace(/\,/g, ""));
 
-       
         var totTargetPer = Number(0);
-      
-        //if (totEnt > 0) {
-        //    totTargetPer = ((totEnt * 100) / totTarget).toFixed(2);
-        //}
-        //else {
-        //    totTargetPer = ((totAch * 100) / totTarget).toFixed(2);
-        //}
 
         totTargetPer = ((TotAchEdited * 100) / totTarget).toFixed(2);
 
-       // $('#Target_Perc_' + period_month + '').val(!isNaN(totAchPer) ? totAchPer.toFixed(2) + "%" : "");
-
-        $('#Target_Perc_' + period_month + '').val(totTargetPer + "%" );
+        $('#Target_Perc_' + model_month + '').val(isNaN(totTargetPer) ? '0.00' + '%' : totTargetPer + "%");
 
 
     }
+
+
+    function TotalIncentive(MinLinesAchPerc,TotalLineAchPerc,BaseIncentive,Cap)
+    {
+
+        var TotalIncentive = Number(0);
+        var Lines = Number(0);
+
+        TotalIncentive = 0;
+
+        if(TotalLineAchPerc>MinLinesAchPerc)
+        {
+            Lines++;
+            TotalIncentive = TotalIncentive + Math.min((BaseIncentive * TotalLineAchPerc), Cap)
+        }
+
+
+    }
+    function FooterTotals(model_table, model_month)
+    {
+        var Templine = Number(0);
+
+        var Totvalue = Number(0);
+       
+        $("#" + model_table + " tr").not(':last').each(function () {
+
+           
+            Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
+       
+            Totvalue = Totvalue + Templine;
+        });
+
+
+        $("#" + model_table + " tr:last").find('td:eq(2) input').val(numberWithCommas(Totvalue));
+
+     
+    }
+
+    //function TotalTargetPerc(obj) {
+
+    //    var TemplinEnt = Number(0);
+    //    var TemplinAch = Number(0);
+    //    var TotAchEdited = Number(0);
+
+     
+    //    $("#" + obj + " tr").not(':first').not(':last').each(function () {
+            
+    //        TemplinEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+    //        TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));
+    //        if (TemplinEnt > 0)
+    //        {
+    //            TotAchEdited = TotAchEdited + TemplinEnt;
+    //        }
+    //        else {
+    //            TotAchEdited = TotAchEdited + TemplinAch;
+    //        }            
+    //    });
+
+    //    var totTarget = $("#" + obj + " tr:last").find('td:eq(2) b').html();
+    //    var period_month = $('#month').val();
+
+    //    totTarget = Number(totTarget.replace(/\,/g, ""));
+
+    //    var totTargetPer = Number(0);
+
+    //    totTargetPer = ((TotAchEdited * 100) / totTarget).toFixed(2);
+
+    //    $('#Target_Perc_' + period_month + '').val(totTargetPer + "%" );
+
+
+    //}
 
     
 </script>

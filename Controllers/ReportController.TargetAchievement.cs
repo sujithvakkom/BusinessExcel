@@ -26,6 +26,8 @@ namespace BusinessExcel.Controllers
 
         public static string USER_TARGET_UPDATE_ACHIEVEMENT = "UpdateAcheivedAmt";
 
+        public static string USER_TARGET_UPDATED_TOTAL = "getUpdatedTargetTotal";
+
         // public static string REPORTCONTROLLER = "Report";
         public static string TARGETACHIEVEMENTACTIONS = "TargetAchievementActions";
         public static string USER_TARGET_DETAILS = "UserTargetDetails";
@@ -430,6 +432,32 @@ namespace BusinessExcel.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
 
         }
+
+
+        public JsonResult getUpdatedTargetTotal(TargetAchievementView userTarget)
+
+        {
+            //TargetTotalView//
+            // Update model to your db
+
+            List<TargetTotalView> items = null;
+            using (var db = new SalesManageDataContext())
+            {
+            
+
+                items = db.getUsertargetTotalDetails(userTarget.user_id.Value, userTarget.target_id.Value);
+
+                //  JSONPagininationModel<TargetTotalView> model = new JSONPagininationModel<TargetTotalView>();
+
+
+                // res = Json(model, JsonRequestBehavior.AllowGet);
+              
+            }
+
+            return Json(items, JsonRequestBehavior.AllowGet);
+
+        }
+
 
         private string GEtAccountName(string location)
         {

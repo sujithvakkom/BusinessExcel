@@ -194,6 +194,7 @@
     <Compile Include="Controllers\JSON\JSON.CategoryAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.LocationAutoCompleter.cs" />
+    <Compile Include="Controllers\JSON\JSON.UserTargetTotals.cs" />
     <Compile Include="Controllers\JSON\JSON.UserByOtherAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\jsTree3Node.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
+    <Compile Include="Models\TargetTotalView.cs" />
     <Compile Include="Models\Tree.cs" />
     <Compile Include="Models\UserDetailsView.cs" />
     <Compile Include="Models\UserViewFilters.cs" />
