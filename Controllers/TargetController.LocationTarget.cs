@@ -20,8 +20,6 @@ namespace BusinessExcel.Controllers
         public static string CREATELOCATIONTARGET_TITLE = "Create Location Target";
 
         public static string LOCATIONTARGET = "LocationTarget";
-
-        public static string _LOCATIONTARGETEDITCREATE = "_LocationTargetEditCreate";
         public static string _VIEWLOCATIONTARGET = "_ViewLocationTarget";
 
         [HttpGet]
@@ -73,7 +71,10 @@ namespace BusinessExcel.Controllers
                 {
                     result = target.Save(out Message);
                     if (result != -1)
+                    {
+                        ModelState.Clear();
                         target = new BaseTarget(true);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -92,6 +93,5 @@ namespace BusinessExcel.Controllers
         public ActionResult _ViewLocationTarget() {
             return View();
         }
-
     }
 }

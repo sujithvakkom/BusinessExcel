@@ -22,75 +22,97 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom" id="loc-target-setup">
+                <ul class="nav nav-tabs pull-right">
+                    <li class="active"><a href="#tab_location_target_view" data-toggle="tab">View</a></li>
+                    <li>
+                        <a href="#target-location-create" onclick="get_new_location()" data-toggle="tab">Edit</a>
+                    </li>
+                    <li class="pull-left header"><i class="fa fa-bar-chart"></i>Site targets</li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_location_target_view">
 
-        <div class="col-md-6">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">@TargetController.LOCATIONTARGET_TITLE</h3>
-                </div>
-                <div class="box-body">
-                   @using (Ajax.BeginForm(
-                       actionName:TargetController._VIEWLOCATIONTARGET,
-                       controllerName:TargetController.TARGET,
-                       ajaxOptions: new AjaxOptions()
-                       {
-                           HttpMethod = "GET",
-                           InsertionMode = InsertionMode.Replace,
-                           LoadingElementId = "location-target-view-search",
-                           UpdateTargetId = "location-target-view"
-                       }
-                       ))
-                   {
-                    <div class="row">
-                            <div class="col-md-2 padding-label">
-                                Site
-                            </div>
-                            <div class="col-md-7">
-                                @Html.AdminLTEDropDownListFor(
-         m => Model.Location,
-         htmlLabelAttributes: null,
-         htmlDropDownAttributes: new Dictionary<string, object>() {
+                        @using (Ajax.BeginForm(
+actionName: TargetController._VIEWLOCATIONTARGET,
+controllerName: TargetController.TARGET,
+ajaxOptions: new AjaxOptions()
+{
+    HttpMethod = "GET",
+    InsertionMode = InsertionMode.Replace,
+    LoadingElementId = "location-target-view-search",
+    UpdateTargetId = "location-target-view"
+}
+))
+                        {
+                            <div class="row">
+                                <div class="col-md-2 padding-label">
+                                    Site
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.AdminLTEDropDownListFor(
+m => Model.Location,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
                                         { "class", "form-control select2" }
-                                    },
-         htmlGroupAttributes: new Dictionary<string, object>() { },
-         autoCompleteOptions: new AutoCompleteOptions()
-         {
-             AjaxOptions = new AjaxOptions()
-             {
-                 HttpMethod = "GET",
-                 Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-             },
-             DescriptionField = "description",
-             IDField = "location_id",
-             Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
-             IsAutoComplete = true,
-             SelectedItem = Model.Location
          },
-         showLabel: false)
+htmlGroupAttributes: new Dictionary<string, object>() { },
+autoCompleteOptions: new AutoCompleteOptions()
+{
+    AjaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+    },
+    DescriptionField = "description",
+    IDField = "location_id",
+    Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+    IsAutoComplete = true,
+    SelectedItem = Model.Location
+},
+showLabel: false)
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="submit" value="Search" class="btn btn-default" />
+                                    @{
+                                        Html.RenderPartial("_Progress", "location-target-view-search");
+                                    }
+                                </div>
                             </div>
-                        <div class="col-md-3">
-                            <input type="submit" value="Search" class="btn btn-default"/>
+                                        }
+                        <div id="location-target-view" class="table-form" style="max-height: 480px;overflow-y: scroll;">
                             @{
-                                Html.RenderPartial("_Progress", "location-target-view-search");
+                                Html.RenderPartial(TargetController._VIEWLOCATIONTARGET, -1);
                             }
                         </div>
                     </div>
-                    }
-                    <div id="location-target-view" class="table-form" style="max-height: 480px;overflow-y: scroll;">
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="target-location-create">
+
                         @{
-                            Html.RenderPartial(TargetController._VIEWLOCATIONTARGET,-1);
+                            Html.RenderPartial(TargetController._LOCATIONTARGETEDITCREATE, Model);
                         }
                     </div>
+                    <!-- /.tab-pane -->
                 </div>
+                <!-- /.tab-content -->
             </div>
+
         </div>
-
-        <div class="col-md-6" id="target-location-create">
-
-            @{
-                Html.RenderPartial(TargetController._LOCATIONTARGETEDITCREATE, Model);
-            }
-        </div>
-
     </div>
 </section>
+<script>
+    function change_edit_tab() {
+        $('#loc-target-setup a[href="#target-location-create"]').tab('show')
+    }
+    function get_new_location() {
+        $.ajax({
+            url: "@Url.Action(TargetController._NEWLOCATIONTARGETEDITCREATE, TargetController.TARGET, null)",
+
+                success: function(data){
+                    $('#target-location-create').html(data);
+                }
+            })
+            }
+</script>

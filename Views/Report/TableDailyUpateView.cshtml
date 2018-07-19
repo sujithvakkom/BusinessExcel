@@ -215,13 +215,17 @@
                                     sortdir: ViewBag.DailyUpateViewDir,
                                     count: out count, Filters: Model
                                     );
+                        var dataList = data.ToList();
                         var grid = new WebGrid(ajaxUpdateContainerId: "table-daily-upate-view",
-                            ajaxUpdateCallback: "TableDailyUpateViewCallback", rowsPerPage: 20
+                            ajaxUpdateCallback: "TableDailyUpateViewCallback", 
+                            rowsPerPage: 20
                             );
-                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                        grid.Bind(source: dataList, 
+                            autoSortAndPage: false, 
+                            rowCount: count);
                         @grid.GetHtml(
                            tableStyle: "table table-striped table-bordered be-pagination-spl",
-                           htmlAttributes: new { @id = "example" },
+                           htmlAttributes: new { @id = "table-daily-upate" },
                            columns: new[] {
                                grid.Column(columnName:"Name",
                                header:Html.AdminLTESorter("Name","Name",grid),
