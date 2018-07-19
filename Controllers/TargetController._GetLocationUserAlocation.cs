@@ -15,7 +15,14 @@ namespace BusinessExcel.Controllers
 {
     public partial class TargetController : Controller
     {
-        
+
+        public static string _GETLOCATIONUSERALOCATION = "_GetLocationUserAlocation";
+
+        [HttpPost]
+        public ActionResult _GetLocationUserAlocation(string Location, string TargetTemplate)
+        {
+            return PartialView(_GETLOCATIONUSERALOCATION,TargetTemplate);
+        }
 
     }
 }

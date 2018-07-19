@@ -206,8 +206,9 @@
     <Compile Include="Controllers\TargetController.TargetDistribution.cs" />
     <Compile Include="Controllers\TargetController.LocationTarget.cs" />
     <Compile Include="Controllers\TargetController.EditViewTarget.cs" />
-    <Compile Include="Controllers\TargetController.TargetTemplet - Copy.cs" />
+    <Compile Include="Controllers\TargetController._GetLocationUserAlocation.cs" />
     <Compile Include="Controllers\TargetController._LocationTargetEditCreate.cs" />
+    <Compile Include="Controllers\TargetController._MinViewLocationTarget.cs" />
     <Compile Include="Controllers\TargetController._ViewLocationTarget.cs" />
     <Compile Include="Controllers\TargetController.TargetTemplet.cs" />
     <Compile Include="Controllers\TargetController.cs" />
@@ -266,10 +267,12 @@
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\ViewLocationTargetDistribution.cs" />
     <Compile Include="Providers\ProviderContext\Entities\_BaseTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.ViewLocationDistribution.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserTree.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.User.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetDetails.cs" />
@@ -728,6 +731,8 @@
     <Content Include="Views\Target\_LocationTargetEditCreate_Backup.cshtml" />
     <Content Include="Views\Target\LocationTarget_Backup.cshtml" />
     <Content Include="Views\Target\_LocationTargetEditCreate - Copy %282%29.cshtml" />
+    <Content Include="Views\Target\_MinViewLocationTarget.cshtml" />
+    <Content Include="Views\Target\_GetLocationUserAlocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

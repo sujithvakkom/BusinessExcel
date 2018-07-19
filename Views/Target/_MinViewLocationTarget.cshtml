@@ -1,0 +1,94 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@model BaseTarget
+
+@if (Model.LineTargets.Length > 0)
+{
+    var total = Model.LineTargets.Sum(x => x.TotalTarget);
+    var totalAssingn = Model.LineTargets.Sum(x => x.Target);
+    var totalAvil = Model.LineTargets.Sum(x => x.TotalTarget - x.Target);
+    var formID = "target-distribute-form-" + Model.TargetTemplate + "-" + Model.Location + "-" + Model.UserName;
+    var hasBonus = "";
+    decimal avilable;
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box-body">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h>Site target details</h>
+                    </div>
+                    <div class="box-body">
+
+                        <table class="table table-striped table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Has Bonus
+                                    </th>
+                                    <th>
+                                        Category Line
+                                    </th>
+                                    <th class="text-right">
+                                        Total Target
+                                    </th>
+                                    <th class="text-right">
+                                        Assigned Target
+                                    </th>
+                                    <th class="text-right">
+                                        Available Target
+                                    </th>
+                                </tr>
+                            <tbody>
+                                @for (int i = 0; i < Model.LineTargets.Length; i++)
+                                {
+                                    CategoryDetail selection = new CategoryDetail();
+                                    using (var db = new SalesManageDataContext())
+                                    {
+                                        selection = db.getCategoryDetails(Model.LineTargets[i].Catogery);
+                                        hasBonus = Model.LineTargets[i].IsBonusLine == true ? "Yes" : "No";
+                                        avilable = (Model.LineTargets[i].TotalTarget == null ? 0 : (decimal)Model.LineTargets[i].TotalTarget) -
+                                            (Model.LineTargets[i].Target == null ? 0 : (decimal)Model.LineTargets[i].Target);
+                                    }
+                                    <tr>
+                                        <td>
+                                            @hasBonus
+                                        </td>
+                                        <td>
+                                            @selection.description
+                                        </td>
+                                        <td>
+                                            @Html.AdminLTEParagraph(Model.LineTargets[i].TotalTarget, new Dictionary<string, object>() { { "class", "numaric" } })
+                                        </td>
+                                        <td>
+                                            @Html.AdminLTEParagraph(Model.LineTargets[i].Target, new Dictionary<string, object>() { { "class", "numaric" } })
+                                        </td>
+                                        <td>
+                                            @Html.AdminLTEParagraph(avilable, new Dictionary<string, object>() { { "class", "numaric" } })
+                                        </td>
+                                    </tr>
+                                }
+                                <tr class="footer text-bold">
+                                    <td colspan="2" class="text-center">Total</td>
+                                    <td>
+                                        @Html.AdminLTEParagraph(total, new Dictionary<string, object>() { { "class", "numaric" } })
+                                    </td>
+                                    <td>
+                                        @Html.AdminLTEParagraph(totalAssingn, new Dictionary<string, object>() { { "class", "numaric" } })
+                                    </td>
+                                    <td>
+                                        @Html.AdminLTEParagraph(totalAvil, new Dictionary<string, object>() { { "class", "numaric" } })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
