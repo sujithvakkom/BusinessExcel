@@ -27,31 +27,32 @@
     }
 }
 @using (Ajax.BeginForm(
-                                                                                    controllerName: TargetController.TARGET,
-                                                                                    actionName: TargetController._GETLOCATIONALOCATION,
-                                                                                    htmlAttributes: new { id = "target-location-create-form" },
-                                                                                    routeValues: null,
-                                                                                    ajaxOptions:
-                                                                                    new AjaxOptions()
-                                                                                    {
-                                                                                        InsertionMode = InsertionMode.Replace,
-                                                                                        HttpMethod = "Post",
-                                                                                        UpdateTargetId = "location-target-allocation",
-                                                                                        OnBegin = "move('#page-load')",
-                                                                                        OnComplete = "ajax_call_load_complete('#page-load')",
-                                                                                        OnFailure = "loadin_failed",
-                                                                                        LoadingElementId = "target-load-progress"
-                                                                                    }))
+                controllerName: TargetController.TARGET,
+                //actionName: TargetController._GETLOCATIONALOCATION,
+                actionName: TargetController._MINVIEWLOCATIONTARGET,
+                htmlAttributes: new { id = "target-location-search-form" },
+                routeValues: null,
+                ajaxOptions:new AjaxOptions()
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "Post",
+                    UpdateTargetId = "location-target-datails",
+                    OnBegin = "load_user_assignments()",
+                    OnComplete = "ajax_call_load_complete('#page-load')",
+                    OnFailure = "loadin_failed",
+                    LoadingElementId = "target-load-progress"
+                }))
 {
     <div class="table-form">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="col-md-4 padding-label">
-                    Site
-                </div>
-                <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-4 padding-label">
+                        Site
+                    </div>
+                    <div class="col-md-8">
 
-                    @Html.AdminLTEDropDownListFor(
+                        @Html.AdminLTEDropDownListFor(
                           expression: m => Model.Location,
                           htmlLabelAttributes: null,
                           htmlDropDownAttributes: new Dictionary<string, object>() {
@@ -75,17 +76,15 @@
                           showLabel: false,
                           hasValidation: true
                           )
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="col-md-4 padding-label">
-                    Period
-                </div>
-                <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-4 padding-label">
+                        Period
+                    </div>
+                    <div class="col-md-8">
 
-                    @Html.AdminLTEDropDownListFor(
+                        @Html.AdminLTEDropDownListFor(
                           m => m.TargetTemplate,
                           htmlLabelAttributes: null,
                           htmlDropDownAttributes: new Dictionary<string, object>() {
@@ -111,17 +110,15 @@
                           hasValidation: true,
                           extras: new System.Linq.Expressions.Expression<Func<BaseTarget, Object>>[] { m => Model.Location }
                           )
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="col-md-4 padding-label">
-                    Employ
-                </div>
-                <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-4 padding-label">
+                        Employ
+                    </div>
+                    <div class="col-md-8">
 
-                    @Html.AdminLTEDropDownListFor(
+                        @Html.AdminLTEDropDownListFor(
         expression: m => Model.UserName,
         htmlLabelAttributes: null,
         htmlDropDownAttributes: new Dictionary<string, object>() {
@@ -146,21 +143,22 @@
         showLabel: false,
         hasValidation: true
         )
+                    </div>
+                </div>
+                <div class="row box-body">
+                    <div class="col-md-offset-4 col-md-2">
+                        <input type="submit" class="btn btn-primary" value="Load Details" />
+                        @{
+                            Html.RenderPartial("_Progress", "target-load-progress");
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="container sp">
-        <div class="row box-body">
-            <div class="col-md-2 pull-right">
-                @{
-                    Html.RenderPartial("_Progress", "target-load-progress");
-                }
-                <input type="submit" class="btn btn-primary" value="Load Details" />
+            <div class="col-md-8" id="location-target-datails">
             </div>
         </div>
     </div>
-                    }
+                            }
 <div id="location-target-allocation">
     @if (Model.LineTargets.Where(x => !string.IsNullOrEmpty(x.Catogery)).Select(x => x).Count() > 0)
     {

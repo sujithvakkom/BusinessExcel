@@ -15,25 +15,30 @@
         selectionLocation = db.getLocationDetail(Model.Location);
         selectionUser = db.getUserDetail(Model.UserName);
     }
+    var temp = new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } };
+    if (!string.IsNullOrEmpty(Model.TargetTemplate))
+    {
+        temp.Add("disabled", "true");
+    }
 }
 
 <div class="table-form">
     @using (Ajax.BeginForm(
-                                                controllerName: TargetController.TARGET,
-                                                actionName: TargetController.LOCATIONTARGET,
-                                                htmlAttributes: new { id = "target-location-create-form" },
-                                                routeValues: null,
-                                                ajaxOptions:
-                                                new AjaxOptions()
-                                                {
-                                                    InsertionMode = InsertionMode.Replace,
-                                                    HttpMethod = "Post",
-                                                    UpdateTargetId = "target-location-create",
-                                                    OnBegin = "move('#page-load')",
-                                                    OnComplete = "ajax_call_load_complete('#page-load')",
-                                                    OnFailure = "loadin_failed",
-                                                    LoadingElementId = "target-create-progress"
-                                                }))
+                                        controllerName: TargetController.TARGET,
+                                        actionName: TargetController.LOCATIONTARGET,
+                                        htmlAttributes: new { id = "target-location-create-form" },
+                                        routeValues: null,
+                                        ajaxOptions:
+                                        new AjaxOptions()
+                                        {
+                                            InsertionMode = InsertionMode.Replace,
+                                            HttpMethod = "Post",
+                                            UpdateTargetId = "target-location-create",
+                                            OnBegin = "move('#page-load')",
+                                            OnComplete = "ajax_call_load_complete('#page-load')",
+                                            OnFailure = "loadin_failed",
+                                            LoadingElementId = "target-create-progress"
+                                        }))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => Model.TargetTemplate)
@@ -43,19 +48,19 @@
                     <div class="col-md-1 padding-label">
                         Period
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                         @Html.AdminLTEDateRangePickerFor(
-             m => Model.StartDate,
-             m => Model.EndDate,
-             "Date Range",
-             htmlLabelAttributes: null,
-             htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
-             htmlGroupAttributes: null,
-             htmlGlyphiconsAttributes: null,
-             glyphiconsName: "fa fa-calendar",
-             showLabel: false,
-             hasValidation: true,
-             showGlyphicons: true)
+m => Model.StartDate,
+m => Model.EndDate,
+"Date Range",
+htmlLabelAttributes: null,
+htmlTextBoxAttributes: temp,
+htmlGroupAttributes: null,
+htmlGlyphiconsAttributes: null,
+glyphiconsName: "fa fa-calendar",
+showLabel: false,
+hasValidation: true,
+showGlyphicons: true)
                     </div>
                 </div>
             </div>
@@ -66,13 +71,20 @@
                     <div class="col-md-1 padding-label">
                         Site
                     </div>
-                    <div class="col-md-3">
-                        @Html.AdminLTEDropDownListFor(
+                    <div class="col-md-5">
+                        @{
+                            temp = new Dictionary<string, object>
+                                () { { "class", "form-control select2" } };
+                            if (!string.IsNullOrEmpty(Model.TargetTemplate))
+                            {
+                                temp.Add("disabled", "true");
+                                @Html.HiddenFor(m=>Model.Location)
+                            }
+                        }
+                            @Html.AdminLTEDropDownListFor(
                  m => Model.Location,
                  htmlLabelAttributes: null,
-                 htmlDropDownAttributes: new Dictionary<string, object>() {
-                                        { "class", "form-control select2" }
-                 },
+                 htmlDropDownAttributes: temp,
                  htmlGroupAttributes: new Dictionary<string, object>() { },
                  autoCompleteOptions: new AutoCompleteOptions()
                  {
@@ -88,7 +100,7 @@
                      SelectedItem = selectionLocation
                  },
                  showLabel: false)
-                    </div>
+</div>
                 </div>
             </div>
         </div>
@@ -102,7 +114,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-offset-5 col-md-1 padding-label">
+                <div class="col-md-offset-6 col-md-1 padding-label ">
                     Total
                 </div>
                 <div class="col-md-3 table-fields">
@@ -110,7 +122,7 @@
                     @Html.AdminLTETextBoxFor(m => m.TotalTarget,
                      null,
                      new Dictionary<string, object>() {
-                                        { "class", "form-control numaric" }, { "readonly", "" }
+                                        { "class", "form-control numaric" }
                      },
                      null,
                      null,

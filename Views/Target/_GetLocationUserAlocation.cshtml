@@ -1,0 +1,74 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model String
+
+@using (var db = new SalesManageDataContext())
+{
+    try
+    {
+        var lineTargets = db.getLocationTargetAssignments(Model);
+        WebGrid grid = new WebGrid(lineTargets);
+        <div class="row">
+            <div class="col-md-offset-4 col-md-8">
+                <div class="box-body">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h>Current target assignments</h>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @grid.GetHtml(
+
+                           tableStyle: "table table-striped table-bordered be-pagination-spl",
+                           columns: new[] {
+                               //AllocatedPercentage
+                               grid.Column(columnName:"UserName",
+                               header:"User Code",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.UserName),
+                               canSort:true),
+                               grid.Column(columnName:"FullName",
+                               header:"Full Name",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.FullName),
+                               canSort:false),
+                               grid.Column(columnName:"Location",
+                               header:"Location",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Location),
+                               canSort:false),
+                               grid.Column(columnName:"Period",
+                               header:"Period",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Period),
+                               canSort:false),
+                               grid.Column(columnName:"Catogery",
+                               header:"Catogery",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Catogery),
+                               canSort:false),
+                               grid.Column(columnName:"Target",
+                               header:"Target",
+                               format:(item)=>@Html.AdminLTEParagraph((object)@item.Target,new Dictionary<string,object>() { { "class","numaric"} }),
+                               canSort:false),
+                               grid.Column(columnName:"AllocatedPercentage",
+                               header:"Allocated Percentage",
+                               format:(item)=>@Html.AdminLTEParagraph(((decimal)@item.AllocatedPercentage/100),null, "{0:0.0%}"),
+                               canSort:false)
+                           })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    catch (Exception ex)
+    {
+            < p > @ex.Message </ p >
+    }
+
+}
+

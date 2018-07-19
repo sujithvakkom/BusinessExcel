@@ -8,7 +8,7 @@
 
 @model  LineTarget[]
 <div class="row table-fields-header">
-    <div class="col-md-offset-1 col-md-1 table-fields">
+    <div class="col-md-offset-1 col-md-2 table-fields">
         Has Bonus
     </div>
     <div class="col-md-4 table-fields">
@@ -17,7 +17,7 @@
     @*<div class="col-md-2 table-fields">
             Min. Achievement (%)
         </div>*@
-    <div class="col-md-3 table-fields">
+    <div class="col-md-3 table-fields text-right">
         Target
     </div>
     @*<div class="col-md-2 table-fields">
@@ -47,7 +47,7 @@
         }
     }
     <div class="row">
-        <div class="col-md-offset-1 col-md-1 table-fields">
+        <div class="col-md-offset-1 col-md-2 table-fields">
             @Html.AdminLTECheckBoxFor(m => Model[i].IsBonusLine,
                         null,
                         new Dictionary<string, object>() { { "class", "form-control pull-right" }, { "autocomplete", "off" } },

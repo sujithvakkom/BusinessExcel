@@ -31,6 +31,11 @@
                             Html.RenderPartial(TargetController._TARGETDISTRIBUTIONASSIGN, Model);
                         }
                     </div>
+                
+                    <div id="location-user-target">
+
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -75,5 +80,16 @@
         //alert(val.value);LineTargets[0].Target
         //"input[name*='].Target']"
         //$('input[name ^=LineTargets][name $=Target]')
+    }
+    function load_user_assignments() {        
+        var dataToPost = $("#target-location-search-form").serialize();
+        $.ajax({
+            url: "@Url.Action(TargetController._GETLOCATIONUSERALOCATION, TargetController.TARGET,null)",
+            data:dataToPost,
+            success: function(data){
+                $('#location-user-target').html(data);
+            },
+            method:"POST"
+        });
     }
 </script>

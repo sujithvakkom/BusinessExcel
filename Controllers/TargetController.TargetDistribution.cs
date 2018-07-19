@@ -47,7 +47,7 @@ namespace BusinessExcel.Controllers
         }
 
         [HttpPost]
-        public ActionResult _GetLocationAlocation(BaseTarget target)
+        public ActionResult _GetLocationAlocation(BaseTarget target) 
         {
             List<LineTarget> lineTargets = new List<LineTarget>();
             using (var db = new SalesManageDataContext())

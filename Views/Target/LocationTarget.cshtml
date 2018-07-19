@@ -22,7 +22,7 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="nav-tabs-custom" id="loc-target-setup">
                 <ul class="nav nav-tabs pull-right">
                     <li class="active"><a href="#tab_location_target_view" data-toggle="tab">View</a></li>
@@ -46,41 +46,47 @@ ajaxOptions: new AjaxOptions()
 }
 ))
                         {
-                            <div class="row">
-                                <div class="col-md-2 padding-label">
-                                    Site
-                                </div>
-                                <div class="col-md-7">
-                                    @Html.AdminLTEDropDownListFor(
-m => Model.Location,
-htmlLabelAttributes: null,
-htmlDropDownAttributes: new Dictionary<string, object>() {
+                            <div class="row" style="padding-bottom:10px;">
+                                <div class="col-md-12">
+                                    <div class="row ">
+                                        <div class="table-form">
+                                            <div class="col-md-2 padding-label">
+                                                Site
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.AdminLTEDropDownListFor(
+                                    m => Model.Location,
+                                    htmlLabelAttributes: null,
+                                    htmlDropDownAttributes: new Dictionary<string, object>() {
                                         { "class", "form-control select2" }
-         },
-htmlGroupAttributes: new Dictionary<string, object>() { },
-autoCompleteOptions: new AutoCompleteOptions()
-{
-    AjaxOptions = new AjaxOptions()
-    {
-        HttpMethod = "GET",
-        Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-    },
-    DescriptionField = "description",
-    IDField = "location_id",
-    Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
-    IsAutoComplete = true,
-    SelectedItem = Model.Location
-},
-showLabel: false)
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="submit" value="Search" class="btn btn-default" />
-                                    @{
-                                        Html.RenderPartial("_Progress", "location-target-view-search");
-                                    }
+                                    },
+                                    htmlGroupAttributes: new Dictionary<string, object>() { },
+                                    autoCompleteOptions: new AutoCompleteOptions()
+                                    {
+                                        AjaxOptions = new AjaxOptions()
+                                        {
+                                            HttpMethod = "GET",
+                                            Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                        },
+                                        DescriptionField = "description",
+                                        IDField = "location_id",
+                                        Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+                                        IsAutoComplete = true,
+                                        SelectedItem = Model.Location
+                                    },
+                                    showLabel: false)
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="submit" value="Search" class="btn btn-default" />
+                                                @{
+                                                Html.RenderPartial("_Progress", "location-target-view-search");
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                                        }
+                                                    }
                         <div id="location-target-view" class="table-form" style="max-height: 480px;overflow-y: scroll;">
                             @{
                                 Html.RenderPartial(TargetController._VIEWLOCATIONTARGET, -1);
@@ -110,9 +116,9 @@ showLabel: false)
         $.ajax({
             url: "@Url.Action(TargetController._NEWLOCATIONTARGETEDITCREATE, TargetController.TARGET, null)",
 
-                success: function(data){
-                    $('#target-location-create').html(data);
-                }
-            })
+            success: function (data) {
+                $('#target-location-create').html(data);
             }
+        })
+    }
 </script>
