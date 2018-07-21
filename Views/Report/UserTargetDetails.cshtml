@@ -8,7 +8,10 @@
 @using BusinessExcel.Controllers.JSON
 
 
+
 @model UserTargetDetailsView
+
+
 
 <div id="userData">
 
@@ -68,72 +71,121 @@
 
 
 
-                                <div class="col-md-1" style="font-weight:bold;">Name</div>
-                                <div class="col-md-5">
+                                @*<div class="col-md-1 " style="font-weight:bold;">Name</div>*@
+                                <div class="col-md-8">
 
                                                 @{ if (User.IsInRole("User"))
                                                     {
                                                         @Html.AdminLTEDropDownListFor(
-                                         m => m.UserName,
-                                         htmlLabelAttributes: null,
-                                         htmlDropDownAttributes: new Dictionary<string, object>() {
+m => m.UserName,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
                                              { "class", "form-control select2" },{ "disabled","true"}
-                                         },
-                                         htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-8" } },
-                                         autoCompleteOptions: new AutoCompleteOptions()
-                                         {
-                                             AjaxOptions = new AjaxOptions()
-                                             {
-                                                 HttpMethod = "GET",
-                                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                             },
-                                             DescriptionField = "full_name",
-                                             IDField = "user_name",
-                                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
-                                             IsAutoComplete = true,
-                                             SelectItems = null
-                                         },
-                                         showLabel: false)
+},
+htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
+autoCompleteOptions: new AutoCompleteOptions()
+{
+    AjaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+    },
+    DescriptionField = "full_name",
+    IDField = "user_name",
+    Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+    SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+    IsAutoComplete = true,
+    SelectItems = null
+},
+showLabel: true)
 
                                                     }
                                                     else
                                                     {
 
-                                                        @Html.AdminLTEDropDownListFor(
-                                         m => m.UserName,
-                                         htmlLabelAttributes: null,
-                                         htmlDropDownAttributes: new Dictionary<string, object>() {
-                                             { "class", "form-control select2" }
-                                         },
-                                         htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-8 " } },
-                                         autoCompleteOptions: new AutoCompleteOptions()
-                                         {
-                                             AjaxOptions = new AjaxOptions()
-                                             {
-                                                 HttpMethod = "GET",
-                                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                             },
-                                             DescriptionField = "full_name",
-                                             IDField = "user_name",
-                                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
-                                             IsAutoComplete = true,
-                                             SelectItems = null
-                                         },
-                                         showLabel: false)
 
-                                                        <div class="col-md-1">
-                                                            <button type="submit" class="btn btn-primary " id="btnAdd">Search</button>
+
+
+                                                        @Html.AdminLTEDropDownListFor(
+m => m.UserName,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
+                                             { "class", "form-control select2" }
+},
+htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
+autoCompleteOptions: new AutoCompleteOptions()
+{
+    AjaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+    },
+    DescriptionField = "full_name",
+    IDField = "user_name",
+    Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+    SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+    IsAutoComplete = true,
+    SelectItems = null
+},
+showLabel: true)
+
+
+
+
+                                                        <div class="col-md-5">
+                                                            
+                                                            
+                                                            
+                                                              @Html.AdminLTEDateRangePickerFor(
+                                                                        m=>m.start_date,
+                                                                         m => m.end_date,
+                                                                         "Period",
+                                                                         htmlLabelAttributes: null,
+                                                                         htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
+                                                                         htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
+                                                                             htmlGlyphiconsAttributes: null,
+                                                                             glyphiconsName: "fa fa-calendar",
+                                                                             showLabel: true,
+                                                                             hasValidation: true,
+                                                                             showGlyphicons: true)
+                                                            <div style="display:none">
+                                                                @Html.AdminLTEDateRangePickerFor(
+                                                                        m => m.start_date,
+                                                                         m => m.end_date,
+                                                                         "Period",
+                                                                         htmlLabelAttributes: null,
+                                                                         htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
+                                                                         htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
+                                                                             htmlGlyphiconsAttributes: null,
+                                                                             glyphiconsName: "fa fa-calendar",
+                                                                             showLabel: true,
+                                                                             hasValidation: true,
+                                                                             showGlyphicons: true)
+                                                            </div>
+
+
+
                                                         </div>
 
-                                                    }
-                                                }
-
-                                      
                  
+                                                            <div class="col-md-1" style="top:1.5em">
+                                                                <button type="submit" class="btn btn-primary " id="btnAdd">Search</button>
+                                                            </div>
 
-                                </div>
+                                                            }
+                                                            }
+
+                                
+
+
+
+
+
+                                                        </div>
+                           
+
+
+
 
                             </div>
                             <div class="row">
@@ -412,14 +464,15 @@
                         </div>
                     </div>
                     <div style="margin-top:15px" id="target-achievement-display">
-                        @if (Model.QuarterMonths.Count > 0)
+                        @if (Model.UserTargets.Count > 0)
                         {
-                            foreach (var month in Model.QuarterMonths)
+                            foreach (var target in Model.UserTargets)
                             {
-                                <div id="target-achievement-display_@month">
+                                
+                                <div id="target-achievement-display_@target.Month">
                                     @Html.Action(
          BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW,
-         new TargetAchievementView { Month = month, user_id = Model.UserID, start_date = Model.start_date })
+         new TargetAchievementView { Month = target.Month, user_id = Model.UserID, start_date = target.start_date ,target_id= target.target_id})
                                 </div>
                             }
                         }
@@ -553,7 +606,7 @@
     //--userData
 
 
-    $(document).ready(function () {
+    @*$(document).ready(function () {
 
       
 
@@ -638,7 +691,6 @@
             });
 
             $('#base_incentive_' + model).val(numberWithCommas(total));
-            //$('#Tsheet'+model+ ' tbody').append('<tr><td><b>Total</b></td><td></td><td class="numaric"><b>' + targetTotal.toFixed(2) + '</b></td><td class="numaric"><b>' + AchAmtTotal.toFixed(2) + '</b></td> </tr>');
             $('#Tsheet' + model + ' tbody').append(
                 '<tr><td><b>Total</b></td><td></td><td class="numaric"><b>' +
                 numberWithCommas(targetTotal) +
@@ -648,74 +700,16 @@
 
 
          
-            /////Total Target Percentage calculation
-            //var linetempEnt = Number(0);
-            //var linetempAch = Number(0);
-            //var TotAchEdited = Number(0);
-
-            //$("#Tsheet" + model + " tr").not(':first').not(':last').each(function () {
-            //    linetempEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
-            //    TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));       
-            //    if (linetempEnt > 0) {
-            //        TotAchEdited = TotAchEdited + linetempEnt;
-            //    }
-            //    else {
-            //        TotAchEdited = TotAchEdited + TemplinAch;
-            //    }
-            //});
-
-            //var totTargetPer = Number(0);
-            //totTargetPer = ((TotAchEdited * 100) / targetTotal).toFixed(2);
           
-            //$('#Target_Perc_' + model + '').val(isNaN(totTargetPer) ? '0.00' + '%' : totTargetPer + "%");
-
-           // TotalTargetPerc('Tsheet' + model, model);
-           // FooterTotals('tottable_' + model, model);
-            if (userid > 0) {
-                setTargetTotals('tottable_' + model, userid, targetid)
-            }
+            //if (userid > 0) {
+            //    setTargetTotals('tottable_' + model, userid, targetid)
+            //}
         });
 
 
 
        
-    });
-
-    @*$(document).ready(function () {
-
-        var total = 0;
-        var targetTotal = 0;
-        var AchAmtTotal = 0;
-
-        var model = @Html.Raw(Json.Encode(Model.Month));
-
-
-
-        var totRows = 0;
-        //$('#Tsheet .hid_Base_Incentive').each(function () {
-
-        //  //  targetTotal = total + parseFloat($(this)[0].innerHTML.toLocaleString());
-        //    //totRows++;
-
-        //    total = total + parseFloat($(this).val());
-
-        //});
-
-        $('#TsheetJUL .Target_amt').each(function () {
-
-            targetTotal = targetTotal + parseFloat($(this)[0].innerHTML.toLocaleString());
-            alert('');
-        });
-
-        //$('#Tsheet .Achieved_Amt').each(function () {
-
-        //    AchAmtTotal = AchAmtTotal + parseFloat($(this)[0].innerHTML.toLocaleString());
-
-        //});
-
-
-      //  $('#base_incentive').val(total.toFixed(2));
-
-       // $('#TsheetJUL').append($('tbody').append('<tr><td><b>Total</b></td><td><b>' + targetTotal.toFixed(2) + '</b></td></tr>'));
     });*@
+
+ 
 </script>

@@ -55,7 +55,7 @@
 
                                              selectedRowStyle: "webgrid-selected-row",
                                              rowStyle: "webgrid-row-style",
-                                             htmlAttributes: new { @id = "Tsheet" + Model.Month },
+                                             htmlAttributes: new { @id = "Tsheet" + Model.target_id },
                                              columns: new[] {
                        grid.Column(
                            columnName: "Category",
@@ -108,7 +108,7 @@
                                     sortdir: ViewBag.UserTargetViewDir,
                                     count: out count, Filters: Model
                                     );
-
+                        
                         var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
                                             ajaxUpdateCallback: "targetachievementviewcallBack",
                                             rowsPerPage: 6
@@ -125,7 +125,7 @@
                                          //alternatingRowStyle: "webgrid-alternating-row",
                                          //selectedRowStyle: "webgrid-selected-row",
                                          //rowStyle: "webgrid-row-style",
-                                         htmlAttributes: new { @id = "Tsheet" + Model.Month },
+                                         htmlAttributes: new { @id = "Tsheet" + Model.target_id },
                                          columns: new[] {
                        grid.Column(
                            columnName: "Category",
@@ -182,7 +182,7 @@
                            format:@<input type="hidden" name="category_id" id="hid_category_id" value="@item.category_id" />),
 
 
-  grid.Column(null, null, format: @<input type="hidden" name="target_id" id="hid_target_id"  class="hid_target_id_cls" value="@item.target_id" />),
+  grid.Column(null, null, format: @<input type="hidden" name="target_id" id="hid_target_id"  class="hid_target_id_cls" value="@Model.target_id" />),
 
   grid.Column(null, null, format: @<input type="hidden" name="month_id" id="hid_month_id" class="hid_month_id_cls" value="@Model.Month" />),
 
@@ -211,7 +211,7 @@
 
                         <input type="text" class="form-control extrainfo" value="Base Incentive" />
                         <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="" id="base_incentive_@Model.Month" style="text-align:right"/>
+                        <input type="text" class="form-control extrainfo" value="" id="base_incentive_@Model.target_id" style="text-align:right"/>
 
                     </div>
 
@@ -222,7 +222,7 @@
 
             <div class="row">
                 <div class="col-md-3">
-                    <table class="table tottable" id="tottable_@Model.Month">
+                    <table class="table tottable" id="tottable_@Model.target_id">
 
                         <tbody>
 
@@ -235,28 +235,28 @@
 
                                 @*<td ><input class="form-control extrainfo tottableinput"/>Target % </td>*@
                                 <td><input class="form-control extrainfo tottableinputLabel" value="Target % " /></td>
-                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Target_Perc_@Model.Month"  /></td>
-                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Target_Amt_@Model.Month" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalTargetPerc id="Target_Perc_@Model.target_id"  /></td>
+                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalIncAmt id="Target_Amt_@Model.target_id" /></td>
                             </tr>
 
                           <tr>
 
                               <td><input class="form-control extrainfo tottableinputLabel" value="Line Achv" /></td>
-                              <td><input class="form-control extrainfo tottableinput" value="0.00" id="Lines_Ach_Perc_@Model.Month" /></td>
-                              <td><input class="form-control extrainfo tottableinput" value="0.00" id="Lines_Ach_Amt_@Model.Month" /></td>
+                              <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].LineAch id="Lines_Ach_Perc_@Model.target_id" /></td>
+                              <td><input class="form-control extrainfo tottableinput" value="0.00" id="Lines_Ach_Amt_@Model.target_id" /></td>
                             </tr>
                             <tr>
 
                                 <td><input class="form-control extrainfo tottableinputLabel" value="Bonus Lines" /></td>
-                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Bonus_Lines_Perc_@Model.Month" /></td>
-                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Bonus_Lines_Amt_@Model.Month" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Bonus_Lines_Perc_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Bonus_Lines_Amt_@Model.target_id" /></td>
                             </tr>
 
                             <tr>
 
                                 <td><input class="form-control extrainfo tottableinputLabel" value="" /></td>
-                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Tot_Perc_@Model.Month" /></td>
-                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Tot_Amt_@Model.Month" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Tot_Perc_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Tot_Amt_@Model.target_id" /></td>
                             </tr>
 
                         </tbody>
@@ -456,106 +456,174 @@
 <script>
 
 
-    var month = '@Html.Raw(Model.Month)';
+
+
+    @*$(document).ready(function () {
+        var month = '@Html.Raw(Model.Month)';
+        var total = Number(0);
+        var targetTotal = Number(0);
+        var AchAmtTotal = Number(0);
+        var EnteredAmtTotal = Number(0);
+        var temp = Number(0);
+
+        var targetid = Number(0);
+
+        $('#Tsheet' + month + '  .hid_target_id_cls').each(function () {
+
+
+            targetid = $(this).val();
+            return;
+
+        });
+      
+    });*@
 
     $('.edit-mode').hide();
 
-   
-    $(function (event) {
-    
 
+    $(function (event) {
+
+        var month = '@Html.Raw(Model.Month)';
+   
+   var targetid = '@Html.Raw(Model.target_id)';
+       // var targetid = Number(0);
+        var total = Number(0);
+        var targetTotal = Number(0);
+        var AchAmtTotal = Number(0);
+        var EnteredAmtTotal = Number(0);
+        var temp = Number(0);
+
+        var userid = Number(0);
+
+   
+      //  targetid = $(this).find('#Tsheet' + month + '  .hid_target_id_cls').val();
+        userid = $(this).find('#Tsheet' + targetid + '  .hid_user_id_cls').val();
+        total = $(this).find('#Tsheet' + targetid + '  .hid_Base_Incentive').val();
+       
+     
+        $('#Tsheet' + targetid + ' .Target_amt p').each(function () {
+            try {
+                temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                targetTotal = targetTotal + temp;
+            }
+            catch (err) { }
+        });
+
+        $('#Tsheet' + targetid + ' .Achieved_Amt p').each(function () {
+
+            try {
+
+                temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                AchAmtTotal = AchAmtTotal + temp;
+            }
+            catch (err) { }
+        });
+
+       
+        $('#Tsheet' + targetid + ' .Entered_Amt label').each(function () {
+
+            try {
+
+                $(this)[0].innerHTML = numberWithCommas($(this)[0].innerHTML)
+
+                temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                EnteredAmtTotal = EnteredAmtTotal + temp;
+              
+            }
+            catch (err) { }
+        });
+        
+        $('#base_incentive_' + targetid).val(numberWithCommas(total));
+        $('#Tsheet' + targetid + ' tbody').append(
+              '<tr><td><b>Total</b></td><td></td><td class="numaric"><b>' +
+              numberWithCommas(targetTotal) +
+              '</b></td><td class="numaric"><b>' +
+              numberWithCommas(AchAmtTotal) + '</b></td>   <td class="numaric totEnt" id="totEnt"><b>' +
+              numberWithCommas(EnteredAmtTotal) + '</b></td>        <td></td>      </tr>');
+
+        //if (targetid > 0) {
+           
+
+        //    setTargetTotals('tottable_' + month, JSON.stringify(totalTargetsData));
+        //}
+
+
+        //Click event
         $('.edit-mode').hide();
         $('.edit-amt, .cancel-amt').on('click', function (event) {
-          
+
             event.stopPropagation();
             event.preventDefault();
             event.stopImmediatePropagation();
 
-       
+
 
             var tr = $(this).parents('tr:first');
             tr.find('.edit-mode, .display-mode').toggle();
             tr.find("#Entered_Amt").focus();
         });
 
+   
 
         $('.save-amt').on('click', function (event) {
             event.stopPropagation();
             event.preventDefault();
             event.stopImmediatePropagation();
-          
+
             var tr = $(this).parents('tr:first');
             var ent_amt = tr.find("#Entered_Amt").val();
             var cat_id = tr.find("#hid_category_id").val();
             var user_id = tr.find("#hid_user_id").val();
-  
+
             var gridid = $(this).closest('table').attr('id');
-           
+
             var model_month = tr.find("#hid_month_id").val();
 
             var target_id = tr.find("#hid_target_id").val();
+
          
 
-          
-           
             var targetModel =
             {
                 "user_id": user_id,
                 "category_id": cat_id,
                 "target_id": target_id,
                 "Entered_Amt": ent_amt
+               
             };
             $.ajax({
-                url: '@Url.Action(BusinessExcel.Controllers.ReportController.USER_TARGET_UPDATE_ACHIEVEMENT)',
+                url: '@Url.Action(BusinessExcel.Controllers.ReportController.USER_TARGET_UPDATED_TOTAL)',
                 data: JSON.stringify(targetModel),
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
 
-                    if(data == 1)
+                  
+                    if (data.length>0)
                     {
                         tr.find("#lblEntered_Amt").text(numberWithCommas(ent_amt));
                         tr.find('.edit-mode, .display-mode').toggle();
-                     
-                        setTargetTotals('tottable_' + model_month, user_id, target_id)
-                    
-                        @*var targetTotal =
-                           {
-                               "user_id": user_id,
-                               "target_id": target_id,
-                           };
-                        $.ajax({
-                            url: '@Url.Action(BusinessExcel.Controllers.ReportController.USER_TARGET_UPDATED_TOTAL)',
-                            data: JSON.stringify(targetTotal),
-                            type: 'POST',
-                            contentType: 'application/json; charset=utf-8',
-                            success: function (totdata) {
-                                
-                                //alert(Object.keys(totdata).length);
-                               
-                                if (totdata.length>0) {
-                                 
-                                    setTargetTotals('tottable_' + model_month, user_id, target_id)
-                                }
-                            }
-                        });*@
 
-
-                        //var tot = Number(0);
-                        //var temp = Number(0);
+                       // setTargetTotals('tottable_' + model_month, user_id, target_id)
                        
-                        //$("#" + gridid + " tr").not(':first').not(':last').each(function () {
+                        var tot = Number(0);
+                        var temp = Number(0);
+
+                        $("#Tsheet" + target_id + " tr").not(':first').not(':last').each(function () {
+
+                            temp = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+                            tot = tot + temp;
+
+                        });
+
+                        $("#Tsheet" + target_id + " tr:last").find('td:eq(4) b').text(numberWithCommas(tot));
+                        setTargetTotals('tottable_' + target_id, data)
+
                         
-                        //    temp = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
-                        //    tot = tot + temp;
-                          
-                        //});
-                     
-                        //$("#" + gridid + " tr:last").find('td:eq(4) b').text(numberWithCommas(tot));
-               
-                        
+
+
                         //TotalTargetPerc(gridid, $('#month').val())
-                     
+
 
                     }
                     else {
@@ -569,117 +637,130 @@
 
 
 
-    function setTargetTotals(model_table, user_id, target_id)
+    @*function LoadTargetTotals(model_table, user_id, target_id)
     {
-        
+     
         var targetTotal =
                          {
                              "user_id": user_id,
-                             "target_id": target_id,
+                             "target_id": target_id
+                           
                          };
         $.ajax({
-            url: '@Url.Action(BusinessExcel.Controllers.ReportController.USER_TARGET_UPDATED_TOTAL)',
+            url: '@Url.Action(BusinessExcel.Controllers.ReportController.LOAD_USER_TARGET_UPDATED_TOTAL)',
             data: JSON.stringify(targetTotal),
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
 
+
                 if (data.length > 0) {
 
-                    
-                    var Templine = Number(0);
-                    var Totvalue = Number(0);
-
-                    $("#" + model_table + " tr:eq(1)").find('td:eq(1) input').val(data[0].TotalTargetPerc+"%");
-                    $("#" + model_table + " tr:eq(1)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalIncAmt));
-                    $("#" + model_table + " tr:eq(2)").find('td:eq(1) input').val(data[0].LineAch);
-                  
-
-                    $("#" + model_table + " tr").not(':last').each(function () {
-
-                        Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
-
-                        Totvalue = Totvalue + Templine;
-                    });
-
-                    $("#" + model_table + " tr:last").find('td:eq(2) input').val(numberWithCommas(Totvalue));
+                    setTargetTotals(model_table, data);
+                }
+                else
+                {
+                    alert("error on Load totals");
                 }
             }
         });
 
-    }
-    function TotalTargetPerc(model_grid, model_month) {
+    }*@
 
-        var BaseIncentive = $('#base_incentive_' + model_month).val();
-
-    
-
-        var TemplinEnt = Number(0);
-        var TemplinAch = Number(0);
-        var TotAchEdited = Number(0);
-
-        $("#" + model_grid + " tr").not(':first').not(':last').each(function () {
-
-            TemplinEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
-            TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));
-            if (TemplinEnt > 0) {
-                TotAchEdited = TotAchEdited + TemplinEnt;
-            }
-            else {
-                TotAchEdited = TotAchEdited + TemplinAch;
-            }
-        });
-
-        var totTarget = $("#" + model_grid + " tr:last").find('td:eq(2) b').html();
-
-
-        totTarget = Number(totTarget.replace(/\,/g, ""));
-
-        var totTargetPer = Number(0);
-
-        totTargetPer = ((TotAchEdited * 100) / totTarget).toFixed(2);
-
-        $('#Target_Perc_' + model_month + '').val(isNaN(totTargetPer) ? '0.00' + '%' : totTargetPer + "%");
-
-
-    }
-
-
-    function TotalIncentive(MinLinesAchPerc,TotalLineAchPerc,BaseIncentive,Cap)
+    function setTargetTotals(model_table,data)
     {
+     
 
-        var TotalIncentive = Number(0);
-        var Lines = Number(0);
-
-        TotalIncentive = 0;
-
-        if(TotalLineAchPerc>MinLinesAchPerc)
-        {
-            Lines++;
-            TotalIncentive = TotalIncentive + Math.min((BaseIncentive * TotalLineAchPerc), Cap)
-        }
-
-
-    }
-    function FooterTotals(model_table, model_month)
-    {
         var Templine = Number(0);
-
         var Totvalue = Number(0);
-       
+
+        $("#" + model_table + " tr:eq(1)").find('td:eq(1) input').val(data[0].TotalTargetPerc + "%");
+        $("#" + model_table + " tr:eq(1)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalIncAmt));
+        $("#" + model_table + " tr:eq(2)").find('td:eq(1) input').val(data[0].LineAch);
+
+
         $("#" + model_table + " tr").not(':last').each(function () {
 
-           
             Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
-       
+
             Totvalue = Totvalue + Templine;
         });
 
-
         $("#" + model_table + " tr:last").find('td:eq(2) input').val(numberWithCommas(Totvalue));
-
-     
     }
+
+    //function TotalTargetPerc(model_grid, model_month) {
+
+    //    var BaseIncentive = $('#base_incentive_' + model_month).val();
+
+
+
+    //    var TemplinEnt = Number(0);
+    //    var TemplinAch = Number(0);
+    //    var TotAchEdited = Number(0);
+
+    //    $("#" + model_grid + " tr").not(':first').not(':last').each(function () {
+
+    //        TemplinEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+    //        TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));
+    //        if (TemplinEnt > 0) {
+    //            TotAchEdited = TotAchEdited + TemplinEnt;
+    //        }
+    //        else {
+    //            TotAchEdited = TotAchEdited + TemplinAch;
+    //        }
+    //    });
+
+    //    var totTarget = $("#" + model_grid + " tr:last").find('td:eq(2) b').html();
+
+
+    //    totTarget = Number(totTarget.replace(/\,/g, ""));
+
+    //    var totTargetPer = Number(0);
+
+    //    totTargetPer = ((TotAchEdited * 100) / totTarget).toFixed(2);
+
+    //    $('#Target_Perc_' + model_month + '').val(isNaN(totTargetPer) ? '0.00' + '%' : totTargetPer + "%");
+
+
+    //}
+
+
+    //function TotalIncentive(MinLinesAchPerc,TotalLineAchPerc,BaseIncentive,Cap)
+    //{
+
+    //    var TotalIncentive = Number(0);
+    //    var Lines = Number(0);
+
+    //    TotalIncentive = 0;
+
+    //    if(TotalLineAchPerc>MinLinesAchPerc)
+    //    {
+    //        Lines++;
+    //        TotalIncentive = TotalIncentive + Math.min((BaseIncentive * TotalLineAchPerc), Cap)
+    //    }
+
+
+    //}
+    //function FooterTotals(model_table, model_month)
+    //{
+    //    var Templine = Number(0);
+
+    //    var Totvalue = Number(0);
+
+    //    $("#" + model_table + " tr").not(':last').each(function () {
+
+
+    //        Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
+
+    //        Totvalue = Totvalue + Templine;
+    //    });
+
+
+    //    $("#" + model_table + " tr:last").find('td:eq(2) input').val(numberWithCommas(Totvalue));
+
+
+    //}
 
     //function TotalTargetPerc(obj) {
 
@@ -687,9 +768,9 @@
     //    var TemplinAch = Number(0);
     //    var TotAchEdited = Number(0);
 
-     
+
     //    $("#" + obj + " tr").not(':first').not(':last').each(function () {
-            
+
     //        TemplinEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
     //        TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));
     //        if (TemplinEnt > 0)
@@ -698,7 +779,7 @@
     //        }
     //        else {
     //            TotAchEdited = TotAchEdited + TemplinAch;
-    //        }            
+    //        }
     //    });
 
     //    var totTarget = $("#" + obj + " tr:last").find('td:eq(2) b').html();
@@ -715,5 +796,5 @@
 
     //}
 
-    
+
 </script>

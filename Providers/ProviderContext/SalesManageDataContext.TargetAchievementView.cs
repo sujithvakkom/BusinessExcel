@@ -31,14 +31,23 @@ namespace BusinessExcel.Providers.ProviderContext
              
             }
 
-            if(Filters.Month !=null)
+            if (Filters.target_id != null)
             {
-                int month = DateTime.ParseExact(Filters.Month, "MMM", CultureInfo.InvariantCulture).Month;
+                res = res.Where(x => x.target_id == Filters.target_id);
 
-                 res = res.Where(x =>  month<= x.start_date.Value.Month && month >= x.start_date.Value.Month);
+
+
             }
+            //if(Filters.Month !=null)
+            //{
+            //    int month = DateTime.ParseExact(Filters.Month, "MMM", CultureInfo.InvariantCulture).Month;
 
-          
+            //     res = res.Where(x =>  month<= x.start_date.Value.Month && month >= x.start_date.Value.Month);
+
+
+            //}
+
+
             count = res.Count();
 
             if (sort == null || sort == "")
@@ -75,7 +84,23 @@ namespace BusinessExcel.Providers.ProviderContext
             }
             */
         }
+        //public List<TargetTotalView> LoadTargetTotal(int user_id, int target_id)
+        //{
 
+
+        //    List<TargetTotalView> items = null;
+        //    using (var db = new SalesManageDataContext())
+        //    {
+
+
+        //        items = db.getUsertargetTotalDetails(user_id, target_id).ToList();
+
+
+        //    }
+
+        //    return items;
+
+        //}
 
         public IQueryable<TargetAchievementView> TargetAchievementViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count)
         {
@@ -107,33 +132,72 @@ namespace BusinessExcel.Providers.ProviderContext
 
             try
             {
-                if (string.IsNullOrEmpty(users.UserName))
-                {
-                    users.UserID = 291;
-                }
 
                 if (users.UserName != null)
                     users.UserID = getUserID(users.UserName);
 
-                users.start_date = Convert.ToDateTime("01-jul-2018");
-                var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails]").ToList().AsQueryable();
+                //  users.start_date = Convert.ToDateTime("01-jul-2018");
+                //  users.end_date = Convert.ToDateTime("01-Aug-2018");
 
-                //res = res.Where(x => x.UserID == users.UserID && users.start_date<= x.start_date && users.start_date >= users.start_date);
 
-                if (res.Any())
+                var user_id = users.UserID > 0 ?
+                    new SqlParameter("@user_id", users.UserID) :
+                    new SqlParameter("@user_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+                var start_date = users.start_date != default(DateTime) ?
+                    new SqlParameter("@start_date", users.start_date.Value.ToString("dd/MMM/yyyy")) :
+                    new SqlParameter("@start_date", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+
+                System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(user_id);
+                parameterList.Add(start_date);
+
+
+                //userlist = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails] @user_id,@start_date", parameterList.ToArray()).ToList();
+
+                var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails] @start_date, @user_id", parameterList.ToArray()).ToList().AsQueryable(); ;
+
+                List<UserTargets> targets = new List<UserTargets>();
+                 targets = res.Select(g => new UserTargets()
                 {
-                    var target = res.Where(x => x.UserID == users.UserID).OrderByDescending(x => x.start_date).First();
+                    target_id = g.target_id,
+                    start_date = g.start_date,
+                    end_date = g.end_date,
+                    Month = g.Month_Name
+                }).ToList();
 
-
-
-                    return target;
+                if (targets.Count > 0)
+                {
+                    users = res.Take(1).FirstOrDefault();
+                    users.UserTargets = targets;
                 }
                 else
-                    return null;
+                {
+                    users.UserTargets = targets;
+                }
+                //List<UserTargets> target = res.OfType<UserTargets>().Select(i => new { i.target_id, i.start_date.Value }).ToList();
+
+
+                //List<UserTargets> target = res.Select(i => new { i.target_id, i.start_date.Value }).ToList();
+
+
+                //     var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails]").ToList().AsQueryable();
+
+                //// //res = res.Where(x => x.UserID == users.UserID && users.start_date<= x.start_date && users.start_date >= users.start_date);
+
+                // if (res.Any())
+                // {
+                //     var target = res.Where(x => x.UserID == users.UserID).OrderByDescending(x => x.start_date).First();
+
+
+
+                return users;
+              
             }
-            catch
+            catch(Exception ex)
             {
-                return null;
+                return users;
             }
         }
 
