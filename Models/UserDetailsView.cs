@@ -14,8 +14,9 @@ namespace BusinessExcel.Models
         [Display(Name = "Name")]
         public int UserID { get; set; }
 
+        
         [Column("user_name")]
-        [Display(Name = "Staff Name")]
+        [Display(Name = "Name")]
         public string UserName { get; set; }
  
 
@@ -74,6 +75,15 @@ namespace BusinessExcel.Models
         public string Account { get; set; }
 
         public List<string> QuarterMonths { get; set; }
+
+
+        [Column("target_id")]
+        public int target_id { get; set; }
+
+
+        public List<UserTargets> UserTargets { get; set; }
+
+        public string Month_Name { get; set; }
 
     }
 }

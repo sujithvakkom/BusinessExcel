@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessExcel.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -103,9 +104,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         public int? target_id { get; set; }
 
 
-  
-
-
+        public List<TargetTotalView> TargetTotal { get; set; }
         //[Column("Target_Per")]
         //[Display(Name = "Target %")]
         //public string Target_Per { get; set; }

@@ -220,6 +220,7 @@
     <Compile Include="Models\TargetTotalView.cs" />
     <Compile Include="Models\Tree.cs" />
     <Compile Include="Models\UserDetailsView.cs" />
+    <Compile Include="Models\UserTargets.cs" />
     <Compile Include="Models\UserViewFilters.cs" />
     <Compile Include="Models\ActionViewFilters.Roster.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
