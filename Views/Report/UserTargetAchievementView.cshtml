@@ -8,6 +8,8 @@
 
 @model TargetAchievementView
 
+
+
 <div class="box box-primary" style="margin-top:3%">
     <div class="box-header with-border">
         <strong>
@@ -17,8 +19,7 @@
     </div>
     <div class="box-body">
       
-     
-
+      
         <div id="target-achievement-view" class="table-responsive">
             @{
                 if (User.IsInRole("User"))
@@ -150,7 +151,7 @@
 
                          @*grid.Column("Entered_Amt", "Entered_Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),*@
 
-                       grid.Column("Entered_Amt", "Entered Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt" style="font-weight:normal">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),
+                       grid.Column("Entered_Amt", "Entered Amt", canSort: false, format: @<text> <span class="display-mode"> <label id="lblEntered_Amt" style="font-weight:normal">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" style="text-align:right;" autocomplete="off"/> </text>, style: "Entered_Amt numaric"),
 
 
                           grid.Column("", format: @<text>
@@ -162,7 +163,7 @@
 
                 <button class="cancel-amt edit-mode">Cancel</button>
           
-                        </text>,  style: "col3Width" , canSort: false),
+                        </text>,  style: "colbtn" , canSort: false),
 
 
                        grid.Column(
@@ -209,7 +210,7 @@
 
                     <div class="input-group">
 
-                        <input type="text" class="form-control extrainfo" value="Base Incentive" />
+                        <input type="text" class="form-control extrainfo" value="Base Incentive" style="background-color:#a4a7a9" />
                         <span class="input-group-addon extrainfo"></span>
                         <input type="text" class="form-control extrainfo" value="" id="base_incentive_@Model.target_id" style="text-align:right"/>
 
@@ -235,7 +236,7 @@
 
                                 @*<td ><input class="form-control extrainfo tottableinput"/>Target % </td>*@
                                 <td><input class="form-control extrainfo tottableinputLabel" value="Target % " /></td>
-                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalTargetPerc id="Target_Perc_@Model.target_id"  /></td>
+                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalTargetPerc% id="Target_Perc_@Model.target_id" /></td>
                                 <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalIncAmt id="Target_Amt_@Model.target_id" /></td>
                             </tr>
 
@@ -255,8 +256,8 @@
                             <tr>
 
                                 <td><input class="form-control extrainfo tottableinputLabel" value="" /></td>
-                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Tot_Perc_@Model.target_id" /></td>
-                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Tot_Amt_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="" id="Tot_Perc_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value= @Model.TargetTotal.Sum(x => x.TotalIncAmt) id="Tot_Amt_@Model.target_id" /></td>
                             </tr>
 
                         </tbody>
@@ -341,13 +342,19 @@
   
   }
 
- 
-
+ .colbtn
+ {
+     width:14%;
+ }
+.Entered_Amt
+{
+    width:15%;
+}
 
      .webgrid {
         margin: 4px;
         border-collapse: collapse;
-        width: 90%;
+        width: 80%;
     }
     
     .gridheader {
@@ -670,22 +677,24 @@
     function setTargetTotals(model_table,data)
     {
      
-
+        
         var Templine = Number(0);
         var Totvalue = Number(0);
 
         $("#" + model_table + " tr:eq(1)").find('td:eq(1) input').val(data[0].TotalTargetPerc + "%");
         $("#" + model_table + " tr:eq(1)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalIncAmt));
         $("#" + model_table + " tr:eq(2)").find('td:eq(1) input').val(data[0].LineAch);
+       
 
-
-        $("#" + model_table + " tr").not(':last').each(function () {
-
-            Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
-
+        $("#" + model_table + " tr").not(':first').not(':last').each(function () {
+            
+            
+           Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
+         
             Totvalue = Totvalue + Templine;
         });
 
+       
         $("#" + model_table + " tr:last").find('td:eq(2) input').val(numberWithCommas(Totvalue));
     }
 
