@@ -19,6 +19,7 @@ namespace BusinessExcel.Controllers
         public static string _TARGETDISTRIBUTIONASSIGN = "_TargetDistributionAssign";
         public static string TARGETDISTRIBUTION_TITLE = "Target Distribution";
 
+        public static string _GETLOCATIONALOCATIONTITLE = "Assign to user";
         public static string _GETLOCATIONALOCATION = "_GetLocationAlocation";
         public ActionResult TargetDistribution()
         {
@@ -47,6 +48,7 @@ namespace BusinessExcel.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult _GetLocationAlocation(BaseTarget target) 
         {
             List<LineTarget> lineTargets = new List<LineTarget>();

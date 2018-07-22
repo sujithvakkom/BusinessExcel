@@ -20,22 +20,17 @@
 <!-- Main content -->
 <section class="content">
     <div class="row" style="margin:10px">
-        <div class="col-md-12">
+        <div class="col-md-9">
             <div id="target-distribution">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">@TargetController.TARGETDISTRIBUTION_TITLE</h3>
                     </div>
-                    <div id="target-distribution-assign" class="box-body">
+                    <div class="box-body">
                         @{
                             Html.RenderPartial(TargetController._TARGETDISTRIBUTIONASSIGN, Model);
                         }
                     </div>
-                
-                    <div id="location-user-target">
-
-                    </div>
-
                 </div>
             </div>
         </div>
