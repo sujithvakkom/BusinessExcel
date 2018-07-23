@@ -69,7 +69,7 @@ namespace BusinessExcel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TargetDistribution(BaseTarget target)
+        public ActionResult TargetDistribution(BaseTarget target, String UserName)
         {
             using(var db = new SalesManageDataContext())
             foreach (var cat in target.LineTargets)

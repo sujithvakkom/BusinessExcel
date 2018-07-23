@@ -47,7 +47,6 @@
 
                 @Html.HiddenFor(m => Model.TargetTemplate)
                 @Html.HiddenFor(m => Model.Location)
-                @Html.HiddenFor(m => Model.UserName)
 
             </div>
                         <div class="table-form" style="padding: 0px 30px 15px 30px">
@@ -218,6 +217,7 @@ total)
   hasValidation: true
   )
                                                         </div>
+
                                                         <div class="col-md-2">
 
                                                             @Html.AdminLTEFromSubmitter("Assign Targets",
@@ -234,6 +234,44 @@ total)
                                                                 }*@
 
                                                         </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        @if (ViewBag.Result != null)
+                                                        {
+                                                            var message = "";
+                                                            var className = @"";
+                                                            switch ((int)ViewBag.Result)
+                                                            {
+                                                                case -1:
+                                                                    className = @"alert alert-danger";
+                                                                    message = "<b>Cannot save.</b>";
+                                                                    break;
+                                                                case -2:
+                                                                    className = @"alert alert-warning";
+                                                                    message = "<b>Updated.</b>";
+                                                                    break;
+                                                                default:
+                                                                    className = @"alert alert-success";
+                                                                    message = "<b>Successfully saved.</b>";
+                                                                    break;
+                                                            }
+
+                                                            if (ViewBag.ModelErrors != null)
+                                                            {
+                                                                foreach (var err in ((string)ViewBag.ModelErrors).Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+                                                                { message += ("<p>" + err + "</p>"); }
+                                                            }
+                                                            if (ViewBag.Message != null)
+                                                            {
+                                                                message += ("<p>" + ViewBag.Message + "</p>");
+                                                            }
+                                                            <div class="row save-message">
+                                                                <div class="col-md-offset-1 col-md-8">
+                                                                    <div class="@className" role="alert">@Html.Raw(message)</div>
+                                                                </div>
+                                                            </div>
+                                                        }
                                                     </div>
                                                         }
                                                     }

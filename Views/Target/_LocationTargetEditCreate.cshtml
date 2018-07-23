@@ -73,14 +73,14 @@ showGlyphicons: true)
                     </div>
                     <div class="col-md-5">
                         @{
-                            temp = new Dictionary<string, object>
-                                () { { "class", "form-control select2" } };
-                            if (!string.IsNullOrEmpty(Model.TargetTemplate))
-                            {
-                                temp.Add("disabled", "true");
-                                @Html.HiddenFor(m=>Model.Location)
+                                temp = new Dictionary<string, object>
+                                    () { { "class", "form-control select2" } , { "onclick","remove_messages"} };
+                                if (!string.IsNullOrEmpty(Model.TargetTemplate))
+                                {
+                                    temp.Add("disabled", "true");
+                                    @Html.HiddenFor(m=>Model.Location)
+                                }
                             }
-                        }
                             @Html.AdminLTEDropDownListFor(
                  m => Model.Location,
                  htmlLabelAttributes: null,
@@ -114,7 +114,8 @@ showGlyphicons: true)
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-offset-6 col-md-1 padding-label ">
+                <div class="col-md-6"></div>
+                <div class="col-md-1 padding-label ">
                     Total
                 </div>
                 <div class="col-md-3 table-fields">
@@ -163,7 +164,7 @@ showGlyphicons: true)
                 {
                     message += ("<p>" + ViewBag.Message + "</p>");
                 }
-                <div class="row">
+                <div class="row save-message">
                     <div class="col-md-offset-1 col-md-8">
                         <div class="@className" role="alert">@Html.Raw(message)</div>
                     </div>
@@ -171,9 +172,17 @@ showGlyphicons: true)
             }
 
             <div class="row">
-                <div class="col-md-offset-1 col-md-8">
-                    <input class="btn btn-primary pull-right" type="submit" value="Save" />
-                    @{Html.RenderPartial("_Progress", "target-create-progress");}
+                <div class="col-md-7"></div>
+                <div class="col-md-3">
+
+                    @Html.AdminLTEFromSubmitter("Save",
+                                               "target-create-progress",
+                                               new Dictionary<string, object>() {
+                                                   { "type", "submit" } ,
+                                                   { "class","btn btn-primary"}
+                                               },
+                                               Url.Content("~/Images/progress.gif")
+                                               )
                 </div>
             </div>
         </div>

@@ -36,7 +36,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         public Int64 row_num { get; set; }
 
         [Column("category_id", Order = 2)]
-        public int category_id { get; set; }
+        public int? category_id { get; set; }
 
         [Column("has_bonus", Order = 3)]
         public bool has_bonus { get; set; }

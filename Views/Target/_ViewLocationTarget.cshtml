@@ -83,18 +83,25 @@ GROUP BY row_num ,
                     new System.Data.SqlClient.SqlParameter("@deleted", System.Data.SqlDbType.BigInt) { Value = 0 },
                     new System.Data.SqlClient.SqlParameter("@target_id", System.Data.SqlDbType.BigInt) { Value = lineTarget.target_id });
                 <tr><th scope="col">No.</th><th scope="col">Has Bonus</th><th>Line</th><th class="text-right">Target</th></tr>
-                decimal sum = 0;
-                foreach (var l in lines)
-                {
+                            decimal sum = 0;
+                            foreach (var l in lines)
+                            {
+                                try { 
+                                var temp = string.IsNullOrEmpty(l.category) ? "Others" : l.category;
                     <tr>
                         <td>@l.row_num</td>
-                        <td>@(l.has_bonus?"Yes":"No")</td>
-                        <td>@l.category</td>
-                        <td class="text-right">@Html.AdminLTEParagraph( l.value,new Dictionary<string, object> { { "class","numaric"} })
+                        <td>@(l.has_bonus ? "Yes" : "No")</td>
+                        <td>@temp</td>
+                        <td class="text-right">@Html.AdminLTEParagraph(l.value, new Dictionary<string, object> { { "class", "numaric" } })
                         </td>
                     </tr>
-                    sum += l.value;
-                }
+                                    sum += l.value;
+                                }
+                                catch (Exception ex)
+                                {
+                                    <p>@ex.Message</p>;
+                                }
+                            }
 
                 <tr><td class="text-danger text-bold" colspan="3">Total</td><td class="text-right text-danger text-bold">
                     @Html.AdminLTEParagraph(sum, new Dictionary<string, object> { { "class", "numaric" } })</td></tr>
