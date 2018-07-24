@@ -350,7 +350,8 @@
     
         function convertNumber(val) {
             try{
-                return Number(val.replace(',', ''))
+                //return Number(val.replace(',', ''))
+                return Number(val.replace(/,/g, ""))
             } catch (err) {
                 return 0
             }

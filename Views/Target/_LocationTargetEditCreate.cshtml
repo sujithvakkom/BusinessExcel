@@ -74,7 +74,7 @@ showGlyphicons: true)
                     <div class="col-md-5">
                         @{
                                 temp = new Dictionary<string, object>
-                                    () { { "class", "form-control select2" } , { "onclick","remove_messages"} };
+                                    () { { "class", "form-control select2" } , { "onchange","remove_messages()"} };
                                 if (!string.IsNullOrEmpty(Model.TargetTemplate))
                                 {
                                     temp.Add("disabled", "true");
@@ -120,20 +120,15 @@ showGlyphicons: true)
                 </div>
                 <div class="col-md-3 table-fields">
 
-                    @Html.AdminLTETextBoxFor(m => m.TotalTarget,
-                     null,
-                     new Dictionary<string, object>() {
-                                        { "class", "form-control numaric" }
-                     },
-                     null,
-                     null,
-                     "",
-                     false,
-                     true,
-                     true)
+                    @Html.AdminLTEParagraphFor(m => m.TotalTarget,
+                   new Dictionary<string, object>() {
+                         { "class", "form-control numaric" },
+                         { "disabled","true"}
+                   })
                 </div>
             </div>
         </div>
+                        //Error Messages
         <div class="row">
             @if (ViewBag.Result != null)
             {

@@ -128,4 +128,13 @@ ajaxOptions: new AjaxOptions()
     function remove_messages() {
         $(".save-messages").html = "";
     }
+
+    function target_line_changed() {
+        var sum = Number(0);
+
+        $("#target-row").find("input[name*='].Target']").each(function () {
+            sum = sum + Number($(this).val());
+        })
+        $("p[id='TotalTarget']").html(sum)
+    }
 </script>

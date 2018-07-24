@@ -69,9 +69,16 @@ namespace BusinessExcel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TargetDistribution(BaseTarget target, String UserName)
+        public ActionResult TargetDistribution(BaseTarget target)
         {
-            using(var db = new SalesManageDataContext())
+            if (ModelState.ContainsKey("StartDate"))
+                ModelState["StartDate"].Errors.Clear();
+            if (ModelState.ContainsKey("EndDate"))
+                ModelState["EndDate"].Errors.Clear();
+            if (ModelState.ContainsKey("Description"))
+                ModelState["Description"].Errors.Clear();
+            var errorList = ModelState.GetErrors();
+            using (var db = new SalesManageDataContext())
             foreach (var cat in target.LineTargets)
             {
                     try
@@ -87,13 +94,26 @@ namespace BusinessExcel.Controllers
                 try
                 {
                     result = target.Save(out Message);
-                    if (result > 0)
-                        target = new BaseTarget(true);
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Message = Message;
                 }
+                using (var db = new SalesManageDataContext())
+                {
+                    try
+                    {
+                        int? userId = null;
+                        try { userId = db.getUserID(target.UserName); }
+                        catch (Exception) { }
+                        target.LineTargets = db.getTargetTempletLineDetails(int.Parse(target.TargetTemplate), userID: userId).ToArray();
+                    }
+                    catch (Exception) { }
+                }
+                ViewBag.Result = result;
+                if (!string.IsNullOrEmpty(Message))
+                    ViewBag.Message = Message;
+                return PartialView(_GETLOCATIONALOCATION, target);
             }
             else
             {
@@ -117,9 +137,6 @@ namespace BusinessExcel.Controllers
                     RedirectToAction(PublicController.WELCOME, PublicController.PUBLIC);
                 }
             }
-            ViewBag.Result = result;
-            if (!string.IsNullOrEmpty(Message))
-                ViewBag.Message = Message;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (Request.IsAjaxRequest())
                 return PartialView(_TARGETDISTRIBUTIONASSIGN, target);
