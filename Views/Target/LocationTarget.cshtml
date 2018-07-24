@@ -77,10 +77,14 @@ ajaxOptions: new AjaxOptions()
                                     showLabel: false)
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="submit" value="Search" class="btn btn-default" />
-                                                @{
-                                                Html.RenderPartial("_Progress", "location-target-view-search");
-                                                }
+                                                @Html.AdminLTEFromSubmitter("Search",
+                                               "location-target-view-search",
+                                               new Dictionary<string, object>() {
+                                                   { "type", "submit" } ,
+                                                   { "class","btn btn-default"}
+                                               },
+                                               Url.Content("~/Images/progress.gif")
+                                               )
                                             </div>
                                         </div>
                                     </div>
@@ -120,5 +124,8 @@ ajaxOptions: new AjaxOptions()
                 $('#target-location-create').html(data);
             }
         })
+    }
+    function remove_messages() {
+        $(".save-messages").html = "";
     }
 </script>

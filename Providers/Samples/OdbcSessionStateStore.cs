@@ -257,10 +257,11 @@ namespace BusinessExcel.Providers.Samples
                 if (WriteExceptionsToEventLog)
                 {
                     WriteToEventLog(e, "SetAndReleaseItemExclusive");
-                    throw new ProviderException(exceptionMessage);
+//TODO 
+                    //throw new ProviderException(exceptionMessage);
                 }
-                else
-                    throw e;
+                //else
+                    //throw e;
             }
             finally
             {
