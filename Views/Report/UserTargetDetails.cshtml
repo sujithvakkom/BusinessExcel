@@ -140,21 +140,24 @@
                                                         @*<div class="col-md-1 padding-label">
                                                             Type
                                                         </div>*@
-                                                        <div class="col-md-4">
+                                                        <div class="form-group col-md-4">
 
+                                                            <div class="row"><label class="col-md-1" for="period">Period</label></div>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    @Html.AdminLTETextBoxFor(m => m.Quarter_Name,
+                                                                               null,
+                                                                               new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "Readonly", "Readonly" } },
+                                                                               null,
+                                                                               null,
+                                                                               "",
+                                                                               false,
+                                                                               true,
+                                                                               true)
+                                                                </div>
+                                                                </div>
 
-                                                            @Html.AdminLTETextBoxFor(m => m.Quarter_Name,
-                       null,
-                       new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } , {"Readonly", "Readonly" } },
-                       null,
-                       null,
-                       "",
-                       true,
-                       true,
-                       true)
-
-
-                                                        </div>
+                                                            </div>
 
                                                             @*<div class="form-group col-md-4 ">
                                                                 <div class="row"><label class="col-md-1" for="email">Period</label></div>
