@@ -170,7 +170,8 @@ namespace BusinessExcel.Controllers
         [Authorize(Roles = "System Administrator")]
         public ActionResult UserTargetDetails(UserTargetDetailsView usr)
         {
-         
+
+            //getUserTargetsNextPrvsThreeMonths(291);
 
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
@@ -179,6 +180,7 @@ namespace BusinessExcel.Controllers
 
             if(usr.start_date ==null)
             {
+              
                 usr.start_date = DateTime.Now.Date;
                 usr.end_date = DateTime.Now.Date;
             }
@@ -205,82 +207,9 @@ namespace BusinessExcel.Controllers
             if (Request.IsAjaxRequest()) return PartialView(usr);
             return View(usr);
 
-            //using (var db = new SalesManageDataContext())
-            //{
-            //    usr = db.getUserTargetDetails(usr);
-            //}
-
-            //if (!string.IsNullOrEmpty(usr.UserName))
-            //    using (var db = new SalesManageDataContext())
-            //    {
-            //        ViewData[SELECTED_FILTED_USER] = db.getUserDetail(usr.UserName);
-            //    }
-
-            //if (usr.Location_Id>0)
-            //    using (var db = new SalesManageDataContext())
-            //    {
-            //        ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(usr.Location_Id.ToString());
-            //    }
-
-            //if (usr.start_date != default(DateTime))
-            //{
-            //    usr.Quarter_Name = GetQuarter(usr.start_date.Value);
-            //    usr.Type = targetType.WM.ToString();
-            //    usr.Account = GEtAccountName(usr.Location_Name);
-            //    usr.QuarterMonths = GetMonths(usr.start_date.Value);
-
-            //    using (var db = new SalesManageDataContext())
-            //    {
-            //        if(usr.SuperVisorId>0)
-            //        usr.FieldMan = db.getUserFullNameByID(usr.SuperVisorId);
-
-            //        usr.SalesMan = db.getUserFullNameByID(db.getParent(usr.UserID));
-            //    }
-            //}
-
-            ////ViewBag.UserTargetViewSort = sort;
-            ////ViewBag.UserTargetViewDir = sortdir;
-            ////ViewBag.UserTargetViewPage = page;
-            //ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
-            //ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-            //ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
-            //return PartialView(usr);
-
-        }
-        //public PartialViewResult TableRosterUpateView(string sort, string sortdir, int page = 1, UserTargetDetailsView Filters = null)
-        //{
-        //    ViewBag.UserTargetViewSort = sort;
-        //    ViewBag.UserTargetViewDir = sortdir;
-        //    ViewBag.UserTargetViewPage = page;
-
-        //    ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
-        //    ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-        //    ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
-        //    return PartialView(USER_TARGET_DETAILS_ACTION, Filters);
-        //}
-        //[HttpPost]
-        //// [Authorize(Roles = "manager")]
-        //[Authorize(Roles = "System Administrator")]
-        //public ActionResult UserTargetDetailsAction(UserTargetDetailsView usr=null)
-        //{
-
-        //    ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
-        //    ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-        //    ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
           
-        //    if (Request.IsAjaxRequest())
-        //    {
-        //        return PartialView(TABLEDAILYUPATEVIEW, usr);
-
-               
-        //    }
-        //    return View();
-
-
-         
-
-        //}
-
+        }
+       
         //public List<UserTargetDetailsView> UserData(UserTargetDetailsView usr)
         //{
            
@@ -430,6 +359,22 @@ namespace BusinessExcel.Controllers
 
         //}
 
+
+        /// <summary>
+        /// Return user target full details.
+        /// Returns null if user not assigned to any location within given period
+        /// </summary>
+        /// <param name="user_id"></param>
+        /// <returns></returns>
+        public JsonResult getUserTargetsNextPrvsThreeMonths(int user_id)
+        {
+            UserTargetDetailsView usrDet = null;
+            using (var db = new SalesManageDataContext())
+            {
+                usrDet = db.getUserTargets(user_id);
+            }
+                return Json(usrDet, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult getUpdatedTargetTotal(TargetAchievementView targetModel)
         {

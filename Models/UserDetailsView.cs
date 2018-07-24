@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessExcel.Providers.ProviderContext.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -55,11 +56,13 @@ namespace BusinessExcel.Models
         public string Quarter_Name { get; set; }
 
 
-        [Display(Name = "Start Date")]
+        [Display(Name = "Start Date")]//Start Date
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? start_date { get; set; }
 
-  
+   
+
         //  [Key, Column(Order = 4)]
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
@@ -82,6 +85,7 @@ namespace BusinessExcel.Models
 
 
         public List<UserTargets> UserTargets { get; set; }
+     
 
         public string Month_Name { get; set; }
 

@@ -151,7 +151,7 @@
 
                          @*grid.Column("Entered_Amt", "Entered_Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),*@
 
-                       grid.Column("Entered_Amt", "Entered Amt", canSort: false, format: @<text> <span class="display-mode"> <label id="lblEntered_Amt" style="font-weight:normal">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" style="text-align:right;" autocomplete="off"/> </text>, style: "Entered_Amt numaric"),
+                       grid.Column("Entered_Amt", "Entered Amt", canSort: false, format: @<text> <span class="display-mode"> <label id="lblEntered_Amt" style="font-weight:normal">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" style="text-align:right;" autocomplete="off" onkeypress='return isNumberKey(event)'/> </text>, style: "Entered_Amt numaric"),
 
 
                           grid.Column("", format: @<text>
@@ -210,9 +210,9 @@
 
                     <div class="input-group">
 
-                        <input type="text" class="form-control extrainfo" value="Base Incentive" style="background-color:#a4a7a9" />
+                        <input type="text" class="form-control extrainfo" value="Base Incentive" style="background-color:#eceaea" />
                         <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="" id="base_incentive_@Model.target_id" style="text-align:right"/>
+                        <input type="text" class="form-control extrainfo" value="" id="base_incentive_@Model.target_id" style="text-align:right;background-color:#eceaea"/>
 
                     </div>
 
@@ -226,11 +226,11 @@
                     <table class="table tottable" id="tottable_@Model.target_id">
 
                         <tbody>
-
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td style="text-align:center;font-weight:bold">Incentive</td>
+                           
+                            <tr class="gridheader">
+                                <th></th>
+                                <th></th>
+                                <th style="text-align:center;font-weight:bold" >Incentive</th>
                             </tr>
                             <tr>
 
@@ -244,22 +244,22 @@
 
                               <td><input class="form-control extrainfo tottableinputLabel" value="Line Achv" /></td>
                               <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].LineAch id="Lines_Ach_Perc_@Model.target_id" /></td>
-                              <td><input class="form-control extrainfo tottableinput" value="0.00" id="Lines_Ach_Amt_@Model.target_id" /></td>
+                              <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalLineAchAccAmt id="Lines_Ach_Amt_@Model.target_id" /></td>
                             </tr>
                             <tr>
 
                                 <td><input class="form-control extrainfo tottableinputLabel" value="Bonus Lines" /></td>
-                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Bonus_Lines_Perc_@Model.target_id" /></td>
-                                <td><input class="form-control extrainfo tottableinput" value="0.00" id="Bonus_Lines_Amt_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].totalBonusLinePerc id="Bonus_Lines_Perc_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalBonusLineAmt id="Bonus_Lines_Amt_@Model.target_id" /></td>
                             </tr>
 
                             <tr>
 
                                 <td><input class="form-control extrainfo tottableinputLabel" value="" /></td>
                                 <td><input class="form-control extrainfo tottableinput" value="" id="Tot_Perc_@Model.target_id" /></td>
-                                <td><input class="form-control extrainfo tottableinput" value= @Model.TargetTotal.Sum(x => x.TotalIncAmt) id="Tot_Amt_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value= @Model.TargetTotal.Sum(x => x.TotalIncAmt+x.TotalLineAchAccAmt+x.TotalBonusLineAmt) id="Tot_Amt_@Model.target_id" /></td>
                             </tr>
-
+                            
                         </tbody>
                     </table>
                 </div>
@@ -407,6 +407,12 @@
         font-weight:bold;
     }
 
+   
+    .tottable > tbody > tr > th  
+    {
+        border-top:1px solid #b5a9a9;
+    }
+
 
     /*.webgrid-table {
         font-family: Arial,Helvetica,sans-serif;
@@ -464,6 +470,10 @@
 
 
 
+
+   // $('#target-achievement-display').find("[id='loading-element']").remove();
+
+    
 
     @*$(document).ready(function () {
         var month = '@Html.Raw(Model.Month)';
@@ -697,7 +707,14 @@
        
         $("#" + model_table + " tr:last").find('td:eq(2) input').val(numberWithCommas(Totvalue));
     }
+    function isNumberKey(evt) {
+      
+        var charCode = (evt.which) ? evt.which : event.keyCode
 
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
     //function TotalTargetPerc(model_grid, model_month) {
 
     //    var BaseIncentive = $('#base_incentive_' + model_month).val();

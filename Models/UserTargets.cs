@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessExcel.Providers.ProviderContext.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,5 +26,11 @@ namespace BusinessExcel.Models
 
         public string Month { get; set; }
 
+
+        public List<TargetAchievementView> TargetDetailsView { get; set; }
+        public List<TargetTotalView> TargetTotalView{ get; set; }
+
+
+   
     }
 }

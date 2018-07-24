@@ -201,6 +201,70 @@ namespace BusinessExcel.Providers.ProviderContext
             }
         }
 
+        /// <summary>
+        /// Returns users target of previous & next three months
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns></returns>
+        public virtual UserTargetDetailsView getUserTargets(int user_id)
+        {
+         
+            try
+            {
+
+
+                UserTargetDetailsView userDet = new UserTargetDetailsView();
+
+                var UID = user_id > 0 ?
+                    new SqlParameter("@user_id", user_id) :
+                    new SqlParameter("@user_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+                System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(UID);
+           
+
+                var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[get_user_target_prvs_nxt_three_months]  @user_id", parameterList.ToArray()).ToList().AsQueryable(); ;
+
+                
+
+                //Any targets available  within period
+                if (res.Any())
+                {
+                    userDet = res.Take(1).FirstOrDefault();
+
+                    List<UserTargets> utList = new List<UserTargets>();
+
+                    UserTargets ut = new UserTargets();
+
+                    foreach (UserTargetDetailsView det in res)
+                    {
+
+
+                        ut = new UserTargets();
+
+                        ut.target_id = det.target_id;
+                        ut.start_date = det.start_date;
+                        ut.end_date = det.end_date;
+                        ut.TargetDetailsView = getUsertargetAchievementDetailsView(user_id, det.target_id);
+                        ut.TargetTotalView = getUsertargetTotalDetails(user_id, det.target_id);
+                        utList.Add(ut);
+                     
+                    }
+                    userDet.UserTargets = utList;
+                    return userDet;
+                }
+
+
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                return  null;
+            }
+        }
+
+
         public virtual IEnumerable< UserTargetDetailsView> getAllUserTargetDetails(UserTargetDetailsView users)
         {
 
