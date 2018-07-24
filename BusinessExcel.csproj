@@ -202,7 +202,7 @@
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\ReportController.CategoryAchievement.cs" />
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
-    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\ReportController.Actions.cs" />
     <Compile Include="Controllers\RosterController.cs" />
     <Compile Include="Controllers\TargetController.TargetDistribution.cs" />
     <Compile Include="Controllers\TargetController.LocationTarget.cs" />

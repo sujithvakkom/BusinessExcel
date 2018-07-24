@@ -88,18 +88,8 @@
                         "",
                         false,
                         true,
-                        true)
+                        false)
 
         </div>
     </div>
 }
-<script>
-    function target_line_changed() {
-        var sum = Number(0);
-
-        $("#target-row").find("input[name*='].Target']").each(function () {
-            sum = sum + Number( $(this).val());
-        })
-        $("input[name='TotalTarget']").val(sum)
-    }
-</script>

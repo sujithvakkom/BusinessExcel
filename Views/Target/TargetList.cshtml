@@ -15,16 +15,15 @@
 
 
 @using (Ajax.BeginForm(
-                                                                                                               actionName: BusinessExcel.Controllers.TargetController.AJAXCREATETARGETDETAILS,
-                                                                                                                routeValues: null,
-                                                                                                                ajaxOptions: new AjaxOptions()
-                                                                                                                {
-                                                                                                                    UpdateTargetId = "target-details-creation-form",
-                                                                                                                    InsertionMode = InsertionMode.Replace,
-                                                                                                                    OnSuccess = "refreshTargetList",
-                                                                                                                    OnFailure = ""
-                                                                                                                },
-                                                                                                                htmlAttributes: new { @class = "form-inline" })
+    actionName: BusinessExcel.Controllers.TargetController.AJAXCREATETARGETDETAILS,
+    routeValues: null,
+    ajaxOptions: new AjaxOptions()
+    {
+        UpdateTargetId = "target-details-creation-form",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "refreshTargetList",
+        OnFailure = ""
+    },htmlAttributes: new { @class = "form-inline" })
                                                                                                                                                                                                                                                     )
 {
 

@@ -11,9 +11,12 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
     [Table(name:"daily_update_v", Schema = "sc_salesmanage_merchant")]
     public partial class DailyUpateView
     {
-        [Key()]
+        [Key]
+        [Column("ROW_NUM")]
+        [Display(Name = "ROW NUM", Description = "ROW NUM", Prompt = "ROW NUM", ShortName = "R NUM")]
+        public int ROW_NUM { get; set; }
         [Column("user_id")]
-        [Display(Name="User Id",Description ="User Id",Prompt ="User Id",ShortName ="U Id")]
+        [Display(Name = "User Id", Description = "User Id", Prompt = "User Id", ShortName = "U Id")]
         public int UserId { get; set; }
         [Column("brand_id")]
         public int BrandId { get; set; }
