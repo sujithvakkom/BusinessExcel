@@ -178,16 +178,31 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
 
 
-            if(usr.start_date ==null)
+            if(usr.Quarter_Name==null)
             {
-              
                 usr.start_date = DateTime.Now.Date;
-                usr.end_date = DateTime.Now.Date;
+            
+            }
+            else
+            {
+                string[] qrt = usr.Quarter_Name.Split('-');
+                usr.start_date = getQuarterStartDate(qrt[0].ToString().Trim(), qrt[1].ToString().Trim());
             }
             if (string.IsNullOrEmpty(usr.UserName))
             {
                 usr.UserID = 291;
             }
+
+            //if(usr.start_date ==null)
+            //{
+
+            //    usr.start_date = DateTime.Now.Date;
+            //    usr.end_date = DateTime.Now.Date;
+            //}
+            //if (string.IsNullOrEmpty(usr.UserName))
+            //{
+            //    usr.UserID = 291;
+            //}
 
 
             using (var db = new SalesManageDataContext())
@@ -209,87 +224,111 @@ namespace BusinessExcel.Controllers
 
           
         }
-       
+
+        private DateTime getQuarterStartDate(string quarter,string year)
+        {
+            DateTime qrt = new DateTime();
+
+            switch(quarter)
+            {
+                case "Q1":
+                    return qrt = Convert.ToDateTime("01-jan-"+ year + "");
+                   
+                case "Q2":
+                    return qrt = Convert.ToDateTime("01-apr-" + year + "");
+
+                case "Q3":
+                    return qrt = Convert.ToDateTime("01-jul-" + year + "");
+
+                case "Q4":
+                    return qrt = Convert.ToDateTime("01-oct-" + year + "");
+
+            }
+
+
+            return qrt;
+        }
+
         //public List<UserTargetDetailsView> UserData(UserTargetDetailsView usr)
         //{
-           
 
-            //using (var db = new SalesManageDataContext())
-            //{
-            //    return db.getUserTargetDetails(usr);
-            //}
 
-            //if (usr != null)
-            //{
-            //    if (!string.IsNullOrEmpty(usr.UserName))
-            //        using (var db = new SalesManageDataContext())
-            //        {
-            //            ViewData[SELECTED_FILTED_USER] = db.getUserDetail(usr.UserName);
-            //        }
+        //using (var db = new SalesManageDataContext())
+        //{
+        //    return db.getUserTargetDetails(usr);
+        //}
 
-            //    if (usr.Location_Id > 0)
-            //        using (var db = new SalesManageDataContext())
-            //        {
-            //            ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(usr.Location_Id.ToString());
-            //        }
+        //if (usr != null)
+        //{
+        //    if (!string.IsNullOrEmpty(usr.UserName))
+        //        using (var db = new SalesManageDataContext())
+        //        {
+        //            ViewData[SELECTED_FILTED_USER] = db.getUserDetail(usr.UserName);
+        //        }
 
-            //    if (usr.start_date != default(DateTime))
-            //    {
-            //        usr.Quarter_Name = GetQuarter(usr.start_date.Value);
-            //        usr.Type = targetType.WM.ToString();
-            //        usr.Account = GEtAccountName(usr.Location_Name);
-            //        usr.QuarterMonths = GetMonths(usr.start_date.Value);
-                   
-            //        using (var db = new SalesManageDataContext())
-            //        {
-            //            if (usr.SuperVisorId > 0)
-            //                usr.FieldMan = db.getUserFullNameByID(usr.SuperVisorId);
+        //    if (usr.Location_Id > 0)
+        //        using (var db = new SalesManageDataContext())
+        //        {
+        //            ViewData[SELECTED_FILTED_LOCATION] = db.getLocationDetail(usr.Location_Id.ToString());
+        //        }
 
-            //            usr.SalesMan = db.getUserFullNameByID( db.getParent(usr.UserID)  );
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    usr = new UserTargetDetailsView();
-            //    usr.Account = "";
-            //    usr.FieldMan = "";
-            //    usr.Full_Name = "";
-            //    usr.Location_Id = 0;
-            //    usr.Location_Name = "";
-            //    usr.QuarterMonths = new string[0].ToList();
-            //    usr.Quarter_Name = "";
-            //    usr.SalesMan = "";
-            //    usr.start_date = default(DateTime);
-            //    usr.end_date = default(DateTime);
-            //    usr.SuperVisorId = 0;
-            //    usr.Type= targetType.WM.ToString();
-            //    usr.UserID = 0;
-            //    usr.UserName = "";
-            //}
+        //    if (usr.start_date != default(DateTime))
+        //    {
+        //        usr.Quarter_Name = GetQuarter(usr.start_date.Value);
+        //        usr.Type = targetType.WM.ToString();
+        //        usr.Account = GEtAccountName(usr.Location_Name);
+        //        usr.QuarterMonths = GetMonths(usr.start_date.Value);
 
-              
-            //return usr;
-           
-           
-       // }
+        //        using (var db = new SalesManageDataContext())
+        //        {
+        //            if (usr.SuperVisorId > 0)
+        //                usr.FieldMan = db.getUserFullNameByID(usr.SuperVisorId);
+
+        //            usr.SalesMan = db.getUserFullNameByID( db.getParent(usr.UserID)  );
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    usr = new UserTargetDetailsView();
+        //    usr.Account = "";
+        //    usr.FieldMan = "";
+        //    usr.Full_Name = "";
+        //    usr.Location_Id = 0;
+        //    usr.Location_Name = "";
+        //    usr.QuarterMonths = new string[0].ToList();
+        //    usr.Quarter_Name = "";
+        //    usr.SalesMan = "";
+        //    usr.start_date = default(DateTime);
+        //    usr.end_date = default(DateTime);
+        //    usr.SuperVisorId = 0;
+        //    usr.Type= targetType.WM.ToString();
+        //    usr.UserID = 0;
+        //    usr.UserName = "";
+        //}
+
+
+        //return usr;
+
+
+        // }
 
         //private string GetQuarter(DateTime date)
         //{
         //    if (date.Month >= 1 && date.Month <= 3)
-        //        return "Q1 - " + date.Year;
+        //        return "Q1-" + date.Year;
         //    else if (date.Month >= 4 && date.Month <= 6)
-        //        return "Q2 - " + date.Year;
+        //        return "Q2-" + date.Year;
         //    else if (date.Month >= 7 && date.Month <= 9)
-        //        return "Q3 - " + date.Year;
+        //        return "Q3-" + date.Year;
         //    else
         //        return "Q4 - " + date.Year;
         //}
 
-        //private  string GetQuarter(DateTime date)
+        //private string GetQuarter(DateTime date)
         //{
         //    if (date.Month >= 4 && date.Month <= 6)
-        //        return "Q1 - "+date.Year;
+        //        return "Q1 - " + date.Year;
         //    else if (date.Month >= 7 && date.Month <= 9)
         //        return "Q2 - " + date.Year;
         //    else if (date.Month >= 10 && date.Month <= 12)
@@ -353,7 +392,7 @@ namespace BusinessExcel.Controllers
 
         //    }
 
-               
+
 
         //    return Json(result, JsonRequestBehavior.AllowGet);
 
