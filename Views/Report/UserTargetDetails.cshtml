@@ -34,6 +34,8 @@
 
         </div>
 
+     
+
         @*<section class="content-header">
                 <h1>
                     @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_TITLE
@@ -56,8 +58,11 @@
             HttpMethod = "Get",
             UpdateTargetId = "userData",
             InsertionMode = InsertionMode.Replace,
-            OnSuccess = "RefreshTargetList",
-            OnFailure = ""
+            OnBegin= "RefreshTargetList",
+           // OnSuccess = "RefreshTargetList",
+            //OnFailure = ""
+
+            OnFailure = "loadin_failed"
         },
         htmlAttributes: new { @class = "form-inline" })
         )
@@ -67,112 +72,103 @@
 
                             <div class="row" style="margin-bottom:1%">
 
-                               
-
-
 
                                 @*<div class="col-md-1 " style="font-weight:bold;">Name</div>*@
                                 <div class="col-md-8">
 
+
+
                                                 @{ if (User.IsInRole("User"))
                                                     {
+
+
+
                                                         @Html.AdminLTEDropDownListFor(
-m => m.UserName,
-htmlLabelAttributes: null,
-htmlDropDownAttributes: new Dictionary<string, object>() {
-                                             { "class", "form-control select2" },{ "disabled","true"}
-},
-htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
-autoCompleteOptions: new AutoCompleteOptions()
-{
-    AjaxOptions = new AjaxOptions()
-    {
-        HttpMethod = "GET",
-        Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-    },
-    DescriptionField = "full_name",
-    IDField = "user_name",
-    Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-    SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
-    IsAutoComplete = true,
-    SelectItems = null
-},
-showLabel: true)
+         m => m.UserName,
+         htmlLabelAttributes: null,
+         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                                                         { "class", "form-control select2" },{ "disabled","true"}
+                                                            },
+         htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
+         autoCompleteOptions: new AutoCompleteOptions()
+         {
+             AjaxOptions = new AjaxOptions()
+             {
+                 HttpMethod = "GET",
+                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+             },
+             DescriptionField = "full_name",
+             IDField = "user_name",
+             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+             IsAutoComplete = true,
+             SelectItems = null
+         },
+         showLabel: true)
 
                                                     }
                                                     else
                                                     {
 
 
+                                                        <div>
+                                                            @Html.AdminLTEDropDownListFor(
+             m => m.UserName,
+             htmlLabelAttributes: null,
+             htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                                                                 { "class", "form-control select2" }
+                                                                    },
+             htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
+             autoCompleteOptions: new AutoCompleteOptions()
+             {
+                 AjaxOptions = new AjaxOptions()
+                 {
+                     HttpMethod = "GET",
+                     Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                 },
+                 DescriptionField = "full_name",
+                 IDField = "user_name",
+                 Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                 SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                 IsAutoComplete = true,
+                 SelectItems = null
+             },
+             showLabel: true)
+                                                        </div>
 
 
-                                                        @Html.AdminLTEDropDownListFor(
-m => m.UserName,
-htmlLabelAttributes: null,
-htmlDropDownAttributes: new Dictionary<string, object>() {
-                                             { "class", "form-control select2" }
-},
-htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
-autoCompleteOptions: new AutoCompleteOptions()
-{
-    AjaxOptions = new AjaxOptions()
-    {
-        HttpMethod = "GET",
-        Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-    },
-    DescriptionField = "full_name",
-    IDField = "user_name",
-    Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-    SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
-    IsAutoComplete = true,
-    SelectItems = null
-},
-showLabel: true)
+                                                        @*<div class="col-md-1 padding-label">
+                                                            Type
+                                                        </div>*@
+                                                        <div class="col-md-6">
 
-
-
-
-                                                        <div class="col-md-5">
                                                             
-                                                            
-                                                            
-                                                              @Html.AdminLTEDateRangePickerFor(
-                                                                        m=>m.start_date,
-                                                                         m => m.end_date,
-                                                                         "Period",
-                                                                         htmlLabelAttributes: null,
-                                                                         htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
-                                                                         htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
-                                                                             htmlGlyphiconsAttributes: null,
-                                                                             glyphiconsName: "fa fa-calendar",
-                                                                             showLabel: true,
-                                                                             hasValidation: true,
-                                                                             showGlyphicons: true)
-                                                            <div style="display:none">
-                                                                @Html.AdminLTEDateRangePickerFor(
-                                                                        m => m.start_date,
-                                                                         m => m.end_date,
-                                                                         "Period",
-                                                                         htmlLabelAttributes: null,
-                                                                         htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
-                                                                         htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
-                                                                             htmlGlyphiconsAttributes: null,
-                                                                             glyphiconsName: "fa fa-calendar",
-                                                                             showLabel: true,
-                                                                             hasValidation: true,
-                                                                             showGlyphicons: true)
-                                                            </div>
+                                                            @Html.AdminLTEDateRangePickerFor(
+                 m => m.start_date,
+                 m => m.end_date,
+                 "Period",
+                 htmlLabelAttributes: null,
+                 htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
+                 htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
+                       htmlGlyphiconsAttributes: null,
+                       glyphiconsName:null,// "fa fa-calendar",
+                       showLabel: true,
+                       hasValidation: true,
+                       showGlyphicons: true)
+
 
 
 
                                                         </div>
 
-                 
+
                                                             <div class="col-md-1" style="top:1.5em">
                                                                 <button type="submit" class="btn btn-primary " id="btnAdd">Search</button>
                                                             </div>
 
                                                             }
+
+
                                                             }
 
                                 
@@ -189,7 +185,14 @@ showLabel: true)
 
                             </div>
                             <div class="row">
+
+
                                 <div class="col-md-8">
+
+                                  
+
+
+
                                     <table class="table usrtable">
                                        
                                       
@@ -199,12 +202,12 @@ showLabel: true)
                                                 <tr >
 
                                                     <td class="tablab">TYPE</td>
-                                                    <td>
+                                                    <td class="tdval">
                                                         @Model.Type
 
                                                 </td>
                                                 <td class="tablab">SALESMAN</td>
-                                                <td>
+                                                <td class="tdval">
                                                     @Model.SalesMan
                                                 </td>
 
@@ -212,11 +215,11 @@ showLabel: true)
                                             <tr>
 
                                                 <td class="tablab">PERIOD</td>
-                                                <td>
+                                                <td class="tdval">
                                                   @Model.Quarter_Name
                                             </td>
                                             <td class="tablab">FIELDMAN</td>
-                                            <td>
+                                            <td class="tdval">
                                                @Model.FieldMan
                                             </td>
 
@@ -224,23 +227,23 @@ showLabel: true)
                                         <tr>
 
                                             <td class="tablab">ACCOUNT</td>
-                                            <td>
+                                            <td class="tdval">
                                                @Model.Account
                                         </td>
 
                                         <td class="tablab">SITE</td>
-                                        <td>
+                                        <td class="tdval">
                                            @Model.Location_Name
                                         </td>
 
                                     </tr>
                                                 <tr>
                                                     <td class="tablab">CODE</td>
-                                                            <td>
+                                                            <td class="tdval">
                                                                 @Model.UserName
                                                             </td>
                                                     <td colspan="1"></td>
-                                                    <td></td>
+                                                    <td class="tdval"></td>
                                                     
                                                 </tr>
                                     </tbody>
@@ -559,20 +562,48 @@ showLabel: true)
         border-top: 1px solid #81817d;
 }
    
+
+
+.tdval
+{
+    width:40%;
+}
+
+
 </style>
 <script>
 
-    $('#btnAdd').click(function () {
+
+
+
+    @*$('#btnAdd').click(function () {
         var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
         $('#target-achievement-display').empty();
         $('#target-achievement-display').append(loadingelement);
-    })
+           $('#loadingMess').find("[id='loading-element']").remove();
+    })*@
 
+      var targets = '@Html.Raw(Model.UserTargets.Count)';
+    if (targets <= 0) {
+        $('#modalnew').modal('show');
+    }
+    function RefreshTargetList() {
+        @*var targets = '@Html.Raw(Model.UserTargets.Count)';
+        alert(targets);
+        if (targets > 0) {*@
 
+            var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
+            $('#target-achievement-display').empty();
+            $('#target-achievement-display').append(loadingelement);
+          //  $('#modalnew').modal('show');
+        //}
+        //else {
+        //    $('#modalnew').modal('show');
+        //}
+    }
 
     //   $('staffcode').val($("#UserName option:selected").val());
 
-    $('#modalnew').modal('show');
     function SelectedUserName(ddlObject) {
 
 
@@ -608,7 +639,7 @@ showLabel: true)
 
     @*$(document).ready(function () {
 
-      
+
 
 
         var models = [];
@@ -627,8 +658,8 @@ showLabel: true)
             var targetid = Number(0);
 
             var userid = Number(0);
-         
-          
+
+
 
             $('#Tsheet' + model + '  .hid_target_id_cls').each(function () {
 
@@ -648,7 +679,7 @@ showLabel: true)
 
             });
 
-        
+
             $('#Tsheet' + model + '  .hid_Base_Incentive').each(function () {
 
 
@@ -699,8 +730,8 @@ showLabel: true)
                 numberWithCommas(EnteredAmtTotal) + '</b></td>        <td></td>      </tr>');
 
 
-         
-          
+
+
             //if (userid > 0) {
             //    setTargetTotals('tottable_' + model, userid, targetid)
             //}
@@ -708,8 +739,8 @@ showLabel: true)
 
 
 
-       
+
     });*@
 
- 
+
 </script>
