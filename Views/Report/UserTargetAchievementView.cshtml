@@ -10,6 +10,7 @@
 
 
 
+
 <div class="box box-primary" style="margin-top:3%">
     <div class="box-header with-border">
         <strong>
@@ -19,7 +20,7 @@
     </div>
     <div class="box-body">
       
-      
+        
         <div id="target-achievement-view" class="table-responsive">
             @{
                 if (User.IsInRole("User"))
@@ -249,7 +250,7 @@
                             <tr>
 
                                 <td><input class="form-control extrainfo tottableinputLabel" value="Bonus Lines" /></td>
-                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].totalBonusLinePerc id="Bonus_Lines_Perc_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].totalBonusLinePerc% id="Bonus_Lines_Perc_@Model.target_id" /></td>
                                 <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalBonusLineAmt id="Bonus_Lines_Amt_@Model.target_id" /></td>
                             </tr>
 
@@ -322,6 +323,7 @@
     .tottableinput{
         border:0;
         text-align:right;
+       
     }
      .tottableinputLabel
      {
@@ -463,13 +465,18 @@
         display: none;
     }
 
-  
+ .tottableinput:read-only {
+   background-color:transparent;
+}
 </style>
 
 <script>
 
 
 
+
+   
+    $('.tottableinput').attr('readonly', true);
 
    // $('#target-achievement-display').find("[id='loading-element']").remove();
 
@@ -694,7 +701,10 @@
         $("#" + model_table + " tr:eq(1)").find('td:eq(1) input').val(data[0].TotalTargetPerc + "%");
         $("#" + model_table + " tr:eq(1)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalIncAmt));
         $("#" + model_table + " tr:eq(2)").find('td:eq(1) input').val(data[0].LineAch);
-       
+        $("#" + model_table + " tr:eq(2)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalLineAchAccAmt));
+        $("#" + model_table + " tr:eq(3)").find('td:eq(1) input').val(data[0].totalBonusLinePerc + "%");
+        $("#" + model_table + " tr:eq(3)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalBonusLineAmt));
+
 
         $("#" + model_table + " tr").not(':first').not(':last').each(function () {
             
