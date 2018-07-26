@@ -58,9 +58,10 @@
             HttpMethod = "Get",
             UpdateTargetId = "userData",
             InsertionMode = InsertionMode.Replace,
-            OnBegin= "RefreshTargetList",
-           // OnSuccess = "RefreshTargetList",
+            //  OnBegin= "RefreshTargetList",
+            // OnSuccess = "RefreshTargetList",
             //OnFailure = ""
+            LoadingElementId = "target-load-progress",
 
             OnFailure = "loadin_failed"
         },
@@ -175,7 +176,18 @@
 
 
                                                             <div class="col-md-1" style="top:1.5em">
-                                                                <button type="submit" class="btn btn-primary " id="btnAdd">Search</button>
+
+                                                                @*<button type="submit" class="btn btn-primary " id="btnAdd">Search</button>*@
+
+                                                                @Html.AdminLTEFromSubmitter("Filter",
+                       "target-load-progress",
+                       new Dictionary<string, object>() {
+                           { "type", "submit" } ,
+                           { "class","btn btn-primary"}
+                       },
+                       Url.Content("~/Images/progress.gif")
+                       )
+
                                                             </div>
 
                                                             }

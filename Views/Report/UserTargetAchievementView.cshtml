@@ -158,11 +158,20 @@
                           grid.Column("", format: @<text>
             
 
-            <button class="edit-amt display-mode">Edit</button>
+            <button class="edit-amt display-mode btn btn-primary btn-sm">Edit</button>
 
-                <button class="save-amt edit-mode">Save</button>
+                <button class="save-amt edit-mode btn btn-success btn-sm">Save</button>
+            @*@Html.AdminLTEFromSubmitter("Save",
+                       "save-load",
+                       new Dictionary<string, object>() {
+                           { "type", "button" } ,
+                           { "class","save-amt edit-mode btn btn-success btn-sm"}
+                       },
+                       Url.Content("~/Images/progress.gif")
+                       )*@
+          
 
-                <button class="cancel-amt edit-mode">Cancel</button>
+                <button class="cancel-amt edit-mode btn btn-info btn-sm">Cancel</button>
           
                         </text>,  style: "colbtn" , canSort: false),
 
@@ -598,6 +607,10 @@
             event.preventDefault();
             event.stopImmediatePropagation();
 
+            $('.save-amt').css({ 'cursor': 'wait' });
+            $('body').css({ 'cursor': 'wait' });
+
+
             var tr = $(this).parents('tr:first');
             var ent_amt = tr.find("#Entered_Amt").val();
             var cat_id = tr.find("#hid_category_id").val();
@@ -647,7 +660,7 @@
                         $("#Tsheet" + target_id + " tr:last").find('td:eq(4) b').text(numberWithCommas(tot));
                         setTargetTotals('tottable_' + target_id, data)
 
-                        
+                       
 
 
                         //TotalTargetPerc(gridid, $('#month').val())
@@ -657,6 +670,8 @@
                     else {
                         alert('Error occured');
                     }
+                    $('.save-amt').css({ 'cursor': 'pointer' });
+                    $('body').css({ 'cursor': 'default' });
                 }
             });
 

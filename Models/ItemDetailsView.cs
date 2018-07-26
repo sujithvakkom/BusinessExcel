@@ -13,7 +13,7 @@ namespace BusinessExcel.Models
         public int inventory_item_id { get; set; }
 
 
-        [Display(Name = "Code")]
+        [Display(Name = "Item")]
         [Column("item_code", Order = 2)]
         public string item_code { get; set; }
         [Column("description", Order = 3)]
