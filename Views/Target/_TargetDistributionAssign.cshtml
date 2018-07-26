@@ -30,24 +30,24 @@
 <div class="row">
     <div class="col-md-6">
         @using (Ajax.BeginForm(
-                                        controllerName: TargetController.TARGET,
-                                        //actionName: TargetController._GETLOCATIONALOCATION,
-                                        actionName: TargetController._GETLOCATIONALOCATION,
-                                        htmlAttributes: new { id = "target-location-search-form" },
-                                        routeValues: null,
-                                        ajaxOptions: new AjaxOptions()
-                                        {
-                                            InsertionMode = InsertionMode.Replace,
-                                            HttpMethod = "Post",
-                                            UpdateTargetId = "location-target-datails",
-                                            OnBegin = "load_user_assignments()",
-                                            OnComplete = "ajax_call_load_complete('#page-load')",
-                                            OnFailure = "loadin_failed",
-                                            LoadingElementId = "target-load-progress"
-                                        }))
+                                                controllerName: TargetController.TARGET,
+                                                //actionName: TargetController._GETLOCATIONALOCATION,
+                                                actionName: TargetController._GETLOCATIONALOCATION,
+                                                htmlAttributes: new { id = "target-location-search-form" },
+                                                routeValues: null,
+                                                ajaxOptions: new AjaxOptions()
+                                                {
+                                                    InsertionMode = InsertionMode.Replace,
+                                                    HttpMethod = "Post",
+                                                    UpdateTargetId = "location-target-datails",
+                                                    OnBegin = "load_user_assignments()",
+                                                    OnComplete = "ajax_call_load_complete('#page-load')",
+                                                    OnFailure = "loadin_failed",
+                                                    LoadingElementId = "target-load-progress"
+                                                }))
         {
             <div class="table-form">
-        @Html.AntiForgeryToken()
+                @Html.AntiForgeryToken()
                 <div class="row">
                     <div class="col-md-4 padding-label">
                         Site
@@ -119,7 +119,7 @@
                         @*<button type="submit" class="btn btn-primary">Load Details
                             @{
                                 Html.RenderPartial("_ProgressButton", "target-load-progress");
-                            }</button>*@ 
+                            }</button>*@
                         @Html.AdminLTEFromSubmitter("Load Details",
                        "target-load-progress",
                        new Dictionary<string, object>() {
@@ -131,7 +131,7 @@
                     </div>
                 </div>
             </div>
-                            }
+        }
     </div>
 </div>
 <div class="row">
@@ -140,20 +140,27 @@
         <div class="nav-tabs-custom" id="user-target-setup">
             <ul class="nav nav-tabs pull-right">
                 <li class="active">
-                    <a href="#location-user-target" data-toggle="tab">View</a>
+                    <a href="#location-user-target" data-toggle="tab">View allocations</a>
                 </li>
                 <li>
-                    <a href="#location-target-datails" data-toggle="tab">Edit</a>
+                    <a href="#location-target-datails" data-toggle="tab">Create allocation</a>
                 </li>
-                <li class="pull-left header"><i class="fa fa-bar-chart"></i>Merchandiser targets</li>
+                <li class="pull-left header"><i class="fa-random fa"></i>Merchandiser targets</li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="location-user-target">
-
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bg-info" style="padding:10px;border-radius:3px">
+                                <h3><i class="fa fa-exclamation-circle" />No data to show.</h3>
+                                <p>Please select location and period.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="location-target-datails">
-
+                    <p>Please select location and period.</p>
                 </div>
                 <!-- /.tab-pane -->
             </div>
