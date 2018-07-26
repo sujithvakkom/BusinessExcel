@@ -215,6 +215,7 @@
     <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\FormSubmitter.cs" />
+    <Compile Include="Models\ItemDetailsView.cs" />
     <Compile Include="Models\jsTree3Node.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
     <Compile Include="Models\TargetTotalView.cs" />
@@ -739,6 +740,8 @@
     <Content Include="Views\Target\_GetLocationUserAlocation.cshtml" />
     <Content Include="Views\Shared\_BarView.cshtml" />
     <Content Include="Views\Shared\_ProgressButton.cshtml" />
+    <Content Include="Views\Items\ItemIndex.cshtml" />
+    <Content Include="Views\Items\_ItemFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

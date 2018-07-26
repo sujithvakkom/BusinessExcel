@@ -249,6 +249,24 @@
                    isNavSideBar: true,
                    carrot: "fa fa-tasks")
 
+
+                            @Ajax.AjaxAdminLTEActionLink(
+                   linkText: ItemsController.ITEM_TITLE,
+                   actionName: ItemsController.ITEM_INDEX,
+                   controllerName: ItemsController.ITEM_CONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(ItemsController.ITEM_INDEX, ItemsController.ITEM_INDEX, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       OnFailure = "loadin_failed"
+                   },
+                   isNavSideBar: true,
+                   carrot: "fa fa-tasks")
+
+
                             @Ajax.AjaxAdminLTEActionLink(
                    linkText: "Loading Error.",
                    actionName: "Test",
