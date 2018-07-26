@@ -79,28 +79,31 @@
                             <div id="target-row">
                                 @for (int i = 0; i < Model.LineTargets.Length; i++)
                                 {
+                                    decimal? maxallocationPct = 0;
                                     CategoryDetail selection = new CategoryDetail();
                                     using (var db = new SalesManageDataContext())
                                     {
                                         int id = 0;
                                         int temp;
-                                        try {
+                                        try
+                                        {
                                             temp = int.Parse(Model.LineTargets[i].Catogery);
                                             selection = db.getCategoryDetails(temp);
                                         }
-                                        catch (Exception) {
+                                        catch (Exception)
+                                        {
                                             selection = db.getCategoryDetails(Model.LineTargets[i].Catogery);
                                         }
                                     }
                                     <div class="row">
                                         <div class="col-md-1 table-fields">
                                             @Html.AdminLTECheckBoxFor(m => Model.LineTargets[i].IsBonusLine,
-                                            null,
-                                            new Dictionary<string, object>() { { "class", "form-control pull-right" }, { "autocomplete", "off" } },
-                                            null,
-                                            null,
-                                            false,
-                                            true)
+     null,
+     new Dictionary<string, object>() { { "class", "form-control pull-right" }, { "autocomplete", "off" } },
+     null,
+     null,
+     false,
+     true)
                                         </div>
                                         <div class="col-md-1 table-fields">
                                             @Html.HiddenFor(m => Model.LineTargets[i].Catogery)
@@ -145,19 +148,21 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2 table-fields">
+                                            @{maxallocationPct = (Model.LineTargets[i].Target / Model.LineTargets[i].TotalTarget) * 100;
+                                            }
                                             @Html.AdminLTETextBox("LineTargets[" + i.ToString() + "].Allocation",
 null,
 new Dictionary<string, object>() {
                               { "class", "form-control numaric" },
                               { "autocomplete", "off" } ,
-                              { "onchange", "target_line_changed(this,'"+formID+"')" } },
+                              { "onchange", "target_line_changed(this,'"+formID+"',"+maxallocationPct.ToString()+")" } },
 null,
 null,
 "fa-percent",
 false,
 true,
 true,
-(Model.LineTargets[i].Target / Model.LineTargets[i].TotalTarget) * 100
+maxallocationPct
 )
                                         </div>
                                         <div class="col-md-2 table-fields">
@@ -166,7 +171,7 @@ null,
 new Dictionary<string, object>() {
                               { "class", "form-control numaric" },
                               { "autocomplete", "off" } ,
-                              { "onchange", "target_line_changed(this,'"+formID+"')" } },
+                              { "onchange", "target_line_changed(this,'"+formID+"',"+maxallocationPct.ToString()+")" } },
 null,
 null,
 "",

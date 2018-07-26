@@ -39,7 +39,7 @@
 
 
 <script>
-    function target_line_changed(val, formID) {
+    function target_line_changed(val, formID,max) {
         var sum = Number(0);
         var prefix = val.getAttribute("name").split(".")[0] + "_";
         var source = val.getAttribute("name").split(".")[1];
@@ -50,6 +50,7 @@
         switch (source) {
             case 'Allocation':
                 allocation = convertNumber(val.value)
+                if (allocation > Number(max)) { allocation = max; val.value= allocation; }
                 var temp = ("#" + prefix + "TotalTarget").replace('[', '_').replace(']', '_') + " p"
                 var x = $.find(temp)[0].textContent
                 avilableTarget = convertNumber(x)
@@ -63,7 +64,9 @@
                 avilableTarget = convertNumber(x)
                 //target = Number($("#" + formID).find(temp).val())
                 var temp = ("#" + prefix + "Allocation").replace('[', '_').replace(']', '_')
-                $("#" + formID).find(temp).val((target / avilableTarget) * 100)
+                allocation = (target / avilableTarget) * 100;
+                if (allocation > Number(max)) { allocation = max; val.value = avilableTarget * allocation / 100; }
+                $("#" + formID).find(temp).val(allocation)
                 break;
         }
         $("#" + formID).find('input[name ^=LineTargets][name $=Target]').each(function () {
