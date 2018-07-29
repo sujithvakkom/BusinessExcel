@@ -628,8 +628,13 @@
     if (content == null) {
       
         alert("Please select name");
+      
         e.preventDefault(); //prevent the default action
+        e.stopPropagation();
        
+        e.stopImmediatePropagation();
+       
+      
     }
 });
 
