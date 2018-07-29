@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace BusinessExcel.Providers.ProviderContext.Entities
 {
@@ -14,7 +11,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Key]
         [Column("ROW_NUM")]
         [Display(Name = "ROW NUM", Description = "ROW NUM", Prompt = "ROW NUM", ShortName = "R NUM")]
-        public int ROW_NUM { get; set; }
+        public Int64 ROW_NUM { get; set; }
         [Column("user_id")]
         [Display(Name = "User Id", Description = "User Id", Prompt = "User Id", ShortName = "U Id")]
         public int UserId { get; set; }
