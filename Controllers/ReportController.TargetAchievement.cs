@@ -178,7 +178,10 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
 
 
-            if(usr.Quarter_Name==null)
+
+       
+
+            if (usr.Quarter_Name==null)
             {
                 usr.start_date = DateTime.Now.Date;
             
@@ -188,23 +191,13 @@ namespace BusinessExcel.Controllers
                 string[] qrt = usr.Quarter_Name.Split('-');
                 usr.start_date = getQuarterStartDate(qrt[0].ToString().Trim(), qrt[1].ToString().Trim());
             }
-            if (string.IsNullOrEmpty(usr.UserName))
-            {
-              
-                    usr.UserID = 291;
-            }
-
-            //if(usr.start_date ==null)
-            //{
-
-            //    usr.start_date = DateTime.Now.Date;
-            //    usr.end_date = DateTime.Now.Date;
-            //}
             //if (string.IsNullOrEmpty(usr.UserName))
             //{
-            //    usr.UserID = 291;
+              
+            //        usr.UserID = 291;
             //}
 
+           
 
             using (var db = new SalesManageDataContext())
             {
@@ -219,6 +212,7 @@ namespace BusinessExcel.Controllers
                   
                 }
             }
+            
           
             if (Request.IsAjaxRequest()) return PartialView(usr);
             return View(usr);
