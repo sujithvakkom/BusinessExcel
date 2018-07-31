@@ -58,7 +58,7 @@
             HttpMethod = "Get",
             UpdateTargetId = "userData",
             InsertionMode = InsertionMode.Replace,
-            //  OnBegin= "RefreshTargetList",
+             // OnBegin= "validate",
             // OnSuccess = "RefreshTargetList",
             //OnFailure = ""
             LoadingElementId = "target-load-progress",
@@ -119,7 +119,7 @@
              htmlDropDownAttributes: new Dictionary<string, object>() {
                                                                                                                  { "class", "form-control select2" }
                                                                     },
-             htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
+             htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" }},
              autoCompleteOptions: new AutoCompleteOptions()
              {
                  AjaxOptions = new AjaxOptions()
@@ -137,15 +137,16 @@
              showLabel: true)
                                                         </div>
 
+                                                        
 
                                                         @*<div class="col-md-1 padding-label">
                                                             Type
                                                         </div>*@
-                                                        <div class="form-group col-md-4">
+                                                        <div class="form-group col-md-3">
 
                                                             <div class="row"><label class="col-md-1" for="period">Period</label></div>
                                                             <div class="row">
-                                                                <div class="col-md-3">
+                                                                <div class="col-md-2">
                                                                     @Html.AdminLTETextBoxFor(m => m.Quarter_Name,
                                                                                null,
                                                                                new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "Readonly", "Readonly" } },
@@ -179,10 +180,10 @@
 
                                                                 @*<button type="submit" class="btn btn-primary " id="btnAdd">Search</button>*@
 
-                                                                @Html.AdminLTEFromSubmitter("Filter",
+                                                                @Html.AdminLTEFromSubmitter("Load Targets",
                        "target-load-progress",
                        new Dictionary<string, object>() {
-                           { "type", "submit" } ,
+                           { "type", "submit" } ,{ "id", "Filter" } ,
                            { "class","btn btn-primary"}
                        },
                        Url.Content("~/Images/progress.gif")
@@ -208,6 +209,7 @@
 
 
                             </div>
+                         
                             <div class="row">
 
 
@@ -217,7 +219,7 @@
 
 
 
-                                    <table class="table usrtable">
+                                    <table class="table usrtable borderless" >
                                        
                                       
                                         
@@ -491,22 +493,25 @@
                         </div>
                     </div>
                     <div style="margin-top:15px" id="target-achievement-display">
-                        @if (Model.UserTargets.Count > 0)
+                        @if (Model.UserName != null)
+                        {
+
+                        if (Model.UserTargets.Count > 0)
                         {
                             foreach (var target in Model.UserTargets)
                             {
-                                
+
                                 <div id="target-achievement-display_@target.Month">
                                     @Html.Action(
-         BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW,
-         new TargetAchievementView { Month = target.Month, user_id = Model.UserID, start_date = target.start_date ,target_id= target.target_id})
+              BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW,
+              new TargetAchievementView { Month = target.Month, user_id = Model.UserID, start_date = target.start_date, target_id = target.target_id })
                                 </div>
                             }
                         }
                         else
                         {
 
-                            
+
                                 <div class="modal fade" id="modalnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content" style="width:50%;margin: auto;">
@@ -524,9 +529,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            
 
 
+
+                        }
                         }
                     </div>
                                     }
@@ -576,15 +582,7 @@
   
   }
 
-  .usrtable tr {
-    border-top: 1px solid #ff0000;
 
-  
-  }
-      
-    .table > tbody > tr > td{
-        border-top: 1px solid #81817d;
-}
    
 
 
@@ -601,10 +599,47 @@
    background-color:transparent;
 }
 
+
+
+  .usrtable tr {
+    border-top: 1px solid #ff0000;
+  }
+      
+    .table > tbody > tr > td{
+        border-top: 1px solid #81817d;
+}
+
+ /*.table.borderless td, .table.borderless th {
+    border: 0 !important;
+}
+
+.table.table-borderless {
+    margin-bottom: 0px;
+}*/
+
+
 </style>
 <script>
 
 
+  
+    $(document).on('click', 'form button[type=submit]', function (e) {
+    var content = $('#UserName').val();
+    if (content == null) {
+      
+        alert("Please select name");
+      
+        e.preventDefault(); //prevent the default action
+        e.stopPropagation();
+       
+        e.stopImmediatePropagation();
+       
+      
+    }
+});
+
+
+ 
         $.fn.datepicker.dates['qtrs'] = {
             days: ["Sunday", "Moonday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             daysShort: ["Sun", "Moon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -612,7 +647,7 @@
             months: ["Q1 -", "Q2 -", "Q3 -", "Q4 -", "", "", "", "", "", "", "", ""],
             monthsShort: ["Jan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mar", "Apr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;May&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jun", "Jul&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aug&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sep", "Oct&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nov&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dec", "", "", "", "", "", "", "", ""],
             today: "Today",
-          
+
             clear: "Clear",
             format: "mm/dd/yyyy",
             titleFormat: "MM yyyy",
@@ -633,7 +668,7 @@
             });
 
         });
-    
+
 
 
 
@@ -652,13 +687,15 @@
            $('#loadingMess').find("[id='loading-element']").remove();
     })*@
 
+
+
       var targets = '@Html.Raw(Model.UserTargets.Count)';
     if (targets <= 0) {
         $('#modalnew').modal('show');
     }
     function RefreshTargetList() {
 
-       
+
         @*var targets = '@Html.Raw(Model.UserTargets.Count)';
         alert(targets);
         if (targets > 0) {*@
