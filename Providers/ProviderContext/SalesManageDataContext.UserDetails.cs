@@ -44,7 +44,6 @@ namespace BusinessExcel.Providers.ProviderContext
                 this.Database.SqlQuery<int>(SELECT_USER, user_name).ToList()[0];
             return detail;
         }
-
         public virtual List<UserDetail> getUserDetails(string search, int Page, out int RowCount)
         {
             List<UserDetail> items = new List<UserDetail>();
