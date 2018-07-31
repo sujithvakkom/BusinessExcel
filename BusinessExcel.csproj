@@ -199,7 +199,11 @@
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
     <Compile Include="Controllers\jsTree3Controller.cs" />
+    <Compile Include="Controllers\MobileAPIController.UserLocation.cs" />
+    <Compile Include="Controllers\MobileAPIController.Target.cs" />
+    <Compile Include="Controllers\MobileAPIController.Item.cs" />
     <Compile Include="Controllers\MobileController.cs" />
+    <Compile Include="Controllers\ReportController.Checking.cs" />
     <Compile Include="Controllers\ReportController.CategoryAchievement.cs" />
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
     <Compile Include="Controllers\ReportController.Actions.cs" />
@@ -257,8 +261,10 @@
     <Compile Include="Providers\ProviderContext\Entities\CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\ItemModel.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LineTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LocationTarget.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserTree.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetDetails.cs" />
@@ -274,9 +280,11 @@
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ViewLocationTargetDistribution.cs" />
     <Compile Include="Providers\ProviderContext\Entities\_BaseTarget.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.ModelDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.ViewLocationDistribution.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserTree.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.User.cs" />
@@ -743,6 +751,7 @@
     <Content Include="Views\Items\ItemIndex.cshtml" />
     <Content Include="Views\Items\_ItemFilter.cshtml" />
     <Content Include="Views\Shared\_PublicAlertModal.cshtml" />
+    <Content Include="Views\Report\MerchandDutyCheckin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
