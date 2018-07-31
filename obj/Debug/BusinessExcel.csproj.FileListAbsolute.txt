@@ -42,8 +42,6 @@ C:\WORKS\BusinessExcel\bin\MvcSiteMapProvider.dll
 C:\WORKS\BusinessExcel\bin\MvcSiteMapProvider.WebActivator.dll
 C:\WORKS\BusinessExcel\bin\MvcSiteMapProvider.xml
 C:\WORKS\BusinessExcel\bin\MvcSiteMapProvider.WebActivator.xml
-C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.pdb
-C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\BusinessExcel.dll.config
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\BusinessExcel.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\BusinessExcel.pdb
