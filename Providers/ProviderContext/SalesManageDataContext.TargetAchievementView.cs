@@ -9,6 +9,7 @@ using BusinessExcel.Extentions;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Web.Security;
 
 namespace BusinessExcel.Providers.ProviderContext
 {
@@ -133,6 +134,12 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
 
+                //int login_member_user_id = (int)Membership.GetUser().ProviderUserKey;
+
+                //int login_user_id = this.getUserID_byMembershipUserId(login_member_user_id);
+
+                int viD = getViewer_Id();
+
                 if (users.UserName != null)
                     users.UserID = getUserID(users.UserName);
 
@@ -148,15 +155,19 @@ namespace BusinessExcel.Providers.ProviderContext
                     new SqlParameter("@start_date", users.start_date.Value.ToString("dd/MMM/yyyy")) :
                     new SqlParameter("@start_date", System.Data.SqlDbType.Int) { Value = DBNull.Value };
 
+                var viewer_id = viD > 0 ?
+                 new SqlParameter("@viewer_id", viD) :
+                 new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
 
                 System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
                 parameterList.Add(user_id);
                 parameterList.Add(start_date);
+                parameterList.Add(viewer_id);
 
 
                 //userlist = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails] @user_id,@start_date", parameterList.ToArray()).ToList();
 
-                var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails] @start_date, @user_id", parameterList.ToArray()).ToList().AsQueryable(); ;
+                var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails] @start_date, @user_id,@viewer_id", parameterList.ToArray()).ToList().AsQueryable(); ;
 
                 List<UserTargets> targets = new List<UserTargets>();
                  targets = res.Select(g => new UserTargets()

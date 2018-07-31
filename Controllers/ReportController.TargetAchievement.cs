@@ -10,9 +10,11 @@ using System.Linq;
 
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace BusinessExcel.Controllers
 {
+    
     public partial class ReportController : Controller
     {
         //
@@ -39,6 +41,12 @@ namespace BusinessExcel.Controllers
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
         public ActionResult TargetAchievementActions(string sort, string sortdir, int page = 1, ActionViewFilters Filters = null)
         {
+
+
+            MembershipUser u = Membership.GetUser(User.Identity.Name);
+
+            string d = User.Identity.Name;
+
             ViewBag.TargetAchievementeViewSort = sort;
             ViewBag.TargetAchievementViewDir = sortdir;
             ViewBag.TargetAchievementViewPage = page;
@@ -167,11 +175,14 @@ namespace BusinessExcel.Controllers
         //Index Action
         [HttpGet]
         // [Authorize(Roles = "manager")]
-        [Authorize(Roles = "System Administrator")]
+       // [Authorize(Roles = "System Administrator")]
         public ActionResult UserTargetDetails(UserTargetDetailsView usr)
         {
 
             //getUserTargetsNextPrvsThreeMonths(291);
+       
+
+
 
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
@@ -201,7 +212,8 @@ namespace BusinessExcel.Controllers
 
             using (var db = new SalesManageDataContext())
             {
-                usr = db.getUserTargetDetails(usr);
+                  
+                  usr = db.getUserTargetDetails(usr);
               
                 string d = usr.Full_Name;
 
