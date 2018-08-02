@@ -97,7 +97,7 @@ namespace BusinessExcel.Controllers
         //public static string USERTREEVIEW = "UserTree";
         //public PartialViewResult UserTreeView()
         //{
-         
+
         //    ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERSLIST_TITLE;
         //    ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
         //    ViewBag.Title = USERSTREE_TITLE;
@@ -127,7 +127,7 @@ namespace BusinessExcel.Controllers
             if (categoryList.Count > 0)
             {
 
-               // getParent(135, categoryList);
+                // getParent(135, categoryList);
 
                 SetChildren(rootCategory, categoryList);
 
@@ -135,19 +135,16 @@ namespace BusinessExcel.Controllers
 
 
                 data = new[] { rootCategory };
-
-                if (Request.IsAjaxRequest())
-                {
-                    return PartialView(USERSTREE, data);
-                }
-                else
-                {
-                    return View(data);
-                }
             }
 
-           
-            return View(data);
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(USERSTREE, data);
+            }
+            else
+            {
+                return View(data);
+            }            
         }
 
 

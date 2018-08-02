@@ -19,5 +19,18 @@ namespace BusinessExcel.Controllers
             }
             return UserLocation;
         }
+
+        //Post
+        [HttpGet]
+        public UserLocation GetUserLocation(int UserId)
+        {
+            UserLocation result = null;
+            using (SalesManageDataContext db = new SalesManageDataContext())
+            {
+                result = db.GetUserLoction(UserId);
+            }
+            return result;
+        }
+
     }
 }

@@ -199,9 +199,9 @@
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
     <Compile Include="Controllers\jsTree3Controller.cs" />
-    <Compile Include="Controllers\MobileAPIController.UserLocation.cs" />
-    <Compile Include="Controllers\MobileAPIController.Target.cs" />
-    <Compile Include="Controllers\MobileAPIController.Item.cs" />
+    <Compile Include="Controllers\API\UsMobileAPIController.UserLocation.cs" />
+    <Compile Include="Controllers\API\MobileAPIController.Target.cs" />
+    <Compile Include="Controllers\API\MobileAPIController.Item.cs" />
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\ReportController.Checking.cs" />
     <Compile Include="Controllers\ReportController.CategoryAchievement.cs" />
@@ -752,6 +752,8 @@
     <Content Include="Views\Items\_ItemFilter.cshtml" />
     <Content Include="Views\Shared\_PublicAlertModal.cshtml" />
     <Content Include="Views\Report\MerchandDutyCheckin.cshtml" />
+    <Content Include="Views\Shared\_UserLocation.cshtml" />
+    <Content Include="Views\Accounts\UpdateLocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
