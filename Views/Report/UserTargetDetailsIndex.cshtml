@@ -1,0 +1,60 @@
+﻿
+
+@using BusinessExcel.Models
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+
+@model UserTargetDetailsView
+
+
+
+<section class="content-header">
+        <h1>
+            @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_TITLE
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Manager</a></li>
+            <li class="active">Manager Panel</li>
+        </ol>
+    </section>
+<!-- Main content -->
+<section class="content">
+    <!-- Your Page Content Here -->
+
+    <div class="row">
+        <div class="col-md-12">
+               
+                <div class="box box-primary" id="user-form">
+                    <div class="box-body" style="padding:10px">
+                        <div id="user-details-form">
+                            @Html.Action(BusinessExcel.Controllers.ReportController.USER_TARGET_DETAILS,new UserTargetDetailsView { end_date=default(DateTime),
+                           Location_Id=0,Location_Name=null,Quarter_Name=null,start_date=default(DateTime),UserID=0,UserName=null,Account=null,FieldMan=null,Full_Name=null,SalesMan=null,SuperVisorId=0,Type=null,QuarterMonths=null
+                       })
+                        </div>
+
+                        <div id="filter"></div>
+                        <div id="successMessage" style="color:green;font-size:large"></div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+</div>
+
+
+
+
+    </div>
+
+
+
+</section><!-- /.content -->
+

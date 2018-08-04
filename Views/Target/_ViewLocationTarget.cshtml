@@ -1,0 +1,111 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@model Int32
+@{
+    using (var db = new SalesManageDataContext())
+    {
+        var lineTargets =
+        db.Database.SqlQuery<LocationTarget>(
+             @"SELECT t.target_id, r.name, r.start_date, r.end_date, r.location_id, l.description
+                   FROM[db_salesmanage_user].[target_m] AS t INNER JOIN[db_salesmanage_user].[roster] AS r ON t.roster_id = r.roster_id
+                                                              INNER JOIN[sc_salesmanage_user].[location_m] AS l ON r.location_id = l.location_id
+                   WHERE l.deleted = @deleted
+                         AND r.location_id = ISNULL(@location_id, r.location_id)
+                         AND
+                         t.user_id IS NULL
+                    ORDER BY r.start_date DESC",
+             new System.Data.SqlClient.SqlParameter("@deleted", System.Data.SqlDbType.BigInt) { Value = 0 },
+             new System.Data.SqlClient.SqlParameter("@location_id", System.Data.SqlDbType.BigInt) { Value = Model==-1?(object)System.DBNull.Value:(object)Model });
+        <table class="table table-bordered">
+            @foreach (var lineTarget in lineTargets)
+            {
+                <thead>
+                    <tr class= "border-top-2">
+                        @{
+                            var descr = @lineTarget.name + " (" + lineTarget.start_date.ToString("dd MMM yyyy") + " - " + lineTarget.end_date.ToString("dd MMM yyyy") + ")";
+                            <th scope="row" width="100px" class="danger">Period</th>
+                        <td colspan="2" class="text-info text-bold danger">@descr</td>
+                        <td class="info">
+                            @Ajax.ActionLink("Edit", TargetController._LOCATIONTARGETEDITCREATE,
+                           TargetController.TARGET,
+                           new { @TargetTempletID = lineTarget.target_id},
+                           new AjaxOptions() {
+                               HttpMethod="GET",
+                               InsertionMode=InsertionMode.Replace,
+                               UpdateTargetId= "target-location-create",
+                               OnComplete="change_edit_tab"
+                           },new {@class= "btn-link pull-right" }
+                           )</td>
+                        }
+                    </tr>
+                </thead>
+                <thead><tr class="warning"><th scope="row" width="100px">Site</th><td colspan="3" class="text-primary text-bold">@lineTarget.description</td></tr>
+                </thead>
+                @*<thead class="thead-light">
+                    <tr><th scope="row" width="100px">Start Date</th><td colspan="3">@lineTarget.start_date.ToShortDateString()</td></tr>
+                </thead>
+                <thead class="thead-light">
+                    <tr><th scope="row" width="100px">End Date</th><td colspan="3">@lineTarget.end_date.ToShortDateString()</td></tr>
+                </thead>*@
+                var lines =
+                db.Database.SqlQuery
+                <LocationTargetLine>
+                    (
+                    @"
+SELECT row_num ,
+       category_id ,
+       has_bonus ,
+       category ,
+       SUM(value) AS value
+FROM ( SELECT ROW_NUMBER() OVER(ORDER BY ut.category_id DESC) AS row_num ,
+              ut.category_id ,
+              ut.has_bonus ,
+              c.description AS                                                             category ,
+              ut.value AS                                                                  value
+       FROM [db_salesmanage_user].[target_m] AS t INNER JOIN [db_salesmanage_user].[roster] AS r ON t.roster_id = r.roster_id
+                                                  INNER JOIN [sc_salesmanage_user].[location_m] AS l ON r.location_id = l.location_id
+                                                  INNER JOIN [db_salesmanage_user].[user_target] AS ut ON t.target_id = ut.target_id
+                                                  LEFT JOIN [sc_salesmanage_merchant].category AS c ON ut.category_id = c.category_id
+       WHERE l.deleted = @deleted
+             AND
+             t.target_id = @target_id
+             AND
+             t.user_id IS NULL
+     ) AS a
+GROUP BY row_num ,
+         category_id ,
+         has_bonus ,
+         category",
+                    new System.Data.SqlClient.SqlParameter("@deleted", System.Data.SqlDbType.BigInt) { Value = 0 },
+                    new System.Data.SqlClient.SqlParameter("@target_id", System.Data.SqlDbType.BigInt) { Value = lineTarget.target_id });
+                <tr><th scope="col">No.</th><th scope="col">Has Bonus</th><th>Line</th><th class="text-right">Target</th></tr>
+                            decimal sum = 0;
+                            foreach (var l in lines)
+                            {
+                                try { 
+                                var temp = string.IsNullOrEmpty(l.category) ? "Others" : l.category;
+                    <tr>
+                        <td>@l.row_num</td>
+                        <td>@(l.has_bonus ? "Yes" : "No")</td>
+                        <td>@temp</td>
+                        <td class="text-right">@Html.AdminLTEParagraph(l.value, new Dictionary<string, object> { { "class", "numaric" } })
+                        </td>
+                    </tr>
+                                    sum += l.value;
+                                }
+                                catch (Exception ex)
+                                {
+                                    <p>@ex.Message</p>;
+                                }
+                            }
+
+                <tr><td class="text-danger text-bold" colspan="3">Total</td><td class="text-right text-danger text-bold">
+                    @Html.AdminLTEParagraph(sum, new Dictionary<string, object> { { "class", "numaric" } })</td></tr>
+                            }
+        </table>
+    }
+}

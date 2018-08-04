@@ -70,11 +70,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MvcSiteMapProvider">
-      <HintPath>..\packages\MvcSiteMapProvider.MVC4.Core.4.6.22\lib\net40\MvcSiteMapProvider.dll</HintPath>
+    <Reference Include="MvcSiteMapProvider, Version=4.6.22.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <HintPath>packages\MvcSiteMapProvider.MVC4.Core.4.6.22\lib\net40\MvcSiteMapProvider.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="MvcSiteMapProvider.WebActivator">
-      <HintPath>..\packages\MvcSiteMapProvider.MVC4.4.6.22\lib\net40\MvcSiteMapProvider.WebActivator.dll</HintPath>
+    <Reference Include="MvcSiteMapProvider.WebActivator, Version=4.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MvcSiteMapProvider.MVC4.4.6.22\lib\net40\MvcSiteMapProvider.WebActivator.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -103,8 +105,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20505.0\lib\net40\System.Web.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -115,27 +117,27 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20505.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <HintPath>packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20505.0\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20505.0\lib\net40\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20505.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20505.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web">
@@ -170,26 +172,60 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Content Include="Content\jsTree\docs.css" />
+    <Content Include="Content\jsTree\themes\default-dark\32px.png" />
+    <Content Include="Content\jsTree\themes\default-dark\40px.png" />
+    <Content Include="Content\jsTree\themes\default-dark\style.css" />
+    <Content Include="Content\jsTree\themes\default-dark\style.min.css" />
+    <Content Include="Content\jsTree\themes\default-dark\throbber.gif" />
+    <Content Include="Content\jsTree\themes\default\32px.png" />
+    <Content Include="Content\jsTree\themes\default\40px.png" />
+    <Content Include="Content\jsTree\themes\default\style.css" />
+    <Content Include="Content\jsTree\themes\default\style.min.css" />
+    <Content Include="Content\jsTree\themes\default\throbber.gif" />
     <Content Include="Content\pace\themes\white\pace-theme-minimal.css" />
     <Compile Include="Controllers\AccountsController.Chart.cs" />
     <Compile Include="Controllers\AdminController.Users.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
+    <Compile Include="Controllers\JSON\JSON.Extra.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetTempletAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.CategoryAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.LocationAutoCompleter.cs" />
+    <Compile Include="Controllers\JSON\JSON.UserTargetTotals.cs" />
     <Compile Include="Controllers\JSON\JSON.UserByOtherAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
+    <Compile Include="Controllers\jsTree3Controller.cs" />
+    <Compile Include="Controllers\API\UsMobileAPIController.UserLocation.cs" />
+    <Compile Include="Controllers\API\MobileAPIController.Target.cs" />
+    <Compile Include="Controllers\API\MobileAPIController.Item.cs" />
+    <Compile Include="Controllers\MobileController.cs" />
+    <Compile Include="Controllers\ReportController.Checking.cs" />
     <Compile Include="Controllers\ReportController.CategoryAchievement.cs" />
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
-    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\ReportController.Actions.cs" />
     <Compile Include="Controllers\RosterController.cs" />
+    <Compile Include="Controllers\TargetController.TargetDistribution.cs" />
+    <Compile Include="Controllers\TargetController.LocationTarget.cs" />
+    <Compile Include="Controllers\TargetController.EditViewTarget.cs" />
+    <Compile Include="Controllers\TargetController._GetLocationUserAlocation.cs" />
+    <Compile Include="Controllers\TargetController._LocationTargetEditCreate.cs" />
+    <Compile Include="Controllers\TargetController._MinViewLocationTarget.cs" />
+    <Compile Include="Controllers\TargetController._ViewLocationTarget.cs" />
     <Compile Include="Controllers\TargetController.TargetTemplet.cs" />
     <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
+    <Compile Include="Models\AlertModal.cs" />
+    <Compile Include="Models\ItemDetailsView.cs" />
+    <Compile Include="Models\jsTree3Node.cs" />
+    <Compile Include="Models\RosterViewModel.cs" />
+    <Compile Include="Models\TargetTotalView.cs" />
+    <Compile Include="Models\Tree.cs" />
+    <Compile Include="Models\UserDetailsView.cs" />
+    <Compile Include="Models\UserTargets.cs" />
     <Compile Include="Models\UserViewFilters.cs" />
     <Compile Include="Models\ActionViewFilters.Roster.cs" />
     <Compile Include="Models\ActionViewFilters.cs" />
@@ -221,9 +257,14 @@
     <Compile Include="Models\TargetViewModel.cs" />
     <Compile Include="Providers\BEMembershipProvider.cs" />
     <Compile Include="Providers\BERoleProvider.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\BaseTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\ItemModel.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\LineTarget.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\LocationTarget.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserTree.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetMaster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetDetails.cs" />
@@ -237,9 +278,14 @@
     <Compile Include="Providers\ProviderContext\Entities\UserDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserM.cs" />
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\ViewLocationTargetDistribution.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\_BaseTarget.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.ModelDetails.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.ViewLocationDistribution.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserTree.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.User.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetDetails.cs" />
@@ -344,6 +390,7 @@
     <Content Include="Content\tether\tether-theme-basic.min.css" />
     <Content Include="Content\tether\tether.css" />
     <Content Include="Content\tether\tether.min.css" />
+    <Content Include="Content\themes\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="gs_icon.ico" />
@@ -353,6 +400,7 @@
     <Content Include="Images\logo185x27.svg" />
     <Content Include="Images\image2vector.svg" />
     <Content Include="Images\logo185x77.png" />
+    <Content Include="Images\progress.gif" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.css" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker.standalone.css" />
@@ -434,6 +482,10 @@
     <Content Include="Scripts\AdminLTE\plugins\pace\pace.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\cldr.js" />
+    <Content Include="Scripts\cldr\event.js" />
+    <Content Include="Scripts\cldr\supplemental.js" />
+    <Content Include="Scripts\cldr\unresolved.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -465,7 +517,24 @@
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.min.css.map" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.standalone.css.map" />
     <Content Include="Scripts\AdminLTE\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.standalone.min.css.map" />
+    <Content Include="Mvc.sitemap" />
+    <Content Include="Content\themes\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\themes\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\themes\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\themes\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\themes\fonts\FontAwesome.otf" />
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\globalize\currency.js" />
+    <Content Include="Scripts\globalize\date.js" />
+    <Content Include="Scripts\globalize\message.js" />
+    <Content Include="Scripts\globalize\number.js" />
+    <Content Include="Scripts\globalize\plural.js" />
+    <Content Include="Scripts\globalize\relative-time.js" />
+    <Content Include="Scripts\globalize\unit.js" />
     <Content Include="Scripts\inputmask\bindings\inputmask.binding.js" />
     <Content Include="Scripts\inputmask\bindings\inputmask.binding.min.js" />
     <Content Include="Scripts\inputmask\dependencyLibs\inputmask.dependencyLib.jqlite.js" />
@@ -513,6 +582,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jsTree3\jstree.js" />
+    <Content Include="Scripts\jsTree3\jstree.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -596,22 +667,6 @@
     <Content Include="Scripts\AdminLTE\plugins\select2\select2.min.js" />
     <Content Include="Scripts\BE\be-base.js" />
     <Content Include="Views\Public\Register.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\Accounts\Profile.cshtml" />
     <Content Include="Views\Accounts\MyProfile.cshtml" />
     <Content Include="Views\Accounts\_ResultMessage.cshtml" />
@@ -657,6 +712,48 @@
     <Content Include="Views\Target\_ViewStart.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
     <Content Include="Views\Admin\UserTree.cshtml" />
+    <Content Include="Views\Shared\_jsTreeDemo.cshtml" />
+    <Content Include="Views\jsTree3\Demo.cshtml" />
+    <Content Include="Views\jsTree3\AJAXDemo.cshtml" />
+    <Content Include="Views\Target\_TargetAssignBlock.cshtml" />
+    <Content Include="Views\Target\_TargetTemplateCreateBlock.cshtml" />
+    <Content Include="Views\Shared\_Progress.cshtml" />
+    <Content Include="Views\Target\TargetLine.cshtml" />
+    <Content Include="Views\Target\EditViewTarget.cshtml" />
+    <Content Include="Views\Target\LocationTarget.cshtml" />
+    <Content Include="Views\Target\_LocationTargetEditCreate.cshtml" />
+    <Content Include="Views\Target\_ViewLocationTarget.cshtml" />
+    <Content Include="Views\Target\TargetDistribution.cshtml" />
+    <Content Include="Views\Target\_TargetDistributionAssign.cshtml" />
+    <Content Include="Views\Target\_GetLocationAlocation.cshtml" />
+    <Content Include="Views\Report\UserTargetDetailsIndex.cshtml" />
+    <Content Include="Views\Report\UserTargetAchievementView.cshtml" />
+    <Content Include="Views\Report\UserDetails.cshtml" />
+    <Content Include="Views\Report\UserTargetDetails.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
+    <Content Include="Views\Accounts\TableForCurrentMonthQuantity.cshtml" />
+    <Content Include="Views\Accounts\TableForCurrentMonthValue.cshtml" />
+    <Content Include="Views\Mobile\Target.cshtml" />
+    <Content Include="Views\Target\_LocationTargetEditCreate_Backup.cshtml" />
+    <Content Include="Views\Target\LocationTarget_Backup.cshtml" />
+    <Content Include="Views\Target\_LocationTargetEditCreate - Copy %282%29.cshtml" />
+    <Content Include="Views\Target\_MinViewLocationTarget.cshtml" />
+    <Content Include="Views\Target\_GetLocationUserAlocation.cshtml" />
+    <Content Include="Views\Shared\_BarView.cshtml" />
+    <Content Include="Views\Shared\_ProgressButton.cshtml" />
+    <Content Include="Views\Items\ItemIndex.cshtml" />
+    <Content Include="Views\Items\_ItemFilter.cshtml" />
+    <Content Include="Views\Shared\_PublicAlertModal.cshtml" />
+    <Content Include="Views\Report\MerchandDutyCheckin.cshtml" />
+    <Content Include="Views\Shared\_UserLocation.cshtml" />
+    <Content Include="Views\Accounts\UpdateLocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -678,10 +775,6 @@
     <Content Include="Images\business-excel-logo-light-50X50.png" />
     <Content Include="Images\business-excel-logo-light-60X60.png" />
     <Content Include="Images\Splash.png" />
-    <Content Include="Mvc.sitemap" />
-    <None Include="MvcSiteMapSchema.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\PublishProfiles\businessexcel - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\businessexcel - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Znet_businessexcel.gsmobileapps.com.pubxml" />

@@ -7,6 +7,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Collections.Generic;
+using System.Web.Security;
 
 namespace BusinessExcel.Providers.ProviderContext
 {
@@ -25,8 +26,8 @@ namespace BusinessExcel.Providers.ProviderContext
                   new SqlParameter("@user_name", userName) :
                   new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            UserDetail detail =
-                this.Database.SqlQuery<UserDetail>(SELECT_USER, user_name).ToList()[0];
+            var users = this.Database.SqlQuery<UserDetail>(SELECT_USER, user_name).ToList();
+            UserDetail detail = users.Count > 0 ? users[0] : null;
             return detail;
         }
         public virtual int getUserID(string userName)
@@ -45,10 +46,67 @@ namespace BusinessExcel.Providers.ProviderContext
             return detail;
         }
 
+        /// <summary>
+        /// Retrive user id by using membership name.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public virtual int getViewer_Id()
+        {
+
+            int login_member_user_id = (int)Membership.GetUser().ProviderUserKey;
+
+            const string SELECT_USER = @"select isnull(user_id,0)
+                                                from [sc_salesmanage_user].[user_m] 
+                                            where 
+                                                user_membership_id = @user_membership_id";
+
+            var user_id = login_member_user_id > 0 ?
+                  new SqlParameter("@user_membership_id", login_member_user_id) :
+                  new SqlParameter("@user_membership_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            int vId = 0;
+            try
+            {
+                  vId = this.Database.SqlQuery<int>(SELECT_USER, user_id).ToList()[0];
+            }
+            catch (Exception)
+            {
+                return vId = 0;
+            }
+            return vId;
+        }
+        public virtual List<int> getViewersList()
+        {
+            List<int> vw = new List<int>();
+
+
+            int VId = getViewer_Id();
+
+            var viewer_id = VId > 0 ?
+              new SqlParameter("@viewer_id", VId) :
+              new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+
+            vw = this.Database.SqlQuery<int>(
+                                            "select user_id from  db_salesmanage_user.f_getLeastChildrens_byParentUser_Id(@viewer_id)",  viewer_id)
+                                            .ToList();
+
+         
+            return vw;
+        }
         public virtual List<UserDetail> getUserDetails(string search, int Page, out int RowCount)
         {
             List<UserDetail> items = new List<UserDetail>();
-              var user_name = search != null ?
+
+            int VId = getViewer_Id();
+
+            var viewer_id = VId > 0 ?
+              new SqlParameter("@viewer_id", VId) :
+              new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+
+            var user_name = search != null ?
                     new SqlParameter("@user_name", search) :
                     new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
@@ -70,7 +128,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<UserDetail>(
-                                                "[sc_salesmanage_user].[getUserDetails] @user_name ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                                                "[sc_salesmanage_user].[getUserDetails] @user_name ,@page_number ,@page_size ,@row_count OUTPUT,@viewer_id", user_name, page_number, page_size, row_count, viewer_id)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }

@@ -1,0 +1,185 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model BaseTarget
+
+@{
+    LocationDetail selectionLocation = new LocationDetail();
+    UserDetail selectionUser = new UserDetail();
+    using (var db = new SalesManageDataContext())
+    {
+        selectionLocation = db.getLocationDetail(Model.Location);
+        selectionUser = db.getUserDetail(Model.UserName);
+    }
+    var temp = new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } };
+    if (!string.IsNullOrEmpty(Model.TargetTemplate))
+    {
+        temp.Add("disabled", "true");
+    }
+}
+
+<div class="table-form">
+    @using (Ajax.BeginForm(
+                                        controllerName: TargetController.TARGET,
+                                        actionName: TargetController.LOCATIONTARGET,
+                                        htmlAttributes: new { id = "target-location-create-form" },
+                                        routeValues: null,
+                                        ajaxOptions:
+                                        new AjaxOptions()
+                                        {
+                                            InsertionMode = InsertionMode.Replace,
+                                            HttpMethod = "Post",
+                                            UpdateTargetId = "target-location-create",
+                                            OnBegin = "move('#page-load')",
+                                            OnComplete = "ajax_call_load_complete('#page-load')",
+                                            OnFailure = "loadin_failed",
+                                            LoadingElementId = "target-create-progress"
+                                        }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => Model.TargetTemplate)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-1 padding-label">
+                        Period
+                    </div>
+                    <div class="col-md-5">
+                        @Html.AdminLTEDateRangePickerFor(
+m => Model.StartDate,
+m => Model.EndDate,
+"Date Range",
+htmlLabelAttributes: null,
+htmlTextBoxAttributes: temp,
+htmlGroupAttributes: null,
+htmlGlyphiconsAttributes: null,
+glyphiconsName: "fa fa-calendar",
+showLabel: false,
+hasValidation: true,
+showGlyphicons: true)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-md-1 padding-label">
+                        Site
+                    </div>
+                    <div class="col-md-5">
+                        @{
+                                temp = new Dictionary<string, object>
+                                    () { { "class", "form-control select2" } , { "onchange","remove_messages()"} };
+                                if (!string.IsNullOrEmpty(Model.TargetTemplate))
+                                {
+                                    temp.Add("disabled", "true");
+                                    @Html.HiddenFor(m=>Model.Location)
+                                }
+                            }
+                            @Html.AdminLTEDropDownListFor(
+                 m => Model.Location,
+                 htmlLabelAttributes: null,
+                 htmlDropDownAttributes: temp,
+                 htmlGroupAttributes: new Dictionary<string, object>() { },
+                 autoCompleteOptions: new AutoCompleteOptions()
+                 {
+                     AjaxOptions = new AjaxOptions()
+                     {
+                         HttpMethod = "GET",
+                         Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                     },
+                     DescriptionField = "description",
+                     IDField = "location_id",
+                     Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+                     IsAutoComplete = true,
+                     SelectedItem = selectionLocation
+                 },
+                 showLabel: false)
+</div>
+                </div>
+            </div>
+        </div>
+        <div class="box-header with-border">
+            <h3 class="box-title">@TargetController.TARGETTEMPLATELINE_TITLE</h3>
+        </div>
+        <div class="row table-form-row" id="target-row">
+            <div class="row">
+                <div class="col-md-12">
+                    @{Html.RenderPartial(TargetController.TARGETLINE, Model.LineTargets);}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-1 padding-label ">
+                    Total
+                </div>
+                <div class="col-md-3 table-fields">
+
+                    @Html.AdminLTEParagraphFor(m => m.TotalTarget,
+                   new Dictionary<string, object>() {
+                         { "class", "form-control numaric" },
+                         { "disabled","true"}
+                   })
+                </div>
+            </div>
+        </div>
+                        //Error Messages
+        <div class="row">
+            @if (ViewBag.Result != null)
+            {
+                var message = "";
+                var className = @"";
+                switch ((int)ViewBag.Result)
+                {
+                    case -1:
+                        className = @"alert alert-danger";
+                        message = "<b>Cannot save.</b>";
+                        break;
+                    case -2:
+                        className = @"alert alert-warning";
+                        message = "<b>Updated.</b>";
+                        break;
+                    default:
+                        className = @"alert alert-success";
+                        message = "<b>Successfully saved.</b>";
+                        break;
+                }
+
+                if (ViewBag.ModelErrors != null)
+                {
+                    foreach (var err in ((string)ViewBag.ModelErrors).Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+                    { message += ("<p>" + err + "</p>"); }
+                }
+                if (ViewBag.Message != null)
+                {
+                    message += ("<p>" + ViewBag.Message + "</p>");
+                }
+                <div class="row save-message">
+                    <div class="col-md-offset-1 col-md-8">
+                        <div class="@className" role="alert">@Html.Raw(message)</div>
+                    </div>
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-3">
+
+                    @Html.AdminLTEFromSubmitter("Save",
+                                               "target-create-progress",
+                                               new Dictionary<string, object>() {
+                                                   { "type", "submit" } ,
+                                                   { "class","btn btn-primary"}
+                                               },
+                                               Url.Content("~/Images/progress.gif")
+                                               )
+                </div>
+            </div>
+        </div>
+                    }
+</div>

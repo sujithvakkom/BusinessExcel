@@ -24,8 +24,21 @@ namespace BusinessExcel
                         "~/Scripts/AdminLTE/plugins/select2/select2.full.min.js",
                         "~/Scripts/AdminLTE/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/bootstrap.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/pace").Include(
                         "~/Scripts/AdminLTE/plugins/pace/pace.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/cldr").Include(
+                        "~/Scripts/cldr.js",
+                        "~/Scripts/cldr/event.js",
+                        "~/Scripts/cldr/supplemental.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/globalize").Include(
+                        "~/Scripts/globalize.js",
+                        "~/Scripts/globalize/number.js"));
 
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
@@ -73,6 +86,15 @@ namespace BusinessExcel
                 "~/Scripts/AdminLTE/plugins/pace/pace.css",
                 "~/Scripts/AdminLTE/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css"
 
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
+                //"~/Content/bootstrap-theme.min.css"
+                "~/Content/bootstrap.min.css",
+                "~/Content/bootstrap-grid.min",
+                "~/Content/font-awesome.min.css",
+                "~/Content/site.css",
+                "~/Content/Custom/site.css"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/themes/smenu/css").Include(

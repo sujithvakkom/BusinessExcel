@@ -1,0 +1,141 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@{
+    Layout = null;
+    WebGrid grid = null;
+    UserDetail user = null;
+    List<TargetAchievementView> LocationAchievement = null;
+    using (var db = new SalesManageDataContext())
+    {
+        user = db.getUserDetail(ViewBag.UserName);
+
+        var user_name = new System.Data.SqlClient.SqlParameter("@user_name", ViewBag.UserName);
+        LocationAchievement =
+           db.Database.SqlQuery<TargetAchievementView>(MobileController.ACHIEVEMENT_CMD,
+           user_name).ToList();
+
+        grid = new WebGrid(
+                source: LocationAchievement,
+                canPage: true,
+                rowsPerPage: 10
+                );
+        grid.Pager(WebGridPagerModes.NextPrevious);
+
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="@Url.Content("~/Images/gs_icon.ico")" />
+    @System.Web.Optimization.Styles.Render("~/Content/bootstrap")
+    <title>Target</title>
+    <style>
+        .pagination {
+            margin: 0px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" style="background-color:rgb(26, 12, 78)">
+            <div class="col-xs-12 text-bold" style="color:white">
+                <h4>Target and Achievement</h4>
+            </div>
+        </div>
+        <div class="row" style="padding-top:10px;">
+            <div class="col-xs-12">
+                <span>@user.full_name</span>
+                <b>(@user.user_name)</b>
+            </div>
+        </div>
+    </div>
+    <div style="padding-top:10px;">
+        <div class="container" style="border: 2px solid rgba(183, 10, 10, 0.5);padding-bottom: 10px;">
+
+            @foreach (var date in LocationAchievement.Select(x => x.start_date).Distinct())
+            {
+                <div class="row">
+                    <div class="col-xs-12" style="padding-top: 10px;background: rgba(93, 54, 54, 0.5);">
+                        @Html.AdminLTEParagraph((DateTime)date, null, "{0:MMMM yyyy}")
+                    </div>
+                </div>
+                foreach (var line in LocationAchievement.Where(x => x.start_date == date).Select(x => x))
+                {
+                    <div class="row border">
+                        <div class="col-xs-2 ">1</div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <div class="col-xs-6">@line.Category</div>
+
+                                <div class="col-xs-6">@Html.AdminLTEParagraph((bool)line.has_bonus ? "Has Bonus." : "Has no bonus.")</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">Target</div>
+                                <div class="col-xs-6">Achievement</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    @Html.AdminLTEParagraph((object)line.Target_amt, new Dictionary<string, object>() { { "class", MyExtentions.NUMARIC } })
+                                </div>
+                                <div class="col-xs-6">@Html.AdminLTEParagraph((object)line.Achieved_Amt, new Dictionary<string, object>() { { "class", MyExtentions.NUMARIC } })</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        @*<div>
+                @grid.GetHtml(
+                               tableStyle: "table table-striped table-bordered be-pagination-spl",
+                               columns: new[] {
+                                   new WebGridColumn() {
+                                       ColumnName = "Category",
+                                      Header="Category",
+                                      CanSort = false,
+                                      Style=""
+                                   },
+                                   new WebGridColumn() {
+                                       ColumnName = "start_date",
+                                      Header="Period",
+                                      Format=(item)=>@Html.AdminLTEParagraph((DateTime)@item["start_date"],null,"{0:MMMM yyyy}"),
+                                      CanSort = false
+                                   },
+                                   new WebGridColumn() {
+                                       ColumnName = "has_bonus",
+                                      Header="Has Bonus",
+                                      Format=(item)=>@Html.AdminLTEParagraph((bool)@item["has_bonus"]?"Yes":"No"),
+                                      CanSort = false
+                                   },
+                                   new WebGridColumn() {
+                                       ColumnName = "Target_amt",
+                                      Header="Target",
+                                      Format=(item)=>@Html.AdminLTEParagraph((object)@item["Target_amt"],new Dictionary<string,object>() { { "class", MyExtentions.NUMARIC } }),
+                                      CanSort = false
+                                   },
+                                   new WebGridColumn() {
+                                       ColumnName = "Achieved_Amt",
+                                      Format=(item)=>@Html.AdminLTEParagraph((object)@item["Achieved_Amt"],new Dictionary<string,object>() { { "class", MyExtentions.NUMARIC } }),
+                                      Header="Achieved",
+                                      CanSort = false
+                                   }
+
+                               })
+            </div>*@
+
+    </div>
+</body>
+</html>
+

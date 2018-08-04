@@ -557,10 +557,10 @@ for the session state store provider):
                 if (WriteExceptionsToEventLog)
                 {
                     WriteToEventLog(e, "ReleaseItemExclusive");
-                    throw new ProviderException(exceptionMessage);
+                    //throw new ProviderException(exceptionMessage);
                 }
-                else
-                    throw e;
+                //else
+                //    throw e;
             }
         }
 

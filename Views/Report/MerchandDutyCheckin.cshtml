@@ -1,0 +1,11 @@
+﻿@using BootstrapHtmlHelper
+@{
+    UriBuilder x = new UriBuilder(@"maps.google.com/maps");
+
+}
+
+<a href="@x.ToQueryString(
+        new System.Collections.Specialized.NameValueCollection() {
+            { "q", "25.2465243,55.3389633" },
+            { "hl", "en" } })" 
+   target="_blank">Map</a>

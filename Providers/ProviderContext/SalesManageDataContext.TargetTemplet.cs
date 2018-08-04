@@ -36,16 +36,21 @@ GO
          private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date,@end_date,@location_in,@user_in,@description_in,@base_incentive_in,@target_line_in";
 
          */
-         private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @target_line_in";
-        public virtual int createUpdateTarget(BaseTarget target)
+         private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @target_teplat_id, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
+        public virtual int createUpdateTarget(BaseTarget target, out string Message)
         {
             int result = -1;
 
-            var returnParameter = new SqlParameter("@ReturnVal", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue };
+            var start_date =
+                target.StartDate == DateTime.MinValue?
+                new SqlParameter("@start_date", SqlDbType.DateTime) { Value = DBNull.Value } :
+                new SqlParameter("@start_date", target.StartDate);
+            
 
-            var start_date = new SqlParameter("@start_date", target.StartDate);
-
-            var end_date = new SqlParameter("@end_date", target.EndDate);
+            var end_date = 
+                target.EndDate == DateTime.MinValue?
+                new SqlParameter("@end_date", SqlDbType.DateTime) { Value = DBNull.Value } :
+                    new SqlParameter("@end_date", target.EndDate);
 
             var location_in = String.IsNullOrEmpty(target.Location) ?
                 new SqlParameter("@location_in", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value } :
@@ -57,49 +62,69 @@ GO
 
             var description_in = String.IsNullOrEmpty(target.Description) ?
                 new SqlParameter("@description_in", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value }:
-                new SqlParameter("@description_in", target.Description) ;
+                new SqlParameter("@description_in", target.Description);
 
-            var base_incentive_in = new SqlParameter("@base_incentive_in", target.BaseIncentive);
+            var base_incentive_in =
+                target.BaseIncentive == null ?
+                new SqlParameter("@base_incentive_in", SqlDbType.Decimal) { Value = DBNull.Value } :
+                new SqlParameter("@base_incentive_in", target.BaseIncentive);
+
+            var target_teplat_id =
+                target.TargetTemplate == null ?
+                new SqlParameter("@target_teplat_id", SqlDbType.Int) { Value = DBNull.Value } :
+                new SqlParameter("@target_teplat_id", target.TargetTemplate);
 
             var data = target.getTargetLine();
             data.TableName = "target_line_in";
             var target_line_in = new SqlParameter("@target_line_in", System.Data.SqlDbType.Structured) { Value = data, TypeName = "target_category_line" };
 
+            var message =
+                new SqlParameter("@message", SqlDbType.NVarChar,-1) { Value = DBNull.Value ,Direction=ParameterDirection.Output};
+
+            var curr_target_id = new SqlParameter("@curr_target_id", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
             try
             {
                 result = this.Database.ExecuteSqlCommand(cmd, 
-                    returnParameter,
                     start_date, 
                     end_date, 
                     location_in, 
                     user_in, 
                     description_in, 
                     base_incentive_in, 
-                    target_line_in);
+                    target_teplat_id,
+                    target_line_in,
+                    message, 
+                    curr_target_id);
+                Message = message.Value.ToString();
+                result = int.Parse(curr_target_id.Value.ToString());
             }
             catch (Exception ex) {
                 result = -1;
+                Message = ex.Message;
             }
-            result = int.Parse(returnParameter.Value.ToString());
             return result;
         }
 
-        public virtual List<TargetTemplet> getTargetTempletDetails(string search, int Page, out int RowCount)
+        public virtual List<TargetTemplet> getTargetTempletDetails(string search, int? PageNum, int? PageSize, out int RowCount, int? LocationID = null)
         {
 
             List<TargetTemplet> items = new List<TargetTemplet>();
+
             var filter = search != null ?
                   new SqlParameter("@filter", search) :
                   new SqlParameter("@filter", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            int? page = null;
-            var page_size = page != null ?
-                new SqlParameter("@page_size", page) :
+            var location_id = LocationID != null ?
+                  new SqlParameter("@location_id", LocationID) :
+                  new SqlParameter("@location_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            var page_size = PageSize != null ?
+                new SqlParameter("@page_size", PageSize) :
                 new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
 
-            int? page_num = Page;
-            var page_number = page_num != null ?
-                new SqlParameter("@page_number", page_num) :
+            var page_number = PageNum != null ?
+                new SqlParameter("@page_number", PageNum) :
                 new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
 
             int? row = null;
@@ -107,10 +132,16 @@ GO
                 new SqlParameter("@row_count", row) :
                 new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
             row_count.Direction = System.Data.ParameterDirection.Output;
+
             try
             {
                 items = this.Database.SqlQuery<TargetTemplet>(
-                                                "[sc_salesmanage_vansale].[getTargetTempletDetails]  @filter ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
+                                                "[sc_salesmanage_vansale].[getTargetTempletDetails]  @filter ,@location_id ,@page_number ,@page_size ,@row_count OUTPUT",
+                                                filter,
+                                                location_id,
+                                                page_number,
+                                                page_size,
+                                                row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
@@ -121,18 +152,27 @@ GO
             return items;
         }
 
-
-        public virtual List<LineTarget> getTargetTempletLineDetails(int? search)
+        public virtual List<LineTarget> getTargetTempletLineDetails(int? search, bool isBalance = true, int? userID=null)
         {
             int result = -1;
             List<LineTarget> items = new List<LineTarget>();
             var target_id = search != null ?
                   new SqlParameter("@target_id", search) :
                   new SqlParameter("@target_id", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+            var balance =
+                  new SqlParameter("@balance", Convert.ToInt32(isBalance));
+
+            var user_id = userID != null ?
+                  new SqlParameter("@user_id", userID) :
+                  new SqlParameter("@user_id", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
             try
             {
                 items = this.Database.SqlQuery<LineTarget>(
-                                                " [sc_salesmanage_vansale].[getTargetTempletLineDetails]  @target_id", target_id)
+                                                " [sc_salesmanage_vansale].[getTargetTempletLineDetails]  @target_id, @balance, @user_id", 
+                                                target_id,
+                                                balance,
+                                                user_id)
                                                 .ToList();
             }
             catch (Exception ex)
@@ -142,5 +182,35 @@ GO
             return items;
         }
 
+        public virtual BaseTarget getTargetTemplet(int? TargetTempletID) {
+            BaseTarget result = null;
+            
+            var target_id = TargetTempletID != null ?
+                new SqlParameter("@target_id", TargetTempletID) :
+                new SqlParameter("@target_id", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+
+            try
+            {
+                result = (BaseTarget)(this.Database.SqlQuery<_BaseTarget>(
+                                                @"SELECT t.[target_id] AS    TargetTemplate ,
+       NULL AS             UserName ,
+       t.[description] AS  Description ,
+       r.location_id AS    Location ,
+       r.start_date AS     StartDate ,
+       r.end_date AS       EndDate ,
+       NULL AS             TotalTarget ,
+       t.base_incentive AS BaseIncentive
+FROM [db_salesmanage_user].[target_m] AS t INNER JOIN [db_salesmanage_user].[roster] AS r ON t.roster_id = r.roster_id
+WHERE t.target_id = @target_id",
+                                                target_id).FirstOrDefault());
+            }
+            catch (Exception ex)
+            {
+                result = null;
+            }
+
+            return result;
+        }
     }
 }

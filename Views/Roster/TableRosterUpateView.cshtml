@@ -62,7 +62,7 @@
                 <div class="box-body">
                     <div class="row">
                      
-                        <div class="col-md-3">
+                        @*<div class="col-md-3">
 
                             @Html.AdminLTEDropDownListFor(
 m => m.UserName,
@@ -87,7 +87,7 @@ autoCompleteOptions: new AutoCompleteOptions()
 },
 showLabel: false)
 
-                        </div>
+                        </div>*@
 
 
                         <div class="col-md-3">
@@ -180,7 +180,7 @@ carrot: "fa fa-download")
                             };
 
                             int count = 0;
-                            IQueryable<Roster> data = db.RosterUpateViewPaging(pageNumber: ViewBag.RosterUpateViewPage,
+                            IQueryable<RosterViewModel> data = db.RosterUpateViewPaging(pageNumber: ViewBag.RosterUpateViewPage,
                                         pageSize: 6,
                                         sort: ViewBag.RosterUpateViewSort,
                                         sortdir: ViewBag.RosterUpateViewDir,
@@ -200,10 +200,10 @@ columns: new[] {
 
 
 
+   
 
-
-                            grid.Column(columnName:"user_name",header:"User Name",format:null,style:"user-name",canSort:false),
-                             grid.Column(columnName:"u_name",header:"Name",format:null,style:"user-name",canSort:false),
+                            grid.Column(columnName:"name",header:"Name",format:null,style:"user-name",canSort:false),
+                             //grid.Column(columnName:"u_name",header:"Name",format:null,style:"user-name",canSort:false),
                             grid.Column(columnName:"start_date",header:"Start Date",format: @<text>@item.start_date.ToString("dd/MMM/yyyy")</text>, style:"start_date",canSort:false), grid.Column(columnName:"end_date",header:"End Date",format: @<text> @item.end_date.ToString("dd/MMM/yyyy") </text> , style:"end_date",canSort:false),
 
                 //grid.Column(columnName:"location_id",header:"Location ID",format:null,style:"location",canSort:false),
@@ -212,22 +212,22 @@ columns: new[] {
                 grid.Column(columnName:"location_name",header:"Location Name",format:null,style:"location",canSort:true),
                  grid.Column(null, null, format: @<input type="hidden" name="rosterID" class="hidRosterId" value="@item.roster_id" />),
 
-      grid.Column(columnName:"target_amt",header:"Target",format:null,style:"user-name1",canSort:true),
+     // grid.Column(columnName:"target_amt",header:"Target",format:null,style:"user-name1",canSort:true),
 
-       grid.Column(null, null, format: @<input type="hidden" name="target_id" class="hidTargetId" value="@item.target_id" />),
+     //  grid.Column(null, null, format: @<input type="hidden" name="target_id" class="hidTargetId" value="@item.target_id" />),
      //  grid.Column(columnName:"description",header:"Target Name",format:null,style:"user-name",canSort:false),
 
                 grid.Column("", style: "btn", format: @<text><div style="padding-left:10px;">
 
 
-                        <a class="edit-roster   glyphicon glyphicon-edit" id="@item.user_name" style="font-size: 20px;" title="Edit"></a>
-                        <a class="delete-roster glyphicon glyphicon-trash" id="@item.user_name" style="font-size: 20px;" title="Delete"></a>
+                        @*<a class="edit-roster   glyphicon glyphicon-edit" id="@item.roster_id" style="font-size: 20px;" title="Edit"></a>*@
+                        <a class="delete-roster glyphicon glyphicon-trash" id="@item.roster_id" style="font-size: 20px;" title="Delete"></a>
                     </div>
                 </text>),
 
 
-
-
+    
+   
 
 
 
@@ -241,6 +241,7 @@ nextText: "NEXT",
 firstText: "FIRST",
 previousText: "PREV.",
 lastText: "LAST")
+                            
                         }
                     }
                 </div>
@@ -349,28 +350,26 @@ lastText: "LAST")
         var roster_id = tr.find('.hidRosterId').val();
         var loc_id = tr.find('.hidlocationId').val();
 
-        var target_id = tr.find('.hidTargetId').val();
+     
         
 
-            var username = $(this).closest('tr').children("td:eq(0)").html();
-            var uname = $(this).closest('tr').children("td:eq(1)").html();
-            var stdate = $(this).closest('tr').children("td:eq(2)").html();
-            var eddate = $(this).closest('tr').children("td:eq(3)").html();
-            var lname = $(this).closest('tr').children("td:eq(5)").html();
-            var target = $(this).closest('tr').children("td:eq(7)").html();
+          
+            var name = $(this).closest('tr').children("td:eq(0)").html();
+            var stdate = $(this).closest('tr').children("td:eq(1)").html();
+            var eddate = $(this).closest('tr').children("td:eq(2)").html();
+         
+         
             //var target_id = $(this).closest('tr').children("td:eq(8)").html();
            
             var ros = {
             
-                user_Name: username,
+ 
                 start_date: stdate,
                 end_date: eddate,
                 roster_id: roster_id,
-                location_name: lname,
                 location_id: loc_id,
-                u_name: uname,
-                target_amt: target,
-                target_id: target_id
+                name: name,
+              
             };
 
           

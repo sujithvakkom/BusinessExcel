@@ -1,4 +1,5 @@
-﻿using BusinessExcel.Models;
+﻿using BootstrapHtmlHelper;
+using BusinessExcel.Models;
 using BusinessExcel.Providers.ProviderContext;
 using BusinessExcel.Providers.ProviderContext.Entities;
 using System;
@@ -16,7 +17,7 @@ namespace BusinessExcel.Controllers
     {
 
         public static string TARGETLINE = "TargetLine";
-        public static string TARGETTEMPLATE_TITLE = "Target Template";
+        public static string TARGETTEMPLATE_TITLE = "Target Creation";
         public static string TARGETASSIGN_TITLE = "Target Assign";
         public static string TARGETTEMPLATELINE_TITLE = "Target Lines";
         public static string TARGETTEMPLATE = "TargetTemplate";
@@ -30,7 +31,7 @@ namespace BusinessExcel.Controllers
             BaseTarget target = null;
             if (target == null)
             {
-                target = new BaseTarget();
+                target = new BaseTarget(true);
             }
             if (!Roles.RoleExists("System Administrator")) Roles.CreateRole("System Administrator");
             if (!Roles.GetRolesForUser().Contains("System Administrator") && WebSecurity.CurrentUserName == "sujithvakkom@gmail.com")
@@ -60,6 +61,7 @@ namespace BusinessExcel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult TargetTemplateCreate(BaseTarget target, ICollection<LineTarget> lineTarget)
         {
+            string Message="";
             int result = -1;
             if (ModelState.IsValid)
             {
@@ -67,14 +69,19 @@ namespace BusinessExcel.Controllers
                     lineTarget.ToArray();
                 try
                 {
-                    result = target.Save();
-                    target = new BaseTarget();
+                    result = target.Save(out Message);
+                    if (result != -1)
+                        target = new BaseTarget(true);
                 }
                 catch (Exception ex)
                 {
-                    target.LineTargets = lineTarget.ToArray();
+                    ViewBag.Message = Message;
                 }
             }
+            else {
+                ViewBag.ModelErrors = ViewData.ModelState.GetErrors();
+            }
+
             if (!Roles.RoleExists("System Administrator")) Roles.CreateRole("System Administrator");
             if (!Roles.GetRolesForUser().Contains("System Administrator") && WebSecurity.CurrentUserName == "sujithvakkom@gmail.com")
                 Roles.AddUserToRole(WebSecurity.CurrentUserName, "System Administrator");
@@ -93,6 +100,8 @@ namespace BusinessExcel.Controllers
                 }
             }
             ViewBag.Result = result;
+            if (!string.IsNullOrEmpty(Message))
+                ViewBag.Message = Message;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (Request.IsAjaxRequest())
                 return PartialView(_TARGETTEMPLATECREATEBLOCK, target);

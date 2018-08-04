@@ -1,4 +1,67 @@
 ﻿
+
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.text-justify {
+  text-align: justify;
+}
+.text-nowrap {
+  white-space: nowrap;
+}
+.text-lowercase {
+  text-transform: lowercase;
+}
+.text-uppercase {
+  text-transform: uppercase;
+}
+.text-capitalize {
+  text-transform: capitalize;
+}
+.text-muted {
+  color: #777;
+}
+.text-primary {
+  color: #337ab7;
+}
+a.text-primary:hover,
+a.text-primary:focus {
+  color: #286090;
+}
+.text-success {
+  color: #3c763d;
+}
+a.text-success:hover,
+a.text-success:focus {
+  color: #2b542c;
+}
+.text-info {
+  color: #31708f;
+}
+a.text-info:hover,
+a.text-info:focus {
+  color: #245269;
+}
+.text-warning {
+  color: #8a6d3b;
+}
+a.text-warning:hover,
+a.text-warning:focus {
+  color: #66512c;
+}
+.text-danger {
+  color: #a94442;
+}
+a.text-danger:hover,
+a.text-danger:focus {
+  color: #843534;
+}
 .box-widget{
     border:none;
     position:relative
@@ -80,39 +143,46 @@ tfoot tr td{
     padding-left:5px;
 }
 
-#target-tamplet #target-row{
+.table-form .table-form-row{
     padding:10px;
      margin: 5px !important;
 }
-#target-tamplet .field-validation-valid{
+.table-form .field-validation-valid{
     margin:0px !important;
 }
-#target-tamplet .form-group {
+.table-form .form-group {
     margin:0px !important;
 }
-#target-tamplet .checkbox {    
+.table-form .checkbox {    
     padding: 6px 0px 6px 10px !important;
     margin: 0px !important;    
     border: 1px solid #ccc;
 }
 
-#target-tamplet .padding-label {
+.table-form .padding-label {
     text-align:right;
     padding: 6px 10px 6px 10px !important;
     font-weight:bold;
 }
 
-#target-tamplet .numaric{
+.numaric{
     text-align:right;
 }
-.table-fields {
+.table-form .table-fields {
     padding-left:0px !important;
     padding-bottom:0px !important;
     padding-top:0px !important;
     padding-right:0px !important
 }
-.table-fields-header div {
+.table-form .table-fields-header div {
     font-weight:bold;
     padding:10px !important;
     border: 1px solid #ccc;
+}
+.select2 select2-container select2-container--default{
+    width:100% !important;
+}
+
+.text-transparent {
+    color:rgba(0,0,0,0);
 }

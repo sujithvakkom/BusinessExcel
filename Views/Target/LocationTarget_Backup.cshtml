@@ -1,0 +1,96 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model BaseTarget
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @TargetController.TARGET
+        <small>@TargetController.TARGETTEMPLATE_TITLE</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="#"><i class="fa fa-dashboard"></i>@TargetController.LOCATIONTARGET_TITLE</a>
+        </li>
+        <li class="active">@AccountsController.WELCOME_TITLE</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@TargetController.LOCATIONTARGET_TITLE</h3>
+                </div>
+                <div class="box-body">
+                   @using (Ajax.BeginForm(
+                       actionName:TargetController._VIEWLOCATIONTARGET,
+                       controllerName:TargetController.TARGET,
+                       ajaxOptions: new AjaxOptions()
+                       {
+                           HttpMethod = "GET",
+                           InsertionMode = InsertionMode.Replace,
+                           LoadingElementId = "location-target-view-search",
+                           UpdateTargetId = "location-target-view"
+                       }
+                       ))
+                   {
+                    <div class="row">
+                            <div class="col-md-2 padding-label">
+                                Site
+                            </div>
+                            <div class="col-md-7">
+                                @Html.AdminLTEDropDownListFor(
+         m => Model.Location,
+         htmlLabelAttributes: null,
+         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                        { "class", "form-control select2" }
+                                    },
+         htmlGroupAttributes: new Dictionary<string, object>() { },
+         autoCompleteOptions: new AutoCompleteOptions()
+         {
+             AjaxOptions = new AjaxOptions()
+             {
+                 HttpMethod = "GET",
+                 Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+             },
+             DescriptionField = "description",
+             IDField = "location_id",
+             Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+             IsAutoComplete = true,
+             SelectedItem = Model.Location
+         },
+         showLabel: false)
+                            </div>
+                        <div class="col-md-3">
+                            <input type="submit" value="Search" class="btn btn-default"/>
+                            @{
+                                Html.RenderPartial("_Progress", "location-target-view-search");
+                            }
+                        </div>
+                    </div>
+                    }
+                    <div id="location-target-view" class="table-form" style="max-height: 480px;overflow-y: scroll;">
+                        @{
+                            Html.RenderPartial(TargetController._VIEWLOCATIONTARGET,-1);
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" id="target-location-create">
+
+            @{
+                Html.RenderPartial(TargetController._LOCATIONTARGETEDITCREATE, Model);
+            }
+        </div>
+
+    </div>
+</section>

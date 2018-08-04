@@ -1,5 +1,6 @@
 ﻿using BusinessExcel.Models;
 using BusinessExcel.Providers.ProviderContext;
+using BusinessExcel.Providers.ProviderContext.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -208,6 +209,17 @@ namespace BusinessExcel.Controllers
         public string GetUsername()
         {
             return (String)Session[Index.USER_PROFILE_INDEX];
+        }
+
+        [HttpGet]
+        public ActionResult UpdateLocation()
+        {
+            return View(new UserLocation() { });
+        }
+
+        [HttpPost]
+        public ActionResult UpdateLocation(UserLocation UserLocation) {
+            return View(UserLocation);
         }
     }
 }

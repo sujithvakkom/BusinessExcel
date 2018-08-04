@@ -12,6 +12,10 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
     public class BaseTarget
     {
         public BaseTarget() {
+        }
+
+        public BaseTarget(bool check)
+        {
             LineTargets = new LineTarget[] {
                 new LineTarget(),
                 new LineTarget(),
@@ -29,20 +33,24 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
         public LineTarget[] LineTargets { get; set; }
 
+        public static explicit operator BaseTarget(TargetMasterDetails v)
+        {
+            return new BaseTarget() { TargetTemplate = v.target_id.ToString(), Description = v.description };
+        }
+
         [Display(Name = "Target Template")]
         public string TargetTemplate { get; set; }
 
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-        [Required]
         [DataType(DataType.Text)]
         [MaxLength(50)]
         [Display(Name = "Description")]
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Location")]
+        [Display(Name = "Site")]
         public string Location { get; set; }
 
         [Required]
@@ -55,20 +63,32 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
+        private decimal? _TotalTarget;
         [Display(Name = "Total Target")]
         [DataType(DataType.Currency)]
-        public Decimal TotalTarget { get; set; }
+        public decimal? TotalTarget
+        {
+            get
+            {
+                try
+                {
+                    _TotalTarget = this.LineTargets.Sum(x => x.Target);
+                }
+                catch (Exception) { _TotalTarget = 0; }
+                return _TotalTarget == null ? 0 : _TotalTarget;
+            }
+            set { _TotalTarget = value == null ? 0 : value; }
+        }
 
-        [Required]
         [Display(Name = "Base Incentive")]
         [DataType(DataType.Currency)]
         public decimal? BaseIncentive { get; set; }
 
-        internal int Save()
+        internal int Save(out string Message)
         {
             using (var db = new SalesManageDataContext())
             {
-                return db.createUpdateTarget(target: this);
+                return db.createUpdateTarget(this,out Message);
             }
         }
         /*
@@ -82,6 +102,18 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
                 where (decimal)(x.Target == null ? 0 : x.Target) != 0
                 select new { category = x.Catogery, is_bonus = Convert.ToInt32(x.IsBonusLine), target_val = (decimal)(x.Target == null ? 0 : x.Target) };
             return data.ToList().ToDataTable();
+        }
+
+        public static explicit operator BaseTarget(_BaseTarget v)
+        {
+            return new BaseTarget() {
+                TargetTemplate = v.TargetTemplate.ToString(),
+                Description = v.Description,
+                BaseIncentive = v.BaseIncentive,
+                EndDate = v.EndDate,
+                Location = v.Location.ToString(),
+                StartDate = v.StartDate
+            };
         }
     }
 }

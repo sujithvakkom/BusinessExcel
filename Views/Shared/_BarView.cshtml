@@ -1,0 +1,7 @@
+﻿@using BootstrapHtmlHelper
+
+@model Decimal
+    @Html.AdminLTEParagraph(((decimal)Model / 100), null, "{0:0.0%}")
+<div class="progress sm">
+    <div class="progress-bar progress-bar-aqua" style="width: @Model%"></div>
+</div>

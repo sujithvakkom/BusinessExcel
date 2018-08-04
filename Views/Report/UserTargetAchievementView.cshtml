@@ -1,0 +1,855 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
+
+@model TargetAchievementView
+
+
+
+
+<div class="box box-primary" style="margin-top:3%">
+    <div class="box-header with-border">
+        <strong>
+            @Model.Month @Model.start_date.Value.ToString(" yyyy")
+             @*@Model.start_date.Value.ToString("MMMM yyyy")*@
+        </strong>
+    </div>
+    <div class="box-body">
+      
+        
+        <div id="target-achievement-view" class="table-responsive">
+            @{
+                if (User.IsInRole("User"))
+                {
+
+
+                    using (var db = new SalesManageDataContext())
+                    {
+                        WebGridColumn col = new WebGridColumn()
+                        {
+
+                        };
+
+                        int count = 0;
+                        IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
+                                    pageSize: 6,
+                                    sort: ViewBag.UserTargetViewSort,
+                                    sortdir: ViewBag.UserTargetViewDir,
+                                    count: out count, Filters: Model
+                                    );
+
+                        var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
+                                            ajaxUpdateCallback: "targetachievementviewcallBack",
+                                            rowsPerPage: 6
+                                            );
+                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                    @grid.GetHtml(
+                       //tableStyle: "table table-striped table-bordered be-pagination-spl",
+                       ////headerStyle: "webgrid-header",
+                       //alternatingRowStyle: "webgrid-alternating-row",
+
+                       tableStyle: "webgrid",
+    headerStyle: "gridheader",
+
+                                             selectedRowStyle: "webgrid-selected-row",
+                                             rowStyle: "webgrid-row-style",
+                                             htmlAttributes: new { @id = "Tsheet" + Model.target_id },
+                                             columns: new[] {
+                       grid.Column(
+                           columnName: "Category",
+                           header: "Category",
+                           format: null,
+                           style: "Category",
+                           canSort: false),
+                       grid.Column(
+                           columnName: "has_bonus",
+                           header: "Bonus Line",
+                           format: @<text>@(item.has_bonus ? "1" : "0" )</text>, style: "Category", canSort: false),
+                       grid.Column(
+                           columnName: "Target_amt",
+                           header: "Target",
+                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Target_amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           style: "Target_amt numaric", canSort: false),
+                       grid.Column(
+                           columnName: "Achieved_Amt",
+                           header: "Achieved",
+                           format: null, style: "Achieved_Amt numaric", canSort: false),
+
+                         grid.Column(
+                           columnName: "Entered_Amt",
+                           header: "Entered",
+                           format: null, style: "Entered_Amt numaric", canSort: false),
+
+                       grid.Column(
+                           null,
+                           null,
+                           format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive" value="@(String.Format("{0:n}",item.Base_Incentive))" />),
+                                             }
+                                             //footerStyle: "extra-table-pager"
+                                             )
+
+                    }
+                }
+                else
+                {
+                    using (var db = new SalesManageDataContext())
+                    {
+                        WebGridColumn col = new WebGridColumn()
+                        {
+
+                        };
+
+                        int count = 0;
+                        IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
+                                    pageSize: 6,
+                                    sort: ViewBag.UserTargetViewSort,
+                                    sortdir: ViewBag.UserTargetViewDir,
+                                    count: out count, Filters: Model
+                                    );
+                        
+                        var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
+                                            ajaxUpdateCallback: "targetachievementviewcallBack",
+                                            rowsPerPage: 6
+                                            );
+                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                        @grid.GetHtml(
+
+                       tableStyle: "webgrid",
+    headerStyle: "gridheader",
+
+
+                                         //tableStyle: "table table-striped table-bordered be-pagination-spl",
+                                         ////headerStyle: "webgrid-header",
+                                         //alternatingRowStyle: "webgrid-alternating-row",
+                                         //selectedRowStyle: "webgrid-selected-row",
+                                         //rowStyle: "webgrid-row-style",
+                                         htmlAttributes: new { @id = "Tsheet" + Model.target_id },
+                                         columns: new[] {
+                       grid.Column(
+                           columnName: "Category",
+                           header: "Category",
+                           format: null,
+                           style: "Category",
+                           canSort: false),
+                       grid.Column(
+                           columnName: "has_bonus",
+                           header: "Bonus Line",
+                           format: @<text>@(item.has_bonus ? "1" : "0" )</text>, style: "Category ", canSort: false),
+                       grid.Column(
+                           columnName: "Target_amt",
+                           header: "Target",
+                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Target_amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           style: "Target_amt numaric", canSort: false),
+                       grid.Column(
+                           columnName: "Achieved_Amt",
+                           header: "Achieved",
+                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Achieved_Amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           style: "Achieved_Amt numaric", canSort: false),
+
+                         @*grid.Column("Entered_Amt", "Entered_Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),*@
+
+                       grid.Column("Entered_Amt", "Entered Amt", canSort: false, format: @<text> <span class="display-mode"> <label id="lblEntered_Amt" style="font-weight:normal">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" style="text-align:right;" autocomplete="off" onkeypress='return isNumberKey(event)'/> </text>, style: "Entered_Amt numaric"),
+
+
+                          grid.Column("", format: @<text>
+            
+
+            <button class="edit-amt display-mode btn btn-primary btn-sm">Edit</button>
+
+                <button class="save-amt edit-mode btn btn-success btn-sm">Save</button>
+            @*@Html.AdminLTEFromSubmitter("Save",
+                       "save-load",
+                       new Dictionary<string, object>() {
+                           { "type", "button" } ,
+                           { "class","save-amt edit-mode btn btn-success btn-sm"}
+                       },
+                       Url.Content("~/Images/progress.gif")
+                       )*@
+          
+
+                <button class="cancel-amt edit-mode btn btn-info btn-sm">Cancel</button>
+          
+                        </text>,  style: "colbtn" , canSort: false),
+
+
+                       grid.Column(
+                           null,
+                           null,
+                           //format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive_@Model.Month" value="@item.Base_Incentive" />),
+                            format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive" value="@(String.Format("{0:n}",item.Base_Incentive))" />),
+
+                                             grid.Column(
+                           null,
+                           null,
+                           format:@<input type="hidden" name="user_id" id="hid_user_id" class="hid_user_id_cls" value="@item.user_id" />),
+
+                           grid.Column(
+                           null,
+                           null,
+                           format:@<input type="hidden" name="category_id" id="hid_category_id" value="@item.category_id" />),
+
+
+  grid.Column(null, null, format: @<input type="hidden" name="target_id" id="hid_target_id"  class="hid_target_id_cls" value="@Model.target_id" />),
+
+  grid.Column(null, null, format: @<input type="hidden" name="month_id" id="hid_month_id" class="hid_month_id_cls" value="@Model.Month" />),
+
+                                         }
+                                         //footerStyle: "extra-table-pager"
+                                         )
+        }
+    }
+
+
+
+}
+        </div>
+
+
+
+    </div>
+
+    <div class="container-fluid">
+        <div id="totalvaluerow">
+            <div class="row">
+                <div class="col-md-4">
+
+
+                    <div class="input-group">
+
+                        <input type="text" class="form-control extrainfo " value="Base Incentive" style="background-color:#eceaea" readonly autocomplete="off"/>
+                        <span class="input-group-addon extrainfo"></span>
+                        <input type="text" class="form-control extrainfo " value="" id="base_incentive_@Model.target_id" style="text-align:right;background-color:#eceaea" readonly autocomplete="off"/>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <hr class="col-md-12" size="20" style="margin:2px;border-top:0">
+
+            <div class="row">
+                <div class="col-md-3">
+                    <table class="table tottable" id="tottable_@Model.target_id">
+
+                        <tbody>
+                           
+                            <tr class="gridheader">
+                                <th></th>
+                                <th></th>
+                                <th style="text-align:center;font-weight:bold" >Incentive</th>
+                            </tr>
+                            <tr>
+
+                                @*<td ><input class="form-control extrainfo tottableinput"/>Target % </td>*@
+                                <td><input class="form-control extrainfo tottableinputLabel" value="Target % " /></td>
+                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalTargetPerc% id="Target_Perc_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalIncAmt id="Target_Amt_@Model.target_id" /></td>
+                            </tr>
+
+                          <tr>
+
+                              <td><input class="form-control extrainfo tottableinputLabel" value="Line Achv" /></td>
+                              <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].LineAch id="Lines_Ach_Perc_@Model.target_id" /></td>
+                              <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalLineAchAccAmt id="Lines_Ach_Amt_@Model.target_id" /></td>
+                            </tr>
+                            <tr>
+
+                                <td><input class="form-control extrainfo tottableinputLabel" value="Bonus Lines" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].totalBonusLinePerc% id="Bonus_Lines_Perc_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalBonusLineAmt id="Bonus_Lines_Amt_@Model.target_id" /></td>
+                            </tr>
+
+                            <tr>
+
+                                <td><input class="form-control extrainfo tottableinputLabel" value="" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value="" id="Tot_Perc_@Model.target_id" /></td>
+                                <td><input class="form-control extrainfo tottableinput" value= @Model.TargetTotal.Sum(x => x.TotalIncAmt+x.TotalLineAchAccAmt+x.TotalBonusLineAmt) id="Tot_Amt_@Model.target_id" /></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @*<div class="row">
+                <div class="col-md-4">
+
+
+                    <div class="input-group">
+                        <input type="text" class="form-control extrainfo" value="Target %" />
+                        <span class="input-group-addon extrainfo"></span>
+                        <input type="text" class="form-control extrainfo" value="0.00" />
+                        <span class="input-group-addon extrainfo"></span>
+                        <input type="text" class="form-control extrainfo" value="0.00" />
+                    </div>
+
+
+                </div>
+                <div class="col-md-4">
+
+
+                    <div class="input-group">
+                        <input type="text" class="form-control extrainfo" value="Line Achv %" />
+                        <span class="input-group-addon extrainfo"></span>
+                        <input type="text" class="form-control extrainfo" value="0.00" />
+                        <span class="input-group-addon extrainfo"></span>
+                        <input type="text" class="form-control extrainfo" value="0.00" />
+                    </div>
+
+
+                </div>
+
+                <div class="col-md-4">
+
+
+                    <div class="input-group">
+                        <input type="text" class="form-control extrainfo" value="Bonus Lines" />
+                        <span class="input-group-addon extrainfo"></span>
+                        <input type="text" class="form-control extrainfo" value="0.00" />
+                        <span class="input-group-addon extrainfo"></span>
+                        <input type="text" class="form-control extrainfo" value="0.00" />
+                    </div>
+
+
+                </div>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+
+
+
+<style>
+
+    .tottable tr, .tottable td{
+   padding:0px !important;
+}
+    .tottableinput{
+        border:0;
+        text-align:right;
+       
+    }
+     .tottableinputLabel
+     {
+           border:0;
+        text-align:left;
+        font-weight:bold;
+     }
+
+        .tottable {
+    border-collapse: collapse;
+      border-top:0;
+  }
+ .tottable th , .tottable td  {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    min-width:4em;
+  
+  }
+
+ .colbtn
+ {
+     width:14%;
+ }
+.Entered_Amt
+{
+    width:15%;
+}
+
+     .webgrid {
+        margin: 4px;
+        border-collapse: collapse;
+        width: 80%;
+    }
+    
+    .gridheader {
+        padding: 6px 5px;
+        text-align: center;
+        background-color: #e8eef4;
+        /*border-bottom: 2px solid #3966A2;*/
+        height: 40px;
+        font-weight: bold;
+        border-top: 2px solid #D6E8FF;
+        border-left: 2px solid #D6E8FF;
+        border-right: 2px solid #D6E8FF;
+    }
+
+    .webgrid th, .webgrid td {
+        border: 1px solid #C0C0C0;
+        padding: 5px;
+    }
+
+
+
+
+    .totControls {
+        width: 40%;
+    }
+
+    .input-group-addon {
+        padding: 0;
+        border: 0;
+        width: 0;
+    }
+
+    #totalvaluerow {
+        margin-bottom: .5%;
+       
+    }
+
+    .month {
+        padding: 0px;
+    }
+
+    .box {
+        margin-bottom: 0px;
+    }
+
+    .extrainfo {
+
+        /*background-color: #5c6a73;*/
+        color: black;
+        font-weight:bold;
+    }
+    .tottable .extrainfo 
+    {
+        /*height:1.5em;*/
+    }
+   
+    .tottable > tbody > tr > th  
+    {
+        border-top:1px solid #b5a9a9;
+       
+    }
+
+
+    /*.webgrid-table {
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        width: 650px;
+        display: table;
+        border-collapse: collapse;
+        border: solid 1px #C5C5C5;
+        background-color: white;
+    }
+
+        .webgrid-table td, th {
+            border: 1px solid #C5C5C5;
+            padding: 3px 7px 2px;
+        }
+
+    .webgrid-header, .webgrid-header a {
+        background-color: #375d7d;
+        color: #ffffff;
+        text-align: right;
+        text-decoration: none;
+    }
+
+
+    .webgrid-row-style {
+        padding: 3px 7px 2px;
+    }
+
+    .webgrid-alternating-row {
+        background-color: white;
+        padding: 3px 7px 2px;
+    }
+
+    .col1Width {
+        width: 55px;
+    }
+
+    .col2Width {
+        width: 220px;
+    }*/
+
+    th:nth-child(n+3) {
+       text-align:right
+    }
+    
+    td:nth-child(n+7), th:nth-child(n+7) {
+        display: none;
+    }
+
+ .tottableinput:read-only {
+   background-color:transparent;
+}
+</style>
+
+<script>
+
+
+
+
+   
+    $('.tottableinput').attr('readonly', true);
+
+   // $('#target-achievement-display').find("[id='loading-element']").remove();
+
+    
+
+    @*$(document).ready(function () {
+        var month = '@Html.Raw(Model.Month)';
+        var total = Number(0);
+        var targetTotal = Number(0);
+        var AchAmtTotal = Number(0);
+        var EnteredAmtTotal = Number(0);
+        var temp = Number(0);
+
+        var targetid = Number(0);
+
+        $('#Tsheet' + month + '  .hid_target_id_cls').each(function () {
+
+
+            targetid = $(this).val();
+            return;
+
+        });
+      
+    });*@
+
+    $('.edit-mode').hide();
+
+
+    $(function (event) {
+
+        var month = '@Html.Raw(Model.Month)';
+   
+   var targetid = '@Html.Raw(Model.target_id)';
+       // var targetid = Number(0);
+        var total = Number(0);
+        var targetTotal = Number(0);
+        var AchAmtTotal = Number(0);
+        var EnteredAmtTotal = Number(0);
+        var temp = Number(0);
+
+        var userid = Number(0);
+
+   
+      //  targetid = $(this).find('#Tsheet' + month + '  .hid_target_id_cls').val();
+        userid = $(this).find('#Tsheet' + targetid + '  .hid_user_id_cls').val();
+        total = $(this).find('#Tsheet' + targetid + '  .hid_Base_Incentive').val();
+       
+     
+        $('#Tsheet' + targetid + ' .Target_amt p').each(function () {
+            try {
+                temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                targetTotal = targetTotal + temp;
+            }
+            catch (err) { }
+        });
+
+        $('#Tsheet' + targetid + ' .Achieved_Amt p').each(function () {
+
+            try {
+
+                temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                AchAmtTotal = AchAmtTotal + temp;
+            }
+            catch (err) { }
+        });
+
+       
+        $('#Tsheet' + targetid + ' .Entered_Amt label').each(function () {
+
+            try {
+
+                $(this)[0].innerHTML = numberWithCommas($(this)[0].innerHTML)
+
+                temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                EnteredAmtTotal = EnteredAmtTotal + temp;
+              
+            }
+            catch (err) { }
+        });
+        
+        $('#base_incentive_' + targetid).val(numberWithCommas(total));
+        $('#Tsheet' + targetid + ' tbody').append(
+              '<tr><td><b>Total</b></td><td></td><td class="numaric"><b>' +
+              numberWithCommas(targetTotal) +
+              '</b></td><td class="numaric"><b>' +
+              numberWithCommas(AchAmtTotal) + '</b></td>   <td class="numaric totEnt" id="totEnt"><b>' +
+              numberWithCommas(EnteredAmtTotal) + '</b></td>        <td></td>      </tr>');
+
+        //if (targetid > 0) {
+           
+
+        //    setTargetTotals('tottable_' + month, JSON.stringify(totalTargetsData));
+        //}
+
+
+        //Click event
+        $('.edit-mode').hide();
+        $('.edit-amt, .cancel-amt').on('click', function (event) {
+
+            event.stopPropagation();
+            event.preventDefault();
+            event.stopImmediatePropagation();
+
+
+
+            var tr = $(this).parents('tr:first');
+            tr.find('.edit-mode, .display-mode').toggle();
+            tr.find("#Entered_Amt").focus();
+        });
+
+   
+
+        $('.save-amt').on('click', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            event.stopImmediatePropagation();
+
+            $('.save-amt').css({ 'cursor': 'wait' });
+            $('body').css({ 'cursor': 'wait' });
+
+
+            var tr = $(this).parents('tr:first');
+            var ent_amt = tr.find("#Entered_Amt").val();
+            var cat_id = tr.find("#hid_category_id").val();
+            var user_id = tr.find("#hid_user_id").val();
+
+            var gridid = $(this).closest('table').attr('id');
+
+            var model_month = tr.find("#hid_month_id").val();
+
+            var target_id = tr.find("#hid_target_id").val();
+
+         
+
+            var targetModel =
+            {
+                "user_id": user_id,
+                "category_id": cat_id,
+                "target_id": target_id,
+                "Entered_Amt": ent_amt
+               
+            };
+            $.ajax({
+                url: '@Url.Action(BusinessExcel.Controllers.ReportController.USER_TARGET_UPDATED_TOTAL)',
+                data: JSON.stringify(targetModel),
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                  
+                    if (data.length>0)
+                    {
+                        tr.find("#lblEntered_Amt").text(numberWithCommas(ent_amt));
+                        tr.find('.edit-mode, .display-mode').toggle();
+
+                       // setTargetTotals('tottable_' + model_month, user_id, target_id)
+                       
+                        var tot = Number(0);
+                        var temp = Number(0);
+
+                        $("#Tsheet" + target_id + " tr").not(':first').not(':last').each(function () {
+
+                            temp = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+                            tot = tot + temp;
+
+                        });
+
+                        $("#Tsheet" + target_id + " tr:last").find('td:eq(4) b').text(numberWithCommas(tot));
+                        setTargetTotals('tottable_' + target_id, data)
+
+                       
+
+
+                        //TotalTargetPerc(gridid, $('#month').val())
+
+
+                    }
+                    else {
+                        alert('Error occured');
+                    }
+                    $('.save-amt').css({ 'cursor': 'pointer' });
+                    $('body').css({ 'cursor': 'default' });
+                }
+            });
+
+        });
+    })
+
+
+
+    @*function LoadTargetTotals(model_table, user_id, target_id)
+    {
+     
+        var targetTotal =
+                         {
+                             "user_id": user_id,
+                             "target_id": target_id
+                           
+                         };
+        $.ajax({
+            url: '@Url.Action(BusinessExcel.Controllers.ReportController.LOAD_USER_TARGET_UPDATED_TOTAL)',
+            data: JSON.stringify(targetTotal),
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+
+                if (data.length > 0) {
+
+                    setTargetTotals(model_table, data);
+                }
+                else
+                {
+                    alert("error on Load totals");
+                }
+            }
+        });
+
+    }*@
+
+    function setTargetTotals(model_table,data)
+    {
+     
+        
+        var Templine = Number(0);
+        var Totvalue = Number(0);
+
+        $("#" + model_table + " tr:eq(1)").find('td:eq(1) input').val(data[0].TotalTargetPerc + "%");
+        $("#" + model_table + " tr:eq(1)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalIncAmt));
+        $("#" + model_table + " tr:eq(2)").find('td:eq(1) input').val(data[0].LineAch);
+        $("#" + model_table + " tr:eq(2)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalLineAchAccAmt));
+        $("#" + model_table + " tr:eq(3)").find('td:eq(1) input').val(data[0].totalBonusLinePerc + "%");
+        $("#" + model_table + " tr:eq(3)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalBonusLineAmt));
+
+
+        $("#" + model_table + " tr").not(':first').not(':last').each(function () {
+            
+            
+           Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
+         
+            Totvalue = Totvalue + Templine;
+        });
+
+       
+        $("#" + model_table + " tr:last").find('td:eq(2) input').val(numberWithCommas(Totvalue));
+    }
+    function isNumberKey(evt) {
+      
+        var charCode = (evt.which) ? evt.which : event.keyCode
+
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    //function TotalTargetPerc(model_grid, model_month) {
+
+    //    var BaseIncentive = $('#base_incentive_' + model_month).val();
+
+
+
+    //    var TemplinEnt = Number(0);
+    //    var TemplinAch = Number(0);
+    //    var TotAchEdited = Number(0);
+
+    //    $("#" + model_grid + " tr").not(':first').not(':last').each(function () {
+
+    //        TemplinEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+    //        TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));
+    //        if (TemplinEnt > 0) {
+    //            TotAchEdited = TotAchEdited + TemplinEnt;
+    //        }
+    //        else {
+    //            TotAchEdited = TotAchEdited + TemplinAch;
+    //        }
+    //    });
+
+    //    var totTarget = $("#" + model_grid + " tr:last").find('td:eq(2) b').html();
+
+
+    //    totTarget = Number(totTarget.replace(/\,/g, ""));
+
+    //    var totTargetPer = Number(0);
+
+    //    totTargetPer = ((TotAchEdited * 100) / totTarget).toFixed(2);
+
+    //    $('#Target_Perc_' + model_month + '').val(isNaN(totTargetPer) ? '0.00' + '%' : totTargetPer + "%");
+
+
+    //}
+
+
+    //function TotalIncentive(MinLinesAchPerc,TotalLineAchPerc,BaseIncentive,Cap)
+    //{
+
+    //    var TotalIncentive = Number(0);
+    //    var Lines = Number(0);
+
+    //    TotalIncentive = 0;
+
+    //    if(TotalLineAchPerc>MinLinesAchPerc)
+    //    {
+    //        Lines++;
+    //        TotalIncentive = TotalIncentive + Math.min((BaseIncentive * TotalLineAchPerc), Cap)
+    //    }
+
+
+    //}
+    //function FooterTotals(model_table, model_month)
+    //{
+    //    var Templine = Number(0);
+
+    //    var Totvalue = Number(0);
+
+    //    $("#" + model_table + " tr").not(':last').each(function () {
+
+
+    //        Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
+
+    //        Totvalue = Totvalue + Templine;
+    //    });
+
+
+    //    $("#" + model_table + " tr:last").find('td:eq(2) input').val(numberWithCommas(Totvalue));
+
+
+    //}
+
+    //function TotalTargetPerc(obj) {
+
+    //    var TemplinEnt = Number(0);
+    //    var TemplinAch = Number(0);
+    //    var TotAchEdited = Number(0);
+
+
+    //    $("#" + obj + " tr").not(':first').not(':last').each(function () {
+
+    //        TemplinEnt = Number($(this).find('td:eq(4) label ').html().replace(/\,/g, ""));
+    //        TemplinAch = Number($(this).find('td:eq(3) p ').html().replace(/\,/g, ""));
+    //        if (TemplinEnt > 0)
+    //        {
+    //            TotAchEdited = TotAchEdited + TemplinEnt;
+    //        }
+    //        else {
+    //            TotAchEdited = TotAchEdited + TemplinAch;
+    //        }
+    //    });
+
+    //    var totTarget = $("#" + obj + " tr:last").find('td:eq(2) b').html();
+    //    var period_month = $('#month').val();
+
+    //    totTarget = Number(totTarget.replace(/\,/g, ""));
+
+    //    var totTargetPer = Number(0);
+
+    //    totTargetPer = ((TotAchEdited * 100) / totTarget).toFixed(2);
+
+    //    $('#Target_Perc_' + period_month + '').val(totTargetPer + "%" );
+
+
+    //}
+
+
+</script>

@@ -1,0 +1,93 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model BaseTarget
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @TargetController.TARGET
+        <small>@TargetController.TARGETDISTRIBUTION_TITLE</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>@TargetController.TARGETDISTRIBUTION_TITLE</a></li>
+        <li class="active">@AccountsController.WELCOME_TITLE</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row" style="margin:10px">
+        <div class="col-md-9">
+            <div id="target-distribution">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@TargetController.TARGETDISTRIBUTION_TITLE</h3>
+                    </div>
+                    <div class="box-body">
+                        @{
+                            Html.RenderPartial(TargetController._TARGETDISTRIBUTIONASSIGN, Model);
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    function target_line_changed(val, formID,max) {
+        var sum = Number(0);
+        var prefix = val.getAttribute("name").split(".")[0] + "_";
+        var source = val.getAttribute("name").split(".")[1];
+        var temp = ('#' + prefix + "AvilableTarget").replace('[', '_').replace(']', '_')
+        var avilableTarget = Number($("#" + formID).find(temp).text())
+        var allocation = Number(0);
+        var target = Number(0);
+        switch (source) {
+            case 'Allocation':
+                allocation = convertNumber(val.value)
+                if (allocation > Number(max)) { allocation = max; val.value= allocation; }
+                var temp = ("#" + prefix + "TotalTarget").replace('[', '_').replace(']', '_') + " p"
+                var x = $.find(temp)[0].textContent
+                avilableTarget = convertNumber(x)
+                var temp = ("#" + prefix + "Target").replace('[', '_').replace(']', '_')
+                $("#" + formID).find(temp).val(avilableTarget * allocation / 100)
+                break;
+            case 'Target':
+                target = convertNumber(val.value)
+                var temp = ("#" + prefix + "TotalTarget").replace('[', '_').replace(']', '_') + " p"
+                var x = $.find(temp)[0].textContent
+                avilableTarget = convertNumber(x)
+                //target = Number($("#" + formID).find(temp).val())
+                var temp = ("#" + prefix + "Allocation").replace('[', '_').replace(']', '_')
+                allocation = (target / avilableTarget) * 100;
+                if (allocation > Number(max)) { allocation = max; val.value = avilableTarget * allocation / 100; }
+                $("#" + formID).find(temp).val(allocation)
+                break;
+        }
+        $("#" + formID).find('input[name ^=LineTargets][name $=Target]').each(function () {
+            sum = sum + convertNumber($(this).val());
+        })
+        $("#" + formID).find("input[name='TotalTarget']").val(numberWithCommas(sum))
+    }
+    function user_changed(val) {
+        //alert(val.value);LineTargets[0].Target
+        //"input[name*='].Target']"
+        //$('input[name ^=LineTargets][name $=Target]')
+    }
+    function load_user_assignments() {        
+        var dataToPost = $("#target-location-search-form").serialize();
+        $.ajax({
+            url: "@Url.Action(TargetController._GETLOCATIONUSERALOCATION, TargetController.TARGET,null)",
+            data:dataToPost,
+            success: function(data){
+                $('#location-user-target').html(data);
+            },
+            method:"POST"
+        });
+    }
+</script>

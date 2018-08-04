@@ -1,0 +1,125 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model String
+
+@using (var db = new SalesManageDataContext())
+{
+    try
+    {
+        var lineTargets = db.getLocationTargetAssignments(Model);
+        WebGrid grid = new WebGrid(lineTargets);
+        @*<div class="row">
+                <div class="col-md-12">
+                    <div class="box-body">
+                        <div class="box  box-default">
+                            <div class="box-header with-border">
+                                <h>Current target assignments</h>
+                            </div>
+                            <div class="box-body">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <div class="row">
+            <div class="col-md-12">
+                @grid.GetHtml(
+
+                        tableStyle: "table table-striped table-bordered be-pagination-spl",
+                        columns: new[] {
+                               //AllocatedPercentage
+                               grid.Column(columnName:"UserName",
+                               header:"User Code",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.UserName),
+                               canSort:true),
+                               grid.Column(columnName:"FullName",
+                               header:"Full Name",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.FullName),
+                               canSort:false),
+                               grid.Column(columnName:"Location",
+                               header:"Location",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Location),
+                               canSort:false),
+                               grid.Column(columnName:"Period",
+                               header:"Period",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Period),
+                               canSort:false),
+                               grid.Column(columnName:"Catogery",
+                               header:"Catogery",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.Catogery),
+                               canSort:false),
+                               grid.Column(columnName:"Target",
+                               header:"Target",
+                               format:(item)=>@Html.AdminLTEParagraph((object)@item.Target,new Dictionary<string,object>() { { "class","numaric"} }),
+                               canSort:false),
+                               grid.Column(columnName:"AllocatedPercentage",
+                               header:"Allocated Percentage",
+                               format:item=> { decimal alocPct = item.AllocatedPercentage;return @Html.Partial("_BarView",alocPct); },
+                               //format:(item)=>@Html.AdminLTEParagraph(((decimal)@item.AllocatedPercentage/100),null, "{0:0.0%}"),
+                               canSort:false)
+                        })
+            </div>
+        </div>
+        if (lineTargets != null && lineTargets.Count > 0)
+        {
+            using (Ajax.BeginForm(
+                controllerName: TargetController.TARGET,
+                                                //actionName: TargetController._GETLOCATIONALOCATION,
+                                                actionName: TargetController._GETLOCATIONALOCATION,
+                                                htmlAttributes: new { id = "target-location-search-form" },
+                                                routeValues: null,
+                                                ajaxOptions: new AjaxOptions()
+                                                {
+                                                    InsertionMode = InsertionMode.Replace,
+                                                    HttpMethod = "Post",
+                                                    UpdateTargetId = "location-target-datails",
+                                                    OnBegin = "load_user_assignments()",
+                                                    OnComplete = "ajax_call_load_complete('#page-load')",
+                                                    OnFailure = "loadin_failed",
+                                                    LoadingElementId = "target-load-progress"
+                                                })
+                )
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("TargetTemplet", Model)
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-10">
+
+                        </div>
+                        <div class="col-md-2">
+                            @Html.AdminLTEFromSubmitter(
+         "Remove",
+         "remove-allocations",
+         new Dictionary<string, object> { { "class", "btn btn-danger" } },
+         Url.Content("~/Images/progress.gif"))
+                        </div>
+                    </div>
+                </div>
+
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        <p> @ex.Message </p>
+    }
+
+}
+
+@*@{
+    Html.RenderPartial("_PublicAlertModal",
+        new AlertModal()
+        {
+            ModalTitle = "Confirm Delete",
+            TriggerDisplayName = "Remove",
+            Message = "Do you want to delete?",
+            Buttons = new List<string>() { "Yes","No"},
+            ModalID="test",ModalLabelID="test1"
+        });
+}*@

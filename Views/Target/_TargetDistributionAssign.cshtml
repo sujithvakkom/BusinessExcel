@@ -1,0 +1,170 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model BaseTarget
+@{
+    var location = new LocationDetail();
+    var user = new UserDetail();
+    var tarTemp = new TargetTemplet();
+    using (var db = new SalesManageDataContext())
+    {
+        location = db.getLocationDetail(Model.Location);
+        user = db.getUserDetail(Model.UserName);
+        try
+        {
+            var temp = db.getTargetTemplet(Convert.ToInt32(Model.TargetTemplate));
+            tarTemp = new TargetTemplet()
+            {
+                target_id = Convert.ToInt32(temp.TargetTemplate),
+                description = temp.Description
+            };
+        }
+        catch (Exception) { }
+    }
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Ajax.BeginForm(
+                                                controllerName: TargetController.TARGET,
+                                                //actionName: TargetController._GETLOCATIONALOCATION,
+                                                actionName: TargetController._GETLOCATIONALOCATION,
+                                                htmlAttributes: new { id = "target-location-search-form" },
+                                                routeValues: null,
+                                                ajaxOptions: new AjaxOptions()
+                                                {
+                                                    InsertionMode = InsertionMode.Replace,
+                                                    HttpMethod = "Post",
+                                                    UpdateTargetId = "location-target-datails",
+                                                    OnBegin = "load_user_assignments()",
+                                                    OnComplete = "ajax_call_load_complete('#page-load')",
+                                                    OnFailure = "loadin_failed",
+                                                    LoadingElementId = "target-load-progress"
+                                                }))
+        {
+            <div class="table-form">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-4 padding-label">
+                        Site
+                    </div>
+                    <div class="col-md-8">
+
+                        @Html.AdminLTEDropDownListFor(
+                          expression: m => Model.Location,
+                          htmlLabelAttributes: null,
+                          htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                { "class", "form-control select2" }
+                                             },
+                          htmlGroupAttributes: new Dictionary<string, object>() { },
+                          autoCompleteOptions: new AutoCompleteOptions()
+                          {
+                              AjaxOptions = new AjaxOptions()
+                              {
+                                  HttpMethod = "GET",
+                                  Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                              },
+                              DescriptionField = "description",
+                              IDField = "location_id",
+                              Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                              SelectedItem = location,
+                              IsAutoComplete = true,
+                              SelectItems = null
+                          },
+                          showLabel: false,
+                          hasValidation: true
+                          )
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 padding-label">
+                        Period
+                    </div>
+                    <div class="col-md-8">
+
+                        @Html.AdminLTEDropDownListFor(
+                          m => m.TargetTemplate,
+                          htmlLabelAttributes: null,
+                          htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                { "class", "form-control select2" }
+                          },
+                          htmlGroupAttributes: new Dictionary<string, object>() { },
+                          autoCompleteOptions: new AutoCompleteOptions()
+                          {
+                              AjaxOptions = new AjaxOptions()
+                              {
+                                  HttpMethod = "GET",
+                                  Url = Url.Action(actionName: JSONController.TARGETTEMPLETAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                              },
+                              DescriptionField = "description",
+                              IDField = "target_id",
+                              Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+                              SelectedItem = tarTemp,
+
+                              IsAutoComplete = true,
+                              SelectItems = null
+                          },
+                          showLabel: false,
+                          hasValidation: true,
+                          extras: new System.Linq.Expressions.Expression<Func<BaseTarget, Object>>[] { m => Model.Location }
+                          )
+                    </div>
+                </div>
+                <div class="row box-body">
+                    <div class="col-md-offset-4 col-md-5">
+                        @*<button type="submit" class="btn btn-primary">Load Details
+                            @{
+                                Html.RenderPartial("_ProgressButton", "target-load-progress");
+                            }</button>*@
+                        @Html.AdminLTEFromSubmitter("Load Details",
+                       "target-load-progress",
+                       new Dictionary<string, object>() {
+                           { "type", "submit" } ,
+                           { "class","btn btn-primary"}
+                       },
+                       Url.Content("~/Images/progress.gif")
+                       )
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="nav-tabs-custom" id="user-target-setup">
+            <ul class="nav nav-tabs pull-right">
+                <li class="active">
+                    <a href="#location-user-target" data-toggle="tab">View allocations</a>
+                </li>
+                <li>
+                    <a href="#location-target-datails" data-toggle="tab">Create allocation</a>
+                </li>
+                <li class="pull-left header"><i class="fa-random fa"></i>Merchandiser targets</li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="location-user-target">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bg-info" style="padding:10px;border-radius:3px">
+                                <h3><i class="fa fa-exclamation-circle" />No data to show.</h3>
+                                <p>Please select location and period.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="location-target-datails">
+                    <p>Please select location and period.</p>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+    </div>
+</div>

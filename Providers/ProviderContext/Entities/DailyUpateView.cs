@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace BusinessExcel.Providers.ProviderContext.Entities
 {
@@ -11,9 +8,12 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
     [Table(name:"daily_update_v", Schema = "sc_salesmanage_merchant")]
     public partial class DailyUpateView
     {
-        [Key()]
+        [Key]
+        [Column("ROW_NUM")]
+        [Display(Name = "ROW NUM", Description = "ROW NUM", Prompt = "ROW NUM", ShortName = "R NUM")]
+        public Int64 ROW_NUM { get; set; }
         [Column("user_id")]
-        [Display(Name="User Id",Description ="User Id",Prompt ="User Id",ShortName ="U Id")]
+        [Display(Name = "User Id", Description = "User Id", Prompt = "User Id", ShortName = "U Id")]
         public int UserId { get; set; }
         [Column("brand_id")]
         public int BrandId { get; set; }
@@ -40,6 +40,6 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Column("user_name")]
         public string UserName { get; set; }
         [Column("value")]
-        public Nullable<int> TotalValue { get; set; }
+        public Nullable<decimal> TotalValue { get; set; }
     }
 }

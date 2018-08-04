@@ -65,5 +65,70 @@ namespace BusinessExcel.Providers.ProviderContext
             return items;
         }
 
+        public virtual string getUserFullNameByID(int user_Id)
+        {
+            string fullName = string.Empty;
+
+            try
+            {
+                if (user_Id > 0)
+                {
+                    const string SELECT_USER = @"select
+                                                isnull(display_name,first_name+' '+second_name) as full_name 
+                                                from [sc_salesmanage_user].[user_m] 
+                                            where 
+                                                user_id = @user_id";
+
+                    var user_id = user_Id > 0 ?
+                          new SqlParameter("@user_id", user_Id) :
+                          new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+                    fullName = this.Database.SqlQuery<UserDetail>(SELECT_USER, user_id).ToList()[0].full_name;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return fullName;
+        }
+
+      
+        public int getParent(int userId)
+        {
+            int Parent_Id = 0;
+            try
+            {
+                if (userId > 0)
+                {
+                    List<UserTree> userList = new List<UserTree>();
+
+                    using (var db = new SalesManageDataContext())
+                    {
+
+                        userList = db.getUserTree();
+
+
+                    }
+
+                    int pid = userList.Where(c => c.user_id == userId).Select(a => a.parent_id).Single();
+                    int left_v = userList.Where(c => c.user_id == userId).Select(a => a.left_v).Single();
+                    int right_v = userList.Where(c => c.user_id == userId).Select(a => a.right_v).Single();
+
+                    var parents = userList.Where(c => c.left_v < left_v && c.right_v > right_v).OrderBy(x => x.left_v).ThenBy(x => x.right_v).LastOrDefault();
+
+                    if (parents != null)
+                    {
+                        Parent_Id = parents.user_id;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                //throw ex;
+                Parent_Id = 0;
+            }
+            return Parent_Id;
+        }
     }
 }
