@@ -1,0 +1,19 @@
+﻿@model BusinessExcel.Providers.ProviderContext.Entities.UserLocation
+
+@using (Ajax.BeginForm("UpdateLocation", "Accounts", new AjaxOptions(
+    
+    )
+{
+  HttpMethod="Post"
+}))
+{
+@Html.LabelFor(m => m.UserID)
+@Html.TextBoxFor(m => m.UserID)
+@Html.LabelFor(m => m.Latitude)
+@Html.TextBoxFor(m => m.Latitude)
+@Html.LabelFor(m => m.Longitude)
+@Html.TextBoxFor(m => m.Longitude)
+@Html.LabelFor(m => m.Type)
+@Html.TextBoxFor(m => m.Type)
+    <input type="submit" value="Submit"/>
+}

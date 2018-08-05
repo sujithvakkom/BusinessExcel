@@ -65,8 +65,15 @@ namespace BusinessExcel.Providers.ProviderContext
                   new SqlParameter("@user_membership_id", login_member_user_id) :
                   new SqlParameter("@user_membership_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            int vId =
-                this.Database.SqlQuery<int>(SELECT_USER, user_id).ToList()[0];
+            int vId = 0;
+            try
+            {
+                  vId = this.Database.SqlQuery<int>(SELECT_USER, user_id).ToList()[0];
+            }
+            catch (Exception)
+            {
+                return vId = 0;
+            }
             return vId;
         }
         public virtual List<int> getViewersList()

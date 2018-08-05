@@ -12,7 +12,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
     public partial class SalesManageDataContext : DbContext
     {
-        private readonly string cmdUserLoction = @"[sc_salesmanage_merchant].[update_checkin] 
+        private readonly string cmdPutUserLoction = @"[sc_salesmanage_merchant].[update_checkin] 
    @user_id
   ,@latitude
   ,@longitude
@@ -33,17 +33,17 @@ namespace BusinessExcel.Providers.ProviderContext
 
             var longitude =
                 UserLocation.Longitude == null ?
-                new SqlParameter("@latitude", SqlDbType.Decimal) { Value = DBNull.Value } :
-                new SqlParameter("@latitude", UserLocation.Longitude);
+                new SqlParameter("@longitude", SqlDbType.Decimal) { Value = DBNull.Value } :
+                new SqlParameter("@longitude", UserLocation.Longitude);
 
             var type =
                 UserLocation.Type == null ?
-                new SqlParameter("@user_id", SqlDbType.Int) { Value = DBNull.Value } :
-                new SqlParameter("@user_id", UserLocation.Type);
+                new SqlParameter("@type", SqlDbType.Int) { Value = DBNull.Value } :
+                new SqlParameter("@type", UserLocation.Type);
 
             try
             {
-                int r = this.Database.ExecuteSqlCommand(cmd,
+                int r = this.Database.ExecuteSqlCommand(cmdPutUserLoction,
                     userID,
                     latitude,
                     longitude,
@@ -53,6 +53,32 @@ namespace BusinessExcel.Providers.ProviderContext
             catch (Exception ex)
             {
                 result = ex.Message;
+            }
+            return result;
+        }
+
+        private readonly string cmdGetUserLoction = @"SELECT top(1) user_id,
+       checkin_time ,
+       latitude,
+       longitude,
+       type
+       from [sc_salesmanage_merchant].[merchant_checkin_m] 
+       where user_id = @user_id";
+        public UserLocation GetUserLoction(int? UserId, DateTime? When = null) {
+            UserLocation result = null;
+
+            var userID =
+                UserId == null ?
+                new SqlParameter("@user_id", SqlDbType.Int) { Value = DBNull.Value } :
+                new SqlParameter("@user_id", UserId);
+
+            try
+            {
+                result = this.Database.SqlQuery<UserLocation>(cmdGetUserLoction, userID).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                result = null;
             }
             return result;
         }

@@ -1,14 +1,12 @@
-﻿using BusinessExcel.Filters;
-using BusinessExcel.Models;
+﻿using BusinessExcel.Models;
 using BusinessExcel.Providers.ProviderContext;
+using BusinessExcel.Providers.ProviderContext.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using WebMatrix.WebData;
 
 namespace BusinessExcel.Controllers
 {
@@ -211,6 +209,17 @@ namespace BusinessExcel.Controllers
         public string GetUsername()
         {
             return (String)Session[Index.USER_PROFILE_INDEX];
+        }
+
+        [HttpGet]
+        public ActionResult UpdateLocation()
+        {
+            return View(new UserLocation() { });
+        }
+
+        [HttpPost]
+        public ActionResult UpdateLocation(UserLocation UserLocation) {
+            return View(UserLocation);
         }
     }
 }

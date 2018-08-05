@@ -167,23 +167,27 @@ namespace BusinessExcel.Controllers
                 if (categoryList.Count > 0)
                 {
 
-
+               // getParent(135, categoryList);
 
                     SetChildren(rootCategory, categoryList);
 
                     var model = new List<UserTree>();
 
 
-                    data = new[] { rootCategory };
+                data = new[] { rootCategory };
 
-
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView(USERSTREE, data);
+                }
+                else
+                {
+                    return View(data);
                 }
             }
-            catch
-            {
-                data = null;
-            }
-            return data;
+
+           
+            return View(data);
         }
 
 
