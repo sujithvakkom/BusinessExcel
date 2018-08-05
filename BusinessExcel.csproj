@@ -752,6 +752,7 @@
     <Content Include="Views\Items\_ItemFilter.cshtml" />
     <Content Include="Views\Shared\_PublicAlertModal.cshtml" />
     <Content Include="Views\Report\MerchandDutyCheckin.cshtml" />
+    <Content Include="Views\Shared\_UserTreeView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

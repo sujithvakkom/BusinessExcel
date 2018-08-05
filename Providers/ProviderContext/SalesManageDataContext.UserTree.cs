@@ -29,10 +29,15 @@ namespace BusinessExcel.Providers.ProviderContext
             //    new SqlParameter("@page_size", page) :
             //    new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
 
-           
+            int VId = getViewer_Id();
+            var viewer_id = VId > 0 ?
+                new SqlParameter("@viewer_id", VId) :
+                new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+
             try
             {
-                users = this.Database.SqlQuery<UserTree>("[db_salesmanage_user].[getUserTree]").ToList();
+                users = this.Database.SqlQuery<UserTree>("[db_salesmanage_user].[getUserTree] @viewer_id", viewer_id).ToList();
                
             }
             catch (Exception ex)

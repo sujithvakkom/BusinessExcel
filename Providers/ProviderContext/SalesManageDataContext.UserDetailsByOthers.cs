@@ -93,10 +93,40 @@ namespace BusinessExcel.Providers.ProviderContext
             return fullName;
         }
 
-      
-        public int getParent(int userId)
+        public int getParenId(int userId)
         {
-            int Parent_Id = 0;
+            int Parent_id = 0;
+            try
+            {
+                if (userId > 0)
+                {
+                    List<UserTree> userList = new List<UserTree>();
+
+                    using (var db = new SalesManageDataContext())
+                    {
+
+                        userList = db.getUserTree();
+
+
+                    }
+
+                    Parent_id = userList.Where(c => c.user_id == userId).Select(a => a.parent_id).First();
+                    
+                
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                Parent_id = 0;
+            }
+            return Parent_id;
+        }
+
+        public int getParentUserId(int userId)
+        {
+            int user_id = 0;
             try
             {
                 if (userId > 0)
@@ -115,20 +145,56 @@ namespace BusinessExcel.Providers.ProviderContext
                     int left_v = userList.Where(c => c.user_id == userId).Select(a => a.left_v).Single();
                     int right_v = userList.Where(c => c.user_id == userId).Select(a => a.right_v).Single();
 
-                    var parents = userList.Where(c => c.left_v < left_v && c.right_v > right_v).OrderBy(x => x.left_v).ThenBy(x => x.right_v).LastOrDefault();
+                    var parents = userList.Where(c => c.left_v < left_v && c.right_v > right_v).OrderBy(x => x.left_v).LastOrDefault();
 
                     if (parents != null)
                     {
-                        Parent_Id = parents.user_id;
+                        user_id = parents.user_id;
                     }
                 }
             }
             catch(Exception ex)
             {
                 //throw ex;
-                Parent_Id = 0;
+                user_id = 0;
             }
-            return Parent_Id;
+            return user_id;
+        }
+        public int getEntity(int userId)
+        {
+            int Enitity_Id = 0;
+            try
+            {
+                if (userId > 0)
+                {
+                    List<UserTree> userList = new List<UserTree>();
+
+                    using (var db = new SalesManageDataContext())
+                    {
+
+                        userList = db.getUserTree();
+
+
+                    }
+
+                    int pid = userList.Where(c => c.user_id == userId).Select(a => a.parent_id).Single();
+                    int left_v = userList.Where(c => c.user_id == userId).Select(a => a.left_v).Single();
+                    int right_v = userList.Where(c => c.user_id == userId).Select(a => a.right_v).Single();
+
+                    var parents = userList.Where(c => c.left_v < left_v && c.right_v > right_v).OrderBy(x => x.left_v).LastOrDefault();
+
+                    if (parents != null)
+                    {
+                        Enitity_Id = parents.entity;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                Enitity_Id = 0;
+            }
+            return Enitity_Id;
         }
     }
 }

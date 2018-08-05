@@ -24,8 +24,14 @@ namespace BusinessExcel.Controllers
         public static string USERSTREE = "UserTree";
         public static string SELECTED_FILTED_USER = "SelectedFilteredUser";
         public static string SELECTED_FILTED_USER_FIRST_NAME = "SelectedFilteredUserFirstName";
+        public static string JSON_USERSLIST = "UserTreeList";
+
+        
+        public static string ADD_CHILDUSER = "AddChild";
+        public static string DELETE_CHILDUSER = "DeleteChild";
 
 
+        public static string USERTREEVIEW = "_UserTreeView";
 
 
         // GET: /Admin/UserManagement
@@ -97,7 +103,7 @@ namespace BusinessExcel.Controllers
         //public static string USERTREEVIEW = "UserTree";
         //public PartialViewResult UserTreeView()
         //{
-         
+
         //    ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERSLIST_TITLE;
         //    ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
         //    ViewBag.Title = USERSTREE_TITLE;
@@ -105,37 +111,30 @@ namespace BusinessExcel.Controllers
         //}
 
 
+        public static string USER_TREE_UPDATEVIEW = "UserTreeUpateView";
+        public PartialViewResult UserTreeUpateView()
+        {
+            IEnumerable<UserTree> data = getUserTreeList();
+            return PartialView(USERTREEVIEW, data);
+        }
 
         [Authorize(Roles = "System Administrator")]
         [HttpGet]
         public ActionResult UserTree()
         {
-
-            List<UserTree> categoryList = new List<UserTree>();
-
-            using (var db = new SalesManageDataContext())
-            {
-
-                categoryList = db.getUserTree();
-
-
-            }
-
-            var rootCategory = categoryList.Where(x => x.level_v == 0).FirstOrDefault();
-
-            IEnumerable<UserTree> data = null;
-            if (categoryList.Count > 0)
-            {
-
-               // getParent(135, categoryList);
-
-                SetChildren(rootCategory, categoryList);
-
-                var model = new List<UserTree>();
-
-
-                data = new[] { rootCategory };
-
+            //List<UserTree> categoryList = new List<UserTree>();
+            //using (var db = new SalesManageDataContext())
+            //{
+            //    categoryList = db.getUserTree();
+            //}
+            //var rootCategory = categoryList.Where(x => x.level_v == 0).FirstOrDefault();
+            //IEnumerable<UserTree> data = null;
+            //if (categoryList.Count > 0)
+            //{
+            //    SetChildren(rootCategory, categoryList);
+            //    var model = new List<UserTree>();
+            //    data = new[] { rootCategory };
+                IEnumerable<UserTree> data = getUserTreeList();
                 if (Request.IsAjaxRequest())
                 {
                     return PartialView(USERSTREE, data);
@@ -144,16 +143,52 @@ namespace BusinessExcel.Controllers
                 {
                     return View(data);
                 }
-            }
+          //  }           
+         //   return View(data);
+        }
 
-           
-            return View(data);
+        public   IEnumerable<UserTree>  getUserTreeList()
+        {
+            IEnumerable<UserTree> data = null;
+            try
+            {
+                List<UserTree> categoryList = new List<UserTree>();
+
+                using (var db = new SalesManageDataContext())
+                {
+
+                    categoryList = db.getUserTree();
+
+                }
+
+                var rootCategory = categoryList.Where(x => x.level_v == 0).FirstOrDefault();
+
+
+                if (categoryList.Count > 0)
+                {
+
+
+
+                    SetChildren(rootCategory, categoryList);
+
+                    var model = new List<UserTree>();
+
+
+                    data = new[] { rootCategory };
+
+
+                }
+            }
+            catch
+            {
+                data = null;
+            }
+            return data;
         }
 
 
 
-      
-      
+
         private void SetChildren(UserTree model, List<UserTree> catList)
         {
 
@@ -188,5 +223,76 @@ namespace BusinessExcel.Controllers
 
         }
 
+        public JsonResult UserTreeList()
+        {
+
+            var lst = getUserTreeList();
+
+
+            return Json(lst, JsonRequestBehavior.AllowGet);
+        }
+
+
+        //public JsonResult AddChild(string paret_user_name,string new_user_name)
+        //{
+
+        //    int insertId = 0;
+        //    using (var db = new SalesManageDataContext())
+        //    {
+        //        insertId= db.InsertUserTree(paret_user_name, new_user_name);
+        //    }
+
+
+              
+        //    return Json(insertId, JsonRequestBehavior.AllowGet);
+        //}
+        public PartialViewResult AddChild(string paret_user_name, string new_user_name)
+        {
+
+            int insertId = 0;// SaveMaster(master);
+
+            using (var db = new SalesManageDataContext())
+            {
+                insertId = db.InsertUserTree(paret_user_name, new_user_name);
+            }
+            if (insertId > 0)
+            {
+                IEnumerable<UserTree> data = getUserTreeList();
+                return PartialView(USERTREEVIEW, data);
+            }
+
+            return PartialView();
+        }
+
+
+        //public JsonResult DeleteChild(string user_name)
+        //{
+        //    int deleteId = 0;// SaveMaster(master);
+
+        //    using (var db = new SalesManageDataContext())
+        //    {
+        //        deleteId= db.DeleteUserTree(user_name);
+        //    }
+
+        //    return Json(deleteId, JsonRequestBehavior.AllowGet);
+        //}
+
+        public PartialViewResult DeleteChild(string user_name)
+        {
+
+            int deleteId = 0;// SaveMaster(master);
+
+            using (var db = new SalesManageDataContext())
+            {
+                deleteId = db.DeleteUserTree(user_name);
+            }
+            if (deleteId > 0)
+            {
+                IEnumerable<UserTree> data = getUserTreeList();
+                return PartialView(USERTREEVIEW, data);
+            }
+            
+            return PartialView();
+        }
     }
 }
