@@ -16,7 +16,7 @@ namespace BusinessExcel.Controllers
     [Authorize(Roles = BERoleDetails.SYSTEM_ADMINISTRATOR)]
     public partial class AdminController : Controller
     {
- 
+
 
         public static string USERSLIST = "UserList";
         public static string USERSLIST_TITLE = "User List";
@@ -26,7 +26,7 @@ namespace BusinessExcel.Controllers
         public static string SELECTED_FILTED_USER_FIRST_NAME = "SelectedFilteredUserFirstName";
         public static string JSON_USERSLIST = "UserTreeList";
 
-        
+
         public static string ADD_CHILDUSER = "AddChild";
         public static string DELETE_CHILDUSER = "DeleteChild";
 
@@ -40,7 +40,7 @@ namespace BusinessExcel.Controllers
         [HttpGet]
         public ActionResult UserList(string sort, string sortdir, int page = 1, UserViewFilters Filters = null)
         {
-       
+
 
             ViewBag.UserUpateViewSort = sort;
             ViewBag.UserUpateViewDir = sortdir;
@@ -77,15 +77,15 @@ namespace BusinessExcel.Controllers
 
             //if (Request.IsAjaxRequest())
             //{
-                //return PartialView(TABLEDAILYUPATEVIEW, Filters);
-                return (PartialViewResult)UserUpateView(sort, sortdir, page, Filters);
+            //return PartialView(TABLEDAILYUPATEVIEW, Filters);
+            return (PartialViewResult)UserUpateView(sort, sortdir, page, Filters);
             //}
             //return View(Filters);
 
 
 
 
-          
+
         }
         public static string USERUPDATEVIEW = "UserList";
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
@@ -134,20 +134,20 @@ namespace BusinessExcel.Controllers
             //    SetChildren(rootCategory, categoryList);
             //    var model = new List<UserTree>();
             //    data = new[] { rootCategory };
-                IEnumerable<UserTree> data = getUserTreeList();
-                if (Request.IsAjaxRequest())
-                {
-                    return PartialView(USERSTREE, data);
-                }
-                else
-                {
-                    return View(data);
-                }
-          //  }           
-         //   return View(data);
+            IEnumerable<UserTree> data = getUserTreeList();
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(USERSTREE, data);
+            }
+            else
+            {
+                return View(data);
+            }
+            //  }           
+            //   return View(data);
         }
 
-        public   IEnumerable<UserTree>  getUserTreeList()
+        public IEnumerable<UserTree> getUserTreeList()
         {
             IEnumerable<UserTree> data = null;
             try
@@ -167,27 +167,23 @@ namespace BusinessExcel.Controllers
                 if (categoryList.Count > 0)
                 {
 
-               // getParent(135, categoryList);
+
 
                     SetChildren(rootCategory, categoryList);
 
                     var model = new List<UserTree>();
 
 
-                data = new[] { rootCategory };
+                    data = new[] { rootCategory };
 
-                if (Request.IsAjaxRequest())
-                {
-                    return PartialView(USERSTREE, data);
-                }
-                else
-                {
-                    return View(data);
+
                 }
             }
-
-           
-            return View(data);
+            catch
+            {
+                data = null;
+            }
+            return data;
         }
 
 
@@ -201,7 +197,7 @@ namespace BusinessExcel.Controllers
             model.level_v = catList.Where(c => c.parent_id == model.parent_id).Select(a => a.level_v).Single();
             model.entity = catList.Where(c => c.parent_id == model.parent_id).Select(a => a.entity).Single();
 
-         
+
 
             var childs = catList.Where(c => c.left_v > model.left_v && c.right_v < model.right_v).OrderBy(x => x.level_v).ToList();
 
@@ -247,7 +243,7 @@ namespace BusinessExcel.Controllers
         //    }
 
 
-              
+
         //    return Json(insertId, JsonRequestBehavior.AllowGet);
         //}
         public PartialViewResult AddChild(string paret_user_name, string new_user_name)
@@ -295,7 +291,7 @@ namespace BusinessExcel.Controllers
                 IEnumerable<UserTree> data = getUserTreeList();
                 return PartialView(USERTREEVIEW, data);
             }
-            
+
             return PartialView();
         }
     }
