@@ -187,6 +187,9 @@
     <Compile Include="Controllers\AccountsController.Chart.cs" />
     <Compile Include="Controllers\AdminController.Users.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\API\MobileAPIController.Item.cs" />
+    <Compile Include="Controllers\API\MobileAPIController.Target.cs" />
+    <Compile Include="Controllers\API\UsMobileAPIController.UserLocation.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\JSON\JSON.Extra.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetTempletAutoCompleter.cs" />
@@ -199,9 +202,6 @@
     <Compile Include="Controllers\JSON\JSON.UserAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.ItemAutoCompleter.cs" />
     <Compile Include="Controllers\jsTree3Controller.cs" />
-    <Compile Include="Controllers\MobileAPIController.UserLocation.cs" />
-    <Compile Include="Controllers\MobileAPIController.Target.cs" />
-    <Compile Include="Controllers\MobileAPIController.Item.cs" />
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\ReportController.Checking.cs" />
     <Compile Include="Controllers\ReportController.CategoryAchievement.cs" />
@@ -280,6 +280,7 @@
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ViewLocationTargetDistribution.cs" />
     <Compile Include="Providers\ProviderContext\Entities\_BaseTarget.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.Item.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
