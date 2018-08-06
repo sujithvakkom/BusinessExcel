@@ -45,22 +45,15 @@
                             columns: new[] {
                             grid.Column(columnName:"item_code",header:"Code",format:null,style:"item_code",canSort:false),
                             grid.Column(columnName:"description",header:"Description",format:null,style:"description",canSort:false),
-                          //  grid.Column(columnName:"model_description",header:"Model",format:null,style:"model_description",canSort:false),
-
-                      grid.Column("model_description", "Model", canSort: false, format: @<text> <span class="display-mode"> <label id="lblModelDesc" style="font-weight:normal">@item.model_description</label> </span>  <input type="text" id="txtModelDesc" value="@item.model_description" class="edit-mode" style="width:100%;" autocomplete="off"  /> </text> ,style: "model_desc"),
-
-                      // grid.Column("Entered_Amt", "Entered Amt", canSort: false, format: @<text> <span class="display-mode"> <label id="lblEntered_Amt" style="font-weight:normal">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" style="text-align:right;" autocomplete="off" onkeypress='return isNumberKey(event)' /> </text>, style: "Entered_Amt numaric"),
-
-
-
+                            grid.Column("model_description", "Model", canSort: false, format: @<text> <span class="display-mode"> <label id="lblModelDesc" style="font-weight:normal">@item.model_description</label> </span>  <input type="text" id="txtModelDesc" value="@item.model_description" class="edit-mode" style="width:100%;" autocomplete="off"  /> </text> ,style: "model_desc"),
                             grid.Column(columnName:"category_description",header:"Category",format:null,style:"category_description",canSort:false),
 
 
-         grid.Column("", format: @<text>
-            <button class="edit-modelDesc display-mode btn btn-primary btn-sm">Edit</button>
-            <button class="save-modelDesc edit-mode btn btn-success btn-sm">Save</button>
-            <button class="cancel-modelDesc edit-mode btn btn-info btn-sm">Cancel</button>
-        </text>,  style: "colbtn" , canSort: false),
+                             grid.Column("", format: @<text>
+                                <button class="edit-modelDesc display-mode btn btn-primary btn-sm">Edit</button>
+                                <button class="save-modelDesc edit-mode btn btn-success btn-sm">Save</button>
+                                <button class="cancel-modelDesc edit-mode btn btn-info btn-sm">Cancel</button>
+                            </text>,  style: "colbtn" , canSort: false),
 
 
                                 grid.Column(null, null, format: @<input type="hidden" name="price" class="hidprice" value="@item.price" />),
@@ -109,8 +102,7 @@
         event.stopPropagation();
         event.preventDefault();
         event.stopImmediatePropagation();
-
-
+       
 
         var tr = $(this).parents('tr:first');
         tr.find('.edit-mode, .display-mode').toggle();
