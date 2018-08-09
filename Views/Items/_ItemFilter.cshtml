@@ -4,6 +4,10 @@
 @using BusinessExcel.Providers.ProviderContext
 @using BusinessExcel.Controllers.JSON
 
+
+@using BusinessExcel.Providers.ProviderContext.Entities
+
+
 @model ItemDetailsView
 
 
@@ -41,9 +45,22 @@
                             columns: new[] {
                             grid.Column(columnName:"item_code",header:"Code",format:null,style:"item_code",canSort:false),
                             grid.Column(columnName:"description",header:"Description",format:null,style:"description",canSort:false),
-                            grid.Column(columnName:"model_description",header:"Model",format:null,style:"model_description",canSort:false),
+                            grid.Column("model_description", "Model", canSort: false, format: @<text> <span class="display-mode"> <label id="lblModelDesc" style="font-weight:normal">@item.model_description</label> </span>  <input type="text" id="txtModelDesc" value="@item.model_description" class="edit-mode" style="width:100%;" autocomplete="off"  /> </text> ,style: "model_desc"),
                             grid.Column(columnName:"category_description",header:"Category",format:null,style:"category_description",canSort:false),
-                            grid.Column(null, null, format: @<input type="hidden" name="price" class="hidprice" value="@item.price" />),
+
+
+                             grid.Column("", format: @<text>
+                                <button class="edit-modelDesc display-mode btn btn-primary btn-sm">Edit</button>
+                                <button class="save-modelDesc edit-mode btn btn-success btn-sm">Save</button>
+                                <button class="cancel-modelDesc edit-mode btn btn-info btn-sm">Cancel</button>
+                            </text>,  style: "colbtn" , canSort: false),
+
+
+                                grid.Column(null, null, format: @<input type="hidden" name="price" class="hidprice" value="@item.price" />),
+                                grid.Column(null, null, format: @<input type="hidden" name="item_id" class="hidItemId" value="@item.inventory_item_id" />)
+
+
+
 
 
                         },
@@ -62,7 +79,80 @@
 </div>
         </div>
 <style>
-      td:nth-child(n+5), th:nth-child(n+5) {
+      td:nth-child(n+6), th:nth-child(n+6) {
         display: none;
     }
+
+
+       .colbtn
+ {
+     width:8%;
+ }
+.model_desc
+{
+    width:15%;
+}
 </style>
+
+<script>
+
+    $('.edit-mode').hide();
+    $('.edit-modelDesc, .cancel-modelDesc').on('click', function (event) {
+
+        event.stopPropagation();
+        event.preventDefault();
+        event.stopImmediatePropagation();
+       
+
+        var tr = $(this).parents('tr:first');
+        tr.find('.edit-mode, .display-mode').toggle();
+        tr.find("#txtModelDesc").focus();
+    });
+
+
+
+    $('.save-modelDesc').on('click', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        $('.save-modelDesc').css({ 'cursor': 'wait' });
+        $('body').css({ 'cursor': 'wait' });
+
+
+        var tr = $(this).parents('tr:first');
+        var model_desc = tr.find("#txtModelDesc").val();
+        var item_id = tr.find(".hidItemId").val();
+     
+        var itemModel =
+        {
+            "model_description": model_desc,
+            "inventory_item_id": item_id
+
+
+        };
+        $.ajax({
+            url: '@Url.Action(BusinessExcel.Controllers.ItemsController.ITEM_MODEL_UPDATE)',
+           
+            data: JSON.stringify(itemModel),
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+
+                if (data > 0) {
+                    tr.find("#lblModelDesc").text(model_desc);
+                    tr.find('.edit-mode, .display-mode').toggle();
+
+                }
+                else {
+                    alert('Error occured');
+                }
+                $('.save-modelDesc').css({ 'cursor': 'pointer' });
+                $('body').css({ 'cursor': 'default' });
+            }
+        });
+
+    });
+
+</script>

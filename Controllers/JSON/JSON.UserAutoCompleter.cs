@@ -14,6 +14,7 @@ namespace BusinessExcel.Controllers.JSON
     public partial class JSONController : Controller
     {
         public static string USERAUTOCOMPLETER = "UserAutoCompleter";
+        public static string USERAUTOCOMPLETERALL = "UserAutoCompleterAll";
         //public JsonResult UserAutoCompleter(String Search, int Page, ICollection<string> Extra)
         public JsonResult UserAutoCompleter(String Search, int Page, string Extra)
         {
@@ -30,6 +31,31 @@ namespace BusinessExcel.Controllers.JSON
                 int temp;
 
                 var items = db.getUserDetails(search: Search, Page: Page,RowCount:out temp);
+                JSONPagininationModel<UserDetail> model = new JSONPagininationModel<UserDetail>();
+                model.CountPerPage = 20;
+                model.OutputList = items;
+                model.Count = temp;
+                res = Json(model, JsonRequestBehavior.AllowGet);
+            }
+            return res;
+        }
+
+        public JsonResult UserAutoCompleterAll(String Search, int Page, string Extra)
+        {
+            JsonResult res = null;
+
+            var extras = ParseJSONString(Extra);
+
+            int? locationId = null;
+
+            try { locationId = int.Parse(((IDictionary)extras)["Location"].ToString()); }
+            catch (Exception) { }
+
+            using (var db = new SalesManageDataContext())
+            {
+                int temp;
+
+                var items = db.getUserDetailsAll(search: Search, Page: Page, RowCount: out temp);
                 JSONPagininationModel<UserDetail> model = new JSONPagininationModel<UserDetail>();
                 model.CountPerPage = 20;
                 model.OutputList = items;

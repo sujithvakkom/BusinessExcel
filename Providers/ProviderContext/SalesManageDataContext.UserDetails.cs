@@ -137,5 +137,173 @@ namespace BusinessExcel.Providers.ProviderContext
             }
             return items;
         }
+        public virtual List<UserDetail> getUserDetailsAll(string search, int Page, out int RowCount)
+        {
+            List<UserDetail> items = new List<UserDetail>();
+
+          
+
+            var user_name = search != null ?
+                    new SqlParameter("@user_name", search) :
+                    new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            int? page = null;
+            var page_size = page != null ?
+                new SqlParameter("@page_size", page) :
+                new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+            int? page_num = Page;
+            var page_number = page_num != null ?
+                new SqlParameter("@page_number", page_num) :
+                new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+            int? row = null;
+            var row_count = row != null ?
+                new SqlParameter("@row_count", row) :
+                new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+            row_count.Direction = System.Data.ParameterDirection.Output;
+            try
+            {
+                items = this.Database.SqlQuery<UserDetail>(
+                                                "[sc_salesmanage_user].[getUserDetailsAll] @user_name ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                                                .ToList();
+                int.TryParse(row_count.Value.ToString(), out RowCount);
+            }
+            catch (Exception ex)
+            {
+                RowCount = 0;
+            }
+            return items;
+        }
+        /// <summary>
+        /// return non assinged users
+        /// </summary>
+        /// <param name="search"></param>
+        /// <param name="Page"></param>
+        /// <param name="RowCount"></param>
+        /// <returns></returns>
+        public virtual List<UserDetail> getnonAssingedUserDetails(string search, int Page, out int RowCount)
+        {
+            List<UserDetail> items = new List<UserDetail>();
+
+
+
+            var user_name = search != null ?
+                    new SqlParameter("@user_name", search) :
+                    new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            int? page = null;
+            var page_size = page != null ?
+                new SqlParameter("@page_size", page) :
+                new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+            int? page_num = Page;
+            var page_number = page_num != null ?
+                new SqlParameter("@page_number", page_num) :
+                new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+            int? row = null;
+            var row_count = row != null ?
+                new SqlParameter("@row_count", row) :
+                new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+            row_count.Direction = System.Data.ParameterDirection.Output;
+            try
+            {
+                items = this.Database.SqlQuery<UserDetail>(
+                                                "[sc_salesmanage_user].[getNonAssignedUserDetails] @user_name ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                                                .ToList();
+                int.TryParse(row_count.Value.ToString(), out RowCount);
+            }
+            catch (Exception ex)
+            {
+                RowCount = 0;
+            }
+            return items;
+        }
+
+        /// <summary>
+        /// set userid,parentid,entity id to save
+        /// </summary>
+        /// <param name="u_id"></param>
+        /// <param name="P_id"></param>
+        /// <param name="E_Id"></param>
+        /// <returns></returns>
+        public int InsertUserTree(string parent_user_name,string new_user_name)
+        {
+            var isInsertUpdate = 0;
+            try
+            {
+
+                int new_userId = getUserID(new_user_name);
+
+                int Parent_userId = getUserID(parent_user_name);
+
+                int Parent_id = getParenId(Parent_userId);
+                int Enity_id = getEntity(Parent_userId);
+
+
+          
+
+                var user_id = new_userId != 0 ?
+      new SqlParameter("@user_id", new_userId) :
+      new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = 0 };
+
+                var parent_id = Parent_id != 0 ?
+              new SqlParameter("@ParentId", Parent_id) :
+              new SqlParameter("@ParentId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+
+                var enity_id = Enity_id != 0 ?
+              new SqlParameter("@EntityId", Enity_id) :
+              new SqlParameter("@EntityId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+
+                System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(user_id);
+                parameterList.Add(parent_id);
+                parameterList.Add(enity_id);
+
+                isInsertUpdate = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[Insert_UserTree] @user_id,@ParentId,@EntityId", parameterList.ToArray());
+
+            }
+            catch(Exception ex)
+            {
+                isInsertUpdate = 0;
+            }
+      
+            return isInsertUpdate;
+        }
+
+        public int DeleteUserTree(string u_name)
+        {
+            var isDelete = 0;
+            try
+            {
+                int userId = getUserID(u_name);
+                int Parent_id = getParenId(userId);
+
+                var parent_id = Parent_id != 0 ?
+              new SqlParameter("@ParentId", Parent_id) :
+              new SqlParameter("@ParentId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+
+       
+
+                System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+                
+                parameterList.Add(parent_id);
+
+
+                isDelete = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[Delete_UserTree] @ParentId", parameterList.ToArray());
+
+            }
+            catch (Exception ex)
+            {
+                isDelete = 0;
+            }
+
+            return isDelete;
+        }
+
     }
 }
