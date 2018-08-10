@@ -1,0 +1,511 @@
+﻿
+@using BusinessExcel.Models
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+
+@using BusinessExcel.Controllers.JSON
+
+@model IEnumerable<UserTree>
+
+
+
+
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0" />
+
+@*@model IEnumerable<BusinessExcel.Models.UserTreeViewModel>*@
+
+
+<script src="~/Scripts/jsTree3/jstree.min.js"></script>
+<script>
+
+        $(function () {
+            var selectedData;
+            $('#jstree').jstree({
+                "core": {
+                    "multiple": false,
+                    "check_callback": false,
+                    'themes': {
+                        "responsive": true,
+                        'variant': 'larg',
+                        'stripes': false,
+                        'dots': false
+                    }
+                },
+                "types": {
+                    "default": {
+                        "icon": "fa fa-user icon-state-warning icon-lg"
+                    },
+                    "file": {
+                        "icon": "fa fa-file icon-state-warning icon-lg"
+                    },
+
+                },
+
+
+                'contextmenu': {
+                    'items': customMenu
+                },
+
+               // "plugins": ["dnd", "state", "types", "sort", "checkbox", "search"],
+                "plugins": ["dnd", "state", "types", "sort", "search", "contextmenu"]
+
+            });
+
+
+
+            var to = false;
+            $('#search_field').keyup(function () {
+
+                if ($('#search_field').val().length <= 1)
+                {
+
+
+                    $('#jstree').jstree('close_all');
+                }
+
+                if (to) { clearTimeout(to); }
+                to = setTimeout(function () {
+                    var v = $('#search_field').val();
+                    $('#jstree').jstree(true).search(v);
+                }, 250);
+
+
+            });
+
+
+
+
+          // $('#jstree').jstree('select_node', 'j1_6');
+          // $("#jstree").jstree("open_all", "j1_6");
+
+
+            $('#jstree')
+    .on('changed.jstree', function (e, data) {
+
+
+
+        var i, j, r = [];
+        for (i = 0, j = data.selected.length; i < j; i++) {
+
+
+        }
+
+    }
+
+
+
+
+    ).jstree();
+
+
+
+
+        });
+
+        $(document).on('click', '#btnAdd', function () {
+
+
+            if ($("#user_id option:selected").text().length > 0) {
+
+                var ParentuserName = $('#jstree').jstree().get_selected(true)[0].a_attr.href;
+                var ParentName = $('#jstree').jstree().get_selected(true)[0].text;
+
+                var childName = $("#user_id option:selected").text();
+                var childuserName = $("#user_id option:selected").val();
+
+                if (ParentuserName != childuserName) {
+                    $('#modalnew').modal('show');
+
+                    $('.modal-title').html("<h3>Adding new child</h3>");
+
+                    $('.modal-body').html("<h4> Adding  <b>" + childName + " </b> to under <b> " + ParentName + "</h4>");
+                }
+                else
+                {
+
+                    popup('Parent and child is same name');
+                }
+            }
+            else {
+
+                popup('Please select user from list');
+            }
+
+
+
+        });
+
+
+
+        function customMenu(node) {
+
+
+            var items = {
+                'Add': {
+                    'label': 'Add',
+                    'action': function (node) { return  $('#Add_modalnew').modal('show')  },               //AddChild(node),
+
+
+                    "icon": "addico glyphicon glyphicon-plus",
+
+                },
+                'Delete': {
+                    'label': 'Delete',
+                    'action': function (data) {
+
+                        var inst = $.jstree.reference(data.reference)
+
+                        var username = node.a_attr.href;
+                        var name = node.text;
+
+
+                        var ParentNode = inst.get_node(node.parent);
+
+                        var ParentName = inst.get_node(node.parent).text
+
+                        $('#Del_btn_user').prop("disabled", false)
+
+                        if (node.children.length > 0) {
+
+                            $('#Del_modalnew').modal('show');
+                            $('#Del_btn_user').prop("disabled", true);//.addClass("disabled");
+                            $('.delmodal-body').html("<p style=\"padding-left:15px\;color:Red\"> Childrens appered, Cannot Delete  " + name + " </p>");
+
+                        }
+                        else {
+
+                            $('#Del_modalnew').modal('show');
+                           
+                            $('#delParent').val(ParentNode.a_attr.href);
+
+
+                            //$('#jstree').jstree(true).settings.core.data = newData;
+                           // $('#jstree').jstree(true).refresh();
+                            @*<p>Would you like to delete with some arbitrary task?</p>*@
+
+                          
+                            $('.delmodal-body').html("<p style=\"padding-left:15px\"> Would you like to delete  <b>" + name + " </b> from  <b> " + ParentName + "</p>");
+                        }
+
+                    },
+
+
+                    "icon": "delico glyphicon glyphicon-minus",
+                }
+            }
+
+            //if (node.type === 'level_1') {
+            //    delete items.item2;
+            //} else if (node.type === 'level_2') {
+            //    delete items.item1;
+            //}
+
+            return items;
+        }
+
+
+
+
+           // $('#Add_modalnew').modal('show');
+
+    $(document).on('click', "#Add_btn_user", function (event) {
+
+        var n_username = $('#user_name').val();
+
+        event.stopPropagation();
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        if (n_username != null) {
+
+            $('#Add_btn_user').css({ 'cursor': 'wait' });
+
+
+            var p_username = $('#jstree').jstree().get_selected(true)[0].a_attr.href;
+
+            var node = $('#jstree').jstree().get_selected(true)[0].id;
+
+       
+
+
+
+            $.ajax({
+                url: '@Url.Action(BusinessExcel.Controllers.AdminController.ADD_CHILDUSER, BusinessExcel.Controllers.AdminController.ADMIN)',
+                data: {
+
+                    paret_user_name: p_username,
+                    new_user_name: n_username
+                },
+                //  type: 'Get',
+                // contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    if (data != 0) {
+
+                        $('#Add_modalnew').modal('hide');
+
+                        $(".modal-backdrop").remove();
+                        $('#userTreeview').html(data)
+
+                        $("#jstree").bind('ready.jstree', function (event, data) {
+                            var $tree = $(this);
+                            $($tree.jstree().get_json($tree, {
+                                flat: true
+                            }))
+                              .each(function (index, value) {
+                                  var node_new = $("#jstree").jstree().get_node(this.id);
+
+                                  if (node_new.a_attr.href == p_username) {
+                                      $('#jstree').jstree('select_node', node_new);
+                                      $("#jstree").jstree("open_all", node_new);
+                                      $('#Add_btn_user').css({ 'cursor': 'default' });
+
+                                      return;
+                                  }
+                              });
+                        });
+
+
+
+                    }
+                },
+                begin: function () {
+                    // $('#role-table-display').modal('hide')
+                }
+            });
+        }
+        else
+        {
+            alert("Select  user from the list");
+        }
+
+        });
+
+        $(document).on('click', "#Del_btn_user", function (event) {
+
+            $('#Del_btn_user').css({ 'cursor': 'wait' });
+           
+
+            var n_username = $('#jstree').jstree().get_selected(true)[0].a_attr.href;
+
+            var delParent = $('#delParent').val();
+
+          
+           
+          
+        
+            var node = $('#jstree').jstree().get_selected(true)[0].id;
+
+            event.stopPropagation();
+            event.preventDefault();
+            event.stopImmediatePropagation();
+
+           
+
+            $.ajax({
+                url: '@Url.Action(BusinessExcel.Controllers.AdminController.DELETE_CHILDUSER, BusinessExcel.Controllers.AdminController.ADMIN)',
+                data: {
+
+
+                    user_name: n_username
+                },
+               // type: 'Get',
+               // contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    if (data != 0) {
+
+
+                        $('#Del_modalnew').modal('hide');
+                        $(".modal-backdrop").remove();
+                        $('#userTreeview').html(data)
+                     
+                      
+
+                        $("#jstree").bind('ready.jstree', function (event, data) {
+                            var $tree = $(this);
+                            $($tree.jstree().get_json($tree, {
+                                flat: true
+                            }))
+                              .each(function (index, value) {
+                                  var node_new = $("#jstree").jstree().get_node(this.id);
+
+                                  if (node_new.a_attr.href == delParent) {
+
+                                   
+                                      $('#jstree').jstree('select_node', node_new);
+                                      $("#jstree").jstree("open_all", node_new);
+                                      $('#Del_btn_user').css({ 'cursor': 'default' });
+                                    
+                                      return;
+                                  }
+                              });
+                        });
+
+                    }
+
+                },
+                begin: function () {
+                    // $('#role-table-display').modal('hide')
+                }
+            });
+
+        });
+
+
+
+    
+</script>
+
+
+<style type="text/css">
+        .jstree-default a.jstree-search {
+            color: green;
+            font-style: normal;
+        }
+
+
+
+
+        /*.modal-header
+    {
+        padding:15px 15px 0px;
+        background-color: #d2cece;
+    }*/
+        .addico {
+            color: green;
+        }
+
+        .delico {
+            color: red;
+        }
+</style>
+
+
+
+
+    <div class="row">
+        <div class="col-md-6">
+            @*<h2>TreeView</h2>*@
+            <link href="~/Content/jsTree/themes/default/style.min.css" rel="stylesheet" />
+            <div class="form-body">
+                <div id="jstree">
+                                  @(Html.TreeView(Model)
+                        .EmptyContent("GS")
+                        .Children(m => m.Childs)
+                        .HtmlAttributes(new { id = "tree" })
+                    .ChildrenHtmlAttributes(new { @class = "subItem" })
+                        .ItemText(m => m.user_id.ToString())
+                        .ItemTemplate(
+                              @<text>
+                                  <a href="@item.user_name.ToString()" desc="@item.u_name" oncontextmenu="return false;">@item.u_name (@item.user_name)</a>
+                              </text>)
+                                  )
+                              </div>
+
+              
+            </div>
+        </div>
+        <div class="col-md-4">
+
+
+            <div class="row">
+                <div class="container-fluid">
+                    <fieldset id="search">
+
+                        <label for="Seach" class="col-form-label">Search</label>
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" placeholder="Search for..." id="search_field">
+
+                        </div>
+
+
+
+                    </fieldset>
+                </div>
+            </div>
+           
+
+        </div>
+
+
+    </div>
+    <div id="add_popup">
+        <div class="modal fade" id="Add_modalnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="Add_myModalLabel">Add User</h4>
+                    </div>
+                    <div class="addmodal-body">
+
+                        <div class="container-fluid" style="padding-top:15px">
+
+                            @Html.AdminLTEDropDownListFor(
+                            m => Model.First().user_name,
+                            htmlLabelAttributes: null,
+                            htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2 " }
+                            },
+                            htmlGroupAttributes: null,
+                            autoCompleteOptions: new AutoCompleteOptions()
+                            {
+                                AjaxOptions = new AjaxOptions()
+                                {
+                                    HttpMethod = "GET",
+                                    Url = Url.Action(actionName: JSONController.NON_ASSIGNED_USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                },
+                                DescriptionField = "full_name",
+                                IDField = "user_name",
+                                Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                                //SelectedItem = ViewData[@BusinessExcel.Controllers.AdminController.SELECTED_FILTED_USER],
+                                IsAutoComplete = true,
+                                SelectItems = null
+                            },
+                            showLabel: false)
+
+                         
+   
+
+
+                        </div>
+                          
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="Add_btn_user" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="delete_popup">
+
+
+        
+        <div class="modal fade" id="Del_modalnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <div id="delParent"></div>
+                        <h4 class="modal-title" id="Del_myModalLabel">Delete User</h4>
+                    </div>
+                    <div class="delmodal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="Del_btn_user" class="btn btn-primary">Continue Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+

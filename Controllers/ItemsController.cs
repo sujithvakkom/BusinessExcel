@@ -19,7 +19,9 @@ namespace BusinessExcel.Controllers
         public static string ITEM_TITLE = "Item Master";
         public static string ITEM_CONTROLLER = "Items";
         public static string SELECTED_FILTED_ITEM = "SelectedFilteredItem";
+        public static string ITEM_MODEL_UPDATE= "getUpdatedItemModel";
 
+        
         public ActionResult ItemIndex()
         {
             //ViewBag.ItemViewSort = sort;
@@ -49,6 +51,15 @@ namespace BusinessExcel.Controllers
 
             return PartialView(ITEM_FILTER_VIEW, Filters);
 
+        }
+        public JsonResult getUpdatedItemModel(ItemDetailsView itemModel)
+        {
+            int updated = 0;
+            using (var db = new SalesManageDataContext())
+            {
+                 updated = db.UpdateItemModel(itemModel);                               
+            }
+           return Json(updated, JsonRequestBehavior.AllowGet);
         }
 
     }
