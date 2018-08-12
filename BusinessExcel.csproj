@@ -190,6 +190,7 @@
     <Compile Include="Controllers\API\MobileAPIController.Item.cs" />
     <Compile Include="Controllers\API\MobileAPIController.Target.cs" />
     <Compile Include="Controllers\API\UsMobileAPIController.UserLocation.cs" />
+    <Compile Include="Controllers\CheckinController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\JSON\JSON.Extra.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetTempletAutoCompleter.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\AlertModal.cs" />
+    <Compile Include="Models\CheckinViewModel.cs" />
     <Compile Include="Models\ItemDetailsView.cs" />
     <Compile Include="Models\jsTree3Node.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
@@ -280,6 +282,7 @@
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ViewLocationTargetDistribution.cs" />
     <Compile Include="Providers\ProviderContext\Entities\_BaseTarget.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.Checkin.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Item.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
@@ -754,6 +757,8 @@
     <Content Include="Views\Shared\_PublicAlertModal.cshtml" />
     <Content Include="Views\Report\MerchandDutyCheckin.cshtml" />
     <Content Include="Views\Shared\_UserTreeView.cshtml" />
+    <Content Include="Views\Checkin\CheckinIndex.cshtml" />
+    <Content Include="Views\Checkin\_CheckinDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
