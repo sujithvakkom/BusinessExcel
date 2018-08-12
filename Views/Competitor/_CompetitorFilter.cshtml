@@ -1,0 +1,80 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+
+
+@using BusinessExcel.Providers.ProviderContext.Entities
+
+
+@model CompetitorViewModel
+
+
+
+<div class="box box-primary">
+
+    <div class="box-body">
+
+        <div id="table-item-view" class="table-responsive">
+            @{
+
+                using (var db = new SalesManageDataContext())
+                {
+                    WebGridColumn col = new WebGridColumn()
+                    {
+
+                    };
+
+                    int count = 0;
+                    IQueryable<CompetitorViewModel> data = db.CompetitorDetailsPaging(pageNumber: ViewBag.CompetitorViewPage,
+                                pageSize: 15,
+                                sort: ViewBag.CompetitorViewSort,
+                                sortdir: ViewBag.CompetitorViewDir,
+                                count: out count, Filters:Model
+                                );
+                    var grid = new WebGrid(ajaxUpdateContainerId: "table-item-view",
+                                        ajaxUpdateCallback: "callBack", rowsPerPage: 15
+                                                    );
+                    grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                    @grid.GetHtml(
+
+                            tableStyle: "table table-striped table-bordered be-pagination-spl",
+                            htmlAttributes: new { @id = "Competitors" },
+
+                            columns: new[] {
+                            grid.Column(columnName:"title",header:"Title",format:null,style:"item_code",canSort:false),
+                            grid.Column(columnName:"message",header:"Message",format:null,style:"description",canSort:false),
+                       
+                            grid.Column(columnName:"user_name",header:"Staff Code",format:null,style:"user_name",canSort:false),
+                             grid.Column(columnName:"create_time",header:"Create Time",format:null,style:"create_time",canSort:false),
+
+                        },
+                        footerStyle: "extra-table-pager"
+                        )
+
+                    @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                        nextText: "NEXT",
+                        firstText: "FIRST",
+                        previousText: "PREV.",
+                        lastText: "LAST")
+
+                }
+            }
+        </div>
+    </div>
+</div>
+<style>
+    td:nth-child(n+6), th:nth-child(n+6) {
+        display: none;
+    }
+
+
+    .colbtn {
+        width: 8%;
+    }
+
+    .model_desc {
+        width: 15%;
+    }
+</style>

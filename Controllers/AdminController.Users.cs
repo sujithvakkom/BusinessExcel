@@ -134,14 +134,17 @@ namespace BusinessExcel.Controllers
             //    SetChildren(rootCategory, categoryList);
             //    var model = new List<UserTree>();
             //    data = new[] { rootCategory };
-            IEnumerable<UserTree> data = getUserTreeList();
+
+
+          //  IEnumerable<UserTree> data = getUserTreeList();
             if (Request.IsAjaxRequest())
             {
-                return PartialView(USERSTREE, data);
+               // return PartialView(USERSTREE, data);
+                return PartialView(USERSTREE);
             }
             else
             {
-                return View(data);
+                return View();
             }
             //  }           
             //   return View(data);
