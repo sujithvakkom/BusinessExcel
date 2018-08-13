@@ -19,7 +19,8 @@
 <script src="~/Scripts/jsTree3/jstree.min.js"></script>
 <script>
 
-        $(function () {
+    $(function () {
+       
             var selectedData;
             $('#jstree').jstree({
                 "core": {
@@ -53,9 +54,10 @@
             });
 
 
-
+          
             var to = false;
             $('#search_field').keyup(function () {
+               
 
                 if ($('#search_field').val().length <= 1)
                 {

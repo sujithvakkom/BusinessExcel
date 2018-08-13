@@ -259,12 +259,52 @@
                        InsertionMode = InsertionMode.Replace,
                        UpdateTargetId = "main-body",
                        OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(ItemsController.ITEM_INDEX, ItemsController.ITEM_INDEX, null, this.Request.Url.Scheme) + "');{0}",
+                            + this.Url.Action(ItemsController.ITEM_INDEX, ItemsController.ITEM_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
                        OnComplete = "ajax_call_load_complete(xhr, status)",
                        OnFailure = "loadin_failed"
                    },
                    isNavSideBar: true,
                    carrot: "fa fa-tasks")
+
+
+
+
+                            @Ajax.AjaxAdminLTEActionLink(
+                   linkText: CheckinController.CHECKIN_TITLE,
+                   actionName: CheckinController.CHECKIN_INDEX,
+                   controllerName: CheckinController.CHECKIN_CONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(CheckinController.CHECKIN_INDEX, CheckinController.CHECKIN_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       OnFailure = "loadin_failed"
+                   },
+                   isNavSideBar: true,
+                   carrot: "fa fa-tasks")
+
+                            @Ajax.AjaxAdminLTEActionLink(
+                   linkText: CompetitorController.COMPETITOR_TITLE,
+                   actionName: CompetitorController.COMPETITOR_INDEX,
+                   controllerName: CompetitorController.COMPETITOR_CONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(CompetitorController.COMPETITOR_INDEX, CompetitorController.COMPETITOR_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       OnFailure = "loadin_failed"
+                   },
+                   isNavSideBar: true,
+                   carrot: "fa fa-tasks")
+
+
+
+
+
 
 
                             @Ajax.AjaxAdminLTEActionLink(

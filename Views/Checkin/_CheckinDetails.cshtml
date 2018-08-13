@@ -1,0 +1,149 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+
+
+@using BusinessExcel.Providers.ProviderContext.Entities
+
+
+@model CheckinViewModel
+
+
+<div class="box box-primary">
+
+    <div class="box-body">
+
+        <div class="row">
+            <div class="col-md-7">
+                <div id="table-item-view" class="table-responsive">
+                    @{
+
+                        using (var db = new SalesManageDataContext())
+                        {
+                            WebGridColumn col = new WebGridColumn()
+                            {
+
+                            };
+
+                            int count = 0;
+                            IQueryable<CheckinViewModel> data = db.CheckinDetailsPaging(pageNumber: ViewBag.ItemViewPage,
+                                        pageSize: 15,
+                                        sort: ViewBag.ItemViewSort,
+                                        sortdir: ViewBag.ItemViewDir,
+                                        count: out count, Filters: Model
+                                        );
+                            var grid = new WebGrid(ajaxUpdateContainerId: "table-item-view",
+                                                ajaxUpdateCallback: "callBack", rowsPerPage: 15
+                                                            );
+                            grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                            @grid.GetHtml(
+                             selectedRowStyle: "select",
+                            tableStyle: "table table-striped table-bordered be-pagination-spl",
+                            htmlAttributes: new { @id = "items" },
+
+                            columns: new[] {
+                            grid.Column(columnName:"user_name",header:"User Name",format:null,style:"user_name",canSort:false),
+                            grid.Column(columnName:"fullname",header:"Name",format:null,style:"fullname",canSort:false),
+                            grid.Column(columnName:"checktype",header:"Check Type",format:null,style:"checktype",canSort:false),
+                            grid.Column(columnName:"checkin_time",header:"Date Time",format:null,style:"checkin_time",canSort:false),
+                            @*grid.Column("", format: @<text>
+                            <button class="show-map  btn btn-primary btn-sm">Last Checkin Location </button>
+                            </text>,  style: "colbtn" , canSort: false),*@
+
+
+                grid.Column("Location", style: "colbtn", format: @<text><div style="padding-left:10px;">
+
+                            <a class="showMap glyphicon glyphicon-map-marker" id="@item.user_id" style="font-size: 20px;cursor:pointer" title="View last  location"
+                               data-toggle="modal" data-target="#mapModal" data-lat=@item.latitude data-lng=@item.longitude
+                               
+                               ></a>
+                        </div>
+                </text>),
+
+                            grid.Column(null, null, format: @<input type="hidden" name="user_id" class="hiduser_id" value="@item.user_id" />)
+
+
+                        },
+                        footerStyle: "extra-table-pager"
+                        )
+
+                            @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                        nextText: "NEXT",
+                        firstText: "FIRST",
+                        previousText: "PREV.",
+                        lastText: "LAST")
+
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-md-5">
+
+                <div class="map"></div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+
+<style>
+     td:nth-child(n+6), th:nth-child(n+6) {
+        display: none;
+    }
+
+    
+ 
+</style>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.showMap').click(function () {
+
+     
+
+            var lat = $(this).data('lat');
+            var lng = $(this).data('lng');
+     
+            //var url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=true&language=" + language;
+            //$.ajax({
+            //    type: 'GET',
+            //    url: url,
+            //    success: function (data) {
+            
+                   // alert(data.results[1].address_components[2].long_name);
+         
+                  
+                    //$('#map1').html(JSON.stringify(data));
+                  // alert(JSON.stringify(data));
+            //    }
+            //});
+
+            mapInit(lat, lng);
+        });
+    });
+
+    function mapInit(lat, lng) {
+
+        var iframe = "<iframe src='http://maps.google.com/maps?q=" + lat + ", " + lng + "&z=15&output=embed' width='100%' height='100%' frameborder='0' style='border:0' allowfullscreen></iframe>"
+      
+
+        $('.map').css("height", "300px").html(iframe);
+      
+       
+    };
+    
+</script>
+
+
+
+
+
+
+
+

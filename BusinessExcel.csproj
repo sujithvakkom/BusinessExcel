@@ -190,6 +190,8 @@
     <Compile Include="Controllers\API\MobileAPIController.Item.cs" />
     <Compile Include="Controllers\API\MobileTargetAPIController.Target.cs" />
     <Compile Include="Controllers\API\UsMobileAPIController.UserLocation.cs" />
+    <Compile Include="Controllers\CheckinController.cs" />
+    <Compile Include="Controllers\CompetitorController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\JSON\JSON.Extra.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetTempletAutoCompleter.cs" />
@@ -219,6 +221,8 @@
     <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\AlertModal.cs" />
+    <Compile Include="Models\CheckinViewModel.cs" />
+    <Compile Include="Models\CompetitorViewModel.cs" />
     <Compile Include="Models\ItemDetailsView.cs" />
     <Compile Include="Models\jsTree3Node.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
@@ -280,7 +284,9 @@
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ViewLocationTargetDistribution.cs" />
     <Compile Include="Providers\ProviderContext\Entities\_BaseTarget.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.Checkin.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Item.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.Competitor.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
@@ -395,7 +401,6 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="gs_icon.ico" />
-    <Content Include="GS_Logo_White.svg" />
     <Content Include="Images\gs_icon.ico" />
     <Content Include="Images\logo-light.svg" />
     <Content Include="Images\logo.png" />
@@ -755,9 +760,10 @@
     <Content Include="Views\Shared\_PublicAlertModal.cshtml" />
     <Content Include="Views\Report\MerchandDutyCheckin.cshtml" />
     <Content Include="Views\Shared\_UserTreeView.cshtml" />
-    <Content Include="Views\Shared\_UserLocation.cshtml" />
-    <Content Include="Views\Roster\_ViewStart.cshtml" />
-    <Content Include="Views\Accounts\UpdateLocation.cshtml" />
+    <Content Include="Views\Checkin\CheckinIndex.cshtml" />
+    <Content Include="Views\Checkin\_CheckinDetails.cshtml" />
+    <Content Include="Views\Competitor\CompetitorIndex.cshtml" />
+    <Content Include="Views\Competitor\_CompetitorFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -819,7 +825,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Checkin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -858,7 +863,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64892</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:3001/</IISUrl>
+          <IISUrl>http://localhost:3000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
