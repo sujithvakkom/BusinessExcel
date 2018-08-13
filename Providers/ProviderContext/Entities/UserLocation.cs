@@ -19,7 +19,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Column("type", Order = 5)]
         public int? Type { get; set; }
 
-        public int? UserID { get { return user_id; } }
+        public int? UserID { get { return user_id; } set { user_id = value; } }
         public DateTime? CheckinTime { get { return checkin_time; } }
     }
 }
