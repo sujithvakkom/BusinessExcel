@@ -233,22 +233,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2018 15:52:27</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>08/05/2018 10:50:08</publishTime>
+      <publishTime>08/12/2018 17:49:02</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>08/05/2018 10:50:08</publishTime>
+      <publishTime>08/12/2018 17:49:01</publishTime>
     </File>
     <File Include="bin/BootstrapHtmlHelper.dll">
-      <publishTime>07/31/2018 17:55:12</publishTime>
+      <publishTime>08/09/2018 17:46:26</publishTime>
     </File>
     <File Include="bin/BootstrapHtmlHelper.pdb">
-      <publishTime>07/31/2018 17:55:12</publishTime>
+      <publishTime>08/09/2018 17:46:26</publishTime>
     </File>
     <File Include="bin/BusinessExcel.dll">
-      <publishTime>08/05/2018 10:13:01</publishTime>
+      <publishTime>08/12/2018 17:45:54</publishTime>
     </File>
     <File Include="bin/BusinessExcel.pdb">
-      <publishTime>08/05/2018 10:13:01</publishTime>
+      <publishTime>08/12/2018 17:45:54</publishTime>
     </File>
     <File Include="bin/ClosedXML.dll">
       <publishTime>04/10/2018 16:30:58</publishTime>
@@ -646,6 +646,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="gs_icon.ico">
       <publishTime>06/12/2018 10:35:41</publishTime>
     </File>
+    <File Include="GS_Logo_White.svg">
+      <publishTime>06/12/2018 13:46:11</publishTime>
+    </File>
     <File Include="Images/ArtWork/business-excel.svg">
       <publishTime>04/15/2018 15:52:26</publishTime>
     </File>
@@ -707,7 +710,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/14/2018 12:10:08</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>08/05/2018 10:50:04</publishTime>
+      <publishTime>08/12/2018 17:48:55</publishTime>
     </File>
     <File Include="Scripts/AdminLTE/app.js">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -3002,7 +3005,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/23/2018 16:28:03</publishTime>
     </File>
     <File Include="Views/Admin/UserTree.cshtml">
-      <publishTime>07/17/2018 11:41:20</publishTime>
+      <publishTime>08/09/2018 16:14:13</publishTime>
     </File>
     <File Include="Views/Admin/ViewManagement.cshtml">
       <publishTime>05/08/2018 16:54:25</publishTime>
@@ -3029,7 +3032,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/26/2018 09:02:12</publishTime>
     </File>
     <File Include="Views/Items/_ItemFilter.cshtml">
-      <publishTime>07/26/2018 09:02:12</publishTime>
+      <publishTime>08/09/2018 16:14:13</publishTime>
     </File>
     <File Include="Views/jsTree3/AJAXDemo.cshtml">
       <publishTime>07/02/2018 18:05:23</publishTime>
@@ -3108,6 +3111,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Roster/TableRosterUpateView.cshtml">
       <publishTime>07/22/2018 18:15:09</publishTime>
+    </File>
+    <File Include="Views/Roster/_ViewStart.cshtml">
+      <publishTime>06/18/2018 09:33:41</publishTime>
     </File>
     <File Include="Views/Shared/DisplayTemplates/CanonicalHelperModel.ascx">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -3214,6 +3220,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Shared/_UserLocation.cshtml">
       <publishTime>08/01/2018 09:48:17</publishTime>
     </File>
+    <File Include="Views/Shared/_UserTreeView.cshtml">
+      <publishTime>08/09/2018 16:14:13</publishTime>
+    </File>
     <File Include="Views/Target/AjaxCreateTargetDetails.cshtml">
       <publishTime>06/20/2018 18:17:38</publishTime>
     </File>
@@ -3284,7 +3293,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/14/2018 12:10:04</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/05/2018 10:50:02</publishTime>
+      <publishTime>08/12/2018 17:48:54</publishTime>
     </File>
   </ItemGroup>
 </Project>
