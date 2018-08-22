@@ -209,6 +209,7 @@
     <Compile Include="Controllers\ReportController.CategoryAchievement.cs" />
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
     <Compile Include="Controllers\ReportController.Actions.cs" />
+    <Compile Include="Controllers\ReportController.MerchantTarget.cs" />
     <Compile Include="Controllers\RosterController.cs" />
     <Compile Include="Controllers\TargetController.TargetDistribution.cs" />
     <Compile Include="Controllers\TargetController.LocationTarget.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Models\CompetitorViewModel.cs" />
     <Compile Include="Models\ItemDetailsView.cs" />
     <Compile Include="Models\jsTree3Node.cs" />
+    <Compile Include="Models\MerchantTargetFilter.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
     <Compile Include="Models\TargetTotalView.cs" />
     <Compile Include="Models\Tree.cs" />
@@ -764,6 +766,8 @@
     <Content Include="Views\Checkin\_CheckinDetails.cshtml" />
     <Content Include="Views\Competitor\CompetitorIndex.cshtml" />
     <Content Include="Views\Competitor\_CompetitorFilter.cshtml" />
+    <Content Include="Views\Report\MerchantTarget.cshtml" />
+    <Content Include="Views\Report\_MerchantTargetTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

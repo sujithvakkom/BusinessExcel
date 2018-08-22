@@ -233,22 +233,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2018 15:52:27</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>08/12/2018 17:49:02</publishTime>
+      <publishTime>08/15/2018 10:14:31</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>08/12/2018 17:49:01</publishTime>
+      <publishTime>08/15/2018 10:14:31</publishTime>
     </File>
     <File Include="bin/BootstrapHtmlHelper.dll">
-      <publishTime>08/09/2018 17:46:26</publishTime>
+      <publishTime>08/13/2018 10:05:41</publishTime>
     </File>
     <File Include="bin/BootstrapHtmlHelper.pdb">
-      <publishTime>08/09/2018 17:46:26</publishTime>
+      <publishTime>08/13/2018 10:05:41</publishTime>
     </File>
     <File Include="bin/BusinessExcel.dll">
-      <publishTime>08/12/2018 17:45:54</publishTime>
+      <publishTime>08/15/2018 09:36:42</publishTime>
     </File>
     <File Include="bin/BusinessExcel.pdb">
-      <publishTime>08/12/2018 17:45:54</publishTime>
+      <publishTime>08/15/2018 09:36:42</publishTime>
     </File>
     <File Include="bin/ClosedXML.dll">
       <publishTime>04/10/2018 16:30:58</publishTime>
@@ -710,7 +710,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/14/2018 12:10:08</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>08/12/2018 17:48:55</publishTime>
+      <publishTime>08/15/2018 10:14:26</publishTime>
     </File>
     <File Include="Scripts/AdminLTE/app.js">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -2945,7 +2945,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2018 09:08:32</publishTime>
     </File>
     <File Include="Views/Accounts/Home.cshtml">
-      <publishTime>07/16/2018 15:32:58</publishTime>
+      <publishTime>08/14/2018 16:14:31</publishTime>
     </File>
     <File Include="Views/Accounts/MyProfile.cshtml">
       <publishTime>04/29/2018 08:32:21</publishTime>
@@ -2954,10 +2954,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2018 15:52:27</publishTime>
     </File>
     <File Include="Views/Accounts/TableForCurrentMonthQuantity.cshtml">
-      <publishTime>06/20/2018 15:23:18</publishTime>
+      <publishTime>08/15/2018 09:46:28</publishTime>
     </File>
     <File Include="Views/Accounts/TableForCurrentMonthValue.cshtml">
-      <publishTime>06/20/2018 15:25:44</publishTime>
+      <publishTime>08/15/2018 09:44:43</publishTime>
     </File>
     <File Include="Views/Accounts/UpdateLocation.cshtml">
       <publishTime>08/01/2018 09:47:17</publishTime>
@@ -3022,6 +3022,18 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/AdminLte/_ViewStart.cshtml">
       <publishTime>04/15/2018 15:52:27</publishTime>
     </File>
+    <File Include="Views/Checkin/CheckinIndex.cshtml">
+      <publishTime>08/13/2018 10:01:53</publishTime>
+    </File>
+    <File Include="Views/Checkin/_CheckinDetails.cshtml">
+      <publishTime>08/13/2018 10:01:52</publishTime>
+    </File>
+    <File Include="Views/Competitor/CompetitorIndex.cshtml">
+      <publishTime>08/13/2018 10:01:53</publishTime>
+    </File>
+    <File Include="Views/Competitor/_CompetitorFilter.cshtml">
+      <publishTime>08/13/2018 10:01:53</publishTime>
+    </File>
     <File Include="Views/Delivery/DeliveryIndex.cshtml">
       <publishTime>06/12/2018 10:35:41</publishTime>
     </File>
@@ -3029,7 +3041,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/12/2018 10:35:41</publishTime>
     </File>
     <File Include="Views/Items/ItemIndex.cshtml">
-      <publishTime>07/26/2018 09:02:12</publishTime>
+      <publishTime>08/13/2018 10:01:53</publishTime>
     </File>
     <File Include="Views/Items/_ItemFilter.cshtml">
       <publishTime>08/09/2018 16:14:13</publishTime>
@@ -3206,7 +3218,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/14/2018 13:13:27</publishTime>
     </File>
     <File Include="Views/Shared/_MainSideBarAccount.cshtml">
-      <publishTime>07/26/2018 09:02:12</publishTime>
+      <publishTime>08/13/2018 10:01:53</publishTime>
     </File>
     <File Include="Views/Shared/_Progress.cshtml">
       <publishTime>07/02/2018 15:38:57</publishTime>
@@ -3221,7 +3233,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/01/2018 09:48:17</publishTime>
     </File>
     <File Include="Views/Shared/_UserTreeView.cshtml">
-      <publishTime>08/09/2018 16:14:13</publishTime>
+      <publishTime>08/13/2018 10:01:53</publishTime>
     </File>
     <File Include="Views/Target/AjaxCreateTargetDetails.cshtml">
       <publishTime>06/20/2018 18:17:38</publishTime>
@@ -3293,7 +3305,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/14/2018 12:10:04</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/12/2018 17:48:54</publishTime>
+      <publishTime>08/15/2018 10:14:25</publishTime>
     </File>
   </ItemGroup>
 </Project>

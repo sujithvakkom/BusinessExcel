@@ -25,6 +25,19 @@ namespace BusinessExcel.Controllers
             using (var db = new SalesManageDataContext())
             {
                 var chartType = ChartType.bar;
+                int viwer = db.getViewer_Id();
+
+                var source = (from dsl in db.DailyUpateView 
+                        join u in db.getViewersList() 
+                        on dsl.UserId equals u
+                        group dsl by dsl.Category into g    
+                        select new graph()
+                        {
+                            Value = g.Sum(_=>(decimal)_.Quantity),
+                            XValues = g.FirstOrDefault().Category,
+                            Label = g.FirstOrDefault().Category
+                        }).AsQueryable();
+                /*
                 var source = db.DailyUpateView
                     .Where(x => x.CreateTime > startDate && x.CreateTime < endDate)
                     .GroupBy(x => new { x.Category })
@@ -36,6 +49,7 @@ namespace BusinessExcel.Controllers
                             XValues = x.Key.Category,
                             Label = x.Key.Category
                         });
+                        */
                 var data = new data<graph>(
                     chartType,
                     source,
@@ -60,7 +74,19 @@ namespace BusinessExcel.Controllers
         {
             using (var db = new SalesManageDataContext())
             {
-                var chartType = ChartType.pie;
+                var chartType = ChartType.bar;
+
+                var source = (from dsl in db.DailyUpateView
+                              join u in db.getViewersList()
+                              on dsl.UserId equals u
+                              group dsl by dsl.Category into g
+                              select new graph()
+                              {
+                                  Value = g.Sum(_ => (decimal)_.TotalValue),
+                                  XValues = g.FirstOrDefault().Category,
+                                  Label = g.FirstOrDefault().Category
+                              }).AsQueryable();
+                /*
                 var source = db.DailyUpateView
                     .Where(x => x.CreateTime > startDate && x.CreateTime < endDate)
                     .GroupBy(x => new { x.Category ,x.UserName})
@@ -72,6 +98,7 @@ namespace BusinessExcel.Controllers
                             XValues = x.Key.UserName,
                             Label = x.Key.Category
                         });
+                        */
                 var data = new data<graph>(
                     chartType,
                     source,
