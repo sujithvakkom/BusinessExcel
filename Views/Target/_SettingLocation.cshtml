@@ -1,0 +1,56 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">@TargetController.SETTING_TARGET</h3>
+    </div>
+    <div class="box-body">
+        <div id="table-settings-location-view">
+            @using (var db = new SalesManageDataContext())
+            {
+                int count = 0;
+                var dataList = db.getLocationDetails(search: "",
+                            Page: ViewBag.Page == null ? 1 : ViewBag.Page,
+                            RowCount: out count
+                            );
+                var grid = new WebGrid(ajaxUpdateContainerId: "table-settings-location-view",
+                    ajaxUpdateCallback: TargetController._SETTINGLOCATION,
+                    rowsPerPage: 20
+                    );
+                grid.Bind(source: dataList,
+                    autoSortAndPage: false,
+                    rowCount: count);
+                @grid.GetHtml(
+                           tableStyle: "table table-striped table-bordered be-pagination-spl",
+                           htmlAttributes: new { @id = "table-daily-upate" },
+                           columns: new[] {
+                               grid.Column(columnName:"ID",
+                               header:Html.AdminLTESorter("ID","ID",grid),
+                               format:(item)=>@Html.AdminLTEParagraph(((int)@item.location_id).ToString()),
+                               style:"name",canSort:true),
+
+                               grid.Column(columnName:"Location",header:"Location",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.description),
+                               style:"location",canSort:false),
+
+                               grid.Column(columnName:"Account",header:"Account",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.account),
+                               style:"location",canSort:false)
+                           },
+                           footerStyle: "extra-table-pager"
+                           )
+
+                @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                           nextText: "NEXT",
+                           firstText: "FIRST",
+                           previousText: "PREV.",
+                           lastText: "LAST")
+            }
+        </div>
+    </div>
+</div>

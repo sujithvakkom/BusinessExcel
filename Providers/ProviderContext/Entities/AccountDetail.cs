@@ -3,13 +3,11 @@
 namespace BusinessExcel.Providers.ProviderContext.Entities
 {
     [ComplexType()]
-    public class LocationDetail
+    public class AccountDetail
     {
-        [Column("location_id", Order = 1)]
-        public int location_id { get; set; }
+        [Column("id", Order = 1)]
+        public int id { get; set; }
         [Column("description", Order = 2)]
         public string description { get; set; }
-        [Column("account", Order = 3)]
-        public string account { get; set; }
     }
 }
