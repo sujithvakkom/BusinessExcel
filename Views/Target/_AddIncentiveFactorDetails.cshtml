@@ -1,0 +1,107 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model IncentiveFactor
+
+@using (Ajax.BeginForm(
+                            actionName: TargetController._ADDINCENTIVEFACTORDETAILS,
+                            controllerName: TargetController.TARGET,
+                            routeValues: null,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                HttpMethod = "Post",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "incentive-details",
+                                LoadingElementId = "add-incentive-progress"
+                            }
+                            ))
+{
+    <table class="table table-striped table-bordered be-pagination-spl">
+        <tr>
+            <td class="name">
+                @Html.AdminLTEDropDownListFor(
+           m => m.Account,
+           htmlLabelAttributes: null,
+           htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+           },
+           htmlGroupAttributes: null,
+           autoCompleteOptions: new AutoCompleteOptions()
+           {
+               AjaxOptions = new AjaxOptions()
+               {
+                   HttpMethod = "GET",
+                   Url = Url.Action(actionName: JSONController.ACCOUNTAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+               },
+               DescriptionField = "description",
+               IDField = "id",
+               Formate = "'<div>'+state.text + '</div>'",
+               //SelectedItem = ViewData[ReportController.SELECTED_FILTED_ITEM],
+               IsAutoComplete = true,
+               SelectItems = null
+           },
+           showLabel: true)
+            </td>
+            <td class="location">
+
+                @Html.AdminLTEDropDownListFor(
+                  m => m.Line,
+                  htmlLabelAttributes: null,
+                  htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+                  },
+                  htmlGroupAttributes: null,
+                  autoCompleteOptions: new AutoCompleteOptions()
+                  {
+                      AjaxOptions = new AjaxOptions()
+                      {
+                          HttpMethod = "GET",
+                          Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                      },
+                      DescriptionField = "description",
+                      IDField = "category_id",
+                      Formate = "'<div>'+state.text + '</div>'",
+                      //SelectedItem = ViewData[ReportController.SELECTED_FILTED_ITEM],
+                      IsAutoComplete = true,
+                      SelectItems = null
+                  },
+                  showLabel: true)
+            </td>
+            <td class="location">
+                @Html.AdminLTETextBoxFor(m => m.Factor,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+            </td>
+            <td class="location">
+                @Html.AdminLTETextBoxFor(m => m.Threshold,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+            </td>
+        </tr>
+    </table>
+
+    <div class="pull-right box-body">
+        @Html.AdminLTEFromSubmitter("Save",
+    "add-incentive-progress",
+    new Dictionary<string, object>() {
+        { "type", "submit" } ,
+        { "class","btn btn-primary"}
+    },
+    Url.Content("~/Images/progress.gif")
+    )
+    </div>
+}
+

@@ -13,25 +13,10 @@ namespace BusinessExcel.Providers.ProviderContext
 
     public partial class SalesManageDataContext : DbContext
     {
-        public virtual LocationDetail getLocationDetail(string locationId)
-        {
-            const string SELECT_LOCATION = @"select location_id, 
-                                                description
-                                                from [sc_salesmanage_user].[location_m] 
-                                            where 
-                                                location_id = @location_id";
 
-            var user_name = locationId != null ?
-                  new SqlParameter("@location_id", locationId) :
-                  new SqlParameter("@location_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
-            var locations = this.Database.SqlQuery<LocationDetail>(SELECT_LOCATION, user_name).ToList();
-            LocationDetail detail = locations.Count > 0 ? locations[0] : null;
-            return detail;
-        }
-
-        public virtual List<LocationDetail> getLocationDetails(string search, int Page, out int RowCount)
+        public virtual List<AccountDetail> getAccountDetails(string search, int Page, out int RowCount)
         {
-            List<LocationDetail> items = new List<LocationDetail>();
+            List<AccountDetail> items = new List<AccountDetail>();
               var user_name = search != null ?
                     new SqlParameter("@filter", search) :
                     new SqlParameter("@filter", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
@@ -53,8 +38,8 @@ namespace BusinessExcel.Providers.ProviderContext
             row_count.Direction = System.Data.ParameterDirection.Output;
             try
             {
-                items = this.Database.SqlQuery<LocationDetail>(
-                                                "[sc_salesmanage_user].[getLocationDetails] @filter ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                items = this.Database.SqlQuery<AccountDetail>(
+                                                "[sc_salesmanage_user].[getAccounts] @filter ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
