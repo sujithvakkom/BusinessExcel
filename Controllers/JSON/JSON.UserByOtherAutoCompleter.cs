@@ -55,6 +55,37 @@ namespace BusinessExcel.Controllers.JSON
             return res;
         }
 
+        public static string USERGROUPAUTOCOMPLETER = "UserGroupAutoCompleter";
+        public JsonResult UserGroupAutoCompleter()
+        {
+            JsonResult res = null;
+            using (var db = new SalesManageDataContext())
+            {
+    
+                var items = db.getUserGroups();
+                JSONPagininationModel<CreateUser> model = new JSONPagininationModel<CreateUser>();
+                //model.CountPerPage = 10;
+                model.OutputList = items;
+                //model.Count = 20;
+               res = Json(model, JsonRequestBehavior.AllowGet);
+            }
+            return res;
+        }
+        public static string USERROLEAUTOCOMPLETER = "UserRoleAutoCompleter";
+        public JsonResult UserRoleAutoCompleter()
+        {
+            JsonResult res = null;
+            using (var db = new SalesManageDataContext())
+            {
 
+                var items = db.getUserRoles();
+                JSONPagininationModel<CreateUser> model = new JSONPagininationModel<CreateUser>();
+                //model.CountPerPage = 10;
+                model.OutputList = items;
+                //model.Count = 20;
+                res = Json(model, JsonRequestBehavior.AllowGet);
+            }
+            return res;
+        }
     }
 }

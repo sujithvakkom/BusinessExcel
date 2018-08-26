@@ -1,0 +1,259 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
+
+
+@model CreateUser
+
+
+
+
+@using (Ajax.BeginForm(AdminController.NEWUSER,
+                                                                                AdminController.ADMIN,
+                                                                                new AjaxOptions()
+                                                                                {
+                                                                                    HttpMethod = "POST",
+                                                                                    // UpdateTargetId = "users-table-display",
+                                                                                    OnBegin = "move('#page-load')",
+                                                                                    OnComplete = "ajax_call_load_complete('#page-load')",
+                                                                                    OnFailure = "loadin_failed"
+                                                                                }))
+
+{
+
+
+
+    <div class="container" style="width:100%">
+
+
+        <div class="box-body">
+
+            <div class="form-group row">
+        
+                <label for="username" class="col-md-3 col-form-label">User Name</label>
+                <div class="col-md-9">
+                    @Html.AdminLTETextBoxFor(m => m.UserName,
+           null,
+           new Dictionary<string, object>() {
+                                                    { "class", "form-control " },{ "required", "" },
+                                                    { "autocomplete", "off" },
+
+           },
+           null,
+           null,
+           "",
+           false,
+           true,
+           true)
+
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label for="firstname" class="col-md-3 col-form-label">First Name</label>
+                <div class="col-md-9">
+                    @Html.AdminLTETextBoxFor(m => m.FirstName,
+           null,
+           new Dictionary<string, object>() {
+                                                    { "class", "form-control " },{ "required", "" },
+                                                    { "autocomplete", "off" },
+
+           },
+           null,
+           null,
+           "",
+           false,
+           true,
+           true)
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="secondname" class="col-md-3 col-form-label">Second Name</label>
+                <div class="col-md-9">
+                    @Html.AdminLTETextBoxFor(m => m.SecondName,
+           null,
+           new Dictionary<string, object>() {
+                                                    { "class", "form-control " },
+                                                    { "autocomplete", "off" },
+
+           },
+           null,
+           null,
+           "",
+           false,
+           true,
+           true)
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="exampleInputFile" class="col-md-3 col-form-label">Display Name</label>
+                <div class="col-md-9">
+                    @Html.AdminLTETextBoxFor(m => m.DisplayName,
+           null,
+           new Dictionary<string, object>() {
+                                                    { "class", "form-control " },
+                                                    { "autocomplete", "off" },
+
+           },
+           null,
+           null,
+           "",
+           false,
+           true,
+           true)
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="exampleInputFile" class="col-md-3 col-form-label">Email</label>
+                <div class="col-md-9">
+                    @Html.AdminLTETextBoxFor(m => m.Email,
+           null,
+           new Dictionary<string, object>() {
+                                                    { "class", "form-control " },
+                                                    { "autocomplete", "off" },
+
+           },
+           null,
+           null,
+           "",
+           false,
+           true,
+           true)
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="exampleInputFile" class="col-md-3 col-form-label">Contact No.</label>
+                <div class="col-md-9">
+                    @Html.AdminLTETextBoxFor(m => m.ContactNumber,
+           null,
+           new Dictionary<string, object>() {
+                                                    { "class", "form-control " },
+                                                    { "autocomplete", "off" },
+
+           },
+           null,
+           null,
+           "",
+           false,
+           true,
+           true)
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="exampleInputFile" class="col-md-3 col-form-label">Password</label>
+                <div class="col-md-9">
+                    @Html.AdminLTETextBoxFor(m => m.Password,
+           null,
+           new Dictionary<string, object>() {
+                                                    { "class", "form-control " },{ "required", "" },
+                                                    { "autocomplete", "off" },
+
+           },
+           null,
+           null,
+           "",
+           false,
+           true,
+           true)
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="exampleInputFile" class="col-md-3 col-form-label">Group</label>
+                <div class="col-md-9">
+                    @Html.AdminLTEDropDownListFor(
+m => m.USERGROUPID,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+},
+//htmlGroupAttributes: new Dictionary<string, object>() { { "onChange", "SelectGROUPName(this)" } },
+htmlGroupAttributes: null,
+autoCompleteOptions: new AutoCompleteOptions()
+{
+    AjaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        Url = Url.Action(actionName: JSONController.USERGROUPAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+    },
+    DescriptionField = "USERGROUPNAME",
+    IDField = "USERGROUPID",
+    Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+     SelectedItem = ViewData[AdminController.SELECTED_FILTED_GROUP],
+    IsAutoComplete = true,
+    SelectItems = null
+},
+showLabel: true)
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label for="exampleInputFile" class="col-md-3 col-form-label">Role</label>
+                <div class="col-md-9">
+                    @Html.AdminLTEDropDownListFor(
+m => m.RoleId,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+},
+//htmlGroupAttributes: new Dictionary<string, object>() { { "onChange", "SelectRoleName(this)" } },
+htmlGroupAttributes: null,
+autoCompleteOptions: new AutoCompleteOptions()
+{
+    AjaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        Url = Url.Action(actionName: JSONController.USERROLEAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+    },
+    DescriptionField = "RoleName",
+    IDField = "RoleId",
+    Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+    SelectedItem = ViewData[AdminController.SELECTED_FILTED_ROLE],
+    IsAutoComplete = true,
+    SelectItems = null
+},
+showLabel: true)
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="exampleInputFile" class="col-md-3 col-form-label">EmployeeLookUp</label>
+                <div class="col-md-9">
+                    @Html.AdminLTETextBoxFor(m => m.EmpCodeLookup,
+           null,
+           new Dictionary<string, object>() {
+                                                    { "class", "form-control " },
+                                                    { "autocomplete", "off" },
+
+           },
+           null,
+           null,
+           "",
+           false,
+           true,
+           true)
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-7">
+                <br>
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-warning">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    
+}

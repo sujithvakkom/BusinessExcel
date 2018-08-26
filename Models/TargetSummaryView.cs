@@ -7,10 +7,16 @@ using System.Web;
 
 namespace BusinessExcel.Models
 {
-    public class TargetTotalView
+    public class TargetSummaryView
     {
 
         [Key()]
+
+
+        public decimal? TotalTarget { get; set; }
+        public decimal? TotalAchieved { get; set; }
+
+
         public decimal? TotalTargetPerc { get; set; }
         public decimal? TotalIncAmt { get; set; }
 
@@ -19,24 +25,39 @@ namespace BusinessExcel.Models
         public decimal? BaseIncentive { get; set; }
 
         public int? LineAch { get; set; }
-        public decimal? TotalLineAchAccAmt { get; set; }
+        public decimal? line_achieved_amt { get; set; }
 
-        public decimal? totalBonusLinePerc { get; set; }
-        public decimal? TotalBonusLineAmt { get; set; }
+        public decimal? bonus_lines { get; set; }
+        public decimal? bonus_line_amt { get; set; }
 
        
         public decimal? TotalEnteredBaseIncentive { get; set; }
 
 
         [Display(Name = "Status")]
-        public int target_status { get; set; }
+        public int target_status_id { get; set; }
 
-      
+
+
+        public string target_status { get; set; }
+
 
         [NotMapped]
         public int? target_id { get; set; }
 
         [NotMapped]
         public int? user_id { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Staff Code")]
+        public string user_name { get; set; }
+
+        public int? roster_id { get; set; }
+
+        [Display(Name = "Location")]
+        public int? location_id { get; set; }
+
+        public string roster_name { get; set; }
+        public string location_name { get; set; }
     }
 }

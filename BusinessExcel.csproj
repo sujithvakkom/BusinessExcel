@@ -195,7 +195,6 @@
     <Compile Include="Controllers\Constands.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\JSON\JSON.Extra.cs" />
-    <Compile Include="Controllers\JSON\JSON.AccountAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetTempletAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.CategoryAutoCompleter.cs" />
@@ -211,7 +210,6 @@
     <Compile Include="Controllers\ReportController.CategoryAchievement.cs" />
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
     <Compile Include="Controllers\ReportController.Actions.cs" />
-    <Compile Include="Controllers\ReportController.MerchantTarget.cs" />
     <Compile Include="Controllers\RosterController.cs" />
     <Compile Include="Controllers\TargetController.ExecutiveTargets.cs" />
     <Compile Include="Controllers\TargetController.Settings.cs" />
@@ -228,11 +226,11 @@
     <Compile Include="Models\AlertModal.cs" />
     <Compile Include="Models\CheckinViewModel.cs" />
     <Compile Include="Models\CompetitorViewModel.cs" />
-    <Compile Include="Models\IncentiveFactor.cs" />
     <Compile Include="Models\ItemDetailsView.cs" />
     <Compile Include="Models\jsTree3Node.cs" />
-    <Compile Include="Models\MerchantTargetFilter.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
+    <Compile Include="Models\TargetStatus.cs" />
+    <Compile Include="Models\TargetSummaryView.cs" />
     <Compile Include="Models\TargetTotalView.cs" />
     <Compile Include="Models\Tree.cs" />
     <Compile Include="Models\UserDetailsView.cs" />
@@ -272,11 +270,9 @@
     <Compile Include="Providers\ProviderContext\Entities\CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
-    <Compile Include="Providers\ProviderContext\Entities\GlobalSettings.cs" />
     <Compile Include="Providers\ProviderContext\Entities\IncentiveFactor.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemModel.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LineTarget.cs" />
-    <Compile Include="Providers\ProviderContext\Entities\AccountDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LocationTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\SalesExcecutiveTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserListView.cs" />
@@ -300,8 +296,6 @@
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Checkin.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Item.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Competitor.cs" />
-    <Compile Include="Providers\ProviderContext\SalesManageDataContext.IncentiveFactorDetails.cs" />
-    <Compile Include="Providers\ProviderContext\SalesManageDataContext.AccountDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.CategoryAchievement.cs" />
@@ -785,11 +779,6 @@
     <Content Include="Views\Target\_SettingLocation.cshtml" />
     <Content Include="Views\Target\_SettingIncentiveFactorDetails.cshtml" />
     <Content Include="Views\Target\_AddIncentiveFactorDetails.cshtml" />
-    <Content Include="Views\Target\_CategorySettings.cshtml" />
-    <Content Include="Views\Target\_AddCategorySettings.cshtml" />
-    <Content Include="Views\Target\_OtherSettings.cshtml" />
-    <Content Include="Views\Shared\_ErrorViewer.cshtml" />
-    <Content Include="Views\Target\SalesExecutiveTarget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

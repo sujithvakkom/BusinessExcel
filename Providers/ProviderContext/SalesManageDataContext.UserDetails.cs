@@ -175,6 +175,84 @@ namespace BusinessExcel.Providers.ProviderContext
             }
             return items;
         }
+
+
+        public virtual List<CreateUser> getUserGroups()
+        {
+            List<CreateUser> ugroups = new List<CreateUser>();
+
+            const string SELECT_USER = @"select user_group_id as USERGROUPID, 
+                                                group_name as USERGROUPNAME
+                                                from [sc_salesmanage_user].[group_m] ";
+            try
+            {
+                ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER).ToList();
+                
+            }
+            catch (Exception ex)
+            {
+                ugroups = null;
+            }
+            return ugroups;
+        }
+
+        public virtual List<CreateUser> getDefaultUserGroups()
+        {
+            List<CreateUser> ugroups = new List<CreateUser>();
+
+            const string SELECT_USER = @"select user_group_id as USERGROUPID, 
+                                                group_name as USERGROUPNAME
+                                                from [sc_salesmanage_user].[group_m]  where user_group_id=1";
+            try
+            {
+                ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ugroups = null;
+            }
+            return ugroups;
+        }
+
+
+        public virtual List<CreateUser> getUserRoles()
+        {
+            List<CreateUser> ugroups = new List<CreateUser>();
+
+            const string SELECT_USER_ROLES = @"select role_id as RoleId, 
+                                                role_name as RoleName
+                                                from [db_salesmanage_user].[role_m] ";
+            try
+            {
+                ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER_ROLES).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ugroups = null;
+            }
+            return ugroups;
+        }
+
+        public virtual List<CreateUser> getDefaultUserRoles()
+        {
+            List<CreateUser> ugroups = new List<CreateUser>();
+
+            const string SELECT_USER_ROLES = @"select role_id as RoleId, 
+                                                role_name as RoleName
+                                                from [db_salesmanage_user].[role_m]  where role_id=1 ";
+            try
+            {
+                ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER_ROLES).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ugroups = null;
+            }
+            return ugroups;
+        }
         /// <summary>
         /// return non assinged users
         /// </summary>

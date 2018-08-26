@@ -1,0 +1,100 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+
+
+@using BusinessExcel.Providers.ProviderContext.Entities
+
+
+@model TargetSummaryView
+
+
+
+<div class="box box-primary">
+
+    <div class="box-body">
+
+        <div id="table-item-view" class="table-responsive">
+            @{
+
+                using (var db = new SalesManageDataContext())
+                {
+                    WebGridColumn col = new WebGridColumn()
+                    {
+
+                    };
+
+                    int count = 0;
+                    IQueryable<TargetSummaryView> data = db.TargetSummaryReportPaging(pageNumber: ViewBag.TargertSummaryViewPage,
+                                pageSize: 15,
+                                sort: ViewBag.TargertSummaryViewSort,
+                                sortdir: ViewBag.TargertSummaryViewDir,
+                                count: out count, Filters: Model
+                                );
+                    var grid = new WebGrid(ajaxUpdateContainerId: "table-item-view",
+                                        ajaxUpdateCallback: "callBack", rowsPerPage: 15
+                                                    );
+                    grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                    @grid.GetHtml(
+
+                            tableStyle: "table table-striped table-bordered be-pagination-spl",
+                            htmlAttributes: new { @id = "targetsummary" },
+
+                            columns: new[] {
+                             grid.Column(columnName:"user_name",header:"Staff Code",format:null,style:"user_name",canSort:false),
+                             grid.Column(columnName:"roster_name",header:"Roster",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"location_name",header:"Location",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"TotalTarget",header:"Target Amt",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalTarget"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
+                             grid.Column(columnName:"TotalAchieved",header:"Achvd Amt",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalAchieved"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
+                             grid.Column(columnName:"BaseIncentive",header:"Base Incent",format:(item)=>@Html.AdminLTEParagraph((object)@item["BaseIncentive"], new Dictionary<string, object> { { "class", "numaric" } }),style:"BaseIncentive",canSort:false),
+                             grid.Column(columnName:"TotalEnteredBaseIncentive",header:"Entered Base Incent",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalEnteredBaseIncentive"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
+                             grid.Column(columnName:"TotalTargetPerc",header:"Target Perc",format: (item)=>@Html.AdminLTEParagraph((object)@item["TotalTargetPerc"]+" %", new Dictionary<string, object> { { "class", "numaric" } }),style:"user_name",canSort:false),
+                             grid.Column(columnName:"TotalIncAmt",header:"Incent Amt",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalIncAmt"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
+                             grid.Column(columnName:"TotalEnteredIncAmt",header:"Entered Incent Amt",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalEnteredIncAmt"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
+                             grid.Column(columnName:"LineAch",header:"Lines Achvd",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"line_achieved_amt",header:"Lines Achvd Amt",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"bonus_lines",header:"Bonus Achvd Perc",format:(item)=>@Html.AdminLTEParagraph((object)@item["bonus_lines"]+" %", new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
+                             grid.Column(columnName:"bonus_line_amt",header:"Bonus Achvd",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"target_status",header:"Target Status",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"roster_id",header:"roster_id",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"location_id",header:"location_id",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"target_status_id",header:"target_status_id",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"target_id",header:"target_id",format:null,style:"create_time",canSort:false),
+
+                        },
+                        footerStyle: "extra-table-pager"
+                        )
+
+                    @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                        nextText: "NEXT",
+                        firstText: "FIRST",
+                        previousText: "PREV.",
+                        lastText: "LAST")
+
+                }
+            }
+        </div>
+    </div>
+</div>
+<style>
+    td:nth-child(n+16), th:nth-child(n+16) {
+        display: none;
+    }
+
+
+    .colbtn {
+        width: 8%;
+    }
+
+   
+      th:nth-child(n+4),  td:nth-child(n+4) {
+       text-align:right
+    }
+    
+   
+       th:nth-child(n+15),td:nth-child(n+15) {
+       text-align:left
+    }
+</style>

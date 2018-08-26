@@ -18,9 +18,16 @@ namespace BusinessExcel.Controllers
     {
 
 
+        public static string USERSLIST = "UserList";
+        public static string NEWUSER = "NewUser";
+        public static string INDEXNEWUSER = "IndexNewUser";
+        public static string USERSLIST_TITLE = "User List";
         public static string USERSTREE_TITLE = "User Hierarchy";
         public static string USERSTREE = "UserTree";
         public static string SELECTED_FILTED_USER = "SelectedFilteredUser";
+        public static string SELECTED_FILTED_ROLE = "SelectedFilteredUserRole";
+        public static string SELECTED_FILTED_GROUP = "SelectedFilteredUserGroup";
+
         public static string SELECTED_FILTED_USER_FIRST_NAME = "SelectedFilteredUserFirstName";
         public static string JSON_USERSLIST = "UserTreeList";
 
@@ -31,10 +38,52 @@ namespace BusinessExcel.Controllers
 
         public static string USERTREEVIEW = "_UserTreeView";
 
+        public static string NEWUSER_FRM = "_NewUser";
+        public static string USERCREATIONMESSAGE = "User created";
 
         // GET: /Admin/UserManagement
         public static string USERSLIST = "UserList";
         public static string USERSLIST_TITLE = "User List";
+
+
+        public PartialViewResult IndexNewUser()
+        {
+            return PartialView(NEWUSER_FRM);
+        }
+
+
+        // [Authorize(Roles = "manager")]
+        [HttpPost]
+        [Authorize(Roles = "System Administrator")]
+        public ActionResult NewUser(CreateUser newUser )
+        {
+
+            if (Request.IsAjaxRequest())
+            {
+                if (ModelState.IsValid)
+                {
+
+                    using (var db = new SalesManageDataContext())
+                    {
+
+                            ViewData[USERCREATIONMESSAGE]=db.CreateUser(newUser);
+                            ModelState.Clear();
+                      
+                    }
+
+                    return PartialView(NEWUSER_FRM,new CreateUser());
+                }
+                else
+                {
+                    return PartialView(NEWUSER_FRM, newUser);
+                }
+            }
+            else
+            {
+                return PartialView(NEWUSER_FRM, new CreateUser());
+            }
+               
+        }
 
         [Authorize(Roles = "System Administrator")]
         [HttpGet]
