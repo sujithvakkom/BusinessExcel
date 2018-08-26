@@ -52,6 +52,7 @@ namespace BusinessExcel.Models
         [Display(Name = "Staff Code")]
         public string user_name { get; set; }
 
+        [Display(Name = "Roster")]
         public int? roster_id { get; set; }
 
         [Display(Name = "Location")]

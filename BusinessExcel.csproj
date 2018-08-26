@@ -193,6 +193,7 @@
     <Compile Include="Controllers\CheckinController.cs" />
     <Compile Include="Controllers\CompetitorController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
+    <Compile Include="Controllers\JSON\JSON.RosterAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.Extra.cs" />
     <Compile Include="Controllers\JSON\JSON.TargetTempletAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.BrandAutoCompleter.cs" />

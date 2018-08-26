@@ -6,6 +6,7 @@ using System.Linq;
 using BusinessExcel.Providers.ProviderContext.Entities;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using BusinessExcel.Models;
 
 namespace BusinessExcel.Providers.ProviderContext
 {
@@ -146,6 +147,46 @@ where roster_id=@roster_id";
                                                 page_number, 
                                                 page_size, 
                                                 row_count)
+                                                .ToList();
+                int.TryParse(row_count.Value.ToString(), out RowCount);
+            }
+            catch (Exception ex)
+            {
+                RowCount = 0;
+            }
+            return items;
+        }
+
+
+        public virtual List<RosterViewModel> getRosterDetails(string search, int Page, out int RowCount)
+        {
+            List<RosterViewModel> items = new List<RosterViewModel>();
+
+      
+
+            var user_name = search != null ?
+                  new SqlParameter("@filter", search) :
+                  new SqlParameter("@filter", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            int? page = null;
+            var page_size = page != null ?
+                new SqlParameter("@page_size", page) :
+                new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = 20 };
+
+            int? page_num = Page;
+            var page_number = page_num != null ?
+                new SqlParameter("@page_number", page_num) :
+                new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+            int? row = null;
+            var row_count = row != null ?
+                new SqlParameter("@row_count", row) :
+                new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+            row_count.Direction = System.Data.ParameterDirection.Output;
+            try
+            {
+                items = this.Database.SqlQuery<RosterViewModel>(
+                                                "[sc_salesmanage_user].[getRosterDetails] @filter ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
