@@ -59,5 +59,8 @@ namespace BusinessExcel.Models
 
         public string roster_name { get; set; }
         public string location_name { get; set; }
+
+
+        public decimal? TotalValue { get; set; }
     }
 }

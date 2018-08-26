@@ -57,6 +57,7 @@
                              grid.Column(columnName:"line_achieved_amt",header:"Lines Achvd Amt",format:null,style:"create_time",canSort:false),
                              grid.Column(columnName:"bonus_lines",header:"Bonus Achvd Perc",format:(item)=>@Html.AdminLTEParagraph((object)@item["bonus_lines"]+" %", new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
                              grid.Column(columnName:"bonus_line_amt",header:"Bonus Achvd",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"TotalValue",header:"Total",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalValue"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
                              grid.Column(columnName:"target_status",header:"Target Status",format:null,style:"create_time",canSort:false),
                              grid.Column(columnName:"roster_id",header:"roster_id",format:null,style:"create_time",canSort:false),
                              grid.Column(columnName:"location_id",header:"location_id",format:null,style:"create_time",canSort:false),
@@ -79,7 +80,7 @@
     </div>
 </div>
 <style>
-    td:nth-child(n+16), th:nth-child(n+16) {
+    td:nth-child(n+17), th:nth-child(n+17) {
         display: none;
     }
 
@@ -94,7 +95,7 @@
     }
     
    
-       th:nth-child(n+15),td:nth-child(n+15) {
+       th:nth-child(n+15),td:nth-child(n+16) {
        text-align:left
     }
 </style>

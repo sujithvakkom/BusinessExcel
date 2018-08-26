@@ -373,7 +373,10 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 
                                 <td><input class="form-control extrainfo tottableinputLabel" value="" /></td>
                                 <td  style="text-align:right"><input class="form-control extrainfo tottableinput" value="" id="Tot_Perc_@Model.target_id" /></td>
-                                <td  style="text-align:right"><input class="form-control extrainfo tottableinput" value= @Model.TargetTotal.Sum(x => x.TotalIncAmt+x.TotalLineAchAccAmt+x.TotalBonusLineAmt) id="Tot_Amt_@Model.target_id" /></td>
+                                @*<td  style="text-align:right"><input class="form-control extrainfo tottableinput" value= @Model.TargetTotal.Sum(x => x.TotalIncAmt+x.TotalLineAchAccAmt+x.TotalBonusLineAmt) id="Tot_Amt_@Model.target_id" /></td>*@
+                                <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal.Sum(x => x.TotalEnteredIncAmt>0 ?  x.TotalEnteredIncAmt + x.TotalLineAchAccAmt+x.TotalBonusLineAmt : x.TotalIncAmt+x.TotalLineAchAccAmt+x.TotalBonusLineAmt) id="Tot_Amt_@Model.target_id" /></td>
+
+                                
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -1065,6 +1068,8 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 
         var Templine = Number(0);
         var Totvalue = Number(0);
+        var Enteredline = Number(0);
+        var incebtive_amt = Number(0);
 
         $("#" + model_table + " tr:eq(1)").find('td:eq(1) input').val(data[0].TotalTargetPerc + "%");
         $("#" + model_table + " tr:eq(1)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalIncAmt));
@@ -1074,14 +1079,30 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
         $("#" + model_table + " tr:eq(3)").find('td:eq(1) input').val(data[0].totalBonusLinePerc + "%");
         $("#" + model_table + " tr:eq(3)").find('td:eq(2) input').val(numberWithCommas(data[0].TotalBonusLineAmt));
 
+        incentive_amt = data[0].TotalIncAmt;
 
-        $("#" + model_table + " tr").not(':first').not(':last').each(function () {
+        Enteredline=data[0].TotalEnteredIncAmt;
+
+        if (Enteredline > 0)
+        {
+            incentive_amt = Enteredline;
+        }
+
+        Totvalue = incentive_amt + data[0].TotalLineAchAccAmt + data[0].TotalBonusLineAmt;
 
 
-            Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
+        //$("#" + model_table + " tr").not(':first').not(':last').each(function () {
 
-            Totvalue = Totvalue + Templine;
-        });
+
+        //    Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
+        //    Enteredline = Number($(this).find('td:eq(3) input ').val().replace(/\,/g, ""));
+           
+        //    if (Enteredline > 0) {
+        //        Templine = Enteredline;
+        //    }
+    
+        //    Totvalue = Totvalue + Templine;
+        //});
 
 
         $("#" + model_table + " tr:last").find('td:eq(2) input').val(numberWithCommas(Totvalue));

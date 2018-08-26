@@ -515,7 +515,10 @@ namespace BusinessExcel.Controllers
 
                 update= db.UpdateTargetStatus(targetModel);
               
-
+                if(update>0)
+                {
+                  
+                }
             }
          
             return Json(update, JsonRequestBehavior.AllowGet);

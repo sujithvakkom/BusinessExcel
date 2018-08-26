@@ -97,3 +97,5 @@ C:\WORKS\BusinessExcel\bin\WebMatrix.WebData.xml
 C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\WORKS\BusinessExcel\obj\Debug\BusinessExcel.pdb
+C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.pdb
+C:\WORKS\BusinessExcel\bin\HtmlAgilityPack.xml
