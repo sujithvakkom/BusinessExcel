@@ -65,5 +65,32 @@ namespace BusinessExcel.Controllers.JSON
             return res;
         }
 
+
+        public static string USERAUTOCOMPLETERFORSE = "UserAutoCompleterForSE";
+        //public JsonResult UserAutoCompleter(String Search, int Page, ICollection<string> Extra)
+        public JsonResult UserAutoCompleterForSE(String Search, int Page, string Extra)
+        {
+            JsonResult res = null;
+
+            var extras = ParseJSONString(Extra);
+
+            int? locationId = null;
+
+            try { locationId = int.Parse(((IDictionary)extras)["Location"].ToString()); }
+            catch (Exception) { }
+
+            using (var db = new SalesManageDataContext())
+            {
+                int temp;
+
+                var items = db.getUserListView(search: Search, Page: Page, UserType : "GS Sales Executive", RowCount: out temp);
+                JSONPagininationModel<UserListView> model = new JSONPagininationModel<UserListView>();
+                model.CountPerPage = 20;
+                model.OutputList = items;
+                model.Count = temp;
+                res = Json(model, JsonRequestBehavior.AllowGet);
+            }
+            return res;
+        }
     }
 }

@@ -1,0 +1,65 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@model GlobalSettings
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">@TargetController._OTHER_SETTINGS</h3>
+    </div>
+    <div class="box-body">
+
+        @using (Ajax.BeginForm(
+                                                                                                                    actionName: TargetController._OTHERSETTINGS,
+                                                                                                                    controllerName: TargetController.TARGET,
+                                                                                                                    routeValues: null,
+                                                                                                                    ajaxOptions: new AjaxOptions()
+                                                                                                                    {
+                                                                                                                        HttpMethod = "Post",
+                                                                                                                        InsertionMode = InsertionMode.Replace,
+                                                                                                                        UpdateTargetId = "global-setting-details",
+                                                                                                                        LoadingElementId = "add-global-setting-progress"
+                                                                                                                    }
+                                                                                                                    ))
+        {
+            <div id="other-settings-view">
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.AdminLTETextBoxFor(m => m.global_base_incentive_cap,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.AdminLTETextBoxFor(m => m.global_acc_factor,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+                    </div>
+                </div>
+            </div>
+            <div class="pull-right box-body">
+                @Html.AdminLTEFromSubmitter("Save",
+                "add-global-setting-progress",
+                new Dictionary<string, object>() {
+                    { "type", "submit" } ,
+                    { "class","btn btn-primary"}
+                },
+                Url.Content("~/Images/progress.gif")
+                )
+            </div>
+        }
+    </div>
+</div>

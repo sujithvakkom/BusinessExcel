@@ -15,7 +15,7 @@ namespace BusinessExcel.Controllers
     public partial class TargetController : Controller
     {
         public static string SETTINGTARGET = "SettingTarget";
-        public static string SETTING_TARGET = "Setting Target";
+        public static string SETTING_TARGET = "Target Settings";
 
         [HttpGet]
         public ActionResult SettingTarget()
@@ -40,7 +40,7 @@ namespace BusinessExcel.Controllers
         }
 
         public static string _SETTINGLOCATION = "_SettingLocation";
-        public static string _SETTING_LOCATION = "Location Setting";
+        public static string _SETTING_LOCATION = "Location Settings";
 
         [HttpGet]
         public ActionResult _SettingLocation()
@@ -114,17 +114,98 @@ namespace BusinessExcel.Controllers
         [HttpPost]
         public PartialViewResult _AddIncentiveFactorDetails(BusinessExcel.Models.IncentiveFactor IncentiveFactor)
         {
-            using (var db = new SalesManageDataContext()) {
-                try
+            if (ModelState.IsValid)
+                using (var db = new SalesManageDataContext())
                 {
-                    db.insertUpdateIncentiveFactor(IncentiveFactor.Account, IncentiveFactor.Line, IncentiveFactor.Factor,IncentiveFactor.Threshold);
+                    try
+                    {
+                        db.insertUpdateIncentiveFactor(IncentiveFactor.Account, IncentiveFactor.Line, IncentiveFactor.Factor, IncentiveFactor.Threshold);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Errors = new string[] { ex.Message };
+                        ViewBag.IncentiveFactor = IncentiveFactor;
+                    }
                 }
-                catch(Exception ex)
+            else
+                ViewBag.IncentiveFactor = IncentiveFactor;
+            return PartialView(_SETTINGINCENTIVEFACTORDETAILS);
+        }
+
+        public static string _CATEGORYSETTINGS = "_CategorySettings";
+        public static string _CATEGORY_SETTINGS = "Category Settings";
+
+        public PartialViewResult _CategorySettings()
+        {
+            return PartialView(_CATEGORYSETTINGS);
+        }
+
+        public static string _ADDCATEGORYSETTINGS = "_AddCategorySettings";
+        public static string _ADD_CATEGORY_SETTINGS = "Add Category Settings";
+
+        [HttpGet]
+        public PartialViewResult _AddCategorySettings()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public PartialViewResult _AddCategorySettings(CategoryDetail CategoryDetail)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new SalesManageDataContext())
                 {
-                    ViewBag.Error = ex.Message;
+                    try
+                    {
+                        db.insertUpdateCategorysettings(CategoryDetail.category_id, CategoryDetail.description, CategoryDetail.base_incentive, CategoryDetail.total_sale_factor,CategoryDetail.category_sellin_factor);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Errors = new string[] { ex.Message };
+                        ViewBag.CategoryDetail = CategoryDetail;
+                    }
                 }
             }
-            return PartialView("_SettingIncentiveFactorDetails");
+            else
+            {
+                ViewBag.CategoryDetail = CategoryDetail;
+            }
+            return PartialView(_CATEGORYSETTINGS);
         }
+
+        public static string _OTHERSETTINGS = "_OtherSettings";
+        public static string _OTHER_SETTINGS = "Global Settings";
+
+        [HttpGet]
+        public PartialViewResult _OtherSettings()
+        {
+            using (var db = new SalesManageDataContext())
+            {
+                return PartialView(db.getGlobalSettings());
+            }
+        }
+
+        [HttpPost]
+        public PartialViewResult _OtherSettings(GlobalSettings GlobalSettings)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new SalesManageDataContext())
+                {
+                    try
+                    {
+                        db.insertUpdateGlobalSettings(GlobalSettings);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Errors = new string[] { ex.Message };
+                    }
+                }
+
+            }
+            return PartialView(GlobalSettings);
+        }
+
     }
 }

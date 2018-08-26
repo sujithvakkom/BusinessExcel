@@ -87,7 +87,6 @@ namespace BusinessExcel.Providers.ProviderContext
             return category;
         }
 
-
         public virtual CategoryDetail getCategoryDetails(int CategoryID)
         {
             CategoryDetail result = null;
@@ -105,5 +104,70 @@ namespace BusinessExcel.Providers.ProviderContext
 
         }
 
+        public virtual List<CategoryDetail> getCategorySettingsDetails(int? category, int Page, out int RowCount)
+        {
+            List<CategoryDetail> categoryList = new List<CategoryDetail>();
+
+            var filter = category==null ?
+                new SqlParameter("@category", System.Data.SqlDbType.Int) { Value = DBNull.Value } :
+                new SqlParameter("@category", category);
+            //filter.Value = DBNull.Value;
+
+            int? page = null;
+            var page_size = page != null ?
+                new SqlParameter("@page_size", page) :
+                new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+            //page_size.Value = DBNull.Value;
+
+            int? page_num = Page;
+            var page_number = page_num != null ?
+                new SqlParameter("@page_number", page_num) :
+                new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+            //page_size.Value = DBNull.Value;
+
+            int? row = null;
+            var row_count = row != null ?
+                new SqlParameter("@row_count", row) { Direction = System.Data.ParameterDirection.Output } :
+                new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value, Direction = System.Data.ParameterDirection.Output };
+            //db.getItemDetailsImport(null, null, null);
+            try
+            {
+                categoryList = this.Database.SqlQuery<CategoryDetail>(
+                                                "[sc_salesmanage_user].[getCatogerySettings] @category ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
+                                                .ToList();
+                int.TryParse(row_count.Value.ToString(), out RowCount);
+            }
+            catch (Exception ex)
+            {
+                RowCount = 0;
+            }
+            return categoryList;
+        }
+
+        public virtual int insertUpdateCategorysettings(int? Line,string Description, decimal? BaseIncentive, decimal? TotalSaleFactor, decimal? CategorySellinFactor)
+        {
+            BaseIncentive = BaseIncentive == null ? 0 : BaseIncentive / 100;
+            TotalSaleFactor = TotalSaleFactor == null ? 0 : TotalSaleFactor / 100;
+            CategorySellinFactor = CategorySellinFactor == null ? 0 : CategorySellinFactor / 100;
+            var category_id = new SqlParameter("@category_id", System.Data.SqlDbType.Int) { Value = Line };
+            var description = new SqlParameter("@description", System.Data.SqlDbType.NVarChar) { Value = (object)(String.IsNullOrEmpty( Description )?(object)DBNull.Value:(object)Description)};
+            var base_incentive = new SqlParameter("@base_incentive", System.Data.SqlDbType.Decimal) { Value = BaseIncentive };
+            var total_sale_factor = new SqlParameter("@total_sale_factor", System.Data.SqlDbType.Decimal) { Value = TotalSaleFactor };
+            var category_sellin_factor = new SqlParameter("@category_sellin_factor", System.Data.SqlDbType.Decimal) { Value = CategorySellinFactor };
+            try
+            {
+                this.Database.ExecuteSqlCommand(@"[db_salesmanage_user].[insertCategorySettings] @category_id ,@description ,@base_incentive ,@total_sale_factor ,@category_sellin_factor",
+                            category_id,
+                            description,
+                            base_incentive,
+                            total_sale_factor, 
+                            category_sellin_factor);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            return 0;
+        }
     }
 }

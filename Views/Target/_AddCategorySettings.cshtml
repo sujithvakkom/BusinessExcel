@@ -1,60 +1,39 @@
 ﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
 @using BusinessExcel.Providers.ProviderContext
 @using BusinessExcel.Controllers.JSON
 @using BusinessExcel.Controllers
 @using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext.Entities
 
-@model IncentiveFactor
+@model CategoryDetail
 
 @using (Ajax.BeginForm(
-                                        actionName: TargetController._ADDINCENTIVEFACTORDETAILS,
-                                        controllerName: TargetController.TARGET,
-                                        routeValues: null,
-                                        ajaxOptions: new AjaxOptions()
-                                        {
-                                            HttpMethod = "Post",
-                                            InsertionMode = InsertionMode.Replace,
-                                            UpdateTargetId = "incentive-details",
-                                            LoadingElementId = "add-incentive-progress"
-                                        }
-                                        ))
+                                                                                                    actionName: TargetController._ADDCATEGORYSETTINGS,
+                                                                                                    controllerName: TargetController.TARGET,
+                                                                                                    routeValues: null,
+                                                                                                    ajaxOptions: new AjaxOptions()
+                                                                                                    {
+                                                                                                        HttpMethod = "Post",
+                                                                                                        InsertionMode = InsertionMode.Replace,
+                                                                                                        UpdateTargetId = "category-setting-details",
+                                                                                                        LoadingElementId = "add-incentive-progress"
+                                                                                                    }
+                                                                                                    ))
 {
     if (ViewBag.Errors != null)
     {
         var errors = (string[])ViewBag.Errors;
-        Html.RenderPartial(BusinessExcel.Controllers.Constands._ErrorViewer, errors.ToList());
+        Html.RenderPartial(Constands._ErrorViewer, errors.ToList());
     }
+
     <table class="table table-condensed no-border" >
         <tr>
 
-            <td class="name">
-                @Html.AdminLTEDropDownListFor(
-           m => m.Account,
-           htmlLabelAttributes: null,
-           htmlDropDownAttributes: new Dictionary<string, object>() {
-                                                                    { "class", "form-control select2" }
-           },
-           htmlGroupAttributes: null,
-           autoCompleteOptions: new AutoCompleteOptions()
-           {
-               AjaxOptions = new AjaxOptions()
-               {
-                   HttpMethod = "GET",
-                   Url = Url.Action(actionName: JSONController.ACCOUNTAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-               },
-               DescriptionField = "description",
-               IDField = "id",
-               Formate = "'<div>'+state.text + '</div>'",
-               //SelectedItem = ViewData[ReportController.SELECTED_FILTED_ITEM],
-               IsAutoComplete = true,
-               SelectItems = null
-           },
-           showLabel: true)
-            </td>
-            <td class="location">
+            <td class="location" colspan="3">
 
                 @Html.AdminLTEDropDownListFor(
-                  m => m.Line,
+                  m => m.category_id,
                   htmlLabelAttributes: null,
                   htmlDropDownAttributes: new Dictionary<string, object>() {
                                                                     { "class", "form-control select2" }
@@ -79,7 +58,7 @@
         </tr>
         <tr>
             <td class="location">
-                @Html.AdminLTETextBoxFor(m => m.Factor,
+                @Html.AdminLTETextBoxFor(m => m.base_incentive,
                   htmlLabelAttributes: null,
                   htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
                   htmlGroupAttributes: null,
@@ -89,7 +68,17 @@
                   showGlyphicons: false)
             </td>
             <td class="location">
-                @Html.AdminLTETextBoxFor(m => m.Threshold,
+                @Html.AdminLTETextBoxFor(m => m.total_sale_factor,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+            </td>
+            <td class="location">
+                @Html.AdminLTETextBoxFor(m => m.category_sellin_factor,
                   htmlLabelAttributes: null,
                   htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
                   htmlGroupAttributes: null,

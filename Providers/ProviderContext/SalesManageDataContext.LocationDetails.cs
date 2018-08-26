@@ -21,7 +21,7 @@ namespace BusinessExcel.Providers.ProviderContext
                                             where 
                                                 location_id = @location_id";
 
-            var user_name = locationId != null ?
+            var user_name = locationId != null ?    
                   new SqlParameter("@location_id", locationId) :
                   new SqlParameter("@location_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
             var locations = this.Database.SqlQuery<LocationDetail>(SELECT_LOCATION, user_name).ToList();

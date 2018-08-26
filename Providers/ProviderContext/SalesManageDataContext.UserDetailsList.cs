@@ -90,5 +90,50 @@ namespace BusinessExcel.Providers.ProviderContext
             }
         }
 
+        //UserListView
+
+        public virtual List<UserListView> getUserListView(string search, int Page, out int RowCount, string UserType=null)
+        {
+            List<UserListView> category = new List<UserListView>();
+
+            var first_name = string.IsNullOrEmpty(search) ?
+                new SqlParameter("@first_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value } :
+                new SqlParameter("@first_name", search);
+
+            var user_type = string.IsNullOrEmpty(UserType) ?
+                new SqlParameter("@user_type", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value } :
+                new SqlParameter("@user_type", UserType);
+            //filter.Value = DBNull.Value;
+
+            int? page = null;
+            var page_size = page != null ?
+                new SqlParameter("@page_size", page) :
+                new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = 10 };
+            //page_size.Value = DBNull.Value;
+
+            int? page_num = Page;
+            var page_number = page_num != null ?
+                new SqlParameter("@page_number", page_num) :
+                new SqlParameter("@page_number", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+            //page_size.Value = DBNull.Value;
+
+            int? row = null;
+            var row_count = row != null ?
+                new SqlParameter("@row_count", row) { Direction = System.Data.ParameterDirection.Output } :
+                new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value, Direction = System.Data.ParameterDirection.Output };
+            //db.getItemDetailsImport(null, null, null);
+            try
+            {
+                category = this.Database.SqlQuery<UserListView>(
+                                                "[sc_salesmanage_user].[getUsersListView]  @first_name ,@user_type ,@page_number ,@page_size ,@row_count OUTPUT", first_name,user_type, page_number, page_size, row_count)
+                                                .ToList();
+                int.TryParse(row_count.Value.ToString(), out RowCount);
+            }
+            catch (Exception ex)
+            {
+                RowCount = 0;
+            }
+            return category;
+        }
     }
 }
