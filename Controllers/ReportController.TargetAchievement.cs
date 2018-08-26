@@ -30,14 +30,23 @@ namespace BusinessExcel.Controllers
         public static string USER_TARGET_UPDATE_ACHIEVEMENT = "UpdateAcheivedAmt";
 
         public static string USER_TARGET_UPDATED_TOTAL = "getUpdatedTargetTotal";
+        public static string USER_TARGET_UPDATE_ENTERED_BASE_INCENTIVE = "UpdateEnteredBaseIncentive";
+        public static string USER_TARGET_UPDATE_ENTERED_INCENTIVE = "UpdateEnteredIncentive";
         public static string LOAD_USER_TARGET_UPDATED_TOTAL = "LoadUpdatedTargetTotal";
 
         // public static string REPORTCONTROLLER = "Report";
         public static string TARGETACHIEVEMENTACTIONS = "TargetAchievementActions";
         public static string USER_TARGET_DETAILS = "UserTargetDetails";
         public static string USER_TARGET_DETAILS_ACTION = "UserTargetDetailsAction";
+        public static string TARGET_UPDATE_STATUS = "UpdateTargetStatus";
 
-       // 
+        public static string SELECTED_FILTED_TARGET_STATUS = "FilteredTargetStatus";
+
+
+     
+
+        // 
+
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
         public ActionResult TargetAchievementActions(string sort, string sortdir, int page = 1, ActionViewFilters Filters = null)
         {
@@ -152,6 +161,15 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
+
+            //if (target.TargetTotal.Count > 0)
+            //{
+            //    using (var db = new SalesManageDataContext())
+            //    {
+            //        ViewData[SELECTED_FILTED_TARGET_STATUS] = db.getTargetStatusBtId(target.TargetTotal[0].target_status);
+            //    }
+            //}
+
             if (target.target_id > 0)
             {
                 target.TargetTotal =  LoadTargetTotal(target.user_id.Value, target.target_id.Value);
@@ -432,7 +450,7 @@ namespace BusinessExcel.Controllers
 
                 if (db.UpdateTargetAchievementAmt(targetModel) > 0)
                 {
-                    items = db.getUsertargetTotalDetails(targetModel.user_id.Value, targetModel.target_id.Value);
+                    items = db.getUsertargetTotalDetails( targetModel.target_id.Value);
 
                 }
               
@@ -443,6 +461,66 @@ namespace BusinessExcel.Controllers
 
         }
 
+        
+        public JsonResult UpdateEnteredBaseIncentive(TargetTotalView targetModel)
+        {
+
+
+            List<TargetTotalView> items = null;
+            using (var db = new SalesManageDataContext())
+            {
+
+                if (db.UpdateEnteredBaseIncentive(targetModel) > 0)
+                {
+                    items = db.getUsertargetTotalDetails(targetModel.target_id.Value);
+
+                }
+
+            }
+
+            return Json(items, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult UpdateEnteredIncentive(TargetTotalView targetModel)
+        {
+
+
+          
+            List<TargetTotalView> items = null;
+            using (var db = new SalesManageDataContext())
+            {
+
+                if (db.UpdateEnteredIncentiveAmt(targetModel) > 0)
+                {
+                    items = db.getUsertargetTotalDetails(targetModel.target_id.Value);
+
+                }
+
+            }
+
+            return Json(items, JsonRequestBehavior.AllowGet);
+
+        }
+
+       
+        public JsonResult UpdateTargetStatus(TargetTotalView targetModel)
+        {
+
+
+
+            int update = 0;
+            using (var db = new SalesManageDataContext())
+            {
+
+                update= db.UpdateTargetStatus(targetModel);
+              
+
+            }
+         
+            return Json(update, JsonRequestBehavior.AllowGet);
+
+        }
         public List<TargetTotalView> LoadTargetTotal(int user_id,int target_id)
         {
 
@@ -457,8 +535,15 @@ namespace BusinessExcel.Controllers
             {
 
 
-                items = db.getUsertargetTotalDetails(user_id, target_id).ToList();
+                items = db.getUsertargetTotalDetails(target_id).ToList();
 
+                
+                if (items.FirstOrDefault().target_status > 0)
+                {
+                   
+                        ViewData[SELECTED_FILTED_TARGET_STATUS] = db.getTargetStatusBtId(items.FirstOrDefault().target_status);
+                    
+                }
 
             }
 
@@ -474,7 +559,7 @@ namespace BusinessExcel.Controllers
             {
 
 
-                    items = db.getUsertargetTotalDetails(targetModel.user_id.Value, targetModel.target_id.Value);
+                    items = db.getUsertargetTotalDetails( targetModel.target_id.Value);
 
 
             }
@@ -499,5 +584,46 @@ namespace BusinessExcel.Controllers
             WC
             
         }
+
+
+        public static string TARGET_SUMMARY_INDEX = "TargertSummaryIndex";
+        public static string TARGET_SUMMARY_FILTER = "TargetSummaryFilter";
+        public static string TARGET_SUMMARY_FILTER_VIEW = "_TargertSummaryFilter";
+        public static string TARGET_SUMMARY_TITLE = "Target Summary Report";
+        public static string TARGET_SUMMARY_CONTROLLER = "Report";
+
+
+        public ActionResult TargertSummaryIndex()
+        {
+
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = TARGET_SUMMARY_TITLE;
+            if (Request.IsAjaxRequest()) return PartialView();
+          
+            return View(new TargetSummaryView());
+        }
+        [HttpGet]
+        public PartialViewResult TargetSummaryFilter(string sort, string sortdir, int page = 1, TargetSummaryView Filters = null)
+        {
+            ViewBag.TargertSummaryViewSort = sort;
+            ViewBag.TargertSummaryViewDir = sortdir;
+            ViewBag.TargertSummaryViewPage = page;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = TARGET_SUMMARY_TITLE;
+
+
+            //if (!string.IsNullOrEmpty(Filters.item_code))
+            //    using (var db = new SalesManageDataContext())
+            //    {
+            //        ViewData[SELECTED_FILTED_ITEM] = db.getItemDetails(Filters.item_code);
+            //    }
+
+
+            return PartialView(TARGET_SUMMARY_FILTER_VIEW, Filters);
+
+        }
+
     }
 }

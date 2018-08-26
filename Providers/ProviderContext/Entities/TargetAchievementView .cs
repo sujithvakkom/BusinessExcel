@@ -89,13 +89,14 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [DataType(DataType.Date)]
         public DateTime? end_date { get; set; }
 
-        [Column("Base_Incentive")]
-        [Display(Name = "Base Incentive")]
-        public decimal? Base_Incentive { get; set; }
+        //[Column("Base_Incentive")]
+        //[Display(Name = "Base Incentive")]
+        //public decimal? Base_Incentive { get; set; }
 
 
+    
 
- 
+
         [Column("category_id")]
         public int? category_id { get; set; }
 

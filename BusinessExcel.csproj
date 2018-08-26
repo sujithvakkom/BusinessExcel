@@ -226,6 +226,8 @@
     <Compile Include="Models\ItemDetailsView.cs" />
     <Compile Include="Models\jsTree3Node.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
+    <Compile Include="Models\TargetStatus.cs" />
+    <Compile Include="Models\TargetSummaryView.cs" />
     <Compile Include="Models\TargetTotalView.cs" />
     <Compile Include="Models\Tree.cs" />
     <Compile Include="Models\UserDetailsView.cs" />
@@ -265,6 +267,7 @@
     <Compile Include="Providers\ProviderContext\Entities\CategoryTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryAchievement.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\CreateUser.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemModel.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LineTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LocationTarget.cs" />
@@ -764,6 +767,9 @@
     <Content Include="Views\Checkin\_CheckinDetails.cshtml" />
     <Content Include="Views\Competitor\CompetitorIndex.cshtml" />
     <Content Include="Views\Competitor\_CompetitorFilter.cshtml" />
+    <Content Include="Views\Admin\_NewUser.cshtml" />
+    <Content Include="Views\Report\TargertSummaryIndex.cshtml" />
+    <Content Include="Views\Report\_TargertSummaryFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
