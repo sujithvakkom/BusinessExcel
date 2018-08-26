@@ -21,6 +21,14 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
+        <div class="col-md-6" id="global-setting-details">
+            @{Html.RenderAction(@TargetController._OTHERSETTINGS);}
+        </div>
+        <div class="col-md-6" id="category-setting-details">
+            @{Html.RenderPartial(@TargetController._CATEGORYSETTINGS);}
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             @{Html.RenderPartial(@TargetController._SETTINGLOCATION);}
         </div>

@@ -251,7 +251,6 @@ namespace BusinessExcel.Controllers
             
         }
 
-
         public int SaveMDetails(List<TargetDetail> list)
         {
             int isSave = 0;
@@ -287,9 +286,6 @@ namespace BusinessExcel.Controllers
 
         }
 
-
-
-
         [HttpPost]
         public JsonResult TargetAddToList(List<TargetDetail> list)
         {
@@ -302,7 +298,6 @@ namespace BusinessExcel.Controllers
         public JsonResult TargetMasterSave(TargetMaster master)
         {
             int masterId = SaveMaster(master);
-
             return Json(masterId, JsonRequestBehavior.AllowGet);
         }
     }

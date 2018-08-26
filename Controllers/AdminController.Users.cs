@@ -41,8 +41,6 @@ namespace BusinessExcel.Controllers
         public static string NEWUSER_FRM = "_NewUser";
         public static string USERCREATIONMESSAGE = "User created";
 
-        // GET: /Admin/UserManagement
-
 
         public PartialViewResult IndexNewUser()
         {
@@ -95,11 +93,16 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USERSLIST_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             //ViewBag.Title = ACTIONS_TITLE;
-
+            int count;
             if (!string.IsNullOrEmpty(Filters.user_name))
                 using (var db = new SalesManageDataContext())
                 {
-                    ViewData[SELECTED_FILTED_USER] = db.getUserDetail(Filters.user_name);
+                    ViewData[SELECTED_FILTED_USER] = db.getUserListView(
+                        search:Filters.first_name,
+                        UserType:null,
+                        Page:page,
+                        RowCount: out count
+                        );
                 }
 
             if (!string.IsNullOrEmpty(Filters.first_name))
