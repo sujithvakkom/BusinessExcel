@@ -41,10 +41,6 @@ namespace BusinessExcel.Controllers
         public static string NEWUSER_FRM = "_NewUser";
         public static string USERCREATIONMESSAGE = "User created";
 
-        // GET: /Admin/UserManagement
-        public static string USERSLIST = "UserList";
-        public static string USERSLIST_TITLE = "User List";
-
 
         public PartialViewResult IndexNewUser()
         {
