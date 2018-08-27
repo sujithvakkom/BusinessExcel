@@ -9,10 +9,13 @@ namespace BusinessExcel.Models
 {
     public class TargetSummaryView
     {
+        public TargetSummaryView()
+        {
+        }
 
         [Key()]
 
-
+       
         public decimal? TotalTarget { get; set; }
         public decimal? TotalAchieved { get; set; }
 

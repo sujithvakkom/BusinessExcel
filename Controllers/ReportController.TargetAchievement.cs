@@ -596,6 +596,8 @@ namespace BusinessExcel.Controllers
         public static string TARGET_SUMMARY_CONTROLLER = "Report";
 
 
+    
+
         public ActionResult TargertSummaryIndex()
         {
 
@@ -616,7 +618,7 @@ namespace BusinessExcel.Controllers
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = TARGET_SUMMARY_TITLE;
 
-
+         
             //if (!string.IsNullOrEmpty(Filters.item_code))
             //    using (var db = new SalesManageDataContext())
             //    {

@@ -28,13 +28,13 @@
 
                     int count = 0;
                     IQueryable<TargetSummaryView> data = db.TargetSummaryReportPaging(pageNumber: ViewBag.TargertSummaryViewPage,
-                                pageSize: 15,
+                                pageSize: 20,
                                 sort: ViewBag.TargertSummaryViewSort,
                                 sortdir: ViewBag.TargertSummaryViewDir,
                                 count: out count, Filters: Model
                                 );
                     var grid = new WebGrid(ajaxUpdateContainerId: "table-item-view",
-                                        ajaxUpdateCallback: "callBack", rowsPerPage: 15
+                                        ajaxUpdateCallback: "callBack", rowsPerPage: 20
                                                     );
                     grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                     @grid.GetHtml(
@@ -44,7 +44,7 @@
 
                             columns: new[] {
                              grid.Column(columnName:"user_name",header:"Staff Code",format:null,style:"user_name",canSort:false),
-                             grid.Column(columnName:"roster_name",header:"Roster",format:null,style:"create_time",canSort:false),
+                             grid.Column(columnName:"roster_name",header:"Roster",format:null,style:"create_time colbtn",canSort:false),
                              grid.Column(columnName:"location_name",header:"Location",format:null,style:"create_time",canSort:false),
                              grid.Column(columnName:"TotalTarget",header:"Target Amt",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalTarget"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
                              grid.Column(columnName:"TotalAchieved",header:"Achvd Amt",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalAchieved"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),

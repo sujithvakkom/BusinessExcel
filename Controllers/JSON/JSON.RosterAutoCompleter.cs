@@ -23,7 +23,7 @@ namespace BusinessExcel.Controllers.JSON
 
             int? locationId = null;
 
-            try { locationId = int.Parse(((IDictionary)extras)["Location"].ToString()); }
+            try { locationId = int.Parse(((IDictionary)extras)["location_id"].ToString()); }
             catch (Exception) { }
 
             using (var db = new SalesManageDataContext())

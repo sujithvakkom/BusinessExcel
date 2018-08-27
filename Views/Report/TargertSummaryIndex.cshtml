@@ -5,6 +5,13 @@
 @using BusinessExcel.Providers.ProviderContext
 @using BusinessExcel.Controllers.JSON
 
+
+
+@using BusinessExcel.Providers.ProviderContext.Entities
+
+
+
+
 @model TargetSummaryView
 
 
@@ -28,21 +35,21 @@
 
     <!-- Your Page Content Here -->
     @using (Ajax.BeginForm(ReportController.TARGET_SUMMARY_FILTER,
-                                                        ReportController.REPORTCONTROLLER,
-                                                        new AjaxOptions()
-                                                        {
-                                                            HttpMethod = "Get",
-                                                            InsertionMode = InsertionMode.Replace,
-                                                            UpdateTargetId = "target_summary_display",
-                                                            //OnBegin = "begin",
-                                                            //OnBegin = "move('#page-load')",
-                                                            //OnComplete = "ajax_call_load_complete('#page-load')",
-                                                            //OnSuccess = "success",
-                                                            OnFailure = "loadin_failed",
-                                                            LoadingElementId = "summary-load-progress"
+                                                    ReportController.REPORTCONTROLLER,
+                                                    new AjaxOptions()
+                                                    {
+                                                        HttpMethod = "Get",
+                                                        InsertionMode = InsertionMode.Replace,
+                                                        UpdateTargetId = "target_summary_display",
+                                                        //OnBegin = "begin",
+                                                        //OnBegin = "move('#page-load')",
+                                                        //OnComplete = "ajax_call_load_complete('#page-load')",
+                                                        //OnSuccess = "success",
+                                                        OnFailure = "loadin_failed",
+                                                        LoadingElementId = "summary-load-progress"
 
 
-                                                        }))
+                                                    }))
 
     {
 
@@ -64,87 +71,93 @@
                     <div class="col-md-3">
 
                         @Html.AdminLTEDropDownListFor(
-         m => m.user_name,
-         htmlLabelAttributes: null,
-         htmlDropDownAttributes: new Dictionary<string, object>() {
-                                                                                                         { "class", "form-control select2" }
-                                                            },
-         htmlGroupAttributes: null, //new Dictionary<string, object>() { { "class", "col-md-4" } },
-         autoCompleteOptions: new AutoCompleteOptions()
-         {
-             AjaxOptions = new AjaxOptions()
-             {
-                 HttpMethod = "GET",
-                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-             },
-             DescriptionField = "full_name",
-             IDField = "user_name",
-             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-             // SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
-             IsAutoComplete = true,
-             SelectItems = null
-         },
-         showLabel: true)
-
-                    </div>
-
-                    
-
-                    <div class="col-md-2">
-                        @Html.AdminLTEDropDownListFor(
-                            m => m.location_id,
-                            htmlLabelAttributes: null,
-                            htmlDropDownAttributes: new Dictionary<string, object>() {
-                                                                    { "class", "form-control select2" }
-                            },
-                             htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-3" }, },
-                            autoCompleteOptions: new AutoCompleteOptions()
-                            {
-                                AjaxOptions = new AjaxOptions()
-                                {
-                                    HttpMethod = "GET",
-                                    Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                },
-                                DescriptionField = "description",
-                                IDField = "location_id",
-                                Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                //  SelectedItem = ViewData[ReportController.SELECTED_FILTED_LOCATION],
-                                IsAutoComplete = true,
-                                SelectItems = null
-                            },
-                            showLabel: true)
-                    </div>
-                    @*<div class="col-md-3">
-
-                                                @Html.AdminLTEDropDownListFor(
-m => m.roster_id,
+m => m.user_name,
 htmlLabelAttributes: null,
 htmlDropDownAttributes: new Dictionary<string, object>() {
-                                                                                                                                                                 { "class", "form-control select2" }
-               },
+                                                                                                         { "class", "form-control select2" }
+                                                            },
 htmlGroupAttributes: null, //new Dictionary<string, object>() { { "class", "col-md-4" } },
 autoCompleteOptions: new AutoCompleteOptions()
 {
     AjaxOptions = new AjaxOptions()
     {
         HttpMethod = "GET",
-        Url = Url.Action(actionName: JSONController.ROSTERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-
-
+        Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
     },
-
-    DescriptionField = "name",
-    IDField = "roster_id",
+    DescriptionField = "full_name",
+    IDField = "user_name",
     Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-   // Extra ,
-    // Extra= ViewData[ReportController.SELECTED_FILTED_USER],
     // SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
     IsAutoComplete = true,
     SelectItems = null
 },
-                                     showLabel: true)
+showLabel: true)
+
+                    </div>
+
+                    
+
+                    <div class="col-md-3">
+                        @Html.AdminLTEDropDownListFor(
+           expression: m => m.location_id,
+         htmlLabelAttributes: null,
+         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+                            },
+          htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-3" }, },
+         autoCompleteOptions: new AutoCompleteOptions()
+         {
+             AjaxOptions = new AjaxOptions()
+             {
+                 HttpMethod = "GET",
+                 Url = Url.Action(actionName: JSONController.LOCATIONAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+             },
+             DescriptionField = "description",
+             IDField = "location_id",
+             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+             //  SelectedItem = ViewData[ReportController.SELECTED_FILTED_LOCATION],
+             IsAutoComplete = true,
+             SelectItems = null
+         },
+         showLabel: true)
+                    </div>
+                 
+                   
+                    @*<div class="col-md-3">
+
+                                                                                @Html.AdminLTEDropDownListFor(
+                                                    m => m.roster_id,
+                                                    htmlLabelAttributes: null,
+                                                    htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                                                                                                                                                                                                     { "class", "form-control select2" }
+                                                    },
+                                                    htmlGroupAttributes: null, //new Dictionary<string, object>() { { "class", "col-md-4" } },
+                                                    autoCompleteOptions: new AutoCompleteOptions()
+                                                    {
+                                                        AjaxOptions = new AjaxOptions()
+                                                        {
+                                                            HttpMethod = "GET",
+                                                            Url = Url.Action(actionName: JSONController.ROSTERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+
+
+                                                        },
+
+                                                        DescriptionField = "name",
+                                                        IDField = "roster_id",
+                                                        Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+
+
+                                                        SelectedItem = ViewData[ReportController.SELECTED_FILTED_LOCATION],
+                                                        IsAutoComplete = true,
+                                                        SelectItems = null
+                                                    },
+                                                  showLabel: true,
+    extras: new System.Linq.Expressions.Expression<Func<TargetSummaryView, Object>>[] { m => Model.location_id }
+
+)
 
                 </div>*@
+
                     <div class="col-md-2">
 
                                                     @Html.AdminLTEDropDownListFor(

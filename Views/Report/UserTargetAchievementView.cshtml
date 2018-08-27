@@ -65,6 +65,9 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                        )*@
 
                 </div>
+            <div  id ="stslbl_@Model.target_id" class="col-md-2 stslbl" style="font-weight:bold;color:green;">
+               
+            </div>
           
         </div>
     </div>
@@ -609,6 +612,12 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 <script>
 
 
+    //$('div.btnSaveSts').click(function () {
+    //    $(this).addClass('stslbl');
+    //    setTimeout(function () {
+    //        $('div.stslbl').removeClass('highlighted');
+    //    }, 2000);
+    //});
 
 
 
@@ -1007,6 +1016,11 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                         //});
                     }
 
+                
+                    $("#stslbl_" + target_id + "").html("Status updated successfully")
+                    $("#stslbl_" + target_id + "").delay(2000).show().fadeOut('slow');;
+       
+
                     //$("#Tsheet" + target_id + " tr:last").find('td:eq(4) b').text(numberWithCommas(tot));
                     //setTargetTotals('tottable_' + target_id, data, target_id)
 
@@ -1015,9 +1029,12 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                     alert('Error occured');
                 }
 
-                $('.btnSaveSts').css({ 'cursor': 'pointer' });
-                $('body').css({ 'cursor': 'default' });
+                //$('.btnSaveSts').css({ 'cursor': 'pointer' });
+                //$('body').css({ 'cursor': 'default' });
 
+
+                $(".trn-ctrl_" + target_id + "").css({ 'cursor': 'pointer' });
+                $('body').css({ 'cursor': 'default' });
             }
         });
 
