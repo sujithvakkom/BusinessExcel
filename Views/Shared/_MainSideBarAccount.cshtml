@@ -335,7 +335,7 @@
 
 
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: ReportController.TARGET_SUMMARY_TITLE,
+                   linkText: ReportController.TARGET_SUMMARY_ME_TITLE,
                    actionName: ReportController.TARGET_SUMMARY_INDEX,
                    controllerName: ReportController.TARGET_SUMMARY_CONTROLLER,
                    ajaxOptions: new AjaxOptions()
@@ -350,6 +350,23 @@
                    isNavSideBar: true,
                    carrot: "fa fa-tasks")
 
+
+
+                            @*@Ajax.AjaxAdminLTEActionLink(
+                   linkText: ReportController.TARGET_SUMMARY_SE_TITLE,
+                   actionName: ReportController.TARGET_SUMMARY_SE_INDEX,
+                   controllerName: ReportController.TARGET_SUMMARY_SE_CONTROLLER,
+                   ajaxOptions: new AjaxOptions()
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "main-body",
+                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                            + this.Url.Action(ReportController.TARGET_SUMMARY_SE_INDEX, ReportController.TARGET_SUMMARY_SE_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                       OnComplete = "ajax_call_load_complete(xhr, status)",
+                       OnFailure = "loadin_failed"
+                   },
+                   isNavSideBar: true,
+                   carrot: "fa fa-tasks")*@
 
 
                          

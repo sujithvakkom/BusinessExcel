@@ -26,9 +26,10 @@ namespace BusinessExcel.Controllers
             {
                 var chartType = ChartType.bar;
                 int viwer = db.getViewer_Id();
-
+                var view = db.getViewersList();
+                /*
                 var source = (from dsl in db.DailyUpateView 
-                        join u in db.getViewersList() 
+                        join u in view
                         on dsl.UserId equals u
                         group dsl by dsl.Category into g    
                         select new graph()
@@ -37,7 +38,7 @@ namespace BusinessExcel.Controllers
                             XValues = g.FirstOrDefault().Category,
                             Label = g.FirstOrDefault().Category
                         }).AsQueryable();
-                /*
+                        */
                 var source = db.DailyUpateView
                     .Where(x => x.CreateTime > startDate && x.CreateTime < endDate)
                     .GroupBy(x => new { x.Category })
@@ -49,7 +50,6 @@ namespace BusinessExcel.Controllers
                             XValues = x.Key.Category,
                             Label = x.Key.Category
                         });
-                        */
                 var data = new data<graph>(
                     chartType,
                     source,
@@ -76,6 +76,7 @@ namespace BusinessExcel.Controllers
             {
                 var chartType = ChartType.bar;
 
+                /*
                 var source = (from dsl in db.DailyUpateView
                               join u in db.getViewersList()
                               on dsl.UserId equals u
@@ -86,7 +87,7 @@ namespace BusinessExcel.Controllers
                                   XValues = g.FirstOrDefault().Category,
                                   Label = g.FirstOrDefault().Category
                               }).AsQueryable();
-                /*
+                        */
                 var source = db.DailyUpateView
                     .Where(x => x.CreateTime > startDate && x.CreateTime < endDate)
                     .GroupBy(x => new { x.Category ,x.UserName})
@@ -98,8 +99,7 @@ namespace BusinessExcel.Controllers
                             XValues = x.Key.UserName,
                             Label = x.Key.Category
                         });
-                        */
-                var data = new data<graph>(
+                    var data = new data<graph>(
                     chartType,
                     source,
                     x => x.Label.ToString(),

@@ -29,7 +29,7 @@
 m => m.TargetTotal.FirstOrDefault().target_status,
 htmlLabelAttributes: null,
 htmlDropDownAttributes: new Dictionary<string, object>() {
-                                                                                                                 { "class", "form-control select2 trn-ctrl_"+Model.target_id+"" }
+                                                                                                                 { "class", "form-control select2  trn_ctrl_td trn-ctrl_"+Model.target_id+"" }
                                               },
 htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" } },
              autoCompleteOptions: new AutoCompleteOptions()
@@ -53,7 +53,7 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 
                     @*<button  class="btn btn-primary btnSaveSts" id="btnSaveSts1">Save Status</button>*@
 
-                    <button class="btnSaveSts btn btn-primary trn-ctrl_@Model.target_id">Save Status</button>
+                    <button class="btnSaveSts btn btn-primary trn-ctrl trn-ctrl_@Model.target_id">Save Status</button>
 
                     @*@Html.AdminLTEFromSubmitter("Save Status",
                        "save-target-progress",
@@ -76,7 +76,7 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
         
         <div id="target-achievement-view" class="table-responsive">
             @{
-                if (User.IsInRole("User"))
+                @*if (User.IsInRole("Viewer"))
                 {
 
 
@@ -101,10 +101,7 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                                             );
                         grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                     @grid.GetHtml(
-                       //tableStyle: "table table-striped table-bordered be-pagination-spl",
-                       ////headerStyle: "webgrid-header",
-                       //alternatingRowStyle: "webgrid-alternating-row",
-
+              
                        tableStyle: "webgrid",
     headerStyle: "gridheader",
 
@@ -137,20 +134,15 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                            header: "Entered",
                            format: null, style: "Entered_Amt numaric", canSort: false),
 
-                       @*grid.Column(
-                           null,
-                           null,
-                           format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive" value="@(String.Format("{0:n}",item.Base_Incentive))" />),*@
-
 
                                              }
-                                             //footerStyle: "extra-table-pager"
+                                        
                                              )
 
                     }
                 }
                 else
-                {
+                {*@
                     using (var db = new SalesManageDataContext())
                     {
                         WebGridColumn col = new WebGridColumn()
@@ -213,9 +205,9 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                           grid.Column("", format: @<text>
             
 
-            <button class="edit-amt display-mode btn btn-primary btn-sm trn-ctrl_@Model.target_id">Edit</button>
+            <button class="edit-amt display-mode btn btn-primary btn-sm trn-ctrl  trn-ctrl_@Model.target_id">Edit</button>
 
-                <button class="save-amt edit-mode btn btn-success btn-sm trn-ctrl_@Model.target_id">Save</button>
+                <button class="save-amt edit-mode btn btn-success btn-sm trn-ctrl trn-ctrl_@Model.target_id">Save</button>
             @*@Html.AdminLTEFromSubmitter("Save",
                        "save-load",
                        new Dictionary<string, object>() {
@@ -226,7 +218,7 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                        )*@
           
 
-                <button class="cancel-amt edit-mode btn btn-info btn-sm trn-ctrl_@Model.target_id">Cancel</button>
+                <button class="cancel-amt edit-mode btn btn-info btn-sm trn-ctrl trn-ctrl_@Model.target_id">Cancel</button>
           
                         </text>,  style: "colbtn" , canSort: false),
 
@@ -256,7 +248,7 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                                          //footerStyle: "extra-table-pager"
                                          )
         }
-    }
+    //}
 
 
 
@@ -292,25 +284,14 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 
                               
                             <td style="padding-left:5px" >
-    <button class="edit-base_amt display-mode btn btn-primary btn-sm trn-ctrl_@Model.target_id">Edit</button>
-    <button class="save-base_amt edit-mode btn btn-success btn-sm trn-ctrl_@Model.target_id" id="@Model.target_id">Save</button>
-    <button class="cancel-base_amt edit-mode btn btn-info btn-sm trn-ctrl_@Model.target_id">Cancel</button>
+    <button class="edit-base_amt display-mode btn btn-primary btn-sm trn-ctrl trn-ctrl_@Model.target_id">Edit</button>
+    <button class="save-base_amt edit-mode btn btn-success btn-sm trn-ctrl trn-ctrl_@Model.target_id" id="@Model.target_id">Save</button>
+    <button class="cancel-base_amt edit-mode btn btn-info btn-sm trn-ctrl trn-ctrl_@Model.target_id">Cancel</button>
 </td>
                             @*<td><button class="btn-success btn-sm">Save</button></td>*@
                         </tr>
                     </table>
-                    @*<div class="input-group">
-
-                        <input type="text" class="form-control extrainfo " value="Base Incentive" style="background-color:#eceaea" readonly autocomplete="off"/>
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo " value="" id="base_incentive_@Model.target_id" style="text-align:right;background-color:#eceaea" readonly autocomplete="off"/>
-                        <input type="text" class="form-control extrainfo " value="" id="entered_base_incentive_@Model.target_id" style="text-align:right;background-color:#eceaea" readonly autocomplete="off" />
-
-
-                        <button class=" btn-success btn-sm">Save</button>
-
-                     
-                    </div>*@
+                   
 
 
                 </div>
@@ -321,7 +302,7 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-7">
 
 
 
@@ -347,9 +328,9 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                                 <td style="padding-right:5px;border:.1px solid #d0cccc;text-align:right" class="Entered_inc_Amt numaric tdTot"> <span class="display-mode "> <label id="lbl_Entered_inc_Amt" style="font-weight:bold;" class="form-control extrainfo tottableinput">@Html.AdminLTEParagraph((object)@Model.TargetTotal[0].TotalEnteredIncAmt, new Dictionary<string, object> { { "class", "numaric" } })</label> </span>  <input type="text" id="Entered_inc_Amt" value="@Model.TargetTotal[0].TotalEnteredIncAmt" class="edit-mode " style="text-align: right; display: none;height:40px;border:0px;width:100%" autocomplete="off" onkeypress="return isNumberKeyDotAllow(event)"> </td>
 
                                 <td >
-                                    <button class="edit-inc_amt colincbtn display-mode btn btn-primary btn-sm trn-ctrl_@Model.target_id">Edit</button>
-                                    <button class="save-inc_amt colincbtn edit-mode btn btn-success btn-sm trn-ctrl_@Model.target_id" id="@Model.target_id">Save</button>
-                                    <button class="cancel-inc_amt colincbtn1 edit-mode btn btn-info btn-sm trn-ctrl_@Model.target_id">Cancel</button>
+                                    <button class="edit-inc_amt colincbtn display-mode btn btn-primary btn-sm trn-ctrl trn-ctrl_@Model.target_id">Edit</button>
+                                    <button class="save-inc_amt colincbtn edit-mode btn btn-success btn-sm trn-ctrl trn-ctrl_@Model.target_id" id="@Model.target_id">Save</button>
+                                    <button class="cancel-inc_amt colincbtn1 edit-mode btn btn-info btn-sm trn-ctrl trn-ctrl_@Model.target_id">Cancel</button>
                                 </td>
 
 
@@ -668,7 +649,7 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 
         var status = '@Html.Raw(Model.TargetTotal.FirstOrDefault().target_status)';
 
-     
+
         if (status == 5)
         {
             ControlDisabled(targetid);
@@ -850,7 +831,7 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 
             var target_id = $(this).attr("id");
 
-            alert(target_id);
+
 
             var targetModel =
             {
@@ -863,9 +844,9 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                 data: JSON.stringify(targetModel),
                 //data: { target_id: target_id, TotalEnteredBaseIncentive: ent_amt },
                 type: 'POST',
-              
+
                contentType: 'application/json; charset=utf-8',
-              
+
                 success: function (data) {
 
 
@@ -886,7 +867,7 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 
         });
 
-        
+
 
 
         $('.edit-inc_amt, .cancel-inc_amt').on('click', function (event) {
@@ -970,13 +951,13 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
         $(".trn-ctrl_" + target_id + "").css({ 'cursor': 'wait' });
         $('body').css({ 'cursor': 'wait' });
 
-   
+
         var status = $(".trn-ctrl_" + target_id + "").val();
-   
 
-   
 
-      
+
+
+
 
         var targetModel =
         {
@@ -1000,11 +981,11 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                     if (status == 5) {
 
                         $('body').css({ 'cursor': 'default' });
-                  
+
                         ControlDisabled(target_id);
                         //$(".trn-ctrl_" + target_id + "").css({ 'cursor': 'not-allowed' });
                         //$(".trn-ctrl_" + target_id + "").prop("disabled", true);
-                     
+
 
                         return;
                         // $(this).closest('.box').prop('readonly', true);
@@ -1016,10 +997,10 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
                         //});
                     }
 
-                
+
                     $("#stslbl_" + target_id + "").html("Status updated successfully")
                     $("#stslbl_" + target_id + "").delay(2000).show().fadeOut('slow');;
-       
+
 
                     //$("#Tsheet" + target_id + " tr:last").find('td:eq(4) b').text(numberWithCommas(tot));
                     //setTargetTotals('tottable_' + target_id, data, target_id)
@@ -1113,11 +1094,11 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 
         //    Templine = Number($(this).find('td:eq(2) input ').val().replace(/\,/g, ""));
         //    Enteredline = Number($(this).find('td:eq(3) input ').val().replace(/\,/g, ""));
-           
+
         //    if (Enteredline > 0) {
         //        Templine = Enteredline;
         //    }
-    
+
         //    Totvalue = Totvalue + Templine;
         //});
 
@@ -1278,6 +1259,19 @@ htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" 
 
 
     //}
+    var isViewer = '@Html.Raw(User.IsInRole("Viewer"))';
 
+
+    if (isViewer=="True") {
+      
+        $('.trn-ctrl').css("display", 'none')
+
+        $(".trn_ctrl_td").prop("disabled", true);//Drpdown status
+       
+    }
+    else
+    {
+        $('.trn-ctrl').css("display", 'normal')
+    }
 
 </script>

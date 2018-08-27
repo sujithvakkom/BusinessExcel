@@ -592,7 +592,8 @@ namespace BusinessExcel.Controllers
         public static string TARGET_SUMMARY_INDEX = "TargertSummaryIndex";
         public static string TARGET_SUMMARY_FILTER = "TargetSummaryFilter";
         public static string TARGET_SUMMARY_FILTER_VIEW = "_TargertSummaryFilter";
-        public static string TARGET_SUMMARY_TITLE = "Target Summary Report";
+        public static string TARGET_SUMMARY_ME_TITLE = "Target Summary Report(MER)";
+     
         public static string TARGET_SUMMARY_CONTROLLER = "Report";
 
 
@@ -601,9 +602,9 @@ namespace BusinessExcel.Controllers
         public ActionResult TargertSummaryIndex()
         {
 
-            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_TITLE;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_ME_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-            ViewBag.Title = TARGET_SUMMARY_TITLE;
+            ViewBag.Title = TARGET_SUMMARY_ME_TITLE;
             if (Request.IsAjaxRequest()) return PartialView();
           
             return View(new TargetSummaryView());
@@ -614,21 +615,47 @@ namespace BusinessExcel.Controllers
             ViewBag.TargertSummaryViewSort = sort;
             ViewBag.TargertSummaryViewDir = sortdir;
             ViewBag.TargertSummaryViewPage = page;
-            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_TITLE;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_ME_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-            ViewBag.Title = TARGET_SUMMARY_TITLE;
-
-         
-            //if (!string.IsNullOrEmpty(Filters.item_code))
-            //    using (var db = new SalesManageDataContext())
-            //    {
-            //        ViewData[SELECTED_FILTED_ITEM] = db.getItemDetails(Filters.item_code);
-            //    }
-
+            ViewBag.Title = TARGET_SUMMARY_ME_TITLE;
+            
 
             return PartialView(TARGET_SUMMARY_FILTER_VIEW, Filters);
 
         }
 
+
+
+        public static string TARGET_SUMMARY_SE_INDEX = "TargertSummary_SE_Index";
+        public static string TARGET_SUMMARY_SE_FILTER = "TargetSummary_SE_Filter";
+        public static string TARGET_SUMMARY_SE_FILTER_VIEW = "_TargertSummary_SE_Filter";
+        public static string TARGET_SUMMARY_SE_TITLE = "Target Summary Report(SE)";
+        public static string TARGET_SUMMARY_SE_CONTROLLER = "Report";
+
+
+        public ActionResult TargertSummary_SE_Index()
+        {
+
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_SE_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = TARGET_SUMMARY_SE_TITLE;
+            if (Request.IsAjaxRequest()) return PartialView();
+
+            return View(new TargetSummaryViewSE());
+        }
+        [HttpGet]
+        public PartialViewResult TargetSummary_SE_Filter(string sort, string sortdir, int page = 1, TargetSummaryViewSE Filters = null)
+        {
+            ViewBag.TargertSummarySEViewSort = sort;
+            ViewBag.TargertSummarySEViewDir = sortdir;
+            ViewBag.TargertSummarySEViewPage = page;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_SE_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = TARGET_SUMMARY_SE_FILTER_VIEW;
+
+
+            return PartialView(TARGET_SUMMARY_SE_FILTER_VIEW, Filters);
+
+        }
     }
 }

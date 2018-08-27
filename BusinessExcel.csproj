@@ -235,6 +235,7 @@
     <Compile Include="Models\MerchantTargetFilter.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
     <Compile Include="Models\TargetStatus.cs" />
+    <Compile Include="Models\TargetSummaryViewSE.cs" />
     <Compile Include="Models\TargetSummaryView.cs" />
     <Compile Include="Models\TargetTotalView.cs" />
     <Compile Include="Models\Tree.cs" />
@@ -804,6 +805,9 @@
     <Content Include="Views\Target\_CategorySettings.cshtml" />
     <Content Include="Views\Target\SalesExecutiveTarget.cshtml" />
     <Content Include="Views\Target\SettingTarget.cshtml" />
+    <Content Include="Views\Accounts\UpdateLocation.cshtml" />
+    <Content Include="Views\Report\TargertSummary_SE_Index.cshtml" />
+    <Content Include="Views\Report\_TargertSummary_SE_Filter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

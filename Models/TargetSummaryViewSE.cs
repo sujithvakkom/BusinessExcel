@@ -7,7 +7,7 @@ using System.Web;
 
 namespace BusinessExcel.Models
 {
-    public class TargetSummaryView
+    public class TargetSummaryViewSE
     {
      
         [Key()]
@@ -63,5 +63,10 @@ namespace BusinessExcel.Models
 
 
         public decimal? TotalValue { get; set; }
+
+        public decimal? QTR_BaseIncentive { get; set; }
+        public decimal? QTR_TotalIncAmt { get; set; }
+
+        public string QTR { get; set; }
     }
 }

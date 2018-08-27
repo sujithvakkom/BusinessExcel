@@ -404,5 +404,93 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
             }
 
         }
+
+
+        public IQueryable<TargetSummaryViewSE> TargetSummary_SE_ReportPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count,
+       TargetSummaryViewSE Filters)
+        {
+            int skippingRows = (pageNumber - 1) * pageSize;
+
+            if (Filters.user_name != null)
+            {
+                Filters.user_id = getUserID(Filters.user_name);
+            }
+            int VId = getViewer_Id();
+
+            var viewer_id = VId > 0 ?
+              new SqlParameter("@viewer_id", VId) :
+              new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+            var user_id_p = Filters.user_id != null ?
+           new SqlParameter("@user_id_p", Filters.user_id) :
+           new SqlParameter("@user_id_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            var location_id_p = Filters.location_id != null ?
+        new SqlParameter("@location_id_p", Filters.location_id) :
+        new SqlParameter("@location_id_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+
+            var target_id = Filters.target_id != null ?
+new SqlParameter("@target_id", Filters.target_id) :
+new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            var target_status_p = Filters.target_status_id > 0 ?
+    new SqlParameter("@target_status_p", Filters.target_status_id) :
+    new SqlParameter("@target_status_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            var page_number = pageNumber > 0 ?
+               new SqlParameter("@page_number", pageNumber) :
+               new SqlParameter("@page_number", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+
+            var page_size = pageSize > 0 ?
+                new SqlParameter("@page_size", pageSize) :
+                new SqlParameter("@page_size", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+
+            int? row = null;
+            var row_count = row != null ?
+                new SqlParameter("@row_count", row) :
+                new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+
+            row_count.Direction = System.Data.ParameterDirection.Output;
+
+            System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+
+            parameterList.Add(target_id);
+            parameterList.Add(target_status_p);
+
+            parameterList.Add(user_id_p);
+            parameterList.Add(location_id_p);
+            parameterList.Add(viewer_id);
+
+            parameterList.Add(page_number);
+            parameterList.Add(page_size);
+            parameterList.Add(row_count);
+
+
+
+            var res = this.Database.SqlQuery<TargetSummaryViewSE>("[db_salesmanage_user].[Target_Summary_Report] @target_id,@target_status_p,@user_id_p,@location_id_p,@viewer_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
+            int.TryParse(row_count.Value.ToString(), out count);
+
+            // count = res.Count();
+            // return res.Skip(skippingRows).Take(pageSize);
+            if (sort == null || sort == "")
+            {
+                return res.OrderByDescending(x => x.target_id);
+            }
+            else
+            {
+                switch (sortdir)
+                {
+                    case "DESC":
+                        return res.OrderByDescending(sort);
+                    default:
+                        return res.OrderBy(sort);
+                }
+            }
+
+        }
     }
 }
