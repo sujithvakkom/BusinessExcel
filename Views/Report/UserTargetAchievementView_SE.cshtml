@@ -23,33 +23,31 @@
                 </strong>
             </div>
            
-                <label for="username" class="col-md-2 col-form-label" style="text-align:right">TARGET STATUS</label>
+                <label for="username" class="col-md-1 col-form-label" style="text-align:right">TARGET STATUS</label>
                 <div class="col-md-2">
-                    @using (Html.BeginPrefixScope(Model.target_id.ToString())) {
-                        @Html.AdminLTEDropDownListFor(
+                    @Html.AdminLTEDropDownListFor(
 m => m.TargetTotal.FirstOrDefault().target_status,
 htmlLabelAttributes: null,
 htmlDropDownAttributes: new Dictionary<string, object>() {
                                                                                                                  { "class", "form-control select2  trn_ctrl_td trn-ctrl_"+Model.target_id+"" }
-        },
-htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-12" } },
-autoCompleteOptions: new AutoCompleteOptions()
-{
-    AjaxOptions = new AjaxOptions()
-    {
-        HttpMethod = "GET",
-        Url = Url.Action(actionName: JSONController.TARGET_STATUS_AUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                              },
+htmlGroupAttributes:  new Dictionary<string, object>() { { "class", "col-md-12" } },
+             autoCompleteOptions: new AutoCompleteOptions()
+             {
+                 AjaxOptions = new AjaxOptions()
+                 {
+                     HttpMethod = "GET",
+                     Url = Url.Action(actionName: JSONController.TARGET_STATUS_AUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
 
-    },
-    DescriptionField = "target_status",
-    IDField = "target_status_id",
-    Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
-    SelectedItem = ViewData[ReportController.SELECTED_FILTED_TARGET_STATUS],
-    //SelectedItem = ViewData[Model.target_id.ToString()],
-    IsAutoComplete = true,
-    SelectItems = null
-},
-showLabel: false)}
+                 },
+                 DescriptionField = "target_status",
+                 IDField = "target_status_id",
+                 Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+                 SelectedItem = ViewData[ReportController.SELECTED_FILTED_TARGET_STATUS],
+                 IsAutoComplete = true,
+                 SelectItems = null
+             },
+             showLabel: false)
                 </div>
                 <div class="col-md-1">
 
@@ -78,73 +76,7 @@ showLabel: false)}
         
         <div id="target-achievement-view" class="table-responsive">
             @{
-                @*if (User.IsInRole("Viewer"))
-                {
-
-
-                    using (var db = new SalesManageDataContext())
-                    {
-                        WebGridColumn col = new WebGridColumn()
-                        {
-
-                        };
-
-                        int count = 0;
-                        IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
-                                    pageSize: 6,
-                                    sort: ViewBag.UserTargetViewSort,
-                                    sortdir: ViewBag.UserTargetViewDir,
-                                    count: out count, Filters: Model
-                                    );
-
-                        var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
-                                            ajaxUpdateCallback: "targetachievementviewcallBack",
-                                            rowsPerPage: 6
-                                            );
-                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
-                    @grid.GetHtml(
-              
-                       tableStyle: "webgrid",
-    headerStyle: "gridheader",
-
-                                             selectedRowStyle: "webgrid-selected-row",
-                                             rowStyle: "webgrid-row-style",
-                                             htmlAttributes: new { @id = "Tsheet" + Model.target_id },
-                                             columns: new[] {
-                       grid.Column(
-                           columnName: "Category",
-                           header: "Category",
-                           format: null,
-                           style: "Category",
-                           canSort: false),
-                       grid.Column(
-                           columnName: "has_bonus",
-                           header: "Bonus Line",
-                           format: @<text>@(item.has_bonus ? "1" : "0" )</text>, style: "Category", canSort: false),
-                       grid.Column(
-                           columnName: "Target_amt",
-                           header: "Target",
-                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Target_amt"], new Dictionary<string, object> { { "class", "numaric" } }),
-                           style: "Target_amt numaric", canSort: false),
-                       grid.Column(
-                           columnName: "Achieved_Amt",
-                           header: "Achieved",
-                           format: null, style: "Achieved_Amt numaric", canSort: false),
-
-                         grid.Column(
-                           columnName: "Entered_Amt",
-                           header: "Entered",
-                           format: null, style: "Entered_Amt numaric", canSort: false),
-
-
-                                             }
-                                        
-                                             )
-
-                    }
-                }
-                else
-                {*@
+               
                     using (var db = new SalesManageDataContext())
                     {
                         WebGridColumn col = new WebGridColumn()
@@ -372,48 +304,7 @@ showLabel: false)}
                 </div>
             </div>
 
-            @*<div class="row">
-                <div class="col-md-4">
-
-
-                    <div class="input-group">
-                        <input type="text" class="form-control extrainfo" value="Target %" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
-                    </div>
-
-
-                </div>
-                <div class="col-md-4">
-
-
-                    <div class="input-group">
-                        <input type="text" class="form-control extrainfo" value="Line Achv %" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
-                    </div>
-
-
-                </div>
-
-                <div class="col-md-4">
-
-
-                    <div class="input-group">
-                        <input type="text" class="form-control extrainfo" value="Bonus Lines" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
-                    </div>
-
-
-                </div>
-            </div>*@
+          
         </div>
     </div>
 </div>
@@ -1261,18 +1152,6 @@ showLabel: false)}
 
 
     //}
-
-  
- 
-    //$('.trn-ctrl_292').val(4);
-    
-    $(document).ready(function () {
-      
-        $('.trn-ctrl_292').find('option[value="3"]').attr('selected', 'selected');
-        console.log("Done.." + $('.trn-ctrl_292').val()     )
-    });
-
-
     var isViewer = '@Html.Raw(User.IsInRole("Viewer"))';
 
 

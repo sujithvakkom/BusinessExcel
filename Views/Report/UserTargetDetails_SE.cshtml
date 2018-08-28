@@ -1,0 +1,644 @@
+﻿
+
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
+
+
+
+@model UserTargetDetailsView
+
+
+
+<div id="userData">
+
+
+    <div class="box">
+
+
+        <div class="box-header with-border">
+            <section class="content-header">
+                <h1>
+                    @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_TITLE_SE 
+                    <small>Control panel</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Manager</a></li>
+                    <li class="active">Manager Panel</li>
+                </ol>
+            </section>
+
+
+        </div>
+
+     
+
+        @*<section class="content-header">
+                <h1>
+                    @BusinessExcel.Controllers.ReportController.USER_TARGET_ACHIEVEMENT_TITLE
+                    <small>Control panel</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Manager</a></li>
+                    <li class="active">Manager Panel</li>
+                </ol>
+            </section>*@
+        <div class="box-body table-form">
+
+            <section class="content">
+
+                @using (Ajax.BeginForm(
+        actionName: BusinessExcel.Controllers.ReportController.USER_TARGET_DETAILS_SE,
+        routeValues: null,
+        ajaxOptions: new AjaxOptions()
+        {
+            HttpMethod = "Get",
+            UpdateTargetId = "userData",
+            InsertionMode = InsertionMode.Replace,
+             // OnBegin= "validate",
+            // OnSuccess = "RefreshTargetList",
+            //OnFailure = ""
+            LoadingElementId = "target-load-progress",
+
+            OnFailure = "loadin_failed"
+        },
+        htmlAttributes: new { @class = "form-inline" })
+        )
+                {
+                    <div id="usrDet">
+                        <div id="usrHead" style="padding:2%">
+
+                            <div class="row" style="margin-bottom:1%">
+
+
+                                @*<div class="col-md-1 " style="font-weight:bold;">Name</div>*@
+                                <div class="col-md-8">
+
+
+
+                                                @{ if (User.IsInRole("User"))
+                                                    {
+
+
+
+                                                        @Html.AdminLTEDropDownListFor(
+         m => m.UserName,
+         htmlLabelAttributes: null,
+         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                                                         { "class", "form-control select2" },{ "disabled","true"}
+                                                            },
+         htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" } },
+         autoCompleteOptions: new AutoCompleteOptions()
+         {
+             AjaxOptions = new AjaxOptions()
+             {
+                 HttpMethod = "GET",
+                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETERFORSE, controllerName: JSONController.JSONCONTROLLER)
+             },
+             DescriptionField = "full_name",
+             IDField = "user_name",
+             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+             IsAutoComplete = true,
+             SelectItems = null
+         },
+         showLabel: true)
+
+                                                    }
+                                                    else
+                                                    {
+
+
+                                                        <div>
+                                                            @Html.AdminLTEDropDownListFor(
+             m => m.UserName,
+             htmlLabelAttributes: null,
+             htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                                                                 { "class", "form-control select2" }
+                                                                    },
+             htmlGroupAttributes: new Dictionary<string, object>() { { "class", "col-md-4" }},
+             autoCompleteOptions: new AutoCompleteOptions()
+             {
+                 AjaxOptions = new AjaxOptions()
+                 {
+                     HttpMethod = "GET",
+                     Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETERFORSE, controllerName: JSONController.JSONCONTROLLER)
+                     
+                 },
+                 DescriptionField = "full_name",
+                 IDField = "user_name",
+                 Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                 SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                 IsAutoComplete = true,
+                 SelectItems = null
+             },
+             showLabel: true)
+                                                        </div>
+
+                                                        
+
+                                                        @*<div class="col-md-1 padding-label">
+                                                            Type
+                                                        </div>*@
+                                                        <div class="form-group col-md-3">
+
+                                                            <div class="row"><label class="col-md-1" for="period">Period</label></div>
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    @Html.AdminLTETextBoxFor(m => m.Quarter_Name,
+                                                                               null,
+                                                                               new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "Readonly", "Readonly" } },
+                                                                               null,
+                                                                               null,
+                                                                               "",
+                                                                               false,
+                                                                               true,
+                                                                               true)
+                                                                </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                            @*<div class="form-group col-md-4 ">
+                                                                <div class="row"><label class="col-md-1" for="email">Period</label></div>
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <input type="text" id="Quarter_Name" class="form-control" style="cursor: pointer" autocomplete="off" readonly/>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>*@
+
+
+                                                     
+
+
+                                                            <div class="col-md-1" style="top:1.5em">
+
+                                                                @*<button type="submit" class="btn btn-primary " id="btnAdd">Search</button>*@
+
+                                                                @Html.AdminLTEFromSubmitter("Load Targets",
+                       "target-load-progress",
+                       new Dictionary<string, object>() {
+                           { "type", "submit" } ,{ "id", "Filter" } ,
+                           { "class","btn btn-primary"}
+                       },
+                       Url.Content("~/Images/progress.gif")
+                       )
+
+                                                            </div>
+
+                                                            }
+
+
+                                                            }
+
+                                
+
+
+
+
+
+                                                        </div>
+                           
+
+
+
+
+                            </div>
+                         
+                            <div class="row">
+
+
+                                <div class="col-md-8">
+
+                                  
+
+
+
+                                    <table class="table usrtable borderless" >
+                                       
+                                      
+                                        
+                                        <tbody>
+                                               
+                                                <tr >
+
+                                                    <td class="tablab">TYPE</td>
+                                                    <td class="tdval">
+                                                        @Model.Type
+
+                                                </td>
+                                                <td class="tablab">SALESMAN</td>
+                                                <td class="tdval">
+                                                    @Model.SalesMan
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+
+                                                <td class="tablab">PERIOD</td>
+                                                <td class="tdval">
+                                                  @Model.Quarter_Name
+                                            </td>
+                                            <td class="tablab">FIELDMAN</td>
+                                            <td class="tdval">
+                                               @Model.FieldMan
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+
+                                            <td class="tablab">ACCOUNT</td>
+                                            <td class="tdval">
+                                               @Model.Account
+                                        </td>
+
+                                        <td class="tablab">SITE</td>
+                                        <td class="tdval">
+                                           @Model.Location_Name
+                                        </td>
+
+                                    </tr>
+                                                <tr>
+                                                    <td class="tablab">CODE</td>
+                                                            <td class="tdval">
+                                                                @Model.UserName
+                                                            </td>
+                                                    <td colspan="1"></td>
+                                                    <td class="tdval"></td>
+                                                    
+                                                </tr>
+                                    </tbody>
+</table>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div style="margin-top:15px" id="target-achievement-display">
+                        @if (Model.UserName != null)
+                        {
+
+                        if (Model.UserTargets.Count > 0)
+                        {
+                            foreach (var target in Model.UserTargets)
+                            {
+
+                                <div id="target-achievement-display_@target.Month">
+                                    @Html.Action(
+              BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+              new TargetAchievementView { Month = target.Month, user_id = Model.UserID, start_date = target.start_date, target_id = target.target_id })
+                                </div>
+                            }
+                        }
+                        else
+                        {
+
+
+                                <div class="modal fade" id="modalnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content" style="width:50%;margin: auto;">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4 class="modal-title" id="myModalLabel">Target not assigned</h4>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                        }
+                        }
+                    </div>
+                                    }
+            </section>
+        </div>
+
+    </div>
+</div>
+<style>
+    .well-sm {
+        padding: 0px,0px,0px,9px;
+        border: 1px solid #cacab8;
+    }
+
+    .content {
+        padding: 0px;
+    }
+
+    .control-label {
+        padding: 15px 0px 0px 0px;
+    }
+    /*#target-achievement-display_JAN {
+
+            background-color:#4f7a9a
+            }
+
+            #target-achievement-display_JUL {
+
+            background-color:#4f7a9a
+            .table-form .padding-label .mainlabel {
+                text-align: left;
+            }
+            }*/
+
+    .tablab{
+        font-weight:bold;
+    }
+     .usrtable {
+    border-collapse: collapse;
+      border-top:0;
+  }
+ .usrtable th , .usrtable td  {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    min-width:4em;
+  
+  }
+
+
+   
+
+
+.tdval
+{
+    width:40%;
+}
+
+
+.datepicker table tr td span {
+  width: 100%;
+}
+ #Quarter_Name:read-only {
+   background-color:transparent;
+}
+
+
+
+  .usrtable tr {
+    border-top: 1px solid #ff0000;
+  }
+      
+    .table > tbody > tr > td{
+        border-top: 1px solid #81817d;
+}
+
+ /*.table.borderless td, .table.borderless th {
+    border: 0 !important;
+}
+
+.table.table-borderless {
+    margin-bottom: 0px;
+}*/
+
+
+</style>
+<script>
+
+
+  
+    $(document).on('click', 'form button[type=submit]', function (e) {
+    var content = $('#UserName').val();
+    if (content == null) {
+      
+        alert("Please select name");
+      
+        e.preventDefault(); //prevent the default action
+        e.stopPropagation();
+       
+        e.stopImmediatePropagation();
+       
+      
+    }
+});
+
+
+ 
+        $.fn.datepicker.dates['qtrs'] = {
+            days: ["Sunday", "Moonday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            daysShort: ["Sun", "Moon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+            months: ["Q1 -", "Q2 -", "Q3 -", "Q4 -", "", "", "", "", "", "", "", ""],
+            monthsShort: ["Jan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mar", "Apr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;May&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jun", "Jul&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aug&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sep", "Oct&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nov&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dec", "", "", "", "", "", "", "", ""],
+            today: "Today",
+
+            clear: "Clear",
+            format: "mm/dd/yyyy",
+            titleFormat: "MM yyyy",
+            /* Leverages same syntax as 'format' */
+            weekStart: 0
+        };
+
+    $('#Quarter_Name').datepicker({
+            format: "MM yyyy",
+            minViewMode: 1,
+            autoclose: true,
+            language: "qtrs",
+            forceParse: false
+        }).on("show", function (event) {
+
+            $(".month").each(function (index, element) {
+                if (index > 3) $(element).hide();
+            });
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+    @*$('#btnAdd').click(function () {
+        var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
+        $('#target-achievement-display').empty();
+        $('#target-achievement-display').append(loadingelement);
+           $('#loadingMess').find("[id='loading-element']").remove();
+    })*@
+
+
+
+      var targets = '@Html.Raw(Model.UserTargets.Count)';
+    if (targets <= 0) {
+        $('#modalnew').modal('show');
+    }
+    function RefreshTargetList() {
+
+
+        @*var targets = '@Html.Raw(Model.UserTargets.Count)';
+        alert(targets);
+        if (targets > 0) {*@
+
+            var loadingelement = '@Html.Raw(ConstantUsages.LOADING_ELEMENT)'
+            $('#target-achievement-display').empty();
+            $('#target-achievement-display').append(loadingelement);
+          //  $('#modalnew').modal('show');
+        //}
+        //else {
+        //    $('#modalnew').modal('show');
+        //}
+    }
+
+    //   $('staffcode').val($("#UserName option:selected").val());
+
+    function SelectedUserName(ddlObject) {
+
+
+
+        var username = $(ddlObject).find('option:selected').text();
+        $("#UserName").val(username);
+
+    }
+
+    //$('#foo').select2('disable');
+
+    ////To get selected value an text of dropdownlist
+    //function SelectedUserName(ddlObject) {
+
+
+
+    //    var username = $(ddlObject).find('option:selected').text();
+    //    $("#name").val(username);
+
+    //}
+
+    //function SelectedLocationName(ddlObject) {
+
+
+
+    //    var username = $(ddlObject).find('option:selected').text();
+    //    $("#location_name").val(username);
+
+    //}
+
+    //--userData
+
+
+    @*$(document).ready(function () {
+
+
+
+
+        var models = [];
+        @foreach (var d in Model.QuarterMonths)
+        {
+            @:models.push("@d");
+                                        }
+
+        $.each(models, function (key, model) {
+            var total = Number(0);
+            var targetTotal = Number(0);
+            var AchAmtTotal = Number(0);
+            var EnteredAmtTotal = Number(0);
+            var temp = Number(0);
+
+            var targetid = Number(0);
+
+            var userid = Number(0);
+
+
+
+            $('#Tsheet' + model + '  .hid_target_id_cls').each(function () {
+
+
+                targetid = $(this).val();
+                return;
+
+            });
+
+
+
+            $('#Tsheet' + model + '  .hid_user_id_cls').each(function () {
+
+
+                userid = $(this).val();
+                return;
+
+            });
+
+
+            $('#Tsheet' + model + '  .hid_Base_Incentive').each(function () {
+
+
+                total = $(this).val();
+
+                return;
+            });
+
+            $('#Tsheet' + model + ' .Target_amt p').each(function () {
+                try {
+                    //alert($(this)[0].innerHTML.replace(/\,/g, ""));
+                    temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                    targetTotal = targetTotal + temp;
+                }
+                catch (err) { }
+            });
+
+            $('#Tsheet' + model + ' .Achieved_Amt p').each(function () {
+
+                try {
+
+                    temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                    AchAmtTotal = AchAmtTotal + temp;
+                }
+                catch (err) { }
+            });
+
+
+            $('#Tsheet' + model + ' .Entered_Amt label').each(function () {
+
+                try {
+
+                    $(this)[0].innerHTML = numberWithCommas($(this)[0].innerHTML)
+
+                    temp = Number($(this)[0].innerHTML.replace(/\,/g, ""));
+                    EnteredAmtTotal = EnteredAmtTotal + temp;
+
+                }
+                catch (err) { }
+            });
+
+            $('#base_incentive_' + model).val(numberWithCommas(total));
+            $('#Tsheet' + model + ' tbody').append(
+                '<tr><td><b>Total</b></td><td></td><td class="numaric"><b>' +
+                numberWithCommas(targetTotal) +
+                '</b></td><td class="numaric"><b>' +
+                numberWithCommas(AchAmtTotal) + '</b></td>   <td class="numaric totEnt" id="totEnt"><b>' +
+                numberWithCommas(EnteredAmtTotal) + '</b></td>        <td></td>      </tr>');
+
+
+
+
+            //if (userid > 0) {
+            //    setTargetTotals('tottable_' + model, userid, targetid)
+            //}
+        });
+
+
+
+
+    });*@
+
+
+</script>

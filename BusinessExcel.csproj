@@ -808,6 +808,8 @@
     <Content Include="Views\Accounts\UpdateLocation.cshtml" />
     <Content Include="Views\Report\TargertSummary_SE_Index.cshtml" />
     <Content Include="Views\Report\_TargertSummary_SE_Filter.cshtml" />
+    <Content Include="Views\Report\UserTargetDetails_SE.cshtml" />
+    <Content Include="Views\Report\UserTargetAchievementView_SE.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
