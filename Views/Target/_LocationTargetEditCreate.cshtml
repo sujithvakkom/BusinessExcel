@@ -110,7 +110,7 @@ showGlyphicons: true)
         <div class="row table-form-row" id="target-row">
             <div class="row">
                 <div class="col-md-12">
-                    @{Html.RenderPartial(TargetController.TARGETLINE, Model.LineTargets);}
+                    @{Html.RenderPartial(TargetController.TARGETLINE, Model.LineTargets.ToArray());}
                 </div>
             </div>
             <div class="row">

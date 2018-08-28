@@ -16,7 +16,8 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
         public BaseTarget(bool check)
         {
-            LineTargets = new LineTarget[] {
+            LineTargets = new List<LineTarget>(6)
+            {
                 new LineTarget(),
                 new LineTarget(),
                 new LineTarget(),
@@ -31,7 +32,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
             this.TargetTemplate = null;
         }
 
-        public LineTarget[] LineTargets { get; set; }
+        public List<LineTarget> LineTargets { get; set; }
 
         public static explicit operator BaseTarget(TargetMasterDetails v)
         {
@@ -84,7 +85,9 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [DataType(DataType.Currency)]
         public decimal? BaseIncentive { get; set; }
 
-        internal int Save(out string Message)
+        public decimal? base_incentive_qtr;
+
+        internal virtual int Save(out string Message)
         {
             using (var db = new SalesManageDataContext())
             {

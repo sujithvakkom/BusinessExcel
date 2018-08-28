@@ -34,7 +34,7 @@ namespace BusinessExcel.Controllers
                     target = (BaseTarget)x;
                     for (int i = lineTargets.Count - 1; i < 6; i++)
                         lineTargets.Add(new LineTarget());
-                    target.LineTargets = lineTargets.ToArray();
+                    target.LineTargets = lineTargets.ToList();
                 }
                 catch (Exception) { }
             }

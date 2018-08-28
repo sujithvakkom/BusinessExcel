@@ -188,5 +188,5 @@ tfoot tr td{
 }
 
 .datepicker table tr td span {
-  width: 100%;
+  width: 100% !important;
 }

@@ -802,8 +802,10 @@
     <Content Include="Views\Target\_AddCategorySettings.cshtml" />
     <Content Include="Views\Target\_AddIncentiveFactorDetails.cshtml" />
     <Content Include="Views\Target\_CategorySettings.cshtml" />
-    <Content Include="Views\Target\SalesExecutiveTarget.cshtml" />
+    <Content Include="Views\Target\_SalesExecutiveTarget.cshtml" />
     <Content Include="Views\Target\SettingTarget.cshtml" />
+    <Content Include="Views\Target\SalesExecutiveTarget.cshtml" />
+    <Content Include="Views\Target\_TargetLine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

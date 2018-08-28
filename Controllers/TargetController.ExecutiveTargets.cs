@@ -14,6 +14,7 @@ namespace BusinessExcel.Controllers
     public partial class TargetController : Controller
     {
 
+
         public static string SALESEXECUTIVETARGET = "SalesExecutiveTarget";
         public static string SALES_EXECUTIVE_TARGET = "Sales Executive Target";
 
@@ -35,20 +36,49 @@ namespace BusinessExcel.Controllers
             }
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (Request.IsAjaxRequest())
-                return PartialView(SALESEXECUTIVETARGET,new SalesExcecutiveTarget());
-            return View(new SalesExcecutiveTarget());
+                return PartialView(SALESEXECUTIVETARGET, new SalesExcecutiveQuarterTarget());
+            return View(new SalesExcecutiveQuarterTarget());
         }
 
         [HttpPost]
-        public ActionResult SalesExecutiveTarget(SalesExcecutiveTarget SalesExcecutiveTarget, ICollection<LineTarget> lineTarget)
+        public PartialViewResult SalesExecutiveTarget(SalesExcecutiveQuarterTarget SalesExcecutiveQuarterTarget)
         {
-            SalesExcecutiveTarget.LineTargets = lineTarget.ToArray();
-            string message = ""; SalesExcecutiveTarget.Location = "141";
-            SalesExcecutiveTarget.Save(out message);
+            SalesExcecutiveQuarterTarget.CreateLines();
+            return PartialView(_SALESEXECUTIVETARGET, SalesExcecutiveQuarterTarget);
+        }
 
+        public static string _SALESEXECUTIVETARGET = "_SalesExecutiveTarget";
+        public static string _SALES_EXECUTIVE_TARGET = "Sales Executive Target";
+
+        [HttpGet]
+        public ActionResult _SalesExecutiveTarget()
+        {
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGETTEMPLATE;
+            using (var db = new UsersContext())
+            {
+                try
+                {
+                    Session[Index.USER_PROFILE_INDEX] = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
+                }
+                catch (Exception)
+                {
+                    WebSecurity.Logout();
+                    RedirectToAction(PublicController.WELCOME, PublicController.PUBLIC);
+                }
+            }
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             if (Request.IsAjaxRequest())
-                return PartialView(SALESEXECUTIVETARGET,new SalesExcecutiveTarget());
+                return PartialView(_SALESEXECUTIVETARGET,new SalesExcecutiveTarget());
             return View(new SalesExcecutiveTarget());
+        }
+        
+        [HttpPost]
+        public ActionResult _SalesExecutiveTarget(SalesExcecutiveQuarterTarget SalesExcecutiveQuarterTarget)
+        {
+            SalesExcecutiveQuarterTarget.Save();
+            if (Request.IsAjaxRequest())
+                return PartialView(SALESEXECUTIVETARGET);
+            return View(SALESEXECUTIVETARGET);
         }
     }
 }

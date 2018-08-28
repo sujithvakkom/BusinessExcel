@@ -33,7 +33,7 @@ namespace BusinessExcel.Controllers
                 }
                 catch (Exception) { }
             }
-            target.LineTargets = lineTargets.ToArray();
+            target.LineTargets = lineTargets.ToList();
             return PartialView(target);
         }
     }

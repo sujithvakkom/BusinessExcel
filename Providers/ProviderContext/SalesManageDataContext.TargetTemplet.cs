@@ -36,19 +36,19 @@ GO
          private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date,@end_date,@location_in,@user_in,@description_in,@base_incentive_in,@target_line_in";
 
          */
-         private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @target_teplat_id, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
+        private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @target_teplat_id, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
         public virtual int createUpdateTarget(BaseTarget target, out string Message)
         {
             int result = -1;
 
             var start_date =
-                target.StartDate == DateTime.MinValue?
+                target.StartDate == DateTime.MinValue ?
                 new SqlParameter("@start_date", SqlDbType.DateTime) { Value = DBNull.Value } :
                 new SqlParameter("@start_date", target.StartDate);
-            
 
-            var end_date = 
-                target.EndDate == DateTime.MinValue?
+
+            var end_date =
+                target.EndDate == DateTime.MinValue ?
                 new SqlParameter("@end_date", SqlDbType.DateTime) { Value = DBNull.Value } :
                     new SqlParameter("@end_date", target.EndDate);
 
@@ -61,7 +61,7 @@ GO
                 new SqlParameter("@user_in", target.UserName);
 
             var description_in = String.IsNullOrEmpty(target.Description) ?
-                new SqlParameter("@description_in", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value }:
+                new SqlParameter("@description_in", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value } :
                 new SqlParameter("@description_in", target.Description);
 
             var base_incentive_in =
@@ -79,27 +79,127 @@ GO
             var target_line_in = new SqlParameter("@target_line_in", System.Data.SqlDbType.Structured) { Value = data, TypeName = "target_category_line" };
 
             var message =
-                new SqlParameter("@message", SqlDbType.NVarChar,-1) { Value = DBNull.Value ,Direction=ParameterDirection.Output};
+                new SqlParameter("@message", SqlDbType.NVarChar, -1) { Value = DBNull.Value, Direction = ParameterDirection.Output };
 
             var curr_target_id = new SqlParameter("@curr_target_id", SqlDbType.Int) { Direction = ParameterDirection.Output };
 
             try
             {
-                result = this.Database.ExecuteSqlCommand(cmd, 
-                    start_date, 
-                    end_date, 
-                    location_in, 
-                    user_in, 
-                    description_in, 
-                    base_incentive_in, 
+                result = this.Database.ExecuteSqlCommand(cmd,
+                    start_date,
+                    end_date,
+                    location_in,
+                    user_in,
+                    description_in,
+                    base_incentive_in,
                     target_teplat_id,
                     target_line_in,
-                    message, 
+                    message,
                     curr_target_id);
                 Message = message.Value.ToString();
                 result = int.Parse(curr_target_id.Value.ToString());
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
+                result = -1;
+                Message = ex.Message;
+            }
+            return result;
+        }
+        /*
+DECLARE @RC int
+DECLARE @start_date date
+DECLARE @end_date date
+DECLARE @location_in nvarchar(1)
+DECLARE @user_in nvarchar(1)
+DECLARE @description_in nvarchar(1)
+DECLARE @base_incentive_in nvarchar(1)
+DECLARE @target_line_in [db_salesmanage_user].[target_category_line]
+
+EXECUTE @RC = [db_salesmanage_user].[create_update_target] 
+   @start_date
+  ,@end_date
+  ,@location_in
+  ,@user_in
+  ,@description_in
+  ,@base_incentive_in
+  ,@target_line_in
+GO
+
+         private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date,@end_date,@location_in,@user_in,@description_in,@base_incentive_in,@target_line_in";
+
+         */
+        private readonly string cmd1 = "[db_salesmanage_user].[create_update_se_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @base_incentive_qtr_in, @target_teplat_id, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
+        public virtual int createUpdateTargetSE(BaseTarget target, out string Message)
+        {
+            int result = -1;
+
+            var start_date =
+                target.StartDate == DateTime.MinValue ?
+                new SqlParameter("@start_date", SqlDbType.DateTime) { Value = DBNull.Value } :
+                new SqlParameter("@start_date", target.StartDate);
+
+
+            var end_date =
+                target.EndDate == DateTime.MinValue ?
+                new SqlParameter("@end_date", SqlDbType.DateTime) { Value = DBNull.Value } :
+                    new SqlParameter("@end_date", target.EndDate);
+
+            var location_in = String.IsNullOrEmpty(target.Location) ?
+                new SqlParameter("@location_in", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value } :
+                new SqlParameter("@location_in", target.Location);
+
+            var user_in = String.IsNullOrEmpty(target.UserName) ?
+                new SqlParameter("@user_in", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value } :
+                new SqlParameter("@user_in", target.UserName);
+
+            var description_in = String.IsNullOrEmpty(target.Description) ?
+                new SqlParameter("@description_in", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value } :
+                new SqlParameter("@description_in", target.Description);
+
+            var base_incentive_in =
+                target.BaseIncentive == null ?
+                new SqlParameter("@base_incentive_in", SqlDbType.Decimal) { Value = DBNull.Value } :
+                new SqlParameter("@base_incentive_in", target.BaseIncentive);
+
+            var base_incentive_qtr_in =
+                target.BaseIncentive == null ?
+                new SqlParameter("@base_incentive_qtr_in", SqlDbType.Decimal) { Value = DBNull.Value } :
+                new SqlParameter("@base_incentive_qtr_in", target.base_incentive_qtr);
+
+            var target_teplat_id =
+                target.TargetTemplate == null ?
+                new SqlParameter("@target_teplat_id", SqlDbType.Int) { Value = DBNull.Value } :
+                new SqlParameter("@target_teplat_id", target.TargetTemplate);
+
+            var data = target.getTargetLine();
+            data.TableName = "target_line_in";
+            var target_line_in = new SqlParameter("@target_line_in", System.Data.SqlDbType.Structured) { Value = data, TypeName = "target_category_line" };
+
+            var message =
+                new SqlParameter("@message", SqlDbType.NVarChar, -1) { Value = DBNull.Value, Direction = ParameterDirection.Output };
+
+            var curr_target_id = new SqlParameter("@curr_target_id", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
+            try
+            {
+                result = this.Database.ExecuteSqlCommand(cmd1,
+                    start_date,
+                    end_date,
+                    location_in,
+                    user_in,
+                    description_in,
+                    base_incentive_in,
+                    base_incentive_qtr_in,
+                    target_teplat_id,
+                    target_line_in,
+                    message,
+                    curr_target_id);
+                Message = message.Value.ToString();
+                result = int.Parse(curr_target_id.Value.ToString());
+            }
+            catch (Exception ex)
+            {
                 result = -1;
                 Message = ex.Message;
             }
@@ -211,6 +311,47 @@ WHERE t.target_id = @target_id",
             }
 
             return result;
+        }
+
+        public virtual List<CategoryTarget> getCategoryTarget(string UserName, DateTime StartDate, DateTime EndDate)
+        {
+            var start_date = StartDate != null ?
+                new SqlParameter("@start_date", StartDate) :
+                new SqlParameter("@start_date", System.Data.SqlDbType.DateTime) { Value = DBNull.Value };
+            var end_date = EndDate != null ?
+                new SqlParameter("@end_date", EndDate) :
+                new SqlParameter("@end_date", System.Data.SqlDbType.DateTime) { Value = DBNull.Value };
+            var user_name = !string.IsNullOrEmpty(UserName) ?
+                new SqlParameter("@user_name", UserName) :
+                new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            string cmd = @"SELECT u.user_name ,
+       u.display_name ,
+       t.description AS target_description ,
+       '' AS  date ,
+       c.description AS category_description ,
+       ut.value ,
+       ut.has_bonus,
+c.category_id
+FROM db_salesmanage_user.roster AS r INNER JOIN [db_salesmanage_user].[target_m] AS t ON r.roster_id = t.roster_id
+                                     INNER JOIN [db_salesmanage_user].[user_target] AS ut ON t.target_id = ut.target_id
+                                     INNER JOIN sc_salesmanage_user.user_m AS u ON t.user_id = u.user_id
+                                     INNER JOIN [sc_salesmanage_merchant].[category] AS c ON ut.category_id = c.category_id
+WHERE r.start_date >= @start_date
+      AND
+      r.end_date <= @end_date
+      AND
+      u.user_name = @user_name";
+            try
+            {
+                var result = this.Database.SqlQuery<CategoryTarget>(cmd,
+                    start_date,
+                    end_date,
+                    user_name);
+                return result.ToList();
+            }
+            catch (Exception ex) {
+                return null;
+            }
         }
     }
 }
