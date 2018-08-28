@@ -8,7 +8,7 @@
 @using BusinessExcel.Providers.ProviderContext.Entities
 
 
-@model TargetSummaryView
+@model TargetSummaryViewSE
 
 
 
@@ -27,10 +27,10 @@
                     };
 
                     int count = 0;
-                    IQueryable<TargetSummaryView> data = db.TargetSummaryReportPaging(pageNumber: ViewBag.TargertSummaryViewPage,
+                    IQueryable<TargetSummaryViewSE> data = db.TargetSummary_SE_ReportPaging(pageNumber: ViewBag.TargertSummarySEViewPage,
                                 pageSize: 20,
-                                sort: ViewBag.TargertSummaryViewSort,
-                                sortdir: ViewBag.TargertSummaryViewDir,
+                                sort: ViewBag.TargertSummarySEViewSort,
+                                sortdir: ViewBag.TargertSummarySEViewDir,
                                 count: out count, Filters: Model
                                 );
                     var grid = new WebGrid(ajaxUpdateContainerId: "table-item-view",
@@ -43,6 +43,7 @@
                             htmlAttributes: new { @id = "targetsummary" },
 
                             columns: new[] {
+                             grid.Column(columnName:"QTR",header:"QTR",format:null,style:"user_name",canSort:false),
                              grid.Column(columnName:"user_name",header:"Staff Code",format:null,style:"user_name",canSort:false),
                              grid.Column(columnName:"roster_name",header:"Roster",format:null,style:"create_time colbtn",canSort:false),
                              grid.Column(columnName:"location_name",header:"Location",format:null,style:"create_time",canSort:false),
@@ -98,4 +99,5 @@
        th:nth-child(n+15),td:nth-child(n+16) {
        text-align:left
     }
+
 </style>

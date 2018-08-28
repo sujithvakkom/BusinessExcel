@@ -22,11 +22,12 @@
                     @*@Model.start_date.Value.ToString("MMMM yyyy")*@
                 </strong>
             </div>
-           
-                <label for="username" class="col-md-2 col-form-label" style="text-align:right">TARGET STATUS</label>
-                <div class="col-md-2">
-                    @using (Html.BeginPrefixScope(Model.target_id.ToString())) {
-                        @Html.AdminLTEDropDownListFor(
+
+            <label for="username" class="col-md-2 col-form-label" style="text-align:right">TARGET STATUS</label>
+            <div class="col-md-2">
+                @using (Html.BeginPrefixScope(Model.target_id.ToString()))
+                {
+                    @Html.AdminLTEDropDownListFor(
 m => m.TargetTotal.FirstOrDefault().target_status,
 htmlLabelAttributes: null,
 htmlDropDownAttributes: new Dictionary<string, object>() {
@@ -50,122 +51,122 @@ autoCompleteOptions: new AutoCompleteOptions()
     SelectItems = null
 },
 showLabel: false)}
-                </div>
-                <div class="col-md-1">
-
-                    @*<button  class="btn btn-primary btnSaveSts" id="btnSaveSts1">Save Status</button>*@
-
-                    <button class="btnSaveSts btn btn-primary trn-ctrl trn-ctrl_@Model.target_id">Save Status</button>
-
-                    @*@Html.AdminLTEFromSubmitter("Save Status",
-                       "save-target-progress",
-                       new Dictionary<string, object>() {
-                           { "type", "submit" } ,{ "id", "btnSaveSts1" } ,
-                           { "class","btn btn-primary btnSaveSts"}
-                       },
-                       Url.Content("~/Images/progress.gif")
-                       )*@
-
-                </div>
-            <div  id ="stslbl_@Model.target_id" class="col-md-2 stslbl" style="font-weight:bold;color:green;">
-               
             </div>
-          
+            <div class="col-md-1">
+
+                @*<button  class="btn btn-primary btnSaveSts" id="btnSaveSts1">Save Status</button>*@
+
+                <button class="btnSaveSts btn btn-primary trn-ctrl trn-ctrl_@Model.target_id">Save Status</button>
+
+                @*@Html.AdminLTEFromSubmitter("Save Status",
+                    "save-target-progress",
+                    new Dictionary<string, object>() {
+                        { "type", "submit" } ,{ "id", "btnSaveSts1" } ,
+                        { "class","btn btn-primary btnSaveSts"}
+                    },
+                    Url.Content("~/Images/progress.gif")
+                    )*@
+
+            </div>
+            <div id="stslbl_@Model.target_id" class="col-md-2 stslbl" style="font-weight:bold;color:green;">
+
+            </div>
+
         </div>
     </div>
     <div class="box-body">
-      
-        
+
+
         <div id="target-achievement-view" class="table-responsive">
             @{
                 @*if (User.IsInRole("Viewer"))
+                                {
+
+
+                                    using (var db = new SalesManageDataContext())
+                                    {
+                                        WebGridColumn col = new WebGridColumn()
+                                        {
+
+                                        };
+
+                                        int count = 0;
+                                        IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
+                                                    pageSize: 6,
+                                                    sort: ViewBag.UserTargetViewSort,
+                                                    sortdir: ViewBag.UserTargetViewDir,
+                                                    count: out count, Filters: Model
+                                                    );
+
+                                        var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
+                                                            ajaxUpdateCallback: "targetachievementviewcallBack",
+                                                            rowsPerPage: 6
+                                                            );
+                                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                                    @grid.GetHtml(
+
+                                       tableStyle: "webgrid",
+                    headerStyle: "gridheader",
+
+                                                             selectedRowStyle: "webgrid-selected-row",
+                                                             rowStyle: "webgrid-row-style",
+                                                             htmlAttributes: new { @id = "Tsheet" + Model.target_id },
+                                                             columns: new[] {
+                                       grid.Column(
+                                           columnName: "Category",
+                                           header: "Category",
+                                           format: null,
+                                           style: "Category",
+                                           canSort: false),
+                                       grid.Column(
+                                           columnName: "has_bonus",
+                                           header: "Bonus Line",
+                                           format: @<text>@(item.has_bonus ? "1" : "0" )</text>, style: "Category", canSort: false),
+                                       grid.Column(
+                                           columnName: "Target_amt",
+                                           header: "Target",
+                                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Target_amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                                           style: "Target_amt numaric", canSort: false),
+                                       grid.Column(
+                                           columnName: "Achieved_Amt",
+                                           header: "Achieved",
+                                           format: null, style: "Achieved_Amt numaric", canSort: false),
+
+                                         grid.Column(
+                                           columnName: "Entered_Amt",
+                                           header: "Entered",
+                                           format: null, style: "Entered_Amt numaric", canSort: false),
+
+
+                                                             }
+
+                                                             )
+
+                                    }
+                                }
+                                else
+                                {*@
+            using (var db = new SalesManageDataContext())
+            {
+                WebGridColumn col = new WebGridColumn()
                 {
 
+                };
 
-                    using (var db = new SalesManageDataContext())
-                    {
-                        WebGridColumn col = new WebGridColumn()
-                        {
+                int count = 0;
+                IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
+                            pageSize: 6,
+                            sort: ViewBag.UserTargetViewSort,
+                            sortdir: ViewBag.UserTargetViewDir,
+                            count: out count, Filters: Model
+                            );
 
-                        };
-
-                        int count = 0;
-                        IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
-                                    pageSize: 6,
-                                    sort: ViewBag.UserTargetViewSort,
-                                    sortdir: ViewBag.UserTargetViewDir,
-                                    count: out count, Filters: Model
+                var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
+                                    ajaxUpdateCallback: "targetachievementviewcallBack",
+                                    rowsPerPage: 6
                                     );
-
-                        var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
-                                            ajaxUpdateCallback: "targetachievementviewcallBack",
-                                            rowsPerPage: 6
-                                            );
-                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
-                    @grid.GetHtml(
-              
-                       tableStyle: "webgrid",
-    headerStyle: "gridheader",
-
-                                             selectedRowStyle: "webgrid-selected-row",
-                                             rowStyle: "webgrid-row-style",
-                                             htmlAttributes: new { @id = "Tsheet" + Model.target_id },
-                                             columns: new[] {
-                       grid.Column(
-                           columnName: "Category",
-                           header: "Category",
-                           format: null,
-                           style: "Category",
-                           canSort: false),
-                       grid.Column(
-                           columnName: "has_bonus",
-                           header: "Bonus Line",
-                           format: @<text>@(item.has_bonus ? "1" : "0" )</text>, style: "Category", canSort: false),
-                       grid.Column(
-                           columnName: "Target_amt",
-                           header: "Target",
-                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Target_amt"], new Dictionary<string, object> { { "class", "numaric" } }),
-                           style: "Target_amt numaric", canSort: false),
-                       grid.Column(
-                           columnName: "Achieved_Amt",
-                           header: "Achieved",
-                           format: null, style: "Achieved_Amt numaric", canSort: false),
-
-                         grid.Column(
-                           columnName: "Entered_Amt",
-                           header: "Entered",
-                           format: null, style: "Entered_Amt numaric", canSort: false),
-
-
-                                             }
-                                        
-                                             )
-
-                    }
-                }
-                else
-                {*@
-                    using (var db = new SalesManageDataContext())
-                    {
-                        WebGridColumn col = new WebGridColumn()
-                        {
-
-                        };
-
-                        int count = 0;
-                        IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewPage,
-                                    pageSize: 6,
-                                    sort: ViewBag.UserTargetViewSort,
-                                    sortdir: ViewBag.UserTargetViewDir,
-                                    count: out count, Filters: Model
-                                    );
-                        
-                        var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
-                                            ajaxUpdateCallback: "targetachievementviewcallBack",
-                                            rowsPerPage: 6
-                                            );
-                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
-                        @grid.GetHtml(
+                grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                @grid.GetHtml(
 
                        tableStyle: "webgrid",
     headerStyle: "gridheader",
@@ -199,37 +200,37 @@ showLabel: false)}
                            format: (item)=>@Html.AdminLTEParagraph((object)@item["Achieved_Amt"], new Dictionary<string, object> { { "class", "numaric" } }),
                            style: "Achieved_Amt numaric", canSort: false),
 
-                         @*grid.Column("Entered_Amt", "Entered_Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),*@
+                    @*grid.Column("Entered_Amt", "Entered_Amt", format: @<text> <span class="display-mode"> <label id="lblEntered_Amt">@item.Entered_Amt</label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" /> </text>, style: "Entered_Amt numaric"),*@
 
-                       grid.Column("Entered_Amt", "Entered Amt", canSort: false, format: @<text> <span class="display-mode"> <label id="lblEntered_Amt" style="font-weight:normal">  @item.Entered_Amt </label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" style="text-align:right;" autocomplete="off" onkeypress='return isNumberKey(event)'/> </text>, style: "Entered_Amt numaric"),
+                       grid.Column("Entered_Amt", "Entered Amt", canSort: false, format: @<text> <span class="display-mode"> <label id="lblEntered_Amt" style="font-weight:normal">  @item.Entered_Amt </label> </span>  <input type="text" id="Entered_Amt" value="@item.Entered_Amt" class="edit-mode" style="text-align:right;" autocomplete="off" onkeypress='return isNumberKey(event)' /> </text>, style: "Entered_Amt numaric"),
 
-                      
+
                           grid.Column("", format: @<text>
-            
 
-            <button class="edit-amt display-mode btn btn-primary btn-sm trn-ctrl  trn-ctrl_@Model.target_id">Edit</button>
+
+                <button class="edit-amt display-mode btn btn-primary btn-sm trn-ctrl  trn-ctrl_@Model.target_id">Edit</button>
 
                 <button class="save-amt edit-mode btn btn-success btn-sm trn-ctrl trn-ctrl_@Model.target_id">Save</button>
-            @*@Html.AdminLTEFromSubmitter("Save",
-                       "save-load",
-                       new Dictionary<string, object>() {
-                           { "type", "button" } ,
-                           { "class","save-amt edit-mode btn btn-success btn-sm"}
-                       },
-                       Url.Content("~/Images/progress.gif")
-                       )*@
-          
+                @*@Html.AdminLTEFromSubmitter("Save",
+                    "save-load",
+                    new Dictionary<string, object>() {
+                        { "type", "button" } ,
+                        { "class","save-amt edit-mode btn btn-success btn-sm"}
+                    },
+                    Url.Content("~/Images/progress.gif")
+                    )*@
+
 
                 <button class="cancel-amt edit-mode btn btn-info btn-sm trn-ctrl trn-ctrl_@Model.target_id">Cancel</button>
-          
+
                         </text>,  style: "colbtn" , canSort: false),
 
 
-                       @*grid.Column(
-                           null,
-                           null,
-                           
-                            format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive" value="@(String.Format("{0:n}",item.Base_Incentive))" />),*@
+                                            @*grid.Column(
+                                                null,
+                                                null,
+
+                                                 format:@<input type="hidden" name="Base_Incentive" class="hid_Base_Incentive" value="@(String.Format("{0:n}",item.Base_Incentive))" />),*@
 
                                              grid.Column(
                            null,
@@ -242,19 +243,19 @@ showLabel: false)}
                            format:@<input type="hidden" name="category_id" id="hid_category_id" value="@item.category_id" />),
 
 
-  grid.Column(null, null, format: @<input type="hidden" name="target_id" id="hid_target_id"  class="hid_target_id_cls" value="@Model.target_id" />),
+  grid.Column(null, null, format: @<input type="hidden" name="target_id" id="hid_target_id" class="hid_target_id_cls" value="@Model.target_id" />),
 
   grid.Column(null, null, format: @<input type="hidden" name="month_id" id="hid_month_id" class="hid_month_id_cls" value="@Model.Month" />),
 
                                          }
                                          //footerStyle: "extra-table-pager"
                                          )
-        }
-    //}
+            }
+            //}
 
 
 
-}
+            }
         </div>
 
 
@@ -263,7 +264,7 @@ showLabel: false)}
 
     <div class="container-fluid">
         <div id="totalvaluerow">
-          
+
             <div class="row">
                 <div class="col-md-4">
 
@@ -278,29 +279,29 @@ showLabel: false)}
                             </tr>
                         </thead>
                         <tr>
-                         
+
                             <td><input type="text" class="form-control extrainfo " value="@Model.TargetTotal[0].BaseIncentive" id="base_incentive_@Model.target_id" style="text-align:right;background-color:#eceaea" readonly autocomplete="off" /></td>
                             @*<td> <span class="display-mode"> <label id="lbl_entered_base_incentive_Amt" style="font-weight:normal"></label> </span>  <input type="text" id="Entered_base_inc__Amt" value="0.00" class="edit-mode" style="text-align:right;" autocomplete="off" onkeypress='return isNumberKey(event)' /> </td>*@
                             @*<td style="border:.1px solid #d0cccc;padding-right:5px" class="Entered_baseinc_Amt numaric"> <span class="display-mode"> <label id="lbl_Entered_baseinc_Amt" style="font-weight:bold">@Model.TargetTotal[0].TotalEnteredBaseIncentive</label> </span>  <input type="text" id="Entered_baseinc_Amt" value="@Model.TargetTotal[0].TotalEnteredBaseIncentive" class="edit-mode" style="text-align: right; display: none;height:30px;border:0px" autocomplete="off" onkeypress="return isNumberKey(event)"> </td>*@
                             <td style="border:.1px solid #d0cccc;padding-right:5px;background-color:#eceaea" class="Entered_baseinc_Amt numaric"> <span class="display-mode"> <label id="lbl_Entered_baseinc_Amt" style="font-weight:bold">@Html.AdminLTEParagraph((object)@Model.TargetTotal[0].TotalEnteredBaseIncentive, new Dictionary<string, object> { { "class", "numaric" } })</label> </span>  <input type="text" id="Entered_baseinc_Amt" value="@Model.TargetTotal[0].TotalEnteredBaseIncentive" class="edit-mode" style="text-align: right; display: none;height:30px;border:0px" autocomplete="off" onkeypress="return isNumberKey(event)"> </td>
 
-                              
-                            <td style="padding-left:5px" >
-    <button class="edit-base_amt display-mode btn btn-primary btn-sm trn-ctrl trn-ctrl_@Model.target_id">Edit</button>
-    <button class="save-base_amt edit-mode btn btn-success btn-sm trn-ctrl trn-ctrl_@Model.target_id" id="@Model.target_id">Save</button>
-    <button class="cancel-base_amt edit-mode btn btn-info btn-sm trn-ctrl trn-ctrl_@Model.target_id">Cancel</button>
-</td>
+
+                            <td style="padding-left:5px">
+                                <button class="edit-base_amt display-mode btn btn-primary btn-sm trn-ctrl trn-ctrl_@Model.target_id">Edit</button>
+                                <button class="save-base_amt edit-mode btn btn-success btn-sm trn-ctrl trn-ctrl_@Model.target_id" id="@Model.target_id">Save</button>
+                                <button class="cancel-base_amt edit-mode btn btn-info btn-sm trn-ctrl trn-ctrl_@Model.target_id">Cancel</button>
+                            </td>
                             @*<td><button class="btn-success btn-sm">Save</button></td>*@
                         </tr>
                     </table>
-                   
+
 
 
                 </div>
             </div>
             <hr class="col-md-12" size="20" style="margin:2px;border-top:0">
 
-          
+
 
 
             <div class="row">
@@ -308,28 +309,28 @@ showLabel: false)}
 
 
 
-                    <table class="table tottable" id="tottable_@Model.target_id" >
+                    <table class="table tottable" id="tottable_@Model.target_id">
 
                         <tbody>
-                           
+
                             <tr class="gridheader" style="background-color:#d48b1e">
                                 <th style="width:10%"></th>
                                 <th style="width:10%"></th>
-                                <th style="text-align:center;font-weight:bold;width:10%" >Incentive</th>
+                                <th style="text-align:center;font-weight:bold;width:10%">Incentive</th>
                                 <th style="text-align:center;font-weight:bold;width:15%">Entered Incentive</th>
                                 <th></th>
                             </tr>
                             <tr>
 
-        
-                                <td ><input class="form-control extrainfo tottableinputLabel" value="Target % " /></td>
-                                <td style="text-align:right" ><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalTargetPerc% id="Target_Perc_@Model.target_id" /></td>
-                                <td style="text-align:right" ><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalIncAmt id="Target_Amt_@Model.target_id" /></td>
-   
+
+                                <td><input class="form-control extrainfo tottableinputLabel" value="Target % " /></td>
+                                <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalTargetPerc % id="Target_Perc_@Model.target_id" /></td>
+                                <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalIncAmt id="Target_Amt_@Model.target_id" /></td>
+
                                 @*<td style="padding-right:5px;border:.1px solid #d0cccc;text-align:right" class="Entered_inc_Amt numaric tdTot"> <span class="display-mode "> <label id="lbl_Entered_inc_Amt" style="font-weight:bold;" class="form-control extrainfo tottableinput">@Model.TargetTotal[0].TotalEnteredIncAmt</label> </span>  <input type="text" id="Entered_inc_Amt" value="@Model.TargetTotal[0].TotalEnteredIncAmt" class="edit-mode " style="text-align: right; display: none;height:40px;border:0px;width:100%" autocomplete="off" onkeypress="return isNumberKey(event)"> </td>*@
                                 <td style="padding-right:5px;border:.1px solid #d0cccc;text-align:right" class="Entered_inc_Amt numaric tdTot"> <span class="display-mode "> <label id="lbl_Entered_inc_Amt" style="font-weight:bold;" class="form-control extrainfo tottableinput">@Html.AdminLTEParagraph((object)@Model.TargetTotal[0].TotalEnteredIncAmt, new Dictionary<string, object> { { "class", "numaric" } })</label> </span>  <input type="text" id="Entered_inc_Amt" value="@Model.TargetTotal[0].TotalEnteredIncAmt" class="edit-mode " style="text-align: right; display: none;height:40px;border:0px;width:100%" autocomplete="off" onkeypress="return isNumberKeyDotAllow(event)"> </td>
 
-                                <td >
+                                <td>
                                     <button class="edit-inc_amt colincbtn display-mode btn btn-primary btn-sm trn-ctrl trn-ctrl_@Model.target_id">Edit</button>
                                     <button class="save-inc_amt colincbtn edit-mode btn btn-success btn-sm trn-ctrl trn-ctrl_@Model.target_id" id="@Model.target_id">Save</button>
                                     <button class="cancel-inc_amt colincbtn1 edit-mode btn btn-info btn-sm trn-ctrl trn-ctrl_@Model.target_id">Cancel</button>
@@ -338,19 +339,19 @@ showLabel: false)}
 
                             </tr>
 
-                          <tr>
+                            <tr>
 
-                              <td><input class="form-control extrainfo tottableinputLabel" value="Line Achv" /></td>
-                              <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].LineAch id="Lines_Ach_Perc_@Model.target_id" /></td>
-                              <td  style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalLineAchAccAmt id="Lines_Ach_Amt_@Model.target_id" /></td>
-                              <td></td>
-                              <td></td>
+                                <td><input class="form-control extrainfo tottableinputLabel" value="Line Achv" /></td>
+                                <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].LineAch id="Lines_Ach_Perc_@Model.target_id" /></td>
+                                <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalLineAchAccAmt id="Lines_Ach_Amt_@Model.target_id" /></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
 
                                 <td><input class="form-control extrainfo tottableinputLabel" value="Bonus Lines" /></td>
-                                <td  style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].totalBonusLinePerc% id="Bonus_Lines_Perc_@Model.target_id" /></td>
-                                <td  style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalBonusLineAmt id="Bonus_Lines_Amt_@Model.target_id" /></td>
+                                <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].totalBonusLinePerc % id="Bonus_Lines_Perc_@Model.target_id" /></td>
+                                <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalBonusLineAmt id="Bonus_Lines_Amt_@Model.target_id" /></td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -358,62 +359,62 @@ showLabel: false)}
                             <tr>
 
                                 <td><input class="form-control extrainfo tottableinputLabel" value="" /></td>
-                                <td  style="text-align:right"><input class="form-control extrainfo tottableinput" value="" id="Tot_Perc_@Model.target_id" /></td>
+                                <td style="text-align:right"><input class="form-control extrainfo tottableinput" value="" id="Tot_Perc_@Model.target_id" /></td>
                                 @*<td  style="text-align:right"><input class="form-control extrainfo tottableinput" value= @Model.TargetTotal.Sum(x => x.TotalIncAmt+x.TotalLineAchAccAmt+x.TotalBonusLineAmt) id="Tot_Amt_@Model.target_id" /></td>*@
                                 <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal.Sum(x => x.TotalEnteredIncAmt>0 ?  x.TotalEnteredIncAmt + x.TotalLineAchAccAmt+x.TotalBonusLineAmt : x.TotalIncAmt+x.TotalLineAchAccAmt+x.TotalBonusLineAmt) id="Tot_Amt_@Model.target_id" /></td>
 
-                                
+
                                 <td></td>
                                 <td></td>
                             </tr>
-                            
+
                         </tbody>
                     </table>
                 </div>
             </div>
 
             @*<div class="row">
-                <div class="col-md-4">
+                    <div class="col-md-4">
 
 
-                    <div class="input-group">
-                        <input type="text" class="form-control extrainfo" value="Target %" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
+                        <div class="input-group">
+                            <input type="text" class="form-control extrainfo" value="Target %" />
+                            <span class="input-group-addon extrainfo"></span>
+                            <input type="text" class="form-control extrainfo" value="0.00" />
+                            <span class="input-group-addon extrainfo"></span>
+                            <input type="text" class="form-control extrainfo" value="0.00" />
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-4">
+
+
+                        <div class="input-group">
+                            <input type="text" class="form-control extrainfo" value="Line Achv %" />
+                            <span class="input-group-addon extrainfo"></span>
+                            <input type="text" class="form-control extrainfo" value="0.00" />
+                            <span class="input-group-addon extrainfo"></span>
+                            <input type="text" class="form-control extrainfo" value="0.00" />
+                        </div>
+
+
                     </div>
 
-
-                </div>
-                <div class="col-md-4">
+                    <div class="col-md-4">
 
 
-                    <div class="input-group">
-                        <input type="text" class="form-control extrainfo" value="Line Achv %" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
+                        <div class="input-group">
+                            <input type="text" class="form-control extrainfo" value="Bonus Lines" />
+                            <span class="input-group-addon extrainfo"></span>
+                            <input type="text" class="form-control extrainfo" value="0.00" />
+                            <span class="input-group-addon extrainfo"></span>
+                            <input type="text" class="form-control extrainfo" value="0.00" />
+                        </div>
+
+
                     </div>
-
-
-                </div>
-
-                <div class="col-md-4">
-
-
-                    <div class="input-group">
-                        <input type="text" class="form-control extrainfo" value="Bonus Lines" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
-                        <span class="input-group-addon extrainfo"></span>
-                        <input type="text" class="form-control extrainfo" value="0.00" />
-                    </div>
-
-
-                </div>
-            </div>*@
+                </div>*@
         </div>
     </div>
 </div>
@@ -422,60 +423,57 @@ showLabel: false)}
 
 
 <style>
-   
-    .colincbtn
-    {
-        margin:5px ;
+    .colincbtn {
+        margin: 5px;
     }
-    .tottable td th
-    {
-        width:10%;
+
+    .tottable td th {
+        width: 10%;
     }
-    .tottable tr, .tottable td{
-   padding:0px !important;
-}
-    .tottableinput{
-        border:0;
-        text-align:right;
 
+    .tottable tr, .tottable td {
+        padding: 0px !important;
     }
-     .tottableinputLabel
-     {
-           border:0;
-        text-align:left;
-        font-weight:bold;
 
-        background-color:moccasin;
-     }
+    .tottableinput {
+        border: 0;
+        text-align: right;
+    }
 
-        .tottable {
-    border-collapse: collapse;
-      border-top:0;
-       background-color:moccasin;
-  }
- .tottable th , .tottable td  {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-    /*min-width:4em;*/
-  
-  }
+    .tottableinputLabel {
+        border: 0;
+        text-align: left;
+        font-weight: bold;
+        background-color: moccasin;
+    }
 
- .colbtn
- {
-     width:14%;
- }
-.Entered_Amt
-{
-    width:15%;
-}
+    .tottable {
+        border-collapse: collapse;
+        border-top: 0;
+        background-color: moccasin;
+    }
 
-     .webgrid {
+        .tottable th, .tottable td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+            /*min-width:4em;*/
+        }
+
+    .colbtn {
+        width: 14%;
+    }
+
+    .Entered_Amt {
+        width: 15%;
+    }
+
+    .webgrid {
         margin: 4px;
         border-collapse: collapse;
         width: 80%;
     }
-    
+
     .gridheader {
         padding: 6px 5px;
         text-align: center;
@@ -508,7 +506,6 @@ showLabel: false)}
 
     #totalvaluerow {
         margin-bottom: .5%;
-       
     }
 
     .month {
@@ -520,21 +517,18 @@ showLabel: false)}
     }
 
     .extrainfo {
-
         /*background-color: #5c6a73;*/
         color: black;
-        font-weight:bold;
-        width:30%;
+        font-weight: bold;
+        width: 30%;
     }
-    .tottable .extrainfo 
-    {
+
+    .tottable .extrainfo {
         /*height:1.5em;*/
     }
-   
-    .tottable > tbody > tr > th  
-    {
-        border-top:1px solid #b5a9a9;
-       
+
+    .tottable > tbody > tr > th {
+        border-top: 1px solid #b5a9a9;
     }
 
 
@@ -580,16 +574,16 @@ showLabel: false)}
     }*/
 
     th:nth-child(n+3) {
-       text-align:right
+        text-align: right;
     }
-    
+
     td:nth-child(n+7), th:nth-child(n+7) {
         display: none;
     }
 
- .tottableinput:read-only {
-   background-color:transparent;
-}
+    .tottableinput:read-only {
+        background-color: transparent;
+    }
 </style>
 
 <script>
@@ -1262,12 +1256,12 @@ showLabel: false)}
 
     //}
 
-  
- 
+
+
     //$('.trn-ctrl_292').val(4);
-    
+
     //$(document).ready(function () {
-      
+
     //    $('.trn-ctrl_292').find('option[value="3"]').attr('selected', 'selected');
     //    console.log("Done.." + $('.trn-ctrl_292').val()     )
     //});
@@ -1277,11 +1271,11 @@ showLabel: false)}
 
 
     if (isViewer=="True") {
-      
+
         $('.trn-ctrl').css("display", 'none')
 
         $(".trn_ctrl_td").prop("disabled", true);//Drpdown status
-       
+
     }
     else
     {
