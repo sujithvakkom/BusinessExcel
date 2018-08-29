@@ -7,6 +7,15 @@
 
 @model GlobalSettings
 
+@{ 
+    Model.base_incentive_pct *= 100;
+    Model.bonus_achieve_acc *= 100;
+    Model.global_acc_factor *= 100;
+    Model.line_achieve_acc *= 100;
+    Model.min_line_achievement *= 100;
+    Model.min_total_achievement *= 100;
+
+}
 <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">@TargetController._OTHER_SETTINGS</h3>
@@ -40,6 +49,53 @@
                     </div>
                     <div class="col-md-6">
                         @Html.AdminLTETextBoxFor(m => m.global_acc_factor,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.AdminLTETextBoxFor(m => m.line_achieve_acc,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.AdminLTETextBoxFor(m => m.min_line_achievement,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.AdminLTETextBoxFor(m => m.min_total_achievement,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.AdminLTETextBoxFor(m => m.min_bonus_achievement,
                   htmlLabelAttributes: null,
                   htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
                   htmlGroupAttributes: null,

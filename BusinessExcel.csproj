@@ -804,6 +804,8 @@
     <Content Include="Views\Target\_AddCategorySettings.cshtml" />
     <Content Include="Views\Target\_AddIncentiveFactorDetails.cshtml" />
     <Content Include="Views\Target\_CategorySettings.cshtml" />
+    <Content Include="Views\Target\_SalesExecutiveTarget.cshtml" />
+    <Content Include="Views\Target\SettingTarget.cshtml" />
     <Content Include="Views\Target\SalesExecutiveTarget.cshtml" />
     <Content Include="Views\Target\SettingTarget.cshtml" />
     <Content Include="Views\Accounts\UpdateLocation.cshtml" />
@@ -911,7 +913,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64892</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:3003/</IISUrl>
+          <IISUrl>http://localhost:3000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

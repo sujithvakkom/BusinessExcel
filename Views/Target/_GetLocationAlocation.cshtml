@@ -21,7 +21,7 @@
     </div>*@
 <div class="row">
 
-    @if (Model.LineTargets.Length > 0)
+    @if (Model.LineTargets.Count > 0)
     {
         var total = Model.LineTargets.Sum(x => x.Target);
         var formID = "target-distribute-form-" + Model.TargetTemplate + "-" + Model.Location + "-" + Model.UserName;
@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                             <div id="target-row">
-                                @for (int i = 0; i < Model.LineTargets.Length; i++)
+                                @for (int i = 0; i < Model.LineTargets.Count; i++)
                                 {
                                     decimal? maxallocationPct = 0;
                                     CategoryDetail selection = new CategoryDetail();

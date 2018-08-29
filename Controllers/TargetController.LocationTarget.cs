@@ -56,7 +56,7 @@ namespace BusinessExcel.Controllers
             string Message = "";
             int result = -1;
             target.LineTargets =
-                lineTarget.ToArray();
+                lineTarget.ToList();
             bool IsModelValid = true;
             IsModelValid = IsModelValid & target.StartDate != null;
             IsModelValid = IsModelValid & target.EndDate != null;

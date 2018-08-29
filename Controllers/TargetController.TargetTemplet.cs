@@ -63,7 +63,7 @@ namespace BusinessExcel.Controllers
             if (ModelState.IsValid)
             {
                 target.LineTargets =
-                    lineTarget.ToArray();
+                    lineTarget.ToList();
                 try
                 {
                     result = target.Save(out Message);
@@ -119,5 +119,8 @@ namespace BusinessExcel.Controllers
         public PartialViewResult _TargetTemplateCreateBlock() { return PartialView(); }
         public static string TARGETLINE = "TargetLine";
         public PartialViewResult TargetLine() { return PartialView(); }
+
+        public static string _TARGETLINE = "_TargetLine";
+        public PartialViewResult _TargetLine() { return PartialView(); }
     }
 }

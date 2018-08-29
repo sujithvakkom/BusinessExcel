@@ -32,5 +32,8 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
 
         [Column("has_bonus", Order = 7)]
         public bool has_bonus { get; set; }
+
+        [Column("category_id", Order = 8)]
+        public int category_id { get; set; }
     }
 }

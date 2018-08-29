@@ -189,6 +189,14 @@ namespace BusinessExcel.Controllers
         [HttpPost]
         public PartialViewResult _OtherSettings(GlobalSettings GlobalSettings)
         {
+
+            GlobalSettings.base_incentive_pct /= 100;
+            GlobalSettings.bonus_achieve_acc /= 100;
+            GlobalSettings.global_acc_factor /= 100;
+            GlobalSettings.line_achieve_acc /= 100;
+            GlobalSettings.min_line_achievement /= 100;
+            GlobalSettings.min_total_achievement /= 100;
+
             if (ModelState.IsValid)
             {
                 using (var db = new SalesManageDataContext())
