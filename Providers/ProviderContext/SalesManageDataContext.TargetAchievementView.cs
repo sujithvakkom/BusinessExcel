@@ -342,6 +342,10 @@ namespace BusinessExcel.Providers.ProviderContext
         new SqlParameter("@location_id_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
+            var roster_id_p = Filters.roster_id != null ?
+    new SqlParameter("@roster_id_p", Filters.roster_id) :
+    new SqlParameter("@roster_id_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
             var target_id = Filters.target_id != null ?
 new SqlParameter("@target_id", Filters.target_id) :
 new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
@@ -375,6 +379,7 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
 
             parameterList.Add(user_id_p);
             parameterList.Add(location_id_p);
+            parameterList.Add(roster_id_p);
             parameterList.Add(viewer_id);
 
             parameterList.Add(page_number);
@@ -383,25 +388,11 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
 
          
 
-            var res = this.Database.SqlQuery<TargetSummaryView>("[db_salesmanage_user].[Target_Summary_Report] @target_id,@target_status_p,@user_id_p,@location_id_p,@viewer_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
+            var res = this.Database.SqlQuery<TargetSummaryView>("[db_salesmanage_user].[Target_Summary_Report] @target_id,@target_status_p,@user_id_p,@location_id_p,@roster_id_p,@viewer_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
             int.TryParse(row_count.Value.ToString(), out count);
 
-            // count = res.Count();
-            // return res.Skip(skippingRows).Take(pageSize);
-            if (sort == null || sort == "")
-            {
-                return res.OrderByDescending(x => x.target_id);
-            }
-            else
-            {
-                switch (sortdir)
-                {
-                    case "DESC":
-                        return res.OrderByDescending(sort);
-                    default:
-                        return res.OrderBy(sort);
-                }
-            }
+            return res;
+           
 
         }
 
@@ -491,6 +482,45 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
                 }
             }
 
+        }
+
+
+        public IQueryable<TargetAchievementDetailQTR> QuarterAchievementViewPaging(TargetAchievementDetailQTR Filters)
+        {
+
+            //var res = this.TargetAchievementView.Select(x=>x);
+
+            IQueryable<TargetAchievementDetailQTR> res = null;
+
+
+
+
+            var qtr_start_date = (Filters.qtr_start_date) !=default(DateTime)?
+                new SqlParameter("@start_date", Filters.qtr_start_date):
+                new SqlParameter("@start_date", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+
+            var user_id = Filters.user_id > 0 ?
+               new SqlParameter("@user_id", Filters.user_id) :
+               new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+
+
+            try
+            {
+                res = this.Database.SqlQuery<TargetAchievementDetailQTR>("[db_salesmanage_user].[User_QTR_Achieved_Data]  @start_date ,@user_id", qtr_start_date, user_id).AsQueryable();
+               
+            }
+            catch (Exception ex)
+            {
+             
+                res = null;
+            }
+
+
+            return res;
+          
+           
         }
     }
 }

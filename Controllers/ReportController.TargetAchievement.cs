@@ -660,32 +660,27 @@ namespace BusinessExcel.Controllers
 
 
         public static string USER_TARGET_ACHIEVEMENT_TITLE_SE = "Target & Achievement (SE) ";
-        public static string USERTARGET_ACHIEVEMENT_VIEW_SE = "USerTargetAchievementView_SE";
-      
+        public static string USERTARGET_ACHIEVEMENT_VIEW_SE = "UserTargetAchievementView_SE";
+        public static string QTR_ACHIEVEMENT_VIEW_SE = "_QTR_AchievementView_SE";
 
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
-        public ActionResult USerTargetAchievementView_SE(string sort, string sortdir, int page = 1, TargetAchievementView target = null)
+        public ActionResult UserTargetAchievementView_SE(string sort, string sortdir, int page = 1, TargetAchievementView target = null)
         {
-            ViewBag.UserTargetViewSort = sort;
-            ViewBag.UserTargetViewDir = sortdir;
-            ViewBag.UserTargetViewPage = page;
+            ViewBag.UserTargetViewSESort = sort;
+            ViewBag.UserTargetViewSEDir = sortdir;
+            ViewBag.UserTargetViewSEPage = page;
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
 
-            //if (target.TargetTotal.Count > 0)
+         
+            //if (target.target_id > 0)
             //{
-            //    using (var db = new SalesManageDataContext())
-            //    {
-            //        ViewData[SELECTED_FILTED_TARGET_STATUS] = db.getTargetStatusBtId(target.TargetTotal[0].target_status);
-            //    }
+            //    target.TargetTotal = LoadTargetTotal(target.user_id.Value, target.target_id.Value);
             //}
 
-            if (target.target_id > 0)
-            {
-                target.TargetTotal = LoadTargetTotal(target.user_id.Value, target.target_id.Value);
-            }
-            return PartialView(USERTARGET_ACHIEVEMENT_VIEW, target);
+
+            return PartialView(USERTARGET_ACHIEVEMENT_VIEW_SE, target);
         }
 
 

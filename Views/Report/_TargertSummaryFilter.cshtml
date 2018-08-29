@@ -33,36 +33,48 @@
                                 sortdir: ViewBag.TargertSummaryViewDir,
                                 count: out count, Filters: Model
                                 );
-                    var grid = new WebGrid(ajaxUpdateContainerId: "table-item-view",
+                    var grid = new WebGrid(ajaxUpdateContainerId: "summary",
                                         ajaxUpdateCallback: "callBack", rowsPerPage: 20
                                                     );
                     grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                     @grid.GetHtml(
 
                             tableStyle: "table table-striped table-bordered be-pagination-spl",
-                            htmlAttributes: new { @id = "targetsummary" },
+                            htmlAttributes: new { @id = "summary" },
 
                             columns: new[] {
-                             grid.Column(columnName:"user_name",header:"Staff Code",format:null,style:"user_name",canSort:false),
-                             grid.Column(columnName:"roster_name",header:"Roster",format:null,style:"create_time colbtn",canSort:false),
-                             grid.Column(columnName:"location_name",header:"Location",format:null,style:"create_time",canSort:false),
-                             grid.Column(columnName:"TotalTarget",header:"Target Amt",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalTarget"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
-                             grid.Column(columnName:"TotalAchieved",header:"Achvd Amt",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalAchieved"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
-                             grid.Column(columnName:"BaseIncentive",header:"Base Incent",format:(item)=>@Html.AdminLTEParagraph((object)@item["BaseIncentive"], new Dictionary<string, object> { { "class", "numaric" } }),style:"BaseIncentive",canSort:false),
-                             grid.Column(columnName:"TotalEnteredBaseIncentive",header:"Entered Base Incent",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalEnteredBaseIncentive"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
-                             grid.Column(columnName:"TotalTargetPerc",header:"Target Perc",format: (item)=>@Html.AdminLTEParagraph((object)@item["TotalTargetPerc"]+" %", new Dictionary<string, object> { { "class", "numaric" } }),style:"user_name",canSort:false),
-                             grid.Column(columnName:"TotalIncAmt",header:"Incent Amt",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalIncAmt"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
-                             grid.Column(columnName:"TotalEnteredIncAmt",header:"Entered Incent Amt",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalEnteredIncAmt"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
-                             grid.Column(columnName:"LineAch",header:"Lines Achvd",format:null,style:"create_time",canSort:false),
-                             grid.Column(columnName:"line_achieved_amt",header:"Lines Achvd Amt",format:null,style:"create_time",canSort:false),
-                             grid.Column(columnName:"bonus_lines",header:"Bonus Achvd Perc",format:(item)=>@Html.AdminLTEParagraph((object)@item["bonus_lines"]+" %", new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
-                             grid.Column(columnName:"bonus_line_amt",header:"Bonus Achvd",format:null,style:"create_time",canSort:false),
-                             grid.Column(columnName:"TotalValue",header:"Total",format:(item)=>@Html.AdminLTEParagraph((object)@item["TotalValue"], new Dictionary<string, object> { { "class", "numaric" } }),style:"create_time",canSort:false),
-                             grid.Column(columnName:"target_status",header:"Target Status",format:null,style:"create_time",canSort:false),
-                             grid.Column(columnName:"roster_id",header:"roster_id",format:null,style:"create_time",canSort:false),
-                             grid.Column(columnName:"location_id",header:"location_id",format:null,style:"create_time",canSort:false),
-                             grid.Column(columnName:"target_status_id",header:"target_status_id",format:null,style:"create_time",canSort:false),
-                             grid.Column(columnName:"target_id",header:"target_id",format:null,style:"create_time",canSort:false),
+
+                              grid.Column(columnName:"qtr_name",header:"Quarter",format: @<text> @{
+        if (@item.qtr_name !=null)
+            {
+                                    <span>@item.qtr_name</span>
+                                    <script type="text/javascript">
+                                        $("tr:contains('@item.qtr_name')").css("background-color", "#91b4cc").css("font-weight", "bold");
+                                    </script>
+            }
+                            }</text>,style: "qtr_name",canSort: false),
+
+
+                             grid.Column(columnName: "user_name", header: "Staff", format: null, style: "user_name", canSort: false),
+                             grid.Column(columnName: "roster_name", header: "Target", format: null, style: "create_time colbtn", canSort: false),
+                             grid.Column(columnName: "location_name", header: "Location", format: null, style: "create_time", canSort: false),
+                             grid.Column(columnName: "TotalTarget", header: "Target Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalTarget"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
+                             grid.Column(columnName: "TotalAchieved", header: "Achvd Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalAchieved"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
+                             grid.Column(columnName: "BaseIncentive", header: "Base Incent", format: (item) => @Html.AdminLTEParagraph((object)@item["BaseIncentive"], new Dictionary<string, object> { { "class", "numaric" } }), style: "BaseIncentive", canSort: false),
+                             grid.Column(columnName: "TotalEnteredBaseIncentive", header: "Entered Base Incent", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalEnteredBaseIncentive"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
+                             grid.Column(columnName: "TotalTargetPerc", header: "Target Perc", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalTargetPerc"] + " %", new Dictionary<string, object> { { "class", "numaric" } }), style: "user_name", canSort: false),
+                             grid.Column(columnName: "TotalIncAmt", header: "Incent Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalIncAmt"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
+                             grid.Column(columnName: "TotalEnteredIncAmt", header: "Entered Incent Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalEnteredIncAmt"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
+                             grid.Column(columnName: "LineAch", header: "Lines Achvd", format: null, style: "create_time", canSort: false),
+                             grid.Column(columnName: "line_achieved_amt", header: "Lines Achvd Amt", format: null, style: "create_time", canSort: false),
+                             grid.Column(columnName: "bonus_lines", header: "Bonus Achvd Perc", format: (item) => @Html.AdminLTEParagraph((object)@item["bonus_lines"] + " %", new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
+                             grid.Column(columnName: "bonus_line_amt", header: "Bonus Achvd", format: null, style: "create_time", canSort: false),
+                             grid.Column(columnName: "TotalValue", header: "Total", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalValue"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
+                             grid.Column(columnName: "target_status", header: "Target Status", format: null, style: "create_time", canSort: false),
+                             grid.Column(columnName: "roster_id", header: "roster_id", format: null, style: "create_time", canSort: false),
+                             grid.Column(columnName: "location_id", header: "location_id", format: null, style: "create_time", canSort: false),
+                             grid.Column(columnName: "target_status_id", header: "target_status_id", format: null, style: "create_time", canSort: false),
+                             grid.Column(columnName: "target_id", header: "target_id", format: null, style: "create_time", canSort: false),
 
                         },
                         footerStyle: "extra-table-pager"
@@ -74,13 +86,13 @@
                         previousText: "PREV.",
                         lastText: "LAST")
 
-                }
+}
             }
         </div>
     </div>
 </div>
 <style>
-    td:nth-child(n+17), th:nth-child(n+17) {
+    td:nth-child(n+18), th:nth-child(n+18) {
         display: none;
     }
 
@@ -90,12 +102,30 @@
     }
 
    
-      th:nth-child(n+4),  td:nth-child(n+4) {
+      th:nth-child(n+5),  td:nth-child(n+5) {
        text-align:right
     }
     
    
-       th:nth-child(n+15),td:nth-child(n+16) {
-       text-align:left
+       th:nth-child(n+16),td:nth-child(n+17) {
+       text-align:left  
     }
+
+       .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th
+       {
+           padding:2px;
+       }
 </style>
+<script type="text/javascript">
+
+    function callBack(data) {
+
+   
+
+        $('#summary').html(data);
+    }
+
+   
+</script>
+
+

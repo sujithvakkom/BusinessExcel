@@ -288,6 +288,7 @@
     <Compile Include="Providers\ProviderContext\Entities\LineTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LocationTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\SalesExcecutiveTarget.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\TargetAchievementDetailQTR.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserListView.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserTree.cs" />
@@ -810,6 +811,7 @@
     <Content Include="Views\Report\_TargertSummary_SE_Filter.cshtml" />
     <Content Include="Views\Report\UserTargetDetails_SE.cshtml" />
     <Content Include="Views\Report\UserTargetAchievementView_SE.cshtml" />
+    <Content Include="Views\Report\_QTR_AchievementView_SE.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

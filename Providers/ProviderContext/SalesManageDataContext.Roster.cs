@@ -158,15 +158,20 @@ where roster_id=@roster_id";
         }
 
 
-        public virtual List<RosterViewModel> getRosterDetails(string search, int Page, out int RowCount)
+        public virtual List<RosterViewModel> getRosterDetails(string search, int Page, out int RowCount, int? LocationID)
         {
             List<RosterViewModel> items = new List<RosterViewModel>();
 
       
 
-            var user_name = search != null ?
+            var filter = search != null ?
                   new SqlParameter("@filter", search) :
                   new SqlParameter("@filter", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            var location_id = LocationID != null ?
+                 new SqlParameter("@location_id", LocationID) :
+                 new SqlParameter("@location_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
 
             int? page = null;
             var page_size = page != null ?
@@ -186,7 +191,7 @@ where roster_id=@roster_id";
             try
             {
                 items = this.Database.SqlQuery<RosterViewModel>(
-                                                "[sc_salesmanage_user].[getRosterDetails] @filter ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                                                "[sc_salesmanage_user].[getRosterDetails] @filter ,@location_id,@page_number ,@page_size ,@row_count OUTPUT", filter, location_id, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
