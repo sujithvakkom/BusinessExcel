@@ -194,6 +194,22 @@ showLabel: true)
                             <div id="loading" style="padding-top:1em"></div>*@
                     </div>
 
+
+                    
+                       
+                  
+
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+
+                        @Html.AdminLTEActionLink(
+linkText: BusinessExcel.Controllers.ReportController.EXPORT_TARGET_SUMMARY_EXCEL_TITLE,
+actionName: BusinessExcel.Controllers.ReportController.EXPORT_TARGET_SUMMARY_EXCEL,
+controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+cssClass: "btn btn-link btnexport", routeValues: Model,
+carrot: "fa fa-download")
+                    </div>
                 </div>
 
             </div>            <!-- /.box-body -->
@@ -209,3 +225,4 @@ showLabel: true)
     </div>
 
 </section><!-- /.content -->
+

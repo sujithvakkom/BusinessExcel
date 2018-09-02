@@ -10,10 +10,15 @@
 
 
 
-
+<div class="row">
+    <div class="col-md-6">
+        <strong style="padding-left:5px">@Model.Month @Model.start_date.Value.ToString(" yyyy")</strong>
+</div>
+</div>
 
 
 <div class="row">
+
     <div class="col-md-12">
 
 
@@ -49,12 +54,7 @@
                               columns: new[] {
 
 
-                           grid.Column(
-                           columnName: "Category",
-                           header: "category",
-                           format: null,
-                           style: "category",
-                           canSort: false),
+
                            grid.Column(
 
                            columnName: "Target_amt",
@@ -82,31 +82,33 @@
             }
         </div>
     </div>
-
+</div>
+<div class="row">
     <div class="col-md-12">
 
-        <table class="table table-bordered" style="width:81%">
-            
+
+
+        <table class="table table-bordered" style="width:80%;background-color:#bbbab8;margin:4px;">
+
             <tbody>
                 <tr>
-                   
+
                     <td>Base Incentive</td>
                     <td>1500</td>
                     <td></td>
                 </tr>
                 <tr>
-                   
+
                     <td>Achived % -Mnth</td>
                     <td>15%</td>
                     <td>350</td>
                 </tr>
-               
+
             </tbody>
         </table>
     </div>
-    </div>
 
-
+</div>
 
 <style>
   
@@ -136,4 +138,10 @@
         border: 1px solid #C0C0C0;
         padding: 5px;
     }
+
+ /*.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th
+       {
+           padding:2px;
+       }*/
+
 </style>

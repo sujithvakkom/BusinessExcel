@@ -289,6 +289,7 @@
     <Compile Include="Providers\ProviderContext\Entities\LocationTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\SalesExcecutiveTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetAchievementDetailQTR.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\TargetAchievementQTRView.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserListView.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserTree.cs" />

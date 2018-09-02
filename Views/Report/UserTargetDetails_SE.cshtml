@@ -282,57 +282,96 @@
 
                         </div>
                     </div>
-                    <div style="margin-top:15px" id="target-achievement-display">
+
+                    @*<div class="row">
+                        <div class="col-md-4">
+                            @Html.Action(
+                                                                  
+                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.UserID, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.Action(
+
+                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.UserID, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.Action(
+
+                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.UserID, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
+                        </div>
+                    </div>*@
+
+
+
+
+                    <div style="margin-top:15px;padding-left:20px" id="target-achievement-display">
                         @if (Model.UserName != null)
                         {
 
                             if (Model.UserTargets.Count > 0)
                             {
-                                            <div class="row">
+                                <div class="row">
 
-                                                <div class="col-md-8" id="QTR">
-
-
-                                                    @Html.Action(
-                                                                    BusinessExcel.Controllers.ReportController.QTR_ACHIEVEMENT_VIEW_SE,
-                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.UserID, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
-
-                                                </div>
+                                    <div class="col-md-12" id="QTR">
 
 
-                                                </div>
-                                         
+                                        @Html.Action(
+                                                                    BusinessExcel.Controllers.ReportController.QTR_ACHIEVEMENT_MASTER_VIEW_SE,
+                                                                    new TargetAchievementQTRView { Month = Model.UserTargets[0].Month, user_id = Model.UserID, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id,UserTargets=Model.UserTargets })
 
-                                        <div class="row ">
-                                  
-                                   
-                                                                <div class="col-md-4" id="QMNT1">
-                                                                    @Html.Action(
+
+
+                                    </div>
+                                </div>
+                                <div class="row">
+
+
+
+
+                                    @*<div class="col-md-4" id="QMNT1">
+                                        @Html.Action(
                                                                     BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
                                                                     new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.UserID, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
-                                                                
-                                                                </div>
-                                                                <div class="col-md-4" id="QMNT2">
-                                                                    @if (Model.UserTargets.Count>1)
-                                                                    {
-                                                                    @Html.Action(
-                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
-                                                                    new TargetAchievementView { Month = Model.UserTargets[1].Month, user_id = Model.UserID, start_date = Model.UserTargets[1].start_date, target_id = Model.UserTargets[1].target_id })
-                                                
-                                                                    }
-                                                                </div>
 
-                                                                <div class="col-md-4" id="QMNT3">
-                                                                    @if (Model.UserTargets.Count > 2)
-                                                                    {
-                                                                    @Html.Action(
-                                                                     BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
-                                                                     new TargetAchievementView { Month = Model.UserTargets[2].Month, user_id = Model.UserID, start_date = Model.UserTargets[2].start_date, target_id = Model.UserTargets[2].target_id })
-                                                                    }
-                                                                </div>
+                                    </div>
+                                    <div class="col-md-4" id="QMNT2">
+                                        @Html.Action(
+                                                                                        BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                                        new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.UserID, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
+
+                                    </div>
+                                    <div class="col-md-4" id="QMNT3">
+                                        @Html.Action(
+                                                                                        BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                                        new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.UserID, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
+
+                                    </div>*@
+                                    @*<div class="col-md-4" id="QMNT2">
+                                            @if (Model.UserTargets.Count>1)
+                                            {
+                                            @Html.Action(
+                                            BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                            new TargetAchievementView { Month = Model.UserTargets[1].Month, user_id = Model.UserID, start_date = Model.UserTargets[1].start_date, target_id = Model.UserTargets[1].target_id })
+
+                                            }
                                         </div>
-                         
-                                  
+
+                                        <div class="col-md-4" id="QMNT3">
+                                            @if (Model.UserTargets.Count > 2)
+                                            {
+                                            @Html.Action(
+                                             BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                             new TargetAchievementView { Month = Model.UserTargets[2].Month, user_id = Model.UserID, start_date = Model.UserTargets[2].start_date, target_id = Model.UserTargets[2].target_id })
+                                            }
+                                        </div>*@
+
+                                </div>
+
+
+
                                 @*foreach (var target in Model.UserTargets)
                                 {
                                     <div >

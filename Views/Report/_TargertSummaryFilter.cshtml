@@ -28,13 +28,13 @@
 
                     int count = 0;
                     IQueryable<TargetSummaryView> data = db.TargetSummaryReportPaging(pageNumber: ViewBag.TargertSummaryViewPage,
-                                pageSize: 20,
+                                pageSize: 200,
                                 sort: ViewBag.TargertSummaryViewSort,
                                 sortdir: ViewBag.TargertSummaryViewDir,
                                 count: out count, Filters: Model
                                 );
                     var grid = new WebGrid(ajaxUpdateContainerId: "summary",
-                                        ajaxUpdateCallback: "callBack", rowsPerPage: 20
+                                        ajaxUpdateCallback: "callBack", rowsPerPage: 200
                                                     );
                     grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
                     @grid.GetHtml(
@@ -52,24 +52,24 @@
                                         $("tr:contains('@item.qtr_name')").css("background-color", "#91b4cc").css("font-weight", "bold");
                                     </script>
             }
-                            }</text>,style: "qtr_name",canSort: false),
+                            }</text>,style: "qtr_name smcol",canSort: false),
 
 
-                             grid.Column(columnName: "user_name", header: "Staff", format: null, style: "user_name", canSort: false),
-                             grid.Column(columnName: "roster_name", header: "Target", format: null, style: "create_time colbtn", canSort: false),
-                             grid.Column(columnName: "location_name", header: "Location", format: null, style: "create_time", canSort: false),
-                             grid.Column(columnName: "TotalTarget", header: "Target Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalTarget"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
-                             grid.Column(columnName: "TotalAchieved", header: "Achvd Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalAchieved"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
+                             grid.Column(columnName: "user_name", header: "Staff", format: null, style: "user_name xtrlg", canSort: false),
+                             grid.Column(columnName: "roster_name", header: "Target", format: null, style: "create_time smcol", canSort: false),
+                             grid.Column(columnName: "location_name", header: "Location", format: null, style: "xtrlg", canSort: false),
+                             grid.Column(columnName: "TotalTarget", header: "Target Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalTarget"], new Dictionary<string, object> { { "class", "numaric" } }), style: "mdcol", canSort: false),
+                             grid.Column(columnName: "TotalAchieved", header: "Achvd Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalAchieved"], new Dictionary<string, object> { { "class", "numaric" } }), style: "mdcol", canSort: false),
                              grid.Column(columnName: "BaseIncentive", header: "Base Incent", format: (item) => @Html.AdminLTEParagraph((object)@item["BaseIncentive"], new Dictionary<string, object> { { "class", "numaric" } }), style: "BaseIncentive", canSort: false),
                              grid.Column(columnName: "TotalEnteredBaseIncentive", header: "Entered Base Incent", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalEnteredBaseIncentive"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
                              grid.Column(columnName: "TotalTargetPerc", header: "Target Perc", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalTargetPerc"] + " %", new Dictionary<string, object> { { "class", "numaric" } }), style: "user_name", canSort: false),
                              grid.Column(columnName: "TotalIncAmt", header: "Incent Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalIncAmt"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
-                             grid.Column(columnName: "TotalEnteredIncAmt", header: "Entered Incent Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalEnteredIncAmt"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
-                             grid.Column(columnName: "LineAch", header: "Lines Achvd", format: null, style: "create_time", canSort: false),
+                             grid.Column(columnName: "TotalEnteredIncAmt", header: "Entered Incent Amt", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalEnteredIncAmt"], new Dictionary<string, object> { { "class", "numaric" } }), style: "", canSort: false),
+                             grid.Column(columnName: "LineAch", header: "Lines Achvd", format: null, style: "smcol", canSort: false),
                              grid.Column(columnName: "line_achieved_amt", header: "Lines Achvd Amt", format: null, style: "create_time", canSort: false),
                              grid.Column(columnName: "bonus_lines", header: "Bonus Achvd Perc", format: (item) => @Html.AdminLTEParagraph((object)@item["bonus_lines"] + " %", new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
                              grid.Column(columnName: "bonus_line_amt", header: "Bonus Achvd", format: null, style: "create_time", canSort: false),
-                             grid.Column(columnName: "TotalValue", header: "Total", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalValue"], new Dictionary<string, object> { { "class", "numaric" } }), style: "create_time", canSort: false),
+                             grid.Column(columnName: "TotalValue", header: "Total", format: (item) => @Html.AdminLTEParagraph((object)@item["TotalValue"], new Dictionary<string, object> { { "class", "numaric" } }), style: "mdcol", canSort: false),
                              grid.Column(columnName: "target_status", header: "Target Status", format: null, style: "create_time", canSort: false),
                              grid.Column(columnName: "roster_id", header: "roster_id", format: null, style: "create_time", canSort: false),
                              grid.Column(columnName: "location_id", header: "location_id", format: null, style: "create_time", canSort: false),
@@ -101,13 +101,25 @@
         width: 8%;
     }
 
-   
+   .smcol
+   {
+       width: 4%;
+   }
+   .lgcol{
+       width:6%;
+   }
+   .mdcol{
+       width:5%;
+   }
+   .xtrlg{
+       width:12%;
+   }
       th:nth-child(n+5),  td:nth-child(n+5) {
        text-align:right
     }
     
    
-       th:nth-child(n+16),td:nth-child(n+17) {
+       th:nth-child(n+17),td:nth-child(n+17) {
        text-align:left  
     }
 
@@ -120,10 +132,15 @@
 
     function callBack(data) {
 
-   
+
 
         $('#summary').html(data);
     }
+
+
+
+
+
 
    
 </script>

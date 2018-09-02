@@ -9,8 +9,10 @@ using System.IO;
 using System.Linq;
 
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 
 namespace BusinessExcel.Controllers
 {
@@ -662,6 +664,22 @@ namespace BusinessExcel.Controllers
         public static string USER_TARGET_ACHIEVEMENT_TITLE_SE = "Target & Achievement (SE) ";
         public static string USERTARGET_ACHIEVEMENT_VIEW_SE = "UserTargetAchievementView_SE";
         public static string QTR_ACHIEVEMENT_VIEW_SE = "_QTR_AchievementView_SE";
+        public static string QTR_ACHIEVEMENT_MASTER_VIEW_SE = "UserTargetAchievementViewMaster_SE";
+
+        public ActionResult UserTargetAchievementViewMaster_SE(string sort, string sortdir, int page = 1, TargetAchievementQTRView target = null)
+        {
+            ViewBag.UserTargetViewSESort = sort;
+            ViewBag.UserTargetViewSEDir = sortdir;
+            ViewBag.UserTargetViewSEPage = page;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
+
+
+            return PartialView(QTR_ACHIEVEMENT_VIEW_SE, target);
+        }
+
+
 
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
         public ActionResult UserTargetAchievementView_SE(string sort, string sortdir, int page = 1, TargetAchievementView target = null)
@@ -673,13 +691,7 @@ namespace BusinessExcel.Controllers
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
 
-         
-            //if (target.target_id > 0)
-            //{
-            //    target.TargetTotal = LoadTargetTotal(target.user_id.Value, target.target_id.Value);
-            //}
-
-
+ 
             return PartialView(USERTARGET_ACHIEVEMENT_VIEW_SE, target);
         }
 
@@ -728,5 +740,79 @@ namespace BusinessExcel.Controllers
 
 
         }
+
+        public static string EXPORT_TARGET_SUMMARY_EXCEL = "ExportTargetSummaryExcel";
+        public static string EXPORT_TARGET_SUMMARY_EXCEL_TITLE = "Export Excel";
+        public ActionResult ExportTargetSummaryExcel(TargetSummaryView Filters = null)
+        {
+
+            using (var db = new SalesManageDataContext())
+            {
+                // var gv = new System.Web.UI.WebControls.GridView();
+                // gv.DataSource = db.GetTargetSummaryExport(Filters);
+
+                //gv.DataBind();
+                //Response.ClearContent();
+                //Response.Buffer = true;
+                //Response.AddHeader("content-disposition", "attachment; filename=RosterList - " + DateTime.Now.Date + ".xls");
+                //Response.ContentType = "application/ms-excel";
+                //Response.Write("<style> TD { mso-number-format:\\@; } </style>");
+
+
+                //Response.Charset = "";
+                //StringWriter objStringWriter = new StringWriter();
+                //System.Web.UI.HtmlTextWriter objHtmlTextWriter = new System.Web.UI.HtmlTextWriter(objStringWriter);
+                //gv.RenderControl(objHtmlTextWriter);
+                //Response.Output.Write(objStringWriter.ToString());
+                //Response.Flush();
+                //Response.End();
+
+                IEnumerable<TargetSummaryView> dt = db.GetTargetSummaryExport(Filters);
+              
+                //create object to webgrid  
+                WebGrid grid = new WebGrid(source: dt, canPage: false, canSort: false);
+                string gridData = grid.GetHtml(
+                columns: grid.Columns(
+                                grid.Column("qtr_name", "Quarter"),
+                                 grid.Column("user_name", "Staff"),
+                                  grid.Column("roster_name", "Target"),
+                                   grid.Column("location_name", "Location"),
+                                   grid.Column("totaltarget", "Target"),
+                                     grid.Column("TotalAchieved", "Achvd Amt"),
+                                     grid.Column("BaseIncentive", "Base Incent"),
+                                     grid.Column("TotalEnteredIncAmt", "Entered Base Incent"),
+                                     grid.Column("TotalTargetPerc", "Target Perc"),
+                                     grid.Column("TotalIncAmt", "Incent Amt"),
+                                     grid.Column("TotalEnteredIncAmt", "Entered Incent Amt"),
+                                     grid.Column("LineAch", "Lines Achvd"),
+                                     grid.Column("line_achieved_amt", "Lines Achvd Amt"),
+                                     grid.Column("bonus_lines", "Bonus Achvd Perc"),
+                                     grid.Column("bonus_line_amt", "Bonus Achvd"),
+                                     grid.Column("TotalValue", "Total"),
+                                        grid.Column("target_status", "Target Status")
+
+
+                                )).ToString();
+              
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment; filename=TargetSummary-" + DateTime.Now.Date + ".xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Write("<style> table, th, td {    border: 1px solid black; } TD { mso-number-format:\\@; }  </style>");
+
+
+                Response.Charset = "";
+         
+                Response.Output.Write(gridData);
+                Response.Flush();
+                Response.End();
+
+            }
+
+            if (Request.IsAjaxRequest()) return PartialView(Filters);
+            return View(Filters);
+        }
+
+       
     }
 }

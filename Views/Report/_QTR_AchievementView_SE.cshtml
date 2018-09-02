@@ -6,7 +6,7 @@
 @using BusinessExcel.Providers.ProviderContext.Entities
 @using BusinessExcel.Controllers.JSON
 
-@model TargetAchievementView
+@model TargetAchievementQTRView
 
 
 
@@ -32,7 +32,7 @@
                     };
 
                     int count = 0;
-                    IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewSEPage,
+                    IQueryable<TargetAchievementQTRView> data = db.TargetAchievementQRTViewPaging(pageNumber: ViewBag.UserTargetViewSEPage,
                                 pageSize: 20,
                                 sort: ViewBag.UserTargetViewSESort,
                                 sortdir: ViewBag.UserTargetViewSEDir,
@@ -87,160 +87,97 @@
 
         </div>
     </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
 
-    <div class="col-md-12">
+        <table class="table table-bordered" style="background-color:#bbbab8;margin:4px">
 
-        <table class="table table-bordered" style="width:81%">
-            
             <tbody>
                 <tr>
 
-                    <td>Base Incentive</td>
+                    <td class="lblcol">Base Incentive</td>
                     <td>1500</td>
                     <td></td>
                 </tr>
                 <tr>
 
-                    <td>Achived % -Mnth</td>
-                    <td>15%</td>
-                    <td>350</td>
+                    <td class="lblcol">Qtr Sell In Parameters</td>
+                    <td colspan="2"></td>
                 </tr>
+                <tr>
 
+                    <td class="lblcol">Achived % -Qrtr</td>
+                    <td>0.0%</td>
+                    <td>0.0</td>
+                </tr>
+                <tr>
+
+                    <td class="lblcol">Lines Achv</td>
+                    <td>0</td>
+                    <td>0.0</td>
+                </tr>
+                <tr>
+
+                    <td class="lblcol">Bonus Lines</td>
+                    <td>0.0%</td>
+                    <td>0.0</td>
+                </tr>
+                <tr>
+
+                    <td class="lblcol">Total Q2, 2018 Incentive:</td>
+                    <td></td>
+                    <td>0.0</td>
+                </tr>
+                <tr>
+
+                    <td class="lblcol"> Received (Mnthly):</td>
+                    <td colspan="2"></td>
+
+                </tr>
+                <tr>
+
+                    <td class="lblcol"> Balance for  Q2, 2018 :</td>
+                    <td colspan="2"></td>
+
+                </tr>
             </tbody>
         </table>
     </div>
+    <div class="col-md-3 qtr" id="QMNT1">
+        @Html.Action(
+                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.user_id, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
+
+
+
+
     </div>
+    <div class="col-md-3 qtr" id="QMNT2">
 
-@*</div>*@
-
-@*<div class="container-fluid">
-    <div id="totalvaluerow">*@
-
-@*<div class="row">
-        <div class="col-md-4">
+        @Html.Action(
+                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.user_id, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
 
 
+    </div>
+    <div class="col-md-3 qtr" id="QMNT3">
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Base Incentive</th>
-                        <th>Entered Base Incentive</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tr>
-
-                    <td><input type="text" class="form-control extrainfo " value="@Model.TargetTotal[0].BaseIncentive" id="base_incentive_@Model.target_id" style="text-align:right;background-color:#eceaea" readonly autocomplete="off" /></td>
-                    <td style="border:.1px solid #d0cccc;padding-right:5px;background-color:#eceaea" class="Entered_baseinc_Amt numaric"> <span class="display-mode"> <label id="lbl_Entered_baseinc_Amt" style="font-weight:bold">@Html.AdminLTEParagraph((object)@Model.TargetTotal[0].TotalEnteredBaseIncentive, new Dictionary<string, object> { { "class", "numaric" } })</label> </span>  <input type="text" id="Entered_baseinc_Amt" value="@Model.TargetTotal[0].TotalEnteredBaseIncentive" class="edit-mode" style="text-align: right; display: none;height:30px;border:0px" autocomplete="off" onkeypress="return isNumberKey(event)"> </td>
+        @Html.Action(
+                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.user_id, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
 
 
-                    <td style="padding-left:5px">
-                        <button class="edit-base_amt display-mode btn btn-primary btn-sm trn-ctrl trn-ctrl_@Model.target_id">Edit</button>
-                        <button class="save-base_amt edit-mode btn btn-success btn-sm trn-ctrl trn-ctrl_@Model.target_id" id="@Model.target_id">Save</button>
-                        <button class="cancel-base_amt edit-mode btn btn-info btn-sm trn-ctrl trn-ctrl_@Model.target_id">Cancel</button>
-                    </td>
-                </tr>
-            </table>
+    </div>
+</div>
 
-
-
-        </div>
-    </div>*@
-
-@*<hr class="col-md-12" size="20" style="margin:2px;border-top:0">*@
-
-
-
-
-@*<div class="row">
-        <div class="col-md-7">
-
-
-
-            <table class="table tottable" id="tottable_@Model.target_id">
-
-                <tbody>
-
-                    <tr class="gridheader" style="background-color:#d48b1e">
-                        <th style="width:10%"></th>
-                        <th style="width:10%"></th>
-                        <th style="text-align:center;font-weight:bold;width:10%">Incentive</th>
-                        <th style="text-align:center;font-weight:bold;width:15%">Entered Incentive</th>
-                        <th></th>
-                    </tr>
-                    <tr>
-
-
-                        <td><input class="form-control extrainfo tottableinputLabel" value="Target % " /></td>
-                        <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalTargetPerc % id="Target_Perc_@Model.target_id" /></td>
-                        <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalIncAmt id="Target_Amt_@Model.target_id" /></td>
-                        <td style="padding-right:5px;border:.1px solid #d0cccc;text-align:right" class="Entered_inc_Amt numaric tdTot"> <span class="display-mode "> <label id="lbl_Entered_inc_Amt" style="font-weight:bold;" class="form-control extrainfo tottableinput">@Html.AdminLTEParagraph((object)@Model.TargetTotal[0].TotalEnteredIncAmt, new Dictionary<string, object> { { "class", "numaric" } })</label> </span>  <input type="text" id="Entered_inc_Amt" value="@Model.TargetTotal[0].TotalEnteredIncAmt" class="edit-mode " style="text-align: right; display: none;height:40px;border:0px;width:100%" autocomplete="off" onkeypress="return isNumberKeyDotAllow(event)"> </td>
-
-                        <td>
-                            <button class="edit-inc_amt colincbtn display-mode btn btn-primary btn-sm trn-ctrl trn-ctrl_@Model.target_id">Edit</button>
-                            <button class="save-inc_amt colincbtn edit-mode btn btn-success btn-sm trn-ctrl trn-ctrl_@Model.target_id" id="@Model.target_id">Save</button>
-                            <button class="cancel-inc_amt colincbtn1 edit-mode btn btn-info btn-sm trn-ctrl trn-ctrl_@Model.target_id">Cancel</button>
-                        </td>
-
-
-                    </tr>
-
-                    <tr>
-
-                        <td><input class="form-control extrainfo tottableinputLabel" value="Line Achv" /></td>
-                        <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].LineAch id="Lines_Ach_Perc_@Model.target_id" /></td>
-                        <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalLineAchAccAmt id="Lines_Ach_Amt_@Model.target_id" /></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-
-                        <td><input class="form-control extrainfo tottableinputLabel" value="Bonus Lines" /></td>
-                        <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].totalBonusLinePerc % id="Bonus_Lines_Perc_@Model.target_id" /></td>
-                        <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal[0].TotalBonusLineAmt id="Bonus_Lines_Amt_@Model.target_id" /></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-
-                        <td><input class="form-control extrainfo tottableinputLabel" value="" /></td>
-                        <td style="text-align:right"><input class="form-control extrainfo tottableinput" value="" id="Tot_Perc_@Model.target_id" /></td>
-                        <td style="text-align:right"><input class="form-control extrainfo tottableinput" value=@Model.TargetTotal.Sum(x => x.TotalEnteredIncAmt>0 ?  x.TotalEnteredIncAmt + x.TotalLineAchAccAmt+x.TotalBonusLineAmt : x.TotalIncAmt+x.TotalLineAchAccAmt+x.TotalBonusLineAmt) id="Tot_Amt_@Model.target_id" /></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-    </div>*@
-
-
-@*</div>
-        </div>
-    </div>*@
-
-@*</div>
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-        </div>
-    </div>*@
 
 
 <style>
-    .row.no-gutters {
-        margin-right: 0;
-        margin-left: 0;
+   
+    .lblcol{
+        width:50%;
     }
-
-        .row.no-gutters > [class^="col-"],
-        .row.no-gutters > [class*=" col-"] {
-            padding-right: 0;
-            padding-left: 0;
-        }
 
     .Entered_Amt {
         width: 15%;
@@ -267,5 +204,9 @@
     .webgrid th, .webgrid td {
         border: 1px solid #C0C0C0;
         padding: 5px;
+    }
+    .qtr
+    {
+        margin-top:2%;
     }
 </style>

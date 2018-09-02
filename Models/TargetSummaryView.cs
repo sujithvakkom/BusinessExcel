@@ -65,6 +65,7 @@ namespace BusinessExcel.Models
         public decimal? TotalValue { get; set; }
 
         [NotMapped]
+        [Display(Name = "Quarter")]
         public string qtr_name { get; set; }
 
     }
