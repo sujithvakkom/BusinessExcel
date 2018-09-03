@@ -38,7 +38,6 @@ namespace BusinessExcel.Controllers
                             XValues = g.FirstOrDefault().Category,
                             Label = g.FirstOrDefault().Category
                         }).AsQueryable();
-                        */
                 var source = db.DailyUpateView
                     .Where(x => x.CreateTime > startDate && x.CreateTime < endDate)
                     .GroupBy(x => new { x.Category })
@@ -50,6 +49,8 @@ namespace BusinessExcel.Controllers
                             XValues = x.Key.Category,
                             Label = x.Key.Category
                         });
+                        */
+                var source = db.GetGraphForCurrentMonthQuantity(viwer,startDate,endDate);
                 var data = new data<graph>(
                     chartType,
                     source,
@@ -74,6 +75,7 @@ namespace BusinessExcel.Controllers
         {
             using (var db = new SalesManageDataContext())
             {
+                int viwer = db.getViewer_Id();
                 var chartType = ChartType.bar;
 
                 /*
@@ -88,17 +90,7 @@ namespace BusinessExcel.Controllers
                                   Label = g.FirstOrDefault().Category
                               }).AsQueryable();
                         */
-                var source = db.DailyUpateView
-                    .Where(x => x.CreateTime > startDate && x.CreateTime < endDate)
-                    .GroupBy(x => new { x.Category ,x.UserName})
-                    .Where(x => x.Sum(y => y.Quantity) > 0)
-                    .Select(x =>
-                        new graph()
-                        {
-                            Value = x.Sum(y => (decimal)y.TotalValue),
-                            XValues = x.Key.UserName,
-                            Label = x.Key.Category
-                        });
+                var source = db.GetGraphForCurrentMonthValue(viwer,startDate,endDate);
                     var data = new data<graph>(
                     chartType,
                     source,

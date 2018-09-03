@@ -283,6 +283,8 @@
     <Compile Include="Providers\ProviderContext\Entities\CategoryDetail.cs" />
     <Compile Include="Providers\ProviderContext\Entities\CreateUser.cs" />
     <Compile Include="Providers\ProviderContext\Entities\GlobalSettings.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\GraphData.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\GraphEntity.cs" />
     <Compile Include="Providers\ProviderContext\Entities\IncentiveFactor.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ItemModel.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LineTarget.cs" />
@@ -305,6 +307,7 @@
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ViewLocationTargetDistribution.cs" />
     <Compile Include="Providers\ProviderContext\Entities\_BaseTarget.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.GetSummaryCurrentMonthQuantity.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.AccountDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Checkin.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.GlobalSettings.cs" />

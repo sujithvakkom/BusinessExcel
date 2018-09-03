@@ -10,18 +10,7 @@
 
         using (var db = new SalesManageDataContext())
         {
-            var source = (from dsl in db.DailyUpateView
-                          join u in db.getViewersList()
-                          on dsl.UserId equals u
-                          group dsl by new { dsl.Item, dsl.Description, dsl.UserName, dsl.Name } into g
-                          select new
-                          {
-                              User = g.FirstOrDefault().UserName,
-                              UserName = g.FirstOrDefault().Name,
-                              Item = g.FirstOrDefault().Item,
-                              ItemDescription = g.FirstOrDefault().Description,
-                              TotalValue = g.Sum(_ => (decimal)_.TotalValue)
-                          }).AsQueryable();
+            var source =db.GetDataForCurrentMonthValue(db.getViewer_Id(), Model.StartDate, Model.EndDate);
 
             //var source = db.DailyUpateView
             //.Where(x => x.CreateTime > Model.StartDate && x.CreateTime < Model.EndDate)
