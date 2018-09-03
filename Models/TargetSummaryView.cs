@@ -9,10 +9,10 @@ namespace BusinessExcel.Models
 {
     public class TargetSummaryView
     {
-     
+
         [Key()]
 
-       
+
         public decimal? TotalTarget { get; set; }
         public decimal? TotalAchieved { get; set; }
 
@@ -21,7 +21,7 @@ namespace BusinessExcel.Models
         public decimal? TotalIncAmt { get; set; }
 
         public decimal? TotalEnteredIncAmt { get; set; }
-      
+
         public decimal? BaseIncentive { get; set; }
 
         public int? LineAch { get; set; }
@@ -30,7 +30,7 @@ namespace BusinessExcel.Models
         public decimal? bonus_lines { get; set; }
         public decimal? bonus_line_amt { get; set; }
 
-       
+
         public decimal? TotalEnteredBaseIncentive { get; set; }
 
 
@@ -52,7 +52,7 @@ namespace BusinessExcel.Models
         [Display(Name = "Staff Code")]
         public string user_name { get; set; }
 
-        [Display(Name = "Roster")]
+        [Display(Name = "Target")]
         public int? roster_id { get; set; }
 
         [Display(Name = "Location")]
@@ -63,5 +63,10 @@ namespace BusinessExcel.Models
 
 
         public decimal? TotalValue { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Quarter")]
+        public string qtr_name { get; set; }
+
     }
 }

@@ -30,7 +30,7 @@ namespace BusinessExcel.Controllers.JSON
             {
                 int temp;
 
-                var items = db.getRosterDetails( search: Search, Page: Page, RowCount: out temp);
+                var items = db.getRosterDetails( search: Search, Page: Page, RowCount: out temp, LocationID: locationId);
                 JSONPagininationModel<RosterViewModel> model = new JSONPagininationModel<RosterViewModel>();
                 model.CountPerPage = 20;
                 model.OutputList = items;

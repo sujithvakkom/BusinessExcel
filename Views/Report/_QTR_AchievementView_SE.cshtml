@@ -6,19 +6,18 @@
 @using BusinessExcel.Providers.ProviderContext.Entities
 @using BusinessExcel.Controllers.JSON
 
-@model TargetAchievementView
+@model TargetAchievementQTRView
 
 
+
+
+@*<div class="row">
+    <div class="col-md-4">*@
+
+@*<div class="box box-primary" style="margin-top:3%" id="@Model.target_id">
+    <div class="box-body">*@
 
 <div class="row">
-    <div class="col-md-6">
-        <strong style="padding-left:5px">@Model.Month @Model.start_date.Value.ToString(" yyyy")</strong>
-</div>
-</div>
-
-
-<div class="row">
-
     <div class="col-md-12">
 
 
@@ -33,7 +32,7 @@
                     };
 
                     int count = 0;
-                    IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewSEPage,
+                    IQueryable<TargetAchievementQTRView> data = db.TargetAchievementQRTViewPaging(pageNumber: ViewBag.UserTargetViewSEPage,
                                 pageSize: 20,
                                 sort: ViewBag.UserTargetViewSESort,
                                 sortdir: ViewBag.UserTargetViewSEDir,
@@ -54,7 +53,12 @@
                               columns: new[] {
 
 
-
+                           grid.Column(
+                           columnName: "Category",
+                           header: "category",
+                           format: null,
+                           style: "category",
+                           canSort: false),
                            grid.Column(
 
                            columnName: "Target_amt",
@@ -80,38 +84,101 @@
 
 
             }
+
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-3">
 
-
-
-        <table class="table table-bordered" style="width:80%;background-color:#bbbab8;margin:4px;">
+        <table class="table table-bordered" style="background-color:#bbbab8;margin:4px">
 
             <tbody>
                 <tr>
 
-                    <td>Base Incentive</td>
+                    <td class="lblcol">Base Incentive</td>
                     <td>1500</td>
                     <td></td>
                 </tr>
                 <tr>
 
-                    <td>Achived % -Mnth</td>
-                    <td>15%</td>
-                    <td>350</td>
+                    <td class="lblcol">Qtr Sell In Parameters</td>
+                    <td colspan="2"></td>
                 </tr>
+                <tr>
 
+                    <td class="lblcol">Achived % -Qrtr</td>
+                    <td>0.0%</td>
+                    <td>0.0</td>
+                </tr>
+                <tr>
+
+                    <td class="lblcol">Lines Achv</td>
+                    <td>0</td>
+                    <td>0.0</td>
+                </tr>
+                <tr>
+
+                    <td class="lblcol">Bonus Lines</td>
+                    <td>0.0%</td>
+                    <td>0.0</td>
+                </tr>
+                <tr>
+
+                    <td class="lblcol">Total Q2, 2018 Incentive:</td>
+                    <td></td>
+                    <td>0.0</td>
+                </tr>
+                <tr>
+
+                    <td class="lblcol"> Received (Mnthly):</td>
+                    <td colspan="2"></td>
+
+                </tr>
+                <tr>
+
+                    <td class="lblcol"> Balance for  Q2, 2018 :</td>
+                    <td colspan="2"></td>
+
+                </tr>
             </tbody>
         </table>
     </div>
+    <div class="col-md-3 qtr" id="QMNT1">
+        @Html.Action(
+                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.user_id, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
 
+
+
+
+    </div>
+    <div class="col-md-3 qtr" id="QMNT2">
+
+        @Html.Action(
+                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.user_id, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
+
+
+    </div>
+    <div class="col-md-3 qtr" id="QMNT3">
+
+        @Html.Action(
+                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.user_id, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
+
+
+    </div>
 </div>
 
+
+
 <style>
-  
+   
+    .lblcol{
+        width:50%;
+    }
+
     .Entered_Amt {
         width: 15%;
     }
@@ -138,10 +205,8 @@
         border: 1px solid #C0C0C0;
         padding: 5px;
     }
-
- /*.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th
-       {
-           padding:2px;
-       }*/
-
+    .qtr
+    {
+        margin-top:2%;
+    }
 </style>
