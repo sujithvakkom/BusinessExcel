@@ -10,7 +10,6 @@
 
 
 
-
 @*<div class="row">
     <div class="col-md-4">*@
 
@@ -32,12 +31,7 @@
                     };
 
                     int count = 0;
-                    IQueryable<TargetAchievementQTRView> data = db.TargetAchievementQRTViewPaging(pageNumber: ViewBag.UserTargetViewSEPage,
-                                pageSize: 20,
-                                sort: ViewBag.UserTargetViewSESort,
-                                sortdir: ViewBag.UserTargetViewSEDir,
-                                count: out count, Filters: Model
-                                );
+                    IQueryable<TargetAchievementQTRView> data = db.TargetAchievementQTRViewPaging(Filters: Model);
 
                     var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
                                                     ajaxUpdateCallback: "targetachievementviewcallBack",
@@ -59,27 +53,34 @@
                            format: null,
                            style: "category",
                            canSort: false),
+
+                                
+                       grid.Column(
+                           columnName: "has_bonus",
+                           header: "Bonus Line",
+                           format: @<text>@(item.has_bonus ? "1" : "0" )</text>, style: "Category ", canSort: false),
+
                            grid.Column(
 
                            columnName: "Target_amt",
                            header: "Target",
-                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Target_amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           format: (item) => @Html.AdminLTEParagraph((object)@item["Target_amt"], new Dictionary<string, object> { { "class", "numaric" } }),
                            style: "Target_amt numaric", canSort: false),
                            grid.Column(
                            columnName: "Achieved_Amt",
                            header: "Achieved",
-                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Achieved_Amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           format: (item) => @Html.AdminLTEParagraph((object)@item["Achieved_Amt"], new Dictionary<string, object> { { "class", "numaric" } }),
                            style: "Achieved_Amt numaric", canSort: false),
                               grid.Column(
                            columnName: "Achieved_Amt",
                            header: "Achieved%",
-                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Achieved_Amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           format: (item) => @Html.AdminLTEParagraph((object)@item["Achieved_Amt"], new Dictionary<string, object> { { "class", "numaric" } }),
                            style: "Achieved_Amt numaric", canSort: false),
 
                               }
 
                 )
-                }
+}
 
 
 
@@ -88,125 +89,313 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-3">
 
-        <table class="table table-bordered" style="background-color:#bbbab8;margin:4px">
-
-            <tbody>
-                <tr>
-
-                    <td class="lblcol">Base Incentive</td>
-                    <td>1500</td>
-                    <td></td>
-                </tr>
-                <tr>
-
-                    <td class="lblcol">Qtr Sell In Parameters</td>
-                    <td colspan="2"></td>
-                </tr>
-                <tr>
-
-                    <td class="lblcol">Achived % -Qrtr</td>
-                    <td>0.0%</td>
-                    <td>0.0</td>
-                </tr>
-                <tr>
-
-                    <td class="lblcol">Lines Achv</td>
-                    <td>0</td>
-                    <td>0.0</td>
-                </tr>
-                <tr>
-
-                    <td class="lblcol">Bonus Lines</td>
-                    <td>0.0%</td>
-                    <td>0.0</td>
-                </tr>
-                <tr>
-
-                    <td class="lblcol">Total Q2, 2018 Incentive:</td>
-                    <td></td>
-                    <td>0.0</td>
-                </tr>
-                <tr>
-
-                    <td class="lblcol"> Received (Mnthly):</td>
-                    <td colspan="2"></td>
-
-                </tr>
-                <tr>
-
-                    <td class="lblcol"> Balance for  Q2, 2018 :</td>
-                    <td colspan="2"></td>
-
-                </tr>
-            </tbody>
-        </table>
+@*<div class="container testimonial-group">
+    <div class="row text-center">
+        <div class="col-md-4">1</div>
+        <!--
+        -->
+        <div class="col-md-4">2</div>
+        <!--
+        -->
+        <div class="col-md-4">3</div>
+        <!--
+        -->
+        <div class="col-md-4">4</div>
+        <!--
+        -->
+        <div class="col-md-4">5</div>
+        <!--
+        -->
+        <div class="col-md-4">6</div>
+        <!--
+        -->
+        <div class="col-md-4">7</div>
+        <!--
+        -->
+        <div class="col-md-4">8</div>
+        <!--
+        -->
+        <div class="col-md-4">9</div>
     </div>
-    <div class="col-md-3 qtr" id="QMNT1">
-        @Html.Action(
+</div>*@
+
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <table class="table table-bordered qtrTot_tbl" style="background-color:#bbbab8;margin:4px">
+
+                <tbody>
+                    <tr>
+
+                        <td class="lblcol">Base Incentive</td>
+                        <td class="entcol"><input type="text" value="@Model.TargetTotal[0].BaseIncentive" id="base_incentive_@Model.target_id" style="text-align:right;background-color:transparent" readonly autocomplete="off" /></td>
+                        @*<td class="entcol"><input type="text" value="@Model.TargetTotal[0].BaseIncentive" id="base_incentive_@Model.target_id" style="text-align:right;background-color:#eceaea" readonly autocomplete="off" /></td>*@
+                        <td>  </td>
+                    </tr>
+
+
+                    <tr>
+
+                        <td class="lblcol">Entered Base Incentive</td>
+                        <td style="border:.1px solid #d0cccc;padding-right:5px;background-color:transparent" class="Entered_baseinc_Amt numaric entcol"> <span class="display-mode"> <label id="lbl_Entered_baseinc_Amt" style="font-weight:bold">@Html.AdminLTEParagraph((object)@Model.TargetTotal[0].TotalEnteredBaseIncentive, new Dictionary<string, object> { { "class", "numaric" } })</label> </span>  <input type="text" id="Entered_baseinc_Amt" value="@Model.TargetTotal[0].TotalEnteredBaseIncentive" class="edit-mode" style="text-align: right; display: none;height:30px;border:0px" autocomplete="off" onkeypress="return isNumberKey(event)"> </td>
+                        <td>
+                            <button class="edit-base_amt display-mode btn btn-primary btn-sm trn-ctrl trn-ctrl_@Model.qtr">Edit</button>
+                            <button class="save-base_amt edit-mode btn btn-success btn-sm trn-ctrl trn-ctrl_@Model.qtr" id="@Model.qtr">Save</button>
+                            <button class="cancel-base_amt edit-mode btn btn-info btn-sm trn-ctrl trn-ctrl_@Model.qtr">Cancel</button>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td class="lblcol">Qtr Sell In Parameters</td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+
+                        <td class="lblcol">Achived % -Qrtr</td>
+                        <td class="entcol">0.0%</td>
+                        <td>0.0</td>
+                    </tr>
+                    <tr>
+
+                        <td class="lblcol">Lines Achv</td>
+                        <td class="entcol">0</td>
+                        <td>0.0</td>
+                    </tr>
+                    <tr>
+
+                        <td class="lblcol">Bonus Lines</td>
+                        <td class="entcol">0.0%</td>
+                        <td>0.0</td>
+                    </tr>
+                    <tr>
+
+                        <td class="lblcol">Total @Model.qtr Incentive:</td>
+                        <td class="entcol"></td>
+                        <td>0.0</td>
+                    </tr>
+                    <tr>
+
+                        <td class="lblcol"> Received (Mnthly):</td>
+                        <td colspan="2"></td>
+
+                    </tr>
+                    <tr>
+
+                        <td class="lblcol"> Balance for  @Model.qtr :</td>
+                        <td colspan="2"></td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12 qtr" id="QMNT1">
+                    @Html.Action(
                                                                     BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
                                                                     new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.user_id, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
 
 
 
 
+                </div>
+                <div class="col-md-12 qtr" id="QMNT2">
+                    @if (Model.UserTargets.Count > 1)
+                    {
+                                        @Html.Action(
+                                                                             BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                             new TargetAchievementView { Month = Model.UserTargets[1].Month, user_id = Model.user_id, start_date = Model.UserTargets[1].start_date, target_id = Model.UserTargets[1].target_id })
+                    }
+
+                </div>
+                <div class="col-md-12 qtr" id="QMNT3">
+                        @if (Model.UserTargets.Count > 2)
+                        {
+
+                                            @Html.Action(
+                                                                                 BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
+                                                                                 new TargetAchievementView { Month = Model.UserTargets[2].Month, user_id = Model.user_id, start_date = Model.UserTargets[2].start_date, target_id = Model.UserTargets[2].target_id })
+                        }
+
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3 qtr" id="QMNT2">
-
-        @Html.Action(
-                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
-                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.user_id, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
-
-
-    </div>
-    <div class="col-md-3 qtr" id="QMNT3">
-
-        @Html.Action(
-                                                                    BusinessExcel.Controllers.ReportController.USERTARGET_ACHIEVEMENT_VIEW_SE,
-                                                                    new TargetAchievementView { Month = Model.UserTargets[0].Month, user_id = Model.user_id, start_date = Model.UserTargets[0].start_date, target_id = Model.UserTargets[0].target_id })
-
-
-    </div>
-</div>
 
 
 
-<style>
-   
-    .lblcol{
-        width:50%;
-    }
 
-    .Entered_Amt {
-        width: 15%;
-    }
+    <style>
+            /*.testimonial-group > .row {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
 
-    .webgrid {
-        margin: 4px;
-        border-collapse: collapse;
-        width: 80%;
-    }
+                .testimonial-group > .row > .col-md-4 {
+                    display: inline-block;
+                    float: none;
+                }*/
 
-    .gridheader {
-        padding: 6px 5px;
-        text-align: center;
-        background-color: #e8eef4;
-        /*border-bottom: 2px solid #3966A2;*/
-        height: 40px;
-        font-weight: bold;
-        border-top: 2px solid #D6E8FF;
-        border-left: 2px solid #D6E8FF;
-        border-right: 2px solid #D6E8FF;
-    }
 
-    .webgrid th, .webgrid td {
-        border: 1px solid #C0C0C0;
-        padding: 5px;
-    }
-    .qtr
-    {
-        margin-top:2%;
-    }
-</style>
+
+
+
+
+
+
+
+
+
+            table td {
+                position: relative;
+            }
+
+                table td input {
+                    position: absolute;
+                    display: block;
+                    top: 0;
+                    left: 0;
+                    margin: 0;
+                    height: 100%;
+                    width: 100%;
+                    border: none;
+                    padding: 5px;
+                    /*box-sizing: border-box;*/
+                }
+
+            .lblcol {
+                width: 50%;
+            }
+
+            .entcol {
+                width: 30%;
+            }
+            /*.qtrTot_tbl input
+        {
+             width:80px;
+        }*/
+            .Entered_Amt {
+                width: 15%;
+            }
+
+            .webgrid {
+                margin: 4px;
+                border-collapse: collapse;
+                width: 80%;
+            }
+
+            .gridheader {
+                padding: 6px 5px;
+                text-align: center;
+                background-color: #e8eef4;
+                /*border-bottom: 2px solid #3966A2;*/
+                height: 40px;
+                font-weight: bold;
+                border-top: 2px solid #D6E8FF;
+                border-left: 2px solid #D6E8FF;
+                border-right: 2px solid #D6E8FF;
+            }
+
+            .webgrid th, .webgrid td {
+                border: 1px solid #C0C0C0;
+                padding: 5px;
+            }
+
+            .qtr {
+                margin-top: 2%;
+            }
+
+            .qtrTot_tbl, .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+                padding: 4px;
+            }
+
+            .btn-group-sm > .btn, .btn-sm {
+                padding: 2px 2px;
+            }
+    </style>
+    <script typeof="text/javascript">
+
+        $(document).ready(function () {
+
+            function isNumberKey(evt) {
+
+                var charCode = (evt.which) ? evt.which : event.keyCode
+
+
+
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                return true;
+            }
+
+            $('.edit-mode').hide();
+            $('.edit-base_amt, .cancel-base_amt').on('click', function (event) {
+
+
+
+                event.stopPropagation();
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+
+
+                var tr = $(this).parents('tr:first');
+                tr.find('.edit-mode, .display-mode').toggle();
+                tr.find("#Entered_baseinc_Amt").focus();
+            });
+
+            $('.save-base_amt').on('click', function (event) {
+                alert('');
+                event.stopPropagation();
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                $('.save-base_amt').css({ 'cursor': 'wait' });
+                $('body').css({ 'cursor': 'wait' });
+
+
+                var tr = $(this).parents('tr:first');
+                var ent_amt = tr.find("#Entered_baseinc_Amt").val();
+
+                var target_id = $(this).attr("id");
+
+                alert(target_id);
+                return;
+                var targetModel =
+                {
+
+                    "target_id": target_id,
+                    "TotalEnteredBaseIncentive": ent_amt
+                };
+                $.ajax({
+                    url: '@Url.Action(BusinessExcel.Controllers.ReportController.USER_TARGET_UPDATE_ENTERED_BASE_INCENTIVE_QTR)',
+                    data: JSON.stringify(targetModel),
+                    //data: { target_id: target_id, TotalEnteredBaseIncentive: ent_amt },
+                    type: 'POST',
+
+                    contentType: 'application/json; charset=utf-8',
+
+                    success: function (data) {
+
+
+                        if (data.length > 0) {
+                            tr.find("#lbl_Entered_baseinc_Amt").text(addCommas(ent_amt));
+                            tr.find('.edit-mode, .display-mode').toggle();
+
+                            setTargetTotals('tottable_' + target_id, data, target_id)
+
+                        }
+                        else {
+                            alert('Error occured');
+                        }
+                        $('.save-base_amt').css({ 'cursor': 'pointer' });
+                        $('body').css({ 'cursor': 'default' });
+                    }
+                });
+
+            });
+        })
+    </script>

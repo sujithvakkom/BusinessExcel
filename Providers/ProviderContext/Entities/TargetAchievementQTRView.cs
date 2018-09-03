@@ -94,7 +94,8 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         //public decimal? Base_Incentive { get; set; }
 
 
-    
+       
+        public string qtr { get; set; }
 
 
         [Column("category_id")]

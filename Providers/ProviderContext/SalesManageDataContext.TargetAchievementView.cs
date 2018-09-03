@@ -507,6 +507,7 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
 
 
 
+
             try
             {
                 res = this.Database.SqlQuery<TargetAchievementDetailQTR>("[db_salesmanage_user].[User_QTR_Achieved_Data]  @start_date ,@user_id", qtr_start_date, user_id).AsQueryable();
@@ -523,49 +524,46 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
           
            
         }
-        public IQueryable<TargetAchievementQTRView> TargetAchievementQRTViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count,
-            TargetAchievementQTRView Filters)
+        public IQueryable<TargetAchievementQTRView> TargetAchievementQTRViewPaging(TargetAchievementQTRView Filters)
         {
-            int skippingRows = (pageNumber - 1) * pageSize;
 
-            //var res = this.TargetAchievementView.Select(x=>x);
+            IQueryable<TargetAchievementQTRView> res = null;
 
-            var res = this.Database.SqlQuery<TargetAchievementQTRView>("[db_salesmanage_user].[User_Target_Achieved_Data]").ToList().AsQueryable();
-
-            if (Filters.user_id != null)
-            {
-                res = res.Where(x => x.user_id == Filters.user_id);
-
-            }
-
-            if (Filters.target_id != null)
-            {
-                res = res.Where(x => x.target_id == Filters.target_id);
+            var qtr_start_date = (Filters.start_date) != default(DateTime) ?
+            new SqlParameter("@start_date", Filters.start_date) :
+            new SqlParameter("@start_date", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
-
-            }
        
 
-            count = res.Count();
+            var user_id = Filters.user_id > 0 ?
+               new SqlParameter("@user_id", Filters.user_id) :
+               new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            if (sort == null || sort == "")
+            int VId = getViewer_Id();
+
+            var viewer_id = VId > 0 ?
+              new SqlParameter("@viewer_id", VId) :
+              new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+
+            System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+
+
+            parameterList.Add(qtr_start_date);
+            parameterList.Add(user_id);
+            parameterList.Add(viewer_id);
+
+         
+            try
             {
-                return res.OrderByDescending(x => x.Target_amt)
-                    .Skip(skippingRows).Take(pageSize);
+                 res = this.Database.SqlQuery<TargetAchievementQTRView>("[db_salesmanage_user].[User_Target_Achieved_QTR_Data] @user_id,@start_date,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
             }
-            else
+            catch
             {
-                switch (sortdir)
-                {
-                    case "DESC":
-                        return res.OrderByDescending(sort)
-                            .Skip(skippingRows).Take(pageSize);
-                    default:
-                        return res.OrderBy(sort)
-                            .Skip(skippingRows).Take(pageSize);
-                }
+                res = null;
             }
+         
+            return res;
            
         }
       

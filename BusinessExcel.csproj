@@ -287,6 +287,7 @@
     <Compile Include="Providers\ProviderContext\Entities\ItemModel.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LineTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\LocationTarget.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\QuarterDetails.cs" />
     <Compile Include="Providers\ProviderContext\Entities\SalesExcecutiveTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetAchievementDetailQTR.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetAchievementQTRView.cs" />

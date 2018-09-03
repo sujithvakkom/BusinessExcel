@@ -484,6 +484,31 @@ namespace BusinessExcel.Controllers
 
         }
 
+        public static string USER_TARGET_UPDATE_ENTERED_BASE_INCENTIVE_QTR = "UpdateEnteredBaseIncentiveQTR";
+        public JsonResult UpdateEnteredBaseIncentiveQTR(QuarterDetails qtrModel)
+        {
+
+
+            List<TargetTotalView> items = null;
+            using (var db = new SalesManageDataContext())
+            {
+
+
+              
+
+                if (db.UpdateEnteredBaseIncentiveQTR(qtrModel)>0)
+                {
+                    items = db.getUsertargetTotalDetailsQTR(qtrModel.start_date.Value);
+
+                }
+
+            }
+
+            return Json(items, JsonRequestBehavior.AllowGet);
+
+        }
+
+
         public JsonResult UpdateEnteredIncentive(TargetTotalView targetModel)
         {
 
@@ -570,6 +595,30 @@ namespace BusinessExcel.Controllers
             }
 
             return Json(items, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public List<TargetTotalView> LoadQuarterTotal(DateTime startdate)
+        {
+
+
+
+            //      res = res.Where(x => month <= x.start_date.Value.Month && month >= x.start_date.Value.Month);
+
+
+
+            List<TargetTotalView> items = null;
+            using (var db = new SalesManageDataContext())
+            {
+
+
+                items = db.getUsertargetTotalDetailsQTR(startdate).ToList();
+
+                
+
+            }
+
+            return items;
 
         }
 
@@ -676,6 +725,21 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
 
 
+            if (target.qtr == null)
+            {
+                target.start_date = DateTime.Now.Date;
+
+            }
+            else
+            {
+                string[] qrt = target.qtr.Split('-');
+                target.start_date = getQuarterStartDate(qrt[0].ToString().Trim(), qrt[1].ToString().Trim());
+            }
+
+            if (target.start_date !=default(DateTime))
+            {
+                target.TargetTotal = LoadQuarterTotal(target.start_date.Value);
+            }
             return PartialView(QTR_ACHIEVEMENT_VIEW_SE, target);
         }
 

@@ -27,7 +27,7 @@ namespace BusinessExcel.Models
        
         public decimal? TotalEnteredBaseIncentive { get; set; }
 
-
+        [NotMapped]
         [Display(Name = "Status")]
         public int target_status { get; set; }
 
