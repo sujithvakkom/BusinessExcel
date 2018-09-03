@@ -25,7 +25,7 @@
            
                 <label for="username" class="col-md-2 col-form-label" style="text-align:right">TARGET STATUS</label>
                 <div class="col-md-2">
-                    @using (Html.BeginPrefixScope(Model.target_id.ToString())) {
+                    @using (Html.BeginHtmlFieldPrefixScope(Model.target_id.ToString())) {
                         @Html.AdminLTEDropDownListFor(
 m => m.TargetTotal.FirstOrDefault().target_status,
 htmlLabelAttributes: null,

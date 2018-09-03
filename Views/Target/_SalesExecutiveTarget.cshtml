@@ -9,86 +9,90 @@
 
 
 
-    <div class="row">
-        <div class="col-md-12" id="global-setting-details">
-            <div class="box no-border">
-                <div class="box-body table-form">
-                    @using (Ajax.BeginForm(
-                controllerName: TargetController.TARGET,
-                actionName: TargetController._SALESEXECUTIVETARGET,
-                htmlAttributes: new { id = "target-location-create-form" },
-                routeValues: null,
-                ajaxOptions: new AjaxOptions()
+<div class="row">
+    <div class="col-md-12" id="global-setting-details">
+        <div class="box no-border">
+            <div class="box-body table-form">
+                @using (Ajax.BeginForm(
+            controllerName: TargetController.TARGET,
+            actionName: TargetController._SALESEXECUTIVETARGET,
+            htmlAttributes: new { id = "target-location-create-form" },
+            routeValues: null,
+            ajaxOptions: new AjaxOptions()
+            {
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "Post",
+                UpdateTargetId = "main-body",
+                OnBegin = "move('#page-load')",
+                OnComplete = "ajax_call_load_complete('#page-load')",
+                OnFailure = "loadin_failed",
+                LoadingElementId = "target-create-progress"
+            }))
                 {
-                    InsertionMode = InsertionMode.Replace,
-                    HttpMethod = "Post",
-                    UpdateTargetId = "main-body",
-                    OnBegin = "move('#page-load')",
-                    OnComplete = "ajax_call_load_complete('#page-load')",
-                    OnFailure = "loadin_failed",
-                    LoadingElementId = "target-create-progress"
-                }))
-                    {
-                        @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-                        <div class="row">
-                            <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">@TargetController.TARGETTEMPLATELINE_TITLE</h3>
+                            </div>
+                            @for (int i = 0; i < Model.SalesExcecutiveTargets.Count; i++)
+
+                            {
+
+                                    var idForBlock = @Model.SalesExcecutiveTargets[i].StartDate.ToString("MMMyyyy");
+
+                                <div id="@idForBlock">
+
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">@TargetController.TARGETTEMPLATELINE_TITLE</h3>
+                                    <h3 class="box-title">@Model.SalesExcecutiveTargets[i].StartDate.ToString("MMM yyyy")</h3>
                                 </div>
-                                @for(int i =0;i< Model.SalesExcecutiveTargets.Count;i++)
+                                <div class="row table-form-row" id="target-row">
+                                    <div class="row">
+                                        <div class="col-md-12">
 
-                                {
-
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title">@Model.SalesExcecutiveTargets[i].StartDate.ToString("MMM yyyy")</h3>
-                                    </div>
-                                    <div class="row table-form-row" id="target-row">
-                                        <div class="row">
-                                            <div class="col-md-12">
-
-                                                <div class="row table-fields-header">
-                                                    <div class="col-md-offset-1 col-md-2 table-fields">
-                                                        Has Bonus
-                                                    </div>
-                                                    <div class="col-md-4 table-fields">
-                                                        Category Line
-                                                    </div>
-                                                    <div class="col-md-3 table-fields text-right">
-                                                        Target
-                                                    </div>
+                                            <div class="row table-fields-header">
+                                                <div class="col-md-offset-1 col-md-2 table-fields">
+                                                    Has Bonus
                                                 </div>
-                                                @Html.HiddenFor(m => Model.SalesExcecutiveTargets[i].UserName)
-                                                @Html.HiddenFor(m => Model.SalesExcecutiveTargets[i].StartDate)
-                                                @Html.HiddenFor(m => Model.SalesExcecutiveTargets[i].EndDate)
-                                                @for (int j = 0; j < Model.SalesExcecutiveTargets[i].LineTargets.Count; j++)
+                                                <div class="col-md-4 table-fields">
+                                                    Category Line
+                                                </div>
+                                                <div class="col-md-3 table-fields text-right">
+                                                    Target
+                                                </div>
+                                            </div>
+                                            @Html.HiddenFor(m => Model.SalesExcecutiveTargets[i].UserName)
+                                            @Html.HiddenFor(m => Model.SalesExcecutiveTargets[i].StartDate)
+                                            @Html.HiddenFor(m => Model.SalesExcecutiveTargets[i].EndDate)
+                                            @for (int j = 0; j < Model.SalesExcecutiveTargets[i].LineTargets.Count; j++)
+                                            {
+                                                CategoryDetail selection = new CategoryDetail();
+                                                using (var db = new SalesManageDataContext())
                                                 {
-                                                    CategoryDetail selection = new CategoryDetail();
-                                                    using (var db = new SalesManageDataContext())
+                                                    try
                                                     {
-                                                        try
-                                                        {
-                                                            int id = int.Parse(Model.SalesExcecutiveTargets[i].LineTargets[j].Catogery);
-                                                            selection = db.getCategoryDetails(id);
-                                                        }
-                                                        catch (ArgumentNullException) { }
-                                                        catch (Exception)
-                                                        {
-                                                            selection = db.getCategoryDetails(Model.SalesExcecutiveTargets[i].LineTargets[j].Catogery);
-                                                        }
+                                                        int id = int.Parse(Model.SalesExcecutiveTargets[i].LineTargets[j].Catogery);
+                                                        selection = db.getCategoryDetails(id);
                                                     }
-                                                    <div class="row">
-                                                        <div class="col-md-offset-1 col-md-2 table-fields">
-                                                            @Html.AdminLTECheckBoxFor(m => Model.SalesExcecutiveTargets[i].LineTargets[j].IsBonusLine,
+                                                    catch (ArgumentNullException) { }
+                                                    catch (Exception)
+                                                    {
+                                                        selection = db.getCategoryDetails(Model.SalesExcecutiveTargets[i].LineTargets[j].Catogery);
+                                                    }
+                                                }
+                                                <div class="row">
+                                                    <div class="col-md-offset-1 col-md-2 table-fields">
+                                                        @Html.AdminLTECheckBoxFor(m => Model.SalesExcecutiveTargets[i].LineTargets[j].IsBonusLine,
                          null,
                          new Dictionary<string, object>() { { "class", "" }, { "autocomplete", "off" } },
                          null,
                          null,
                          false,
                          true)
-                                                        </div>
-                                                        <div class="col-md-4 table-fields">
-                                                            @Html.AdminLTEDropDownListFor(m => Model.SalesExcecutiveTargets[i].LineTargets[j].Catogery,
+                                                    </div>
+                                                    <div class="col-md-4 table-fields">
+                                                        @Html.AdminLTEDropDownListFor(m => Model.SalesExcecutiveTargets[i].LineTargets[j].Catogery,
             htmlLabelAttributes: null,
             htmlDropDownAttributes: new Dictionary<string, object>() { { "class", "form-control select2" }, { "style", "border-style:none !important;width:100%" } },
             htmlGroupAttributes: new Dictionary<string, object>() { },
@@ -106,11 +110,11 @@
                 IsAutoComplete = true,
                 SelectItems = null
             }, showLabel: false)
-                                                        </div>
-                                                        <div class="col-md-3 table-fields">
-                                                            @Html.AdminLTETextBoxFor(m => Model.SalesExcecutiveTargets[i].LineTargets[j].Target,
+                                                    </div>
+                                                    <div class="col-md-3 table-fields">
+                                                        @Html.AdminLTETextBoxFor(m => Model.SalesExcecutiveTargets[i].LineTargets[j].Target,
                          null,
-                         new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" }, { "onchange", "target_line_changed()" } },
+                         new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" }, { "onchange", "target_line_changed('"+ @idForBlock + "',this)" } },
                          null,
                          null,
                          "",
@@ -118,16 +122,32 @@
                          true,
                          false)
 
-                                                        </div>
                                                     </div>
-                                                }
-                                                
+                                                </div>
+                                            }
+
+                                            <div class="row">
+                                                <div class="col-md-offset-1 col-md-6 table-fields">Total</div>
+
+                                                <div class="col-md-3 table-fields">
+                                                    @Html.AdminLTETextBoxFor(m => Model.SalesExcecutiveTargets[i].TotalTarget,
+                         null,
+                         new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" }, { "disabled", "disabled" } },
+                         null,
+                         null,
+                         "",
+                         false,
+                         true,
+                         false)
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                                    }
+                                </div>
                             </div>
+                            }
                         </div>
+                    </div>
                         <div class="row">
                             <div class="col-md-7"></div>
                             <div class="col-md-3">
@@ -142,11 +162,11 @@
                                                )
                             </div>
                         </div>
-                                                    }
-                </div>
+                }
             </div>
         </div>
     </div>
+</div>
 
 
 <script>
@@ -166,12 +186,12 @@
         $(".save-messages").html = "";
     }
 
-    function target_line_changed() {
+    function target_line_changed(block,val) {
+        var prefix = val.name.substring(0, 25);
         var sum = Number(0);
-
-        $("#target-row").find("input[name*='].Target']").each(function () {
+        $("#"+block).find("input[name*='].Target']").each(function () {
             sum = sum + Number($(this).val());
         })
-        $("p[id='TotalTarget']").html(sum)
+        $("input[name='"+prefix+".TotalTarget']").val(sum)
     }
 </script>
