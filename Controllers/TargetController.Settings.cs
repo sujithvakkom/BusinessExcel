@@ -43,28 +43,28 @@ namespace BusinessExcel.Controllers
         public static string _SETTING_LOCATION = "Location Settings";
 
         [HttpGet]
-        public ActionResult _SettingLocation()
-        {
-            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGETTEMPLATE;
-            using (var db = new UsersContext())
-            {
-                try
-                {
-                    Session[Index.USER_PROFILE_INDEX] = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
-                }
-                catch (Exception)
-                {
-                    WebSecurity.Logout();
-                    RedirectToAction(PublicController.WELCOME, PublicController.PUBLIC);
-                }
-            }
-            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-            if (Request.IsAjaxRequest())
-                return PartialView(SETTINGTARGET);
-            return View();
-        }
-        [HttpPost]
-        public PartialViewResult _SettingLocation(string sort, string sortdir, int page = 1)
+        //public ActionResult _SettingLocation()
+        //{
+        //    ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGETTEMPLATE;
+        //    using (var db = new UsersContext())
+        //    {
+        //        try
+        //        {
+        //            Session[Index.USER_PROFILE_INDEX] = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
+        //        }
+        //        catch (Exception)
+        //        {
+        //            WebSecurity.Logout();
+        //            RedirectToAction(PublicController.WELCOME, PublicController.PUBLIC);
+        //        }
+        //    }
+        //    ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+        //    if (Request.IsAjaxRequest())
+        //        return PartialView(SETTINGTARGET);
+        //    return View();
+        //}
+        //[HttpPost]
+        public PartialViewResult _SettingLocation(string sort="", string sortdir="", int page = 1)
         {
             ViewBag.Page = page;
             return PartialView();
@@ -74,28 +74,28 @@ namespace BusinessExcel.Controllers
         public static string _SETTING_INCENTIVE_FACTOR_DETAILS = "Incentive Factor Details";
 
         [HttpGet]
-        public ActionResult _SettingIncentiveFactorDetails()
-        {
-            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGETTEMPLATE;
-            using (var db = new UsersContext())
-            {
-                try
-                {
-                    Session[Index.USER_PROFILE_INDEX] = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
-                }
-                catch (Exception)
-                {
-                    WebSecurity.Logout();
-                    RedirectToAction(PublicController.WELCOME, PublicController.PUBLIC);
-                }
-            }
-            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
-            if (Request.IsAjaxRequest())
-                return PartialView(_SETTINGINCENTIVEFACTORDETAILS);
-            return View();
-        }
+        //public ActionResult _SettingIncentiveFactorDetails()
+        //{
+        //    ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGETTEMPLATE;
+        //    using (var db = new UsersContext())
+        //    {
+        //        try
+        //        {
+        //            Session[Index.USER_PROFILE_INDEX] = db.UserProfile.SingleOrDefault(x => x.UserName == User.Identity.Name).UserFullName;
+        //        }
+        //        catch (Exception)
+        //        {
+        //            WebSecurity.Logout();
+        //            RedirectToAction(PublicController.WELCOME, PublicController.PUBLIC);
+        //        }
+        //    }
+        //    ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+        //    if (Request.IsAjaxRequest())
+        //        return PartialView(_SETTINGINCENTIVEFACTORDETAILS);
+        //    return View();
+        //}
 
-        [HttpPost]
+        //[HttpPost]
         public PartialViewResult _SettingIncentiveFactorDetails(string sort, string sortdir, int page = 1)
         {
             ViewBag.Page = page;

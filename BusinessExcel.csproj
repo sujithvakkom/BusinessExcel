@@ -172,6 +172,8 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Content Include="SQLCommands\ActionDetails.sql" />
+    <Content Include="SQLCommands\MergeTargetLocation.sql" />
     <Content Include="Content\jsTree\docs.css" />
     <Content Include="Content\jsTree\themes\default-dark\32px.png" />
     <Content Include="Content\jsTree\themes\default-dark\40px.png" />

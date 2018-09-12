@@ -61,9 +61,9 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Column("base_incentive_pct", Order = 9)]
         public decimal base_incentive_pct { get; set; }
 
-        [Display(Name = "Global Base Incentive Acc.")]
+        [Display(Name = "Base Incentive Cap.")]
         [Required]
-        [Column("bonus_achieve_acc", Order = 10)]
+        [Column("global_base_incentive_cap", Order = 10)]
         public decimal global_base_incentive_cap { get; set; }
 
         [Display(Name = "Global Acc. Factor")]

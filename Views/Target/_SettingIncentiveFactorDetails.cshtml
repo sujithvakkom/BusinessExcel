@@ -4,12 +4,7 @@
 @using BusinessExcel.Controllers
 @using BootstrapHtmlHelper
 
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title">@TargetController._SETTING_INCENTIVE_FACTOR_DETAILS</h3>
-    </div>
-    <div class="box-body">
-        <div id="table-settings-incentive-factor-view">
+
             @using (var db = new SalesManageDataContext())
             {
                 int count = 0;
@@ -19,7 +14,6 @@
                     RowCount: out count
                             );
                 var grid = new WebGrid(ajaxUpdateContainerId: "table-settings-incentive-factor-view",
-                    ajaxUpdateCallback: TargetController._SETTINGLOCATION,
                     rowsPerPage: 20
                     );
                 grid.Bind(source: dataList,
@@ -49,42 +43,19 @@
                            footerStyle: "extra-table-pager"
                            )
 
-                @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                @*@grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
                            nextText: "NEXT",
                            firstText: "FIRST",
                            previousText: "PREV.",
-                           lastText: "LAST")
+                           lastText: "LAST")*@
+
+
+                @Ajax.Pager(grid,
+               "table-settings-location-view",
+               mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                nextText: "NEXT",
+                firstText: "FIRST",
+                previousText: "PREV.",
+                lastText: "LAST",
+                ActionName: TargetController._SETTINGINCENTIVEFACTORDETAILS)
             }
-        </div>
-
-        <div class="pull-right box-body">
-            @Ajax.AjaxAdminLTEActionLink(
-           linkText: "Add",
-           actionName: TargetController._ADDINCENTIVEFACTORDETAILS,
-           controllerName: TargetController.TARGET,
-           ajaxOptions: new AjaxOptions()
-           {
-               HttpMethod = "Get",
-               InsertionMode = InsertionMode.Replace,
-               UpdateTargetId = "add-incentive-factor-block",
-               OnFailure = "loadin_failed",
-               LoadingElementId= "add-incentive-progress"
-           },
-            LoadingElementId:
-            "add-incentive-progress",
-            buttonAttributes: new Dictionary<string, object> (){ { "class","btn btn-primary" } },
-            Image:
-            Url.Content("~/Images/progress.gif")
-            )
-
-        </div>
-        <div id="add-incentive-factor-block">
-
-            @if (ViewBag.CategoryDetail != null)
-            {
-                var IncentiveFactor = (IncentiveFactor)ViewBag.IncentiveFactor;
-                Html.RenderPartial(TargetController._ADDCATEGORYSETTINGS, IncentiveFactor);
-            }
-        </div>
-    </div>
-</div>
