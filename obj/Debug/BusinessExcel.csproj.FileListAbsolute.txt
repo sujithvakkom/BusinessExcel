@@ -97,3 +97,5 @@ C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\HtmlAgilityPack.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.csprojResolveAssemblyReference.cache
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.pdb
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\System.Web.Optimization.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\System.Web.Optimization.xml

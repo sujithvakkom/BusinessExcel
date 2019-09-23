@@ -120,8 +120,9 @@
       <HintPath>packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Optimization">
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
@@ -189,12 +190,16 @@
     <Compile Include="Controllers\AccountsController.Chart.cs" />
     <Compile Include="Controllers\AdminController.Users.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\API\DeliveryAPIController.cs" />
+    <Compile Include="Controllers\API\MobileAPIController.Delivery.cs" />
+    <Compile Include="Controllers\API\MobileAPIController.UserAuth.cs" />
     <Compile Include="Controllers\API\MobileAPIController.Item.cs" />
     <Compile Include="Controllers\API\MobileTargetAPIController.Target.cs" />
     <Compile Include="Controllers\API\UsMobileAPIController.UserLocation.cs" />
     <Compile Include="Controllers\CheckinController.cs" />
     <Compile Include="Controllers\CompetitorController.cs" />
     <Compile Include="Controllers\Constands.cs" />
+    <Compile Include="Controllers\Default.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\JSON\JSON.AccountAutoCompleter.cs" />
     <Compile Include="Controllers\JSON\JSON.RosterAutoCompleter.cs" />
@@ -295,6 +300,7 @@
     <Compile Include="Providers\ProviderContext\Entities\SalesExcecutiveTarget.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetAchievementDetailQTR.cs" />
     <Compile Include="Providers\ProviderContext\Entities\TargetAchievementQTRView.cs" />
+    <Compile Include="Providers\ProviderContext\Entities\Delivery.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserListView.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserLocation.cs" />
     <Compile Include="Providers\ProviderContext\Entities\UserTree.cs" />
@@ -312,6 +318,7 @@
     <Compile Include="Providers\ProviderContext\Entities\Roster.cs" />
     <Compile Include="Providers\ProviderContext\Entities\ViewLocationTargetDistribution.cs" />
     <Compile Include="Providers\ProviderContext\Entities\_BaseTarget.cs" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.Delivery.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.GetSummaryCurrentMonthQuantity.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.AccountDetails.cs" />
     <Compile Include="Providers\ProviderContext\SalesManageDataContext.Checkin.cs" />
@@ -566,6 +573,7 @@
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\globalize.js" />
     <Content Include="Scripts\globalize\currency.js" />
@@ -821,6 +829,7 @@
     <Content Include="Views\Report\UserTargetDetails_SE.cshtml" />
     <Content Include="Views\Report\UserTargetAchievementView_SE.cshtml" />
     <Content Include="Views\Report\_QTR_AchievementView_SE.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

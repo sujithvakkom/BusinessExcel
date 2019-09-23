@@ -15,6 +15,11 @@ namespace BusinessExcel.Providers.ProviderContext
         {
             Database.SetInitializer<SalesManageDataContext>(null);
         }
+        public SalesManageDataContext(String ConnectionString)
+            : base(ConnectionString)
+        {
+            Database.SetInitializer<SalesManageDataContext>(null);
+        }
 
         public DbSet<DailyUpateView> DailyUpateView { get; set; }
 

@@ -26,9 +26,12 @@ FROM [sc_salesmanage_merchant].[daily_update_v] AS x INNER JOIN db_salesmanage_u
                                                                                                                         ) AS y ON x.user_id = y.user_id
 																														and create_time between '{1}' and '{2}'
 group by x.category";
-            var result = this.Database.SqlQuery<graph>(
-                string.Format(cmd,viewer.ToString(),startDate.ToString("ddMMMyyyy"),endDate.ToString("ddMMMyyyy"))
-                                               )
+
+            var cmdRes =
+                string.Format(cmd, viewer.ToString(), startDate.ToString("ddMMMyyyy"), endDate.ToString("ddMMMyyyy"));
+
+
+            var result = this.Database.SqlQuery<graph>(cmdRes)
                                                 .AsQueryable<graph>();
 
             return result;

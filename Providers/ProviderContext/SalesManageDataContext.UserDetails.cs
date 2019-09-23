@@ -30,6 +30,26 @@ namespace BusinessExcel.Providers.ProviderContext
             UserDetail detail = users.Count > 0 ? users[0] : null;
             return detail;
         }
+        public virtual UserDetail getAuthUserDetail(string userName, string password)
+        {
+            const string SELECT_USER = @"select user_name, 
+                                                isnull(display_name,first_name+' '+second_name) as full_name 
+                                                from [sc_salesmanage_user].[user_m] 
+                                            where 
+                                                user_name = @user_name
+                                            and password = @password";
+
+            var _user_name = !string.IsNullOrEmpty(userName) ?
+                  new SqlParameter("@user_name", userName) :
+                  new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            var _password = !string.IsNullOrEmpty(password) ?
+                new SqlParameter("@password", password) :
+                new SqlParameter("@password", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            var users = this.Database.SqlQuery<UserDetail>(SELECT_USER, _user_name,_password).ToList();
+            UserDetail detail = users.Count > 0 ? users[0] : null;
+            return detail;
+        }
         public virtual int getUserID(string userName)
         {
             const string SELECT_USER = @"select user_id
