@@ -340,28 +340,30 @@ namespace BusinessExcel.Providers.ProviderContext
                 int Enity_id = getEntity(Parent_userId);
 
 
-          
+                if (new_userId != Parent_userId)
+                {
 
-                var user_id = new_userId != 0 ?
-      new SqlParameter("@user_id", new_userId) :
-      new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = 0 };
+                    var user_id = new_userId != 0 ?
+          new SqlParameter("@user_id", new_userId) :
+          new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = 0 };
 
-                var parent_id = Parent_id != 0 ?
-              new SqlParameter("@ParentId", Parent_id) :
-              new SqlParameter("@ParentId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
-
-
-                var enity_id = Enity_id != 0 ?
-              new SqlParameter("@EntityId", Enity_id) :
-              new SqlParameter("@EntityId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+                    var parent_id = Parent_id != 0 ?
+                  new SqlParameter("@ParentId", Parent_id) :
+                  new SqlParameter("@ParentId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
-                System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(user_id);
-                parameterList.Add(parent_id);
-                parameterList.Add(enity_id);
+                    var enity_id = Enity_id != 0 ?
+                  new SqlParameter("@EntityId", Enity_id) :
+                  new SqlParameter("@EntityId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-                isInsertUpdate = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[Insert_UserTree] @user_id,@ParentId,@EntityId", parameterList.ToArray());
+
+                    System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(user_id);
+                    parameterList.Add(parent_id);
+                    parameterList.Add(enity_id);
+
+                    isInsertUpdate = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[Insert_UserTree] @user_id,@ParentId,@EntityId", parameterList.ToArray());
+                }
 
             }
             catch(Exception ex)

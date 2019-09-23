@@ -200,6 +200,41 @@ namespace BusinessExcel.Controllers
             //   return View(data);
         }
 
+        //public IEnumerable<UserTree> getUserTreeList()
+        //{
+        //    IEnumerable<UserTree> data = null;
+        //    try
+        //    {
+        //        List<UserTree> categoryList = new List<UserTree>();
+
+        //        using (var db = new SalesManageDataContext())
+        //        {
+
+        //            categoryList = db.getUserTree();
+
+        //        }
+
+        //        var rootCategory = categoryList.Where(x => x.level_v == 0).FirstOrDefault();
+
+        //        if (categoryList.Count > 0)
+        //        {
+
+        //            SetChildren(rootCategory, categoryList);
+
+        //            var model = new List<UserTree>();
+
+        //            data = new[] { rootCategory };
+
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        data = null;
+        //    }
+        //    return data;
+        //}
+
+
         public IEnumerable<UserTree> getUserTreeList()
         {
             IEnumerable<UserTree> data = null;
@@ -207,15 +242,22 @@ namespace BusinessExcel.Controllers
             {
                 List<UserTree> categoryList = new List<UserTree>();
 
+                int vid = 0;
                 using (var db = new SalesManageDataContext())
                 {
 
                     categoryList = db.getUserTree();
-
+                    vid = db.getViewer_Id();
                 }
+
+                //var rootCategory = categoryList.Where(x => x.level_v == 0 ).FirstOrDefault();
 
                 var rootCategory = categoryList.Where(x => x.level_v == 0).FirstOrDefault();
 
+                if (rootCategory == null)
+                {
+                    rootCategory = categoryList.Where(x => x.user_id == vid).FirstOrDefault();
+                }
 
                 if (categoryList.Count > 0)
                 {
@@ -238,10 +280,6 @@ namespace BusinessExcel.Controllers
             }
             return data;
         }
-
-
-
-
         private void SetChildren(UserTree model, List<UserTree> catList)
         {
 
@@ -267,14 +305,53 @@ namespace BusinessExcel.Controllers
                 foreach (var child in newlist)
                 {
 
+
                     SetChildren(child, catList);
 
+                    if (model.Childs.Contains(child))
+                    {
+                        continue;
+                    }
 
                     model.Childs.Add(child);
                 }
+
             }
 
         }
+        //private void SetChildren(UserTree model, List<UserTree> catList)
+        //{
+
+        //    model.left_v = catList.Where(c => c.parent_id == model.parent_id).Select(a => a.left_v).Single();
+        //    model.right_v = catList.Where(c => c.parent_id == model.parent_id).Select(a => a.right_v).Single();
+        //    model.level_v = catList.Where(c => c.parent_id == model.parent_id).Select(a => a.level_v).Single();
+        //    model.entity = catList.Where(c => c.parent_id == model.parent_id).Select(a => a.entity).Single();
+
+
+
+        //    var childs = catList.Where(c => c.left_v > model.left_v && c.right_v < model.right_v).OrderBy(x => x.level_v).ToList();
+
+        //    if (childs.Count > 0)
+        //    {
+
+
+        //        var min = childs.Min(t => t.level_v);
+
+
+        //        var newlist = childs.Where(c => c.level_v == min);
+
+
+        //        foreach (var child in newlist)
+        //        {
+
+        //            SetChildren(child, catList);
+
+
+        //            model.Childs.Add(child);
+        //        }
+        //    }
+
+        //}
 
         public JsonResult UserTreeList()
         {

@@ -4,6 +4,7 @@
     <NameOfLastUsedPublishProfile>Local</NameOfLastUsedPublishProfile>
     <UseIISExpress>true</UseIISExpress>
     <ProjectView>ProjectFiles</ProjectView>
+    <ToolsVersionPromptShown>3.2</ToolsVersionPromptShown>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
