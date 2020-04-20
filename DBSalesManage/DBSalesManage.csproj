@@ -62,6 +62,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="obj\Debug\DBSalesManage.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\DBSalesManage.csproj.FileListAbsolute.txt" />
     <Content Include="SalesManageModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SalesManageModel.edmx</DependentUpon>
@@ -78,16 +80,21 @@
     <Compile Include="getItemDetails_Result.cs">
       <DependentUpon>SalesManageModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="getItemDetails_Result.ModelBase.cs" />
     <Compile Include="inventory_item_m.cs">
       <DependentUpon>SalesManageModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="inventory_item_m.ModelBase.cs" />
     <Compile Include="inventory_item_price.cs">
       <DependentUpon>SalesManageModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="inventory_item_price.ModelBase.cs" />
     <Compile Include="model_m.cs">
       <DependentUpon>SalesManageModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="model_m.ModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SalesManageModel.Context.ContextBase.cs" />
     <Compile Include="SalesManageModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -103,6 +110,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SalesManageModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="SalesManageModel.ModelBase.cs" />
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>SalesManageModel.tt</DependentUpon>
     </Compile>
@@ -118,6 +126,16 @@
     <Content Include="SalesManageModel.edmx.diagram">
       <DependentUpon>SalesManageModel.edmx</DependentUpon>
     </Content>
+    <Content Include="obj\Debug\build.force" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\SalesManageModel.csdl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\SalesManageModel.msl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\SalesManageModel.ssdl" />
+    <Content Include="obj\Release\DBSalesManage.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Release\edmxResourcesToEmbed\SalesManageModel.csdl" />
+    <Content Include="obj\Release\edmxResourcesToEmbed\SalesManageModel.msl" />
+    <Content Include="obj\Release\edmxResourcesToEmbed\SalesManageModel.ssdl" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -127,6 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

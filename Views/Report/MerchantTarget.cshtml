@@ -1,0 +1,161 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
+
+@model MerchantTargetFilter
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @ReportController.MERCHAND_TARGET
+        <small>Report</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> @ReportController.REPORTCONTROLLER</a></li>
+        <li class="active">@ReportController.MERCHAND_TARGET</li>
+    </ol>
+</section>
+
+<section class="content">
+
+
+    <div class="box box-default collapsed-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Filters</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        @using (Ajax.BeginForm(ReportController.MERCHANDTARGET,
+                                                                                    ReportController.REPORTCONTROLLER,
+                                                                                    new AjaxOptions()
+                                                                                    {
+                                                                                        HttpMethod = "Post",
+                                                                                        UpdateTargetId = "main-body",
+                                                                                        OnBegin = "move('#page-load')",
+                                                                                        OnComplete = "ajax_call_load_complete('#page-load')",
+                                                                                        OnFailure = "loadin_failed"
+                                                                                    }))
+        {
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.AdminLTEDropDownListFor(
+m => m.UserName,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
+        { "class", "form-control select2" },
+        { "multiple","multiple" }
+},
+htmlGroupAttributes: null,
+autoCompleteOptions: new AutoCompleteOptions()
+{
+    AjaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+    },
+    DescriptionField = "full_name",
+    IDField = "user_name",
+    Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+    SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+    IsAutoComplete = true,
+    SelectItems = null
+},
+showLabel: true)
+                    </div>
+                    <div class="col-md-1">
+                        <b>Select all</b>
+                        @Html.AdminLTECheckBoxFor(
+                       m => m.SelectAllUsers,
+                       null,
+                       new Dictionary<string, object>() { { "onclick", "toggleUserSelection(this)" } },
+                       null,
+                       null,
+                       false
+                       )
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.AdminLTETextBoxFor(m => m.Quarter_Name,
+                                                                               null,
+                                                                               new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }},
+                                                                               null,
+                                                                               null,
+                                                                               "",
+                                                                               true,
+                                                                               true,
+                                                                               true)
+                    </div>
+                </div>
+            </div>
+        <!-- /.box-body -->
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-lg-2">
+
+                        <input type="submit" value="Filter" class="btn btn-primary" />
+                    </div>
+                    @*<div class="col-lg-offset-8">
+
+                            @Html.AdminLTEActionLink(
+                           linkText: BusinessExcel.Controllers.ReportController.EXPORTEXCEL_TITLE,
+                           actionName: BusinessExcel.Controllers.ReportController.EXPORTEXCEL,
+                           controllerName: BusinessExcel.Controllers.ReportController.REPORTCONTROLLER,
+                           cssClass: "btn btn-link", routeValues: Model,
+                           carrot: "fa fa-download")
+                        </div>*@
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ReportController.MERCHAND_TARGET</h3>
+        </div>
+        <div class="box-body">
+        </div>
+    </div>
+</section>
+<script>
+    function toggleUserSelection(val) {
+        $('#UserName').prop("disabled", val.checked);
+    }
+
+
+    $.fn.datepicker.dates['qtrs'] = {
+        days: ["Sunday", "Moonday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        daysShort: ["Sun", "Moon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+        months: ["Q1 -", "Q2 -", "Q3 -", "Q4 -", "", "", "", "", "", "", "", ""],
+        monthsShort: ["Jan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mar", "Apr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;May&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jun", "Jul&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aug&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sep", "Oct&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nov&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dec", "", "", "", "", "", "", "", ""],
+        today: "Today",
+
+        clear: "Clear",
+        format: "mm/dd/yyyy",
+        titleFormat: "MM yyyy",
+        /* Leverages same syntax as 'format' */
+        weekStart: 0
+    };
+    $('#Quarter_Name').datepicker({
+        format: "MM yyyy",
+        minViewMode: 1,
+        autoclose: true,
+        language: "qtrs",
+        forceParse: false
+    }).on("show", function (event) {
+
+        $(".month").each(function (index, element) {
+            if (index > 3) $(element).hide();
+        });
+
+    });
+</script>
+ 

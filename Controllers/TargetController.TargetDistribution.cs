@@ -63,7 +63,7 @@ namespace BusinessExcel.Controllers
                 }
                 catch (Exception) { }
             }
-            target.LineTargets = lineTargets.ToArray();
+            target.LineTargets = lineTargets.ToList();
             return PartialView(target);
         }
 
@@ -106,7 +106,7 @@ namespace BusinessExcel.Controllers
                         int? userId = null;
                         try { userId = db.getUserID(target.UserName); }
                         catch (Exception) { }
-                        target.LineTargets = db.getTargetTempletLineDetails(int.Parse(target.TargetTemplate), userID: userId).ToArray();
+                        target.LineTargets = db.getTargetTempletLineDetails(int.Parse(target.TargetTemplate), userID: userId).ToList();
                     }
                     catch (Exception) { }
                 }

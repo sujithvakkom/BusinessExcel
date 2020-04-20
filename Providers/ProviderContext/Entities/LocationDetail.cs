@@ -9,5 +9,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         public int location_id { get; set; }
         [Column("description", Order = 2)]
         public string description { get; set; }
+        [Column("account", Order = 3)]
+        public string account { get; set; }
     }
 }

@@ -1,0 +1,89 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+
+<section class="content-header">
+    <h1>
+        @TargetController.TARGET
+        <small>@TargetController.SETTING_TARGET</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="#"><i class="fa fa-dashboard"></i>@TargetController.SETTING_TARGET</a>
+        </li>
+        <li class="active">@AccountsController.WELCOME_TITLE</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6" id="global-setting-details">
+            @{Html.RenderAction(@TargetController._OTHERSETTINGS);}
+        </div>
+        <div class="col-md-6" id="category-setting-details">
+            @{Html.RenderPartial(@TargetController._CATEGORYSETTINGS);}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@TargetController._SETTING_LOCATION</h3>
+                </div>
+                <div class="box-body">
+                    <div id="table-settings-location-view">
+                        @{Html.RenderAction(@TargetController._SETTINGLOCATION);}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" id="incentive-details">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@TargetController._SETTING_INCENTIVE_FACTOR_DETAILS</h3>
+                </div>
+                <div class="box-body">
+                    <div id="table-settings-incentive-factor-view">
+                        @{Html.RenderPartial(@TargetController._SETTINGINCENTIVEFACTORDETAILS);}
+                    </div>
+
+                    <div class="pull-right box-body">
+                        @Ajax.AjaxAdminLTEActionLink(
+           linkText: "Add",
+           actionName: TargetController._ADDINCENTIVEFACTORDETAILS,
+           controllerName: TargetController.TARGET,
+           ajaxOptions: new AjaxOptions()
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "add-incentive-factor-block",
+               OnFailure = "loadin_failed",
+               LoadingElementId = "add-incentive-progress"
+           },
+            LoadingElementId:
+            "add-incentive-progress",
+            buttonAttributes: new Dictionary<string, object>() { { "class", "btn btn-primary" } },
+            Image:
+            Url.Content("~/Images/progress.gif")
+            )
+
+                    </div>
+                    <div id="add-incentive-factor-block">
+
+                        @if (ViewBag.CategoryDetail != null)
+            {
+                var IncentiveFactor = (BusinessExcel.Providers.ProviderContext.Entities.IncentiveFactor)ViewBag.IncentiveFactor;
+                Html.RenderPartial(TargetController._ADDCATEGORYSETTINGS, IncentiveFactor);
+            }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,71 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@using (var db = new SalesManageDataContext())
+{
+    int count = 0;
+    var dataList = db.getLocationDetails(search: "",
+                Page: ViewBag.Page == null ? 1 : ViewBag.Page,
+                RowCount: out count
+                );
+    var grid = new BootstrapHtmlHelper.Helpers.MyWebGrid(
+        ajaxUpdateContainerId: "table-settings-location-view",
+        rowsPerPage: 20
+        )
+    { ActionName = TargetController._SETTINGLOCATION
+    ,AjaxHelper = Ajax,
+        AjaxOptions=new AjaxOptions()
+        {
+            HttpMethod="Get",
+            InsertionMode=InsertionMode.Replace,
+            UpdateTargetId = "table-settings-location-view"
+        }
+    };
+    grid.Bind(source: dataList,
+        autoSortAndPage: false,
+        rowCount: count);
+    @grid.GetHtml(
+                tableStyle: "table table-striped table-bordered be-pagination-spl",
+                htmlAttributes: new { @id = "table-daily-upate" },
+                columns: new[] {
+                               grid.Column(columnName:"ID",
+                               header:Html.AdminLTESorter("ID","ID",grid),
+                               format:(item)=>@Html.AdminLTEParagraph(((int)@item.location_id).ToString()),
+                               style:"name",canSort:true),
+
+                               grid.Column(columnName:"Location",header:"Location",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.description),
+                               style:"location",canSort:false),
+
+                               grid.Column(columnName:"Account",header:"Account",
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.account),
+                               style:"location",canSort:false)
+                           },
+                footerStyle: "extra-table-pager"
+                )
+    var x = new WebGrid();
+
+    @grid.PagerList(mode: MyWebGridPagerModes.FirstLast | 
+    MyWebGridPagerModes.NextPrevious | 
+    MyWebGridPagerModes.Numeric,
+        nextText: "NEXT",
+        firstText: "FIRST",
+        previousText: "PREV.",
+        lastText: "LAST")
+    @*
+        @Ajax.MyPager(grid,
+                   "table-settings-location-view",
+                   mode: BootstrapHtmlHelper.Helpers.WebGridPagerModes.FirstLast |
+                   BootstrapHtmlHelper.Helpers.WebGridPagerModes.NextPrevious |
+                   BootstrapHtmlHelper.Helpers.WebGridPagerModes.Numeric,
+                    nextText: "NEXT",
+                    firstText: "FIRST",
+                    previousText: "PREV.",
+                    lastText: "LAST",
+                    ActionName: TargetController._SETTINGLOCATION)
+    *@
+}

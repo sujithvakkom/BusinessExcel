@@ -14,13 +14,13 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     @*<h1>
-        @BusinessExcel.Controllers.AdminController.USERSLIST_TITLE
-        <small>List</small>
-    </h1>*@
+            @BusinessExcel.Controllers.AdminController.USERSLIST_TITLE
+            <small>List</small>
+        </h1>*@
     @*<ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.AdminController.ADMIN</a></li>
-        <li class="active">@BusinessExcel.Controllers.AdminController.USERSLIST_TITLE</li>
-    </ol>*@
+            <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.AdminController.ADMIN</a></li>
+            <li class="active">@BusinessExcel.Controllers.AdminController.USERSLIST_TITLE</li>
+        </ol>*@
 </section>
 
 
@@ -32,15 +32,15 @@
 
     <!-- Your Page Content Here -->
     @using (Ajax.BeginForm(AdminController.USERSLIST,
-                                        AdminController.ADMIN,
-                                        new AjaxOptions()
-                                        {
-                                            HttpMethod = "Get",
-                                            UpdateTargetId = "users-table-display",
-                                            OnBegin = "move('#page-load')",
-                                            OnComplete = "ajax_call_load_complete('#page-load')",
-                                            OnFailure = "loadin_failed"
-                                        }))
+                                                AdminController.ADMIN,
+                                                new AjaxOptions()
+                                                {
+                                                    HttpMethod = "Get",
+                                                    UpdateTargetId = "users-table-display",
+                                                    OnBegin = "move('#page-load')",
+                                                    OnComplete = "ajax_call_load_complete('#page-load')",
+                                                    OnFailure = "loadin_failed"
+                                                }))
 
     {
 
@@ -115,8 +115,8 @@ showLabel: true)
                     </div>
 
 
-                   
-                    
+
+
 
                     <div class="col-md-2" style="padding-top:2.5%">
 
@@ -126,7 +126,7 @@ showLabel: true)
 
 
                 </div>
-                
+
             </div>            <!-- /.box-body -->
 
         </div><!-- /.box -->
@@ -138,84 +138,70 @@ showLabel: true)
 
 
 
-    <div class="box box-primary">
+        <div class="box box-primary">
 
 
 
 
-        <div class="box-header with-border">
+        @*<div class="box-header with-border">
             <h3 class="box-title">Users List</h3>
-        </div>
+            <div  style="float:right"><button type="button" class="btn btn-success" id="btnNewUser">Add New User</button></div>
+        </div>*@
 
-        <div class="box-body">
+            <div class="box-body">
 
-            <div id="user-list-upate-view" class="table-responsive">
-                @{
+                <div id="user-list-upate-view" class="table-responsive">
+                    @{
 
-                    using (var db = new SalesManageDataContext())
-                    {
-                        WebGridColumn col = new WebGridColumn()
+                        using (var db = new SalesManageDataContext())
                         {
+                            WebGridColumn col = new WebGridColumn()
+                            {
 
-                        };
+                            };
 
 
 
 
-                        int count = 0;
-                        IQueryable<UserM> data = db.UsersListViewPaging(pageNumber: ViewBag.UserUpateViewPage,
-                                    pageSize: 6,
-                                    sort: ViewBag.UserUpateViewSort,
-                                    sortdir: ViewBag.UserUpateViewDir,
-                                    count: out count, Filters: Model
-                                    );
+                            int count = 0;
+                            List<UserListView> data = db.getUserListView(Page: ViewBag.UserUpateViewPage,
+                                        RowCount: out count, search: Model.first_name
+                                        );
 
-                        var grid = new WebGrid(ajaxUpdateContainerId: "user-list-upate-view",
-                                            ajaxUpdateCallback: "callBack", rowsPerPage: 6
-                                            );
-                        grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
-                        @grid.GetHtml(
+                            var grid = new WebGrid(ajaxUpdateContainerId: "user-list-upate-view",
+                                                ajaxUpdateCallback: "callBack", rowsPerPage: 6
+                                                );
+                            grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                            @grid.GetHtml(
                   tableStyle: "table table-striped table-bordered be-pagination-spl",
                   htmlAttributes: new { @id = "example" },
 
                   columns: new[] {
-
-
-
-
-
-                              grid.Column(columnName:"FirstName",header:"FirstName",format:null,style:"user-name",canSort:false),
-                              grid.Column(columnName:"SecondName",header:"SecondName",format:null,style:"user-name",canSort:false),
-                            grid.Column(columnName:"UserName",header:"Staff Code",format:null,style:"user-name",canSort:false),
-                             grid.Column(columnName:"Email",header:"Email",format:null,style:"user-name",canSort:false),
-                             grid.Column(columnName:"ContactNumber",header:"Contact Number",format:null,style:"user-name",canSort:false),
-                             //grid.Column(columnName:"EmpCodeLookup",header:"UserType",format:null,style:"user-name",canSort:false),
-
-
-                           //  grid.Column(format: item => @Html.ActionLink(item.FileName != null ? (String)item.FileName : string.Empty,"DownloadFile")
-
-
-                           grid.Column(columnName:"EmpCodeLookup",header:"User Type",      format:x=>x.EmpCodeLookup != null ? "GS":"NON GS",   style:"values",canSort:false)
-
-
-
-
+                      grid.Column(columnName:"first_name",header:"FirstName",format:null,style:"user-name",canSort:false),
+                      grid.Column(columnName:"second_name",header:"SecondName",format:null,style:"user-name",canSort:false),
+                      grid.Column(columnName:"user_name",header:"Staff Code",format:null,style:"user-name",canSort:false),
+                      grid.Column(columnName:"email",header:"Email",format:null,style:"user-name",canSort:false),
+                      grid.Column(columnName:"contact_number",header:"Contact Number",format:null,style:"user-name",canSort:false),
+                      grid.Column(columnName:"group_name",header:"User Type",format:null,style:"user-name",canSort:false)
+                      //grid.Column(columnName:"EmpCodeLookup",header:"UserType",format:null,style:"user-name",canSort:false),
+                      //  grid.Column(format: item => @Html.ActionLink(item.FileName != null ? (String)item.FileName : string.Empty,"DownloadFile")
+                      //grid.Column(columnName:"EmpCodeLookup",header:"User Type",      format:x=>x.EmpCodeLookup != null ? "GS":"NON GS",   style:"values",canSort:false)
                   },
                   footerStyle: "extra-table-pager"
                   )
 
-                        @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                            @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
                   nextText: "NEXT",
                   firstText: "FIRST",
                   previousText: "PREV.",
                   lastText: "LAST")
+                        }
                     }
-                }
+                </div>
             </div>
         </div>
-    </div>
 
-                    }
+                        }
 </section><!-- /.content -->
                     
 

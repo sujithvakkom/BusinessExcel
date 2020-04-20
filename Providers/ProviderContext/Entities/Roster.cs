@@ -12,6 +12,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
     {
 
         [Required]
+  
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Int32 roster_id { get; set; }
 

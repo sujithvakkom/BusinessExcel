@@ -21,7 +21,7 @@ namespace BusinessExcel.Providers.ProviderContext
                                             where 
                                                 location_id = @location_id";
 
-            var user_name = locationId != null ?
+            var user_name = locationId != null ?    
                   new SqlParameter("@location_id", locationId) :
                   new SqlParameter("@location_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
             var locations = this.Database.SqlQuery<LocationDetail>(SELECT_LOCATION, user_name).ToList();
@@ -39,7 +39,7 @@ namespace BusinessExcel.Providers.ProviderContext
             int? page = null;
             var page_size = page != null ?
                 new SqlParameter("@page_size", page) :
-                new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+                new SqlParameter("@page_size", System.Data.SqlDbType.BigInt) { Value = 20 };
 
             int? page_num = Page;
             var page_number = page_num != null ?

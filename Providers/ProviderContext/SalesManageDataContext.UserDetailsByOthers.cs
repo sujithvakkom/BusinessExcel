@@ -187,6 +187,10 @@ namespace BusinessExcel.Providers.ProviderContext
                     {
                         Enitity_Id = parents.entity;
                     }
+                    else
+                    {
+                        Enitity_Id = 1;
+                    }
                 }
             }
             catch (Exception ex)

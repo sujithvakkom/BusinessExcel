@@ -6,7 +6,7 @@
     <div class="box-header with-border">
         <h3 class="box-title">User Profile</h3>
     </div>
-    @using (Html.BeginPrefixScope("ChangeName"))
+    @using (Html.BeginHtmlFieldPrefixScope("ChangeName"))
     {
         using (Ajax.BeginForm("ChangeName",
             new AjaxOptions()

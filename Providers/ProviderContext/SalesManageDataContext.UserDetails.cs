@@ -30,6 +30,26 @@ namespace BusinessExcel.Providers.ProviderContext
             UserDetail detail = users.Count > 0 ? users[0] : null;
             return detail;
         }
+        public virtual UserDetail getAuthUserDetail(string userName, string password)
+        {
+            const string SELECT_USER = @"select user_name, 
+                                                isnull(display_name,first_name+' '+second_name) as full_name 
+                                                from [sc_salesmanage_user].[user_m] 
+                                            where 
+                                                user_name = @user_name
+                                            and password = @password";
+
+            var _user_name = !string.IsNullOrEmpty(userName) ?
+                  new SqlParameter("@user_name", userName) :
+                  new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            var _password = !string.IsNullOrEmpty(password) ?
+                new SqlParameter("@password", password) :
+                new SqlParameter("@password", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+            var users = this.Database.SqlQuery<UserDetail>(SELECT_USER, _user_name,_password).ToList();
+            UserDetail detail = users.Count > 0 ? users[0] : null;
+            return detail;
+        }
         public virtual int getUserID(string userName)
         {
             const string SELECT_USER = @"select user_id
@@ -175,6 +195,84 @@ namespace BusinessExcel.Providers.ProviderContext
             }
             return items;
         }
+
+
+        public virtual List<CreateUser> getUserGroups()
+        {
+            List<CreateUser> ugroups = new List<CreateUser>();
+
+            const string SELECT_USER = @"select user_group_id as USERGROUPID, 
+                                                group_name as USERGROUPNAME
+                                                from [sc_salesmanage_user].[group_m] ";
+            try
+            {
+                ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER).ToList();
+                
+            }
+            catch (Exception ex)
+            {
+                ugroups = null;
+            }
+            return ugroups;
+        }
+
+        public virtual List<CreateUser> getDefaultUserGroups()
+        {
+            List<CreateUser> ugroups = new List<CreateUser>();
+
+            const string SELECT_USER = @"select user_group_id as USERGROUPID, 
+                                                group_name as USERGROUPNAME
+                                                from [sc_salesmanage_user].[group_m]  where user_group_id=1";
+            try
+            {
+                ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ugroups = null;
+            }
+            return ugroups;
+        }
+
+
+        public virtual List<CreateUser> getUserRoles()
+        {
+            List<CreateUser> ugroups = new List<CreateUser>();
+
+            const string SELECT_USER_ROLES = @"select role_id as RoleId, 
+                                                role_name as RoleName
+                                                from [db_salesmanage_user].[role_m] ";
+            try
+            {
+                ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER_ROLES).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ugroups = null;
+            }
+            return ugroups;
+        }
+
+        public virtual List<CreateUser> getDefaultUserRoles()
+        {
+            List<CreateUser> ugroups = new List<CreateUser>();
+
+            const string SELECT_USER_ROLES = @"select role_id as RoleId, 
+                                                role_name as RoleName
+                                                from [db_salesmanage_user].[role_m]  where role_id=1 ";
+            try
+            {
+                ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER_ROLES).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                ugroups = null;
+            }
+            return ugroups;
+        }
         /// <summary>
         /// return non assinged users
         /// </summary>
@@ -242,28 +340,30 @@ namespace BusinessExcel.Providers.ProviderContext
                 int Enity_id = getEntity(Parent_userId);
 
 
-          
+                if (new_userId != Parent_userId)
+                {
 
-                var user_id = new_userId != 0 ?
-      new SqlParameter("@user_id", new_userId) :
-      new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = 0 };
+                    var user_id = new_userId != 0 ?
+          new SqlParameter("@user_id", new_userId) :
+          new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = 0 };
 
-                var parent_id = Parent_id != 0 ?
-              new SqlParameter("@ParentId", Parent_id) :
-              new SqlParameter("@ParentId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
-
-
-                var enity_id = Enity_id != 0 ?
-              new SqlParameter("@EntityId", Enity_id) :
-              new SqlParameter("@EntityId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+                    var parent_id = Parent_id != 0 ?
+                  new SqlParameter("@ParentId", Parent_id) :
+                  new SqlParameter("@ParentId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
-                System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(user_id);
-                parameterList.Add(parent_id);
-                parameterList.Add(enity_id);
+                    var enity_id = Enity_id != 0 ?
+                  new SqlParameter("@EntityId", Enity_id) :
+                  new SqlParameter("@EntityId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-                isInsertUpdate = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[Insert_UserTree] @user_id,@ParentId,@EntityId", parameterList.ToArray());
+
+                    System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(user_id);
+                    parameterList.Add(parent_id);
+                    parameterList.Add(enity_id);
+
+                    isInsertUpdate = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[Insert_UserTree] @user_id,@ParentId,@EntityId", parameterList.ToArray());
+                }
 
             }
             catch(Exception ex)

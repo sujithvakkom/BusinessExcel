@@ -19,7 +19,8 @@
 <script src="~/Scripts/jsTree3/jstree.min.js"></script>
 <script>
 
-        $(function () {
+    $(function () {
+       
             var selectedData;
             $('#jstree').jstree({
                 "core": {
@@ -53,9 +54,10 @@
             });
 
 
-
+          
             var to = false;
             $('#search_field').keyup(function () {
+               
 
                 if ($('#search_field').val().length <= 1)
                 {
@@ -442,32 +444,30 @@
                     </div>
                     <div class="addmodal-body">
 
-                        <div class="container-fluid" style="padding-top:15px">
-
+                        <div class="container-fluid" style="padding-top:15px">                         
                             @Html.AdminLTEDropDownListFor(
-                            m => Model.First().user_name,
-                            htmlLabelAttributes: null,
-                            htmlDropDownAttributes: new Dictionary<string, object>() {
-                                                                    { "class", "form-control select2 " }
-                            },
-                            htmlGroupAttributes: null,
-                            autoCompleteOptions: new AutoCompleteOptions()
-                            {
-                                AjaxOptions = new AjaxOptions()
-                                {
-                                    HttpMethod = "GET",
-                                    Url = Url.Action(actionName: JSONController.NON_ASSIGNED_USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                },
-                                DescriptionField = "full_name",
-                                IDField = "user_name",
-                                Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                                //SelectedItem = ViewData[@BusinessExcel.Controllers.AdminController.SELECTED_FILTED_USER],
-                                IsAutoComplete = true,
-                                SelectItems = null
-                            },
-                            showLabel: false)
-
-                         
+                         m => m.First().user_name,
+                         htmlLabelAttributes: null,
+                         htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                { "class", "form-control select2" }
+                                            },
+                         htmlGroupAttributes: new Dictionary<string, object>() { },
+                         autoCompleteOptions: new AutoCompleteOptions()
+                         {
+                             AjaxOptions = new AjaxOptions()
+                             {
+                                 HttpMethod = "GET",
+                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETERALL, controllerName: JSONController.JSONCONTROLLER)
+                             },
+                             DescriptionField = "full_name",
+                             IDField = "user_name",
+                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                             IsAutoComplete = true,
+                             SelectItems = null,
+                             DropdownParent = "Add_modalnew"
+                         },
+                         showLabel: false,
+                             dropdownParent: "Add_modalnew")
    
 
 

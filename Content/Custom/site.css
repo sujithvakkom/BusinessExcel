@@ -186,3 +186,7 @@ tfoot tr td{
 .text-transparent {
     color:rgba(0,0,0,0);
 }
+
+.datepicker table tr td span {
+  width: 100% !important;
+}

@@ -1,0 +1,90 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">@TargetController._CATEGORY_SETTINGS</h3>
+    </div>
+    <div class="box-body">
+        <div id="category-settings-location-view">
+            @using (var db = new SalesManageDataContext())
+            {
+                int count = 0;
+                var dataList = db.getCategorySettingsDetails(category: null,
+                            Page: ViewBag.Page == null ? 1 : ViewBag.Page,
+                            RowCount: out count
+                            );
+                var grid = new WebGrid(ajaxUpdateContainerId: "table-settings-location-view",
+                    ajaxUpdateCallback: TargetController._SETTINGLOCATION,
+                    rowsPerPage: 20
+                    );
+                grid.Bind(source: dataList,
+                    autoSortAndPage: false,
+                    rowCount: count);
+                @grid.GetHtml(
+                           tableStyle: "table table-striped table-bordered be-pagination-spl",
+                           htmlAttributes: new { @id = "table-daily-upate" },
+                           columns: new[] {
+                               grid.Column(columnName:"Description",
+                               header:Html.AdminLTESorter("Description","Description",grid),
+                               format:(item)=>@Html.AdminLTEParagraph((string)@item.description),
+                               style:"name",canSort:true),
+
+                               grid.Column(columnName:"Default Base Inc.",header:"Default Base Inc.",
+                               format:(item)=>@Html.AdminLTEParagraph((decimal)(@item.base_incentive==null?0:@item.base_incentive)),
+                               style:"location",canSort:false),
+
+                               grid.Column(columnName:"TSF",header:"Total Sale Factor",
+                               format:(item)=>@Html.AdminLTEParagraph((decimal)(@item.total_sale_factor==null?0:@item.total_sale_factor)),
+                               style:"location",canSort:false),
+
+                               grid.Column(columnName:"Sell-in Factor",header:"Sell-in Factor",
+                               format:(item)=>@Html.AdminLTEParagraph((decimal)(@item.category_sellin_factor==null?0:@item.category_sellin_factor)),
+                               style:"location",canSort:false)
+                           },
+                           footerStyle: "extra-table-pager"
+                           )
+
+                @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                           nextText: "NEXT",
+                           firstText: "FIRST",
+                           previousText: "PREV.",
+                           lastText: "LAST")
+            }
+        </div>
+
+        <div class="pull-right box-body">
+            @Ajax.AjaxAdminLTEActionLink(
+           linkText: "Add",
+           actionName: TargetController._ADDCATEGORYSETTINGS,
+           controllerName: TargetController.TARGET,
+           ajaxOptions: new AjaxOptions()
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "add-category-settings",
+               OnFailure = "loadin_failed",
+               LoadingElementId = "add-category-settings-progress"
+           },
+            LoadingElementId:
+            "add-category-settings-progress",
+            buttonAttributes: new Dictionary<string, object>() { { "class", "btn btn-primary" } },
+            Image:
+            Url.Content("~/Images/progress.gif")
+            )
+
+        </div>
+        <div id="add-category-settings">
+            @if(ViewBag.CategoryDetail!=null)
+            {
+                var CategoryDetail = (CategoryDetail)ViewBag.CategoryDetail;
+                Html.RenderPartial(TargetController._ADDCATEGORYSETTINGS, CategoryDetail);
+            }
+        </div>
+    </div>
+</div>

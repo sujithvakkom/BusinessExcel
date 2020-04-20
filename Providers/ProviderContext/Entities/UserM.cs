@@ -54,5 +54,7 @@ emp_code_lookup	varchar(6)
         public string ContactNumber { get; set; }
         [Column("emp_code_lookup")]
         public string EmpCodeLookup { get; set; }
+
+ 
     }
 }

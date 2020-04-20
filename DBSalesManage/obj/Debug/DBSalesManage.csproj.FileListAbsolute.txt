@@ -26,3 +26,4 @@ C:\Users\sujithvakkom\Source\Repos\BusinessExcel\DBSalesManage\bin\EntityFramewo
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\bin\EntityFramework.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\bin\EntityFramework.SqlServer.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\DBSalesManage\bin\EntityFramework.SqlServer.xml
+C:\works\BusinessExcel\DBSalesManage\obj\Debug\DBSalesManage.csprojResolveAssemblyReference.cache

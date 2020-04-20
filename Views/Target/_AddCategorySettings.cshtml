@@ -1,0 +1,104 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext.Entities
+
+@model CategoryDetail
+
+@using (Ajax.BeginForm(
+                                                                                                    actionName: TargetController._ADDCATEGORYSETTINGS,
+                                                                                                    controllerName: TargetController.TARGET,
+                                                                                                    routeValues: null,
+                                                                                                    ajaxOptions: new AjaxOptions()
+                                                                                                    {
+                                                                                                        HttpMethod = "Post",
+                                                                                                        InsertionMode = InsertionMode.Replace,
+                                                                                                        UpdateTargetId = "category-setting-details",
+                                                                                                        LoadingElementId = "add-incentive-progress"
+                                                                                                    }
+                                                                                                    ))
+{
+    if (ViewBag.Errors != null)
+    {
+        var errors = (string[])ViewBag.Errors;
+        Html.RenderPartial(Constands._ErrorViewer, errors.ToList());
+    }
+
+    <table class="table table-condensed no-border" >
+        <tr>
+
+            <td class="location" colspan="3">
+
+                @Html.AdminLTEDropDownListFor(
+                  m => m.category_id,
+                  htmlLabelAttributes: null,
+                  htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                    { "class", "form-control select2" }
+                  },
+                  htmlGroupAttributes: null,
+                  autoCompleteOptions: new AutoCompleteOptions()
+                  {
+                      AjaxOptions = new AjaxOptions()
+                      {
+                          HttpMethod = "GET",
+                          Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                      },
+                      DescriptionField = "description",
+                      IDField = "category_id",
+                      Formate = "'<div>'+state.text + '</div>'",
+                      //SelectedItem = ViewData[ReportController.SELECTED_FILTED_ITEM],
+                      IsAutoComplete = true,
+                      SelectItems = null
+                  },
+                  showLabel: true)
+            </td>
+        </tr>
+        <tr>
+            <td class="location">
+                @Html.AdminLTETextBoxFor(m => m.base_incentive,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+            </td>
+            <td class="location">
+                @Html.AdminLTETextBoxFor(m => m.total_sale_factor,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+            </td>
+            <td class="location">
+                @Html.AdminLTETextBoxFor(m => m.category_sellin_factor,
+                  htmlLabelAttributes: null,
+                  htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" } },
+                  htmlGroupAttributes: null,
+                  htmlGlyphiconsAttributes: null,
+                  glyphiconsName: "",
+                  showLabel: true,
+                  showGlyphicons: false)
+            </td>
+        </tr>
+    </table>
+
+    <div class="pull-right box-body">
+        @Html.AdminLTEFromSubmitter("Save",
+    "add-incentive-progress",
+    new Dictionary<string, object>() {
+        { "type", "submit" } ,
+        { "class","btn btn-primary"}
+    },
+    Url.Content("~/Images/progress.gif")
+    )
+    </div>
+}
+

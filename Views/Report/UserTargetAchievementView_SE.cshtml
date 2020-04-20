@@ -1,0 +1,152 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Controllers.JSON
+
+@model TargetAchievementView
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <strong style="padding-left:5px">@Model.Month @Model.start_date.Value.ToString(" yyyy")</strong>
+</div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+
+
+        <div id="target-achievement-view" class="table-responsive">
+            @{
+
+                using (var db = new SalesManageDataContext())
+                {
+                    WebGridColumn col = new WebGridColumn()
+                    {
+
+                    };
+
+                    int count = 0;
+                    IQueryable<TargetAchievementView> data = db.TargetAchievementViewPaging(pageNumber: ViewBag.UserTargetViewSEPage,
+                                pageSize: 20,
+                                sort: ViewBag.UserTargetViewSESort,
+                                sortdir: ViewBag.UserTargetViewSEDir,
+                                count: out count, Filters: Model
+                                );
+
+                    var grid = new WebGrid(ajaxUpdateContainerId: "target-achievement-view",
+                                                    ajaxUpdateCallback: "targetachievementviewcallBack",
+                                                    rowsPerPage: 20
+                                                    );
+                    grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
+                    @grid.GetHtml(
+
+                 tableStyle: "webgrid",
+                 headerStyle: "gridheader",
+
+                              htmlAttributes: new { @id = "Tsheet" + Model.target_id },
+                              columns: new[] {
+
+
+                                   grid.Column(
+                           columnName: "Category",
+                           header: "category",
+                           format: null,
+                           style: "category",
+                           canSort: false),
+                           grid.Column(
+
+                           columnName: "Target_amt",
+                           header: "Target",
+                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Target_amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           style: "Target_amt numaric", canSort: false),
+                           grid.Column(
+                           columnName: "Achieved_Amt",
+                           header: "Achieved",
+                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Achieved_Amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           style: "Achieved_Amt numaric", canSort: false),
+                              grid.Column(
+                           columnName: "Achieved_Amt",
+                           header: "Achieved%",
+                           format: (item)=>@Html.AdminLTEParagraph((object)@item["Achieved_Amt"], new Dictionary<string, object> { { "class", "numaric" } }),
+                           style: "Achieved_Amt numaric", canSort: false),
+
+                              }
+
+                )
+                }
+
+
+
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+
+
+        <table class="table table-bordered" style="width:50%;background-color:#bbbab8;margin:4px;">
+
+            <tbody>
+                <tr>
+
+                    <td class="lblcol">Base Incentive</td>
+                    <td>1500</td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td class="lblcol">Achived % -Mnth</td>
+                    <td>15%</td>
+                    <td>350</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<style>
+  
+    .Entered_Amt {
+        width: 15%;
+    }
+
+    .webgrid {
+        margin: 4px;
+        border-collapse: collapse;
+        width: 80%;
+    }
+
+    .gridheader {
+        padding: 6px 5px;
+        text-align: center;
+        background-color: #e8eef4;
+        /*border-bottom: 2px solid #3966A2;*/
+        height: 40px;
+        font-weight: bold;
+        border-top: 2px solid #D6E8FF;
+        border-left: 2px solid #D6E8FF;
+        border-right: 2px solid #D6E8FF;
+    }
+
+    .webgrid th, .webgrid td {
+        border: 1px solid #C0C0C0;
+        padding: 5px;
+    }
+
+ /*.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th
+       {
+           padding:2px;
+       }*/
+
+</style>

@@ -15,13 +15,10 @@ namespace BusinessExcel.Controllers
 {
     public partial class TargetController : Controller
     {
-
-        public static string TARGETLINE = "TargetLine";
         public static string TARGETTEMPLATE_TITLE = "Target Creation";
         public static string TARGETASSIGN_TITLE = "Target Assign";
         public static string TARGETTEMPLATELINE_TITLE = "Target Lines";
         public static string TARGETTEMPLATE = "TargetTemplate";
-        public static string _TARGETTEMPLATECREATEBLOCK = "_TargetTemplateCreateBlock";
         public static string _TARGETASSIGNBLOCK = "_TargetAssignBlock";
         public static string TARGETTEMPLATECREATE = "TargetTemplateCreate";
         public static string _TEMPLETLINES = "_TempletLines";
@@ -66,7 +63,7 @@ namespace BusinessExcel.Controllers
             if (ModelState.IsValid)
             {
                 target.LineTargets =
-                    lineTarget.ToArray();
+                    lineTarget.ToList();
                 try
                 {
                     result = target.Save(out Message);
@@ -118,5 +115,12 @@ namespace BusinessExcel.Controllers
             }
         }
 
+        public static string _TARGETTEMPLATECREATEBLOCK = "_TargetTemplateCreateBlock";
+        public PartialViewResult _TargetTemplateCreateBlock() { return PartialView(); }
+        public static string TARGETLINE = "TargetLine";
+        public PartialViewResult TargetLine() { return PartialView(); }
+
+        public static string _TARGETLINE = "_TargetLine";
+        public PartialViewResult _TargetLine() { return PartialView(); }
     }
 }

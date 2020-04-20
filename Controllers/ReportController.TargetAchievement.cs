@@ -9,8 +9,10 @@ using System.IO;
 using System.Linq;
 
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 
 namespace BusinessExcel.Controllers
 {
@@ -21,8 +23,8 @@ namespace BusinessExcel.Controllers
         // GET: /Report/
         public static string TARGETACHIEVEMENT_ACTIONS_TITLE = "Target & Achievement (Roster)";
 
-        public static string USER_TARGET_ACHIEVEMENT_TITLE = "Target & Achievement (User) ";
-        public static string USER_TARGET_ACHIEVEMENT_PAGE_TITLE = "Target & Achievement";
+        public static string USER_TARGET_ACHIEVEMENT_TITLE = "Target & Achievement (ME) ";
+        public static string USER_TARGET_ACHIEVEMENT_PAGE_TITLE = "Target & Achievement (ME)";
         public static string USER_TARGET_ACHIEVEMENT_DETAILS = "UserTargetAchievementDetails";
 
         public static string USER_TARGET_ACHIEVEMENT_ACTION = "UserTargertAchievement";
@@ -30,14 +32,23 @@ namespace BusinessExcel.Controllers
         public static string USER_TARGET_UPDATE_ACHIEVEMENT = "UpdateAcheivedAmt";
 
         public static string USER_TARGET_UPDATED_TOTAL = "getUpdatedTargetTotal";
+        public static string USER_TARGET_UPDATE_ENTERED_BASE_INCENTIVE = "UpdateEnteredBaseIncentive";
+        public static string USER_TARGET_UPDATE_ENTERED_INCENTIVE = "UpdateEnteredIncentive";
         public static string LOAD_USER_TARGET_UPDATED_TOTAL = "LoadUpdatedTargetTotal";
 
         // public static string REPORTCONTROLLER = "Report";
         public static string TARGETACHIEVEMENTACTIONS = "TargetAchievementActions";
         public static string USER_TARGET_DETAILS = "UserTargetDetails";
         public static string USER_TARGET_DETAILS_ACTION = "UserTargetDetailsAction";
+        public static string TARGET_UPDATE_STATUS = "UpdateTargetStatus";
 
-       // 
+        public static string SELECTED_FILTED_TARGET_STATUS = "FilteredTargetStatus";
+
+
+     
+
+        // 
+
         ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
         public ActionResult TargetAchievementActions(string sort, string sortdir, int page = 1, ActionViewFilters Filters = null)
         {
@@ -152,6 +163,15 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
+
+            //if (target.TargetTotal.Count > 0)
+            //{
+            //    using (var db = new SalesManageDataContext())
+            //    {
+            //        ViewData[SELECTED_FILTED_TARGET_STATUS] = db.getTargetStatusBtId(target.TargetTotal[0].target_status);
+            //    }
+            //}
+
             if (target.target_id > 0)
             {
                 target.TargetTotal =  LoadTargetTotal(target.user_id.Value, target.target_id.Value);
@@ -432,7 +452,7 @@ namespace BusinessExcel.Controllers
 
                 if (db.UpdateTargetAchievementAmt(targetModel) > 0)
                 {
-                    items = db.getUsertargetTotalDetails(targetModel.user_id.Value, targetModel.target_id.Value);
+                    items = db.getUsertargetTotalDetails( targetModel.target_id.Value);
 
                 }
               
@@ -443,6 +463,94 @@ namespace BusinessExcel.Controllers
 
         }
 
+        
+        public JsonResult UpdateEnteredBaseIncentive(TargetTotalView targetModel)
+        {
+
+
+            List<TargetTotalView> items = null;
+            using (var db = new SalesManageDataContext())
+            {
+
+                if (db.UpdateEnteredBaseIncentive(targetModel) > 0)
+                {
+                    items = db.getUsertargetTotalDetails(targetModel.target_id.Value);
+
+                }
+
+            }
+
+            return Json(items, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public static string USER_TARGET_UPDATE_ENTERED_BASE_INCENTIVE_QTR = "UpdateEnteredBaseIncentiveQTR";
+        public JsonResult UpdateEnteredBaseIncentiveQTR(QuarterDetails qtrModel)
+        {
+
+
+            List<TargetTotalView> items = null;
+            using (var db = new SalesManageDataContext())
+            {
+
+
+              
+
+                if (db.UpdateEnteredBaseIncentiveQTR(qtrModel)>0)
+                {
+                    items = db.getUsertargetTotalDetailsQTR(qtrModel.start_date.Value);
+
+                }
+
+            }
+
+            return Json(items, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        public JsonResult UpdateEnteredIncentive(TargetTotalView targetModel)
+        {
+
+
+          
+            List<TargetTotalView> items = null;
+            using (var db = new SalesManageDataContext())
+            {
+
+                if (db.UpdateEnteredIncentiveAmt(targetModel) > 0)
+                {
+                    items = db.getUsertargetTotalDetails(targetModel.target_id.Value);
+
+                }
+
+            }
+
+            return Json(items, JsonRequestBehavior.AllowGet);
+
+        }
+
+       
+        public JsonResult UpdateTargetStatus(TargetTotalView targetModel)
+        {
+
+
+
+            int update = 0;
+            using (var db = new SalesManageDataContext())
+            {
+
+                update= db.UpdateTargetStatus(targetModel);
+              
+                if(update>0)
+                {
+                  
+                }
+            }
+         
+            return Json(update, JsonRequestBehavior.AllowGet);
+
+        }
         public List<TargetTotalView> LoadTargetTotal(int user_id,int target_id)
         {
 
@@ -457,8 +565,15 @@ namespace BusinessExcel.Controllers
             {
 
 
-                items = db.getUsertargetTotalDetails(user_id, target_id).ToList();
+                items = db.getUsertargetTotalDetails(target_id).ToList();
 
+                
+                if (items.FirstOrDefault().target_status > 0)
+                {
+
+                     ViewData[SELECTED_FILTED_TARGET_STATUS] = db.getTargetStatusBtId(items.FirstOrDefault().target_status);
+                    //ViewData[target_id.ToString()] = db.getTargetStatusBtId(items.FirstOrDefault().target_status);
+                }
 
             }
 
@@ -474,12 +589,36 @@ namespace BusinessExcel.Controllers
             {
 
 
-                    items = db.getUsertargetTotalDetails(targetModel.user_id.Value, targetModel.target_id.Value);
+                    items = db.getUsertargetTotalDetails( targetModel.target_id.Value);
 
 
             }
 
             return Json(items, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public List<TargetTotalView> LoadQuarterTotal(DateTime startdate)
+        {
+
+
+
+            //      res = res.Where(x => month <= x.start_date.Value.Month && month >= x.start_date.Value.Month);
+
+
+
+            List<TargetTotalView> items = null;
+            using (var db = new SalesManageDataContext())
+            {
+
+
+                items = db.getUsertargetTotalDetailsQTR(startdate).ToList();
+
+                
+
+            }
+
+            return items;
 
         }
 
@@ -499,5 +638,245 @@ namespace BusinessExcel.Controllers
             WC
             
         }
+
+
+        public static string TARGET_SUMMARY_INDEX = "TargertSummaryIndex";
+        public static string TARGET_SUMMARY_FILTER = "TargetSummaryFilter";
+        public static string TARGET_SUMMARY_FILTER_VIEW = "_TargertSummaryFilter";
+        public static string TARGET_SUMMARY_ME_TITLE = "Target Summary Report(MER)";
+     
+        public static string TARGET_SUMMARY_CONTROLLER = "Report";
+
+
+    
+
+        public ActionResult TargertSummaryIndex()
+        {
+
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_ME_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = TARGET_SUMMARY_ME_TITLE;
+            if (Request.IsAjaxRequest()) return PartialView();
+          
+            return View(new TargetSummaryView());
+        }
+        [HttpGet]
+        public PartialViewResult TargetSummaryFilter(string sort, string sortdir, int page = 1, TargetSummaryView Filters = null)
+        {
+            ViewBag.TargertSummaryViewSort = sort;
+            ViewBag.TargertSummaryViewDir = sortdir;
+            ViewBag.TargertSummaryViewPage = page;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_ME_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = TARGET_SUMMARY_ME_TITLE;
+            
+
+            return PartialView(TARGET_SUMMARY_FILTER_VIEW, Filters);
+
+        }
+
+
+
+        public static string TARGET_SUMMARY_SE_INDEX = "TargertSummary_SE_Index";
+        public static string TARGET_SUMMARY_SE_FILTER = "TargetSummary_SE_Filter";
+        public static string TARGET_SUMMARY_SE_FILTER_VIEW = "_TargertSummary_SE_Filter";
+        public static string TARGET_SUMMARY_SE_TITLE = "Target Summary Report(SE)";
+        public static string TARGET_SUMMARY_SE_CONTROLLER = "Report";
+
+
+        public ActionResult TargertSummary_SE_Index()
+        {
+
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_SE_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = TARGET_SUMMARY_SE_TITLE;
+            if (Request.IsAjaxRequest()) return PartialView();
+
+            return View(new TargetSummaryViewSE());
+        }
+        [HttpGet]
+        public PartialViewResult TargetSummary_SE_Filter(string sort, string sortdir, int page = 1, TargetSummaryViewSE Filters = null)
+        {
+            ViewBag.TargertSummarySEViewSort = sort;
+            ViewBag.TargertSummarySEViewDir = sortdir;
+            ViewBag.TargertSummarySEViewPage = page;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_SE_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = TARGET_SUMMARY_SE_FILTER_VIEW;
+
+
+            return PartialView(TARGET_SUMMARY_SE_FILTER_VIEW, Filters);
+
+        }
+
+
+        public static string USER_TARGET_ACHIEVEMENT_TITLE_SE = "Target & Achievement (SE) ";
+        public static string USERTARGET_ACHIEVEMENT_VIEW_SE = "UserTargetAchievementView_SE";
+        public static string QTR_ACHIEVEMENT_VIEW_SE = "_QTR_AchievementView_SE";
+        public static string QTR_ACHIEVEMENT_MASTER_VIEW_SE = "UserTargetAchievementViewMaster_SE";
+
+        public ActionResult UserTargetAchievementViewMaster_SE(string sort, string sortdir, int page = 1, TargetAchievementQTRView target = null)
+        {
+            ViewBag.UserTargetViewSESort = sort;
+            ViewBag.UserTargetViewSEDir = sortdir;
+            ViewBag.UserTargetViewSEPage = page;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
+
+
+            if (target.qtr == null)
+            {
+                target.start_date = DateTime.Now.Date;
+
+            }
+            else
+            {
+                string[] qrt = target.qtr.Split('-');
+                target.start_date = getQuarterStartDate(qrt[0].ToString().Trim(), qrt[1].ToString().Trim());
+            }
+
+            if (target.start_date !=default(DateTime))
+            {
+                target.TargetTotal = LoadQuarterTotal(target.start_date.Value);
+            }
+            return PartialView(QTR_ACHIEVEMENT_VIEW_SE, target);
+        }
+
+
+
+        ///Report/Actions?sort=CreateTime&sortdir=ASC&page=2
+        public ActionResult UserTargetAchievementView_SE(string sort, string sortdir, int page = 1, TargetAchievementView target = null)
+        {
+            ViewBag.UserTargetViewSESort = sort;
+            ViewBag.UserTargetViewSEDir = sortdir;
+            ViewBag.UserTargetViewSEPage = page;
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
+
+ 
+            return PartialView(USERTARGET_ACHIEVEMENT_VIEW_SE, target);
+        }
+
+
+        public static string USER_TARGET_DETAILS_SE = "UserTargetDetails_SE";
+        [HttpGet]
+        // [Authorize(Roles = "manager")]
+        // [Authorize(Roles = "System Administrator")]
+        public ActionResult UserTargetDetails_SE(UserTargetDetailsView usr)
+        {
+
+            ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + USER_TARGET_ACHIEVEMENT_TITLE;
+            ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
+            ViewBag.Title = USER_TARGET_ACHIEVEMENT_TITLE;
+
+            if (usr.Quarter_Name == null)
+            {
+                usr.start_date = DateTime.Now.Date;
+
+            }
+            else
+            {
+                string[] qrt = usr.Quarter_Name.Split('-');
+                usr.start_date = getQuarterStartDate(qrt[0].ToString().Trim(), qrt[1].ToString().Trim());
+            }
+      
+
+            using (var db = new SalesManageDataContext())
+            {
+
+                usr = db.getUserTargetDetails(usr);
+
+                string d = usr.Full_Name;
+
+                if (!string.IsNullOrEmpty(usr.UserName))
+                {
+                    ViewData[SELECTED_FILTED_USER] = db.getUserDetail(usr.UserName);
+
+
+                }
+            }
+
+
+            if (Request.IsAjaxRequest()) return PartialView(usr);
+            return View(usr);
+
+
+        }
+
+        public static string EXPORT_TARGET_SUMMARY_EXCEL = "ExportTargetSummaryExcel";
+        public static string EXPORT_TARGET_SUMMARY_EXCEL_TITLE = "Export Excel";
+        public ActionResult ExportTargetSummaryExcel(TargetSummaryView Filters = null)
+        {
+
+            using (var db = new SalesManageDataContext())
+            {
+                // var gv = new System.Web.UI.WebControls.GridView();
+                // gv.DataSource = db.GetTargetSummaryExport(Filters);
+
+                //gv.DataBind();
+                //Response.ClearContent();
+                //Response.Buffer = true;
+                //Response.AddHeader("content-disposition", "attachment; filename=RosterList - " + DateTime.Now.Date + ".xls");
+                //Response.ContentType = "application/ms-excel";
+                //Response.Write("<style> TD { mso-number-format:\\@; } </style>");
+
+
+                //Response.Charset = "";
+                //StringWriter objStringWriter = new StringWriter();
+                //System.Web.UI.HtmlTextWriter objHtmlTextWriter = new System.Web.UI.HtmlTextWriter(objStringWriter);
+                //gv.RenderControl(objHtmlTextWriter);
+                //Response.Output.Write(objStringWriter.ToString());
+                //Response.Flush();
+                //Response.End();
+
+                IEnumerable<TargetSummaryView> dt = db.GetTargetSummaryExport(Filters);
+              
+                //create object to webgrid  
+                WebGrid grid = new WebGrid(source: dt, canPage: false, canSort: false);
+                string gridData = grid.GetHtml(
+                columns: grid.Columns(
+                                grid.Column("qtr_name", "Quarter"),
+                                 grid.Column("user_name", "Staff"),
+                                  grid.Column("roster_name", "Target"),
+                                   grid.Column("location_name", "Location"),
+                                   grid.Column("totaltarget", "Target"),
+                                     grid.Column("TotalAchieved", "Achvd Amt"),
+                                     grid.Column("BaseIncentive", "Base Incent"),
+                                     grid.Column("TotalEnteredIncAmt", "Entered Base Incent"),
+                                     grid.Column("TotalTargetPerc", "Target Perc"),
+                                     grid.Column("TotalIncAmt", "Incent Amt"),
+                                     grid.Column("TotalEnteredIncAmt", "Entered Incent Amt"),
+                                     grid.Column("LineAch", "Lines Achvd"),
+                                     grid.Column("line_achieved_amt", "Lines Achvd Amt"),
+                                     grid.Column("bonus_lines", "Bonus Achvd Perc"),
+                                     grid.Column("bonus_line_amt", "Bonus Achvd"),
+                                     grid.Column("TotalValue", "Total"),
+                                        grid.Column("target_status", "Target Status")
+
+
+                                )).ToString();
+              
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment; filename=TargetSummary-" + DateTime.Now.Date + ".xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Write("<style> table, th, td {    border: 1px solid black; } TD { mso-number-format:\\@; }  </style>");
+
+
+                Response.Charset = "";
+         
+                Response.Output.Write(gridData);
+                Response.Flush();
+                Response.End();
+
+            }
+
+            if (Request.IsAjaxRequest()) return PartialView(Filters);
+            return View(Filters);
+        }
+
+       
     }
 }

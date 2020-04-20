@@ -10,19 +10,21 @@
 
         using (var db = new SalesManageDataContext())
         {
-            var source = db.DailyUpateView
-                .Where(x => x.CreateTime > Model.StartDate && x.CreateTime < Model.EndDate)
-                .GroupBy(x => new { x.Item, x.Description, x.UserName, x.Name })
-                .Where(x => x.Sum(y => y.Quantity) > 0)
-                .Select(x =>
-                    new
-                    {
-                        User = x.Key.UserName.ToString(),
-                        UserName = x.Key.Name.ToString(),
-                        Item = x.Key.Item,
-                        ItemDescription = x.Key.Description,
-                        TotalValue = x.Sum(y => (decimal)y.TotalValue),
-                    });
+            var source =db.GetDataForCurrentMonthValue(db.getViewer_Id(), Model.StartDate, Model.EndDate);
+
+            //var source = db.DailyUpateView
+            //.Where(x => x.CreateTime > Model.StartDate && x.CreateTime < Model.EndDate)
+            //.GroupBy(x => new { x.Item, x.Description, x.UserName, x.Name })
+            //.Where(x => x.Sum(y => y.Quantity) > 0)
+            //.Select(x =>
+            //    new
+            //    {
+            //        User = x.Key.UserName.ToString(),
+            //        UserName = x.Key.Name.ToString(),
+            //        Item = x.Key.Item,
+            //        ItemDescription = x.Key.Description,
+            //        TotalValue = x.Sum(y => (decimal)y.TotalValue),
+            //    });
 
             var grid = new WebGrid(ajaxUpdateContainerId: "table-current-month-quantity",
                 rowsPerPage: 20

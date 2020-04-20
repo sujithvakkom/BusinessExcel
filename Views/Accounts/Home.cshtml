@@ -63,10 +63,11 @@
                 <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
-        </div>
+        </div>  
     </div>
     </div>
-    <div class="row">
+
+    @*<div class="row">
         <div class="col-lg-6">
 
             <div class="box box-primary">
@@ -183,7 +184,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
     <script>
         var ctx = document.getElementById("myQtyHomeChart").getContext('2d');
         var graph =@Html.Raw(Json.Encode(ViewBag.QtyGraph));

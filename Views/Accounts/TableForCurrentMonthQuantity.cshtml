@@ -10,19 +10,34 @@
 
         using (var db = new SalesManageDataContext())
         {
-            var source = db.DailyUpateView
-                .Where(x => x.CreateTime > Model.StartDate && x.CreateTime < Model.EndDate)
-                .GroupBy(x => new { x.Item, x.Description, x.UserName, x.Name })
-                .Where(x => x.Sum(y => y.Quantity) > 0)
-                .Select(x =>
-                    new
-                    {
-                        User = x.Key.UserName.ToString(),
-                        UserName = x.Key.Name.ToString(),
-                        Item = x.Key.Item,
-                        ItemDescription = x.Key.Description,
-                        TotalValue = x.Sum(y => (decimal)y.Quantity),
-                    });
+
+
+            var source = db.GetDataForCurrentMonthQuantity(db.getViewer_Id(), Model.StartDate, Model.EndDate);
+            //var source = (from dsl in db.DailyUpateView
+            //              join u in db.getViewersList()
+            //              on dsl.UserId equals u
+            //              group dsl by new { dsl.Item, dsl.Description,dsl.UserName,dsl.Name} into g
+            //              select new {
+            //                  User = g.FirstOrDefault().UserName,
+            //                  UserName = g.FirstOrDefault().Name,
+            //                  Item = g.FirstOrDefault().Item,
+            //                  ItemDescription = g.FirstOrDefault().Description,
+            //                  TotalValue = g.Sum(_=> (decimal)_.Quantity)
+            //              }).AsQueryable();
+
+            //var source = db.DailyUpateView
+            //.Where(x => x.CreateTime > Model.StartDate && x.CreateTime < Model.EndDate)
+            //.GroupBy(x => new { x.Item, x.Description, x.UserName, x.Name })
+            //.Where(x => x.Sum(y => y.Quantity) > 0)
+            //.Select(x =>
+            //    new
+            //    {
+            //        User = x.Key.UserName.ToString(),
+            //        UserName = x.Key.Name.ToString(),
+            //        Item = x.Key.Item,
+            //        ItemDescription = x.Key.Description,
+            //        TotalValue = x.Sum(y => (decimal)y.Quantity),
+            //    });
 
             var grid = new WebGrid(ajaxUpdateContainerId: "table-current-month-quantity",
                 rowsPerPage: 20
@@ -50,7 +65,7 @@
                                format:(item)=>@Html.AdminLTEParagraph((string)@item.ItemDescription),
                                style:"name",canSort:true),
                                grid.Column(columnName:"TotalValue",
-                               header:"Total Value",
+                               header:"Total Qty.",
                                format:x=>string.Format("{0:0.00}",x.TotalValue),   
                                style:"values",canSort:false)
                            },
