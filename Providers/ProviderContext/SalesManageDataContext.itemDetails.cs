@@ -48,7 +48,7 @@ namespace BusinessExcel.Providers.ProviderContext
                                                 "[sc_salesmanage_merchant].[getItemDetails]  @item_code ,@page_number ,@page_size ,@row_count OUTPUT", item_code, page_number, page_size, row_count)
                                                 .ToList();
 
-                return items[0];
+                return items.FirstOrDefault();
             }
             return null;
         }
@@ -187,26 +187,6 @@ namespace BusinessExcel.Providers.ProviderContext
             }
 
         }
-
-        //public IQueryable<ItemDetailsView> ItemDetailsPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count)
-        //{
-        //    int skippingRows = (pageNumber - 1) * pageSize;
-
-        //    switch (sort)
-        //    {
-        //        case "CreateTime":
-        //            count = this.DailyUpateView.Count();
-        //            if (sortdir == "ASC")
-        //                return this.DailyUpateView.OrderBy(x => x.CreateTime)
-        //                    .Skip(skippingRows).Take(pageSize);
-        //            return this.DailyUpateView.OrderByDescending(x => x.CreateTime)
-        //                .Skip(skippingRows).Take(pageSize);
-        //        default:
-        //            count = this.DailyUpateView.Count();
-        //            return this.DailyUpateView.OrderBy(x => x.UserId)
-        //                .Skip(skippingRows).Take(pageSize);
-        //    }
-        //}
 
     }
 }

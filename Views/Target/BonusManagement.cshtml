@@ -1,0 +1,60 @@
+﻿
+@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@{ 
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @BusinessExcel.Controllers.TargetController.BONUS_MANAGEMENT
+        <small>Report</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> @BusinessExcel.Controllers.TargetController.TARGETCONTROLLER</a></li>
+        <li class="active">@BusinessExcel.Controllers.TargetController.BONUS_MANAGEMENT</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Your Page Content Here -->
+    <div class="row">
+        <!--Week Selection-->
+        <div class="col-md-3">
+            <div class="box box-solid">
+                <div class="box-header with-border">Weeks</div>
+                <div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked" id="week_menu">
+                        @foreach (var week in (List<BonusWeek>)ViewBag.Weeks)
+                        {
+                            <li id="week_@week.Id">
+                                @Ajax.ActionLink(
+                               @week.Description,
+                               "_BonusLines",
+                               week,
+                               new AjaxOptions()
+                               {
+                                   HttpMethod = "GET",
+                                   InsertionMode = InsertionMode.Replace,
+                                   UpdateTargetId = "bonus_settings",
+                                   OnSuccess = string.Format("updateactiveweek(#{0}')", "week_" + @week.Id)
+                               },
+                               new { @class = week.IsActive()?"bg-green":"" })
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--Week Selection/-->
+        <!--Bonus Settup-->
+        <div id="bonus_settings" class="col-md-9">
+        </div>
+    </div>
+
+</section>
+<script>
+    function updateactiveweek(id) {
+        $("#id").parent().find('li').removeClass("active"); 
+        $("#id").parent().addClass('active');
+    }
+</script>
