@@ -21,7 +21,7 @@ namespace BusinessExcel.Providers.ProviderContext
             int skippingRows = (pageNumber - 1) * pageSize;
 
 
-            var item_code = Filters.user_name != null ?
+            var user_name = Filters.user_name != null ?
            new SqlParameter("@user_name", Filters.user_name) :
            new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
@@ -35,20 +35,23 @@ namespace BusinessExcel.Providers.ProviderContext
                 new SqlParameter("@page_size", System.Data.SqlDbType.Int) { Value = DBNull.Value };
 
 
-            int? row = null;
-            var row_count = row != null ?
-                new SqlParameter("@row_count", row) :
-                new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
-            row_count.Direction = System.Data.ParameterDirection.Output;
+            int VId = getViewer_Id();
+            var viewer_id =
+                new SqlParameter("@viewer_id", VId);
 
             System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
-            parameterList.Add(item_code);
+            parameterList.Add(user_name);
             parameterList.Add(page_number);
             parameterList.Add(page_size);
-            parameterList.Add(row_count);
+            parameterList.Add(viewer_id);
 
-            var res = this.Database.SqlQuery<CheckinViewModel>("[sc_salesmanage_merchant].[get_user_checkin_details] @user_name,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
-            int.TryParse(row_count.Value.ToString(), out count);
+            var res = this.Database.SqlQuery<CheckinViewModel>(@"EXECUTE [sc_salesmanage_merchant].[get_user_checkin_details] 
+   @user_name
+  , @page_number
+  , @page_size
+  , @viewer_id", parameterList.ToArray()).ToList().AsQueryable();
+
+            count = (res.FirstOrDefault().row_count)??0;
 
             // count = res.Count();
             // return res.Skip(skippingRows).Take(pageSize);

@@ -8,7 +8,6 @@
 @model CheckinViewModel
 
 
-
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -24,8 +23,6 @@
 
 <!-- Main content -->
 <section class="content">
-
-
     <!-- Your Page Content Here -->
     @using (Ajax.BeginForm(CheckinController.CHECKIN_DETAILS,
                                                 CheckinController.CHECKIN_CONTROLLER,
@@ -34,19 +31,16 @@
                                                     HttpMethod = "Get",
                                                     InsertionMode = InsertionMode.Replace,
                                                     UpdateTargetId = "checkin_details_display",
-                                                    //OnBegin = "begin",
-                                                    //OnBegin = "move('#page-load')",
-                                                    //OnComplete = "ajax_call_load_complete('#page-load')",
-                                                    //OnSuccess = "success",
-                                                    OnFailure = "loadin_failed",
+                                            //OnBegin = "begin",
+                                            //OnBegin = "move('#page-load')",
+                                            //OnComplete = "ajax_call_load_complete('#page-load')",
+                                            //OnSuccess = "success",
+                                            OnFailure = "loadin_failed",
                                                     LoadingElementId = "checkin-load-progress"
 
 
                                                 }))
-
     {
-
-
         <!-- Your Page Content Here -->
         <div class="box box-default collapsed-box">
             <div class="box-header with-border">
@@ -55,12 +49,7 @@
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
                 </div><!-- /.box-tools -->
             </div><!-- /.box-header -->
-
-
             <div class="box-body">
-
-
-
                 @*<div class="row">
                     <div class="col-md-3" style="font-weight:bold">
                         Code
@@ -69,28 +58,28 @@
                 <div class="row">
 
                     <div class="col-md-3">
-                          @Html.AdminLTEDropDownListFor(
+                        @Html.AdminLTEDropDownListFor(
 m => m.user_name,
 htmlLabelAttributes: null,
 htmlDropDownAttributes: new Dictionary<string, object>() {
-                         { "class", "form-control select2" }
-      },
-                        htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
-                         autoCompleteOptions: new AutoCompleteOptions()
-                         {
-                             AjaxOptions = new AjaxOptions()
-                             {
-                                 HttpMethod = "GET",
-                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                             },
-                             DescriptionField = "full_name",
-                             IDField = "user_name",
-                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
-                             IsAutoComplete = true,
-                             SelectItems = null
-                         },
-                         showLabel: true)
+                       { "class", "form-control select2" }
+    },
+                      htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
+                       autoCompleteOptions: new AutoCompleteOptions()
+                       {
+                           AjaxOptions = new AjaxOptions()
+                           {
+                               HttpMethod = "GET",
+                               Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                           },
+                           DescriptionField = "full_name",
+                           IDField = "user_name",
+                           Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                           SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                           IsAutoComplete = true,
+                           SelectItems = null
+                       },
+                       showLabel: true)
 
                     </div>
 
@@ -120,12 +109,8 @@ htmlDropDownAttributes: new Dictionary<string, object>() {
 
     <div id="checkin_details_display">
 
-        @Html.Action(BusinessExcel.Controllers.CheckinController.CHECKIN_DETAILS, Model)
+        @Html.Partial(BusinessExcel.Controllers.CheckinController.CHECKIN_DETAILS_VIEW, Model)
 
     </div>
 
 </section><!-- /.content -->
-
-
-
-

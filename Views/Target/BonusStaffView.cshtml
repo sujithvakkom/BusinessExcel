@@ -9,7 +9,7 @@
 }
 
 @{
-    ViewBag.Title = "Weekly List";
+    ViewBag.Title = "Weekly Rewards";
 }
 
 @functions
@@ -23,7 +23,7 @@
             <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Expected Bonus</span>
+                    <span class="info-box-text">Total Expected Rewards</span>
                     <span class="info-box-number">@string.Format("AED {0:0.00}", Model.GetBonusTotal())</span>
                     <span class="info-box-more text-red">*Subjected to vary with retailer data.</span>
                 </div>

@@ -825,6 +825,7 @@
     <Content Include="Views\Shared\_AdminLteLayoutNoSideBar.cshtml" />
     <Content Include="Views\Target\BonusStaffView.cshtml" />
     <Content Include="Views\Target\Dashboard.cshtml" />
+    <Content Include="Views\Checkin\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
