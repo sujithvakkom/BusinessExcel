@@ -41,11 +41,11 @@
                                                         HttpMethod = "Get",
                                                         InsertionMode = InsertionMode.Replace,
                                                         UpdateTargetId = "target_summary_display",
-                                                        //OnBegin = "begin",
-                                                        //OnBegin = "move('#page-load')",
-                                                        //OnComplete = "ajax_call_load_complete('#page-load')",
-                                                        //OnSuccess = "success",
-                                                        OnFailure = "loadin_failed",
+                                                //OnBegin = "begin",
+                                                //OnBegin = "move('#page-load')",
+                                                //OnComplete = "ajax_call_load_complete('#page-load')",
+                                                //OnSuccess = "success",
+                                                OnFailure = "loadin_failed",
                                                         LoadingElementId = "summary-load-progress"
 
 
@@ -95,7 +95,7 @@ showLabel: true)
 
                     </div>
 
-                    
+
 
                     <div class="col-md-2">
                         @Html.AdminLTEDropDownListFor(
@@ -121,8 +121,8 @@ showLabel: true)
          },
          showLabel: true)
                     </div>
-                 
-                   
+
+
                     <div class="col-md-2">
                         @Html.AdminLTEDropDownListFor(
                        m => m.roster_id,
@@ -149,33 +149,33 @@ showLabel: true)
                        extras: new System.Linq.Expressions.Expression<Func<TargetSummaryView, int?>>[] { m => m.location_id }
                        )
 
-                </div>
+                    </div>
 
                     <div class="col-md-2">
 
-                                                    @Html.AdminLTEDropDownListFor(
-                            m => m.target_status_id,
-                            htmlLabelAttributes: null,
-                            htmlDropDownAttributes: new Dictionary<string, object>() {
-                                                                                                                                             { "class", "form-control select2 " }
-                                                                          },
-                            htmlGroupAttributes:null,// new Dictionary<string, object>() { { "class", "col-md-12" } },
-                                         autoCompleteOptions: new AutoCompleteOptions()
-                                         {
-                                             AjaxOptions = new AjaxOptions()
-                                             {
-                                                 HttpMethod = "GET",
-                                                 Url = Url.Action(actionName: JSONController.TARGET_STATUS_AUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                        @Html.AdminLTEDropDownListFor(
+m => m.target_status_id,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
+                                                                                                                 { "class", "form-control select2 " }
+                                              },
+htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-12" } },
+             autoCompleteOptions: new AutoCompleteOptions()
+             {
+                 AjaxOptions = new AjaxOptions()
+                 {
+                     HttpMethod = "GET",
+                     Url = Url.Action(actionName: JSONController.TARGET_STATUS_AUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
 
-                                             },
-                                             DescriptionField = "target_status",
-                                             IDField = "target_status_id",
-                                             Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
-                                           //  SelectedItem = ViewData[ReportController.SELECTED_FILTED_TARGET_STATUS],
-                                             IsAutoComplete = true,
-                                             SelectItems = null
-                                         },
-                                         showLabel: true)
+                 },
+                 DescriptionField = "target_status",
+                 IDField = "target_status_id",
+                 Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+               //  SelectedItem = ViewData[ReportController.SELECTED_FILTED_TARGET_STATUS],
+                 IsAutoComplete = true,
+                 SelectItems = null
+             },
+             showLabel: true)
                     </div>
 
 
@@ -195,9 +195,9 @@ showLabel: true)
                     </div>
 
 
-                    
-                       
-                  
+
+
+
 
                 </div>
                 <div class="row">
@@ -225,4 +225,3 @@ carrot: "fa fa-download")
     </div>
 
 </section><!-- /.content -->
-

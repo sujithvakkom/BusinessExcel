@@ -103,6 +103,8 @@ namespace BusinessExcel.Providers.ProviderContext
                 new SqlParameter("@item_code", search) :
                 new SqlParameter("@item_code", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
+            var category_id = new SqlParameter("@category_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
             var page_number = Page_num > 0 ?
                 new SqlParameter("@page_number", Page_num) :
                 new SqlParameter("@page_number", System.Data.SqlDbType.Int) { Value = DBNull.Value };
@@ -115,13 +117,14 @@ namespace BusinessExcel.Providers.ProviderContext
 
             System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
             parameterList.Add(item_code);
+            parameterList.Add(category_id);
             parameterList.Add(page_number);
             parameterList.Add(page_size);
 
 
             try
             {
-                var res = this.Database.SqlQuery<ItemDetails>("[db_salesmanage_user].[getAllItemDetails]  @item_code ,@page_number ,@page_size", parameterList.ToArray()).ToList();
+                var res = this.Database.SqlQuery<ItemDetails>("[db_salesmanage_user].[getAllItemDetails]  @item_code,@category_id ,@page_number ,@page_size", parameterList.ToArray()).ToList();
 
                 return res;
             }
@@ -144,6 +147,10 @@ namespace BusinessExcel.Providers.ProviderContext
            new SqlParameter("@item_code", Filters.item_code) :
            new SqlParameter("@item_code", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
+            var category_id = Filters.category_id != null ?
+                new SqlParameter("@category_id", Filters.category_id) :
+                new SqlParameter("@category_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
             var page_number = pageNumber > 0 ?
                new SqlParameter("@page_number", pageNumber) :
                new SqlParameter("@page_number", System.Data.SqlDbType.Int) { Value = DBNull.Value };
@@ -162,11 +169,12 @@ namespace BusinessExcel.Providers.ProviderContext
 
             System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
             parameterList.Add(item_code);
+            parameterList.Add(category_id);
             parameterList.Add(page_number);
             parameterList.Add(page_size);
             parameterList.Add(row_count);
 
-            var res = this.Database.SqlQuery<ItemDetailsView>("[db_salesmanage_user].[getAllItemDetails] @item_code,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
+            var res = this.Database.SqlQuery<ItemDetailsView>("[db_salesmanage_user].[getAllItemDetails] @item_code,@category_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
             int.TryParse(row_count.Value.ToString(), out count);
 
            // count = res.Count();

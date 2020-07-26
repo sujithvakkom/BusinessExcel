@@ -18,7 +18,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Column("brand_id")]
         public int BrandId { get; set; }
         [Column("category_id")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         [Column("model_id")]
         public int ModelId { get; set; }
         [Column("create_time")]

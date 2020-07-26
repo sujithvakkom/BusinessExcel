@@ -14,7 +14,7 @@ namespace BusinessExcel.Controllers
         //
         // GET: /Checkin/
         public static string CHECKIN_INDEX = "CheckinIndex";
-        public static string CHECKIN_DETAILS = "CheckinDetails";
+        public static string CHECKIN_DETAILS = "_CheckinDetails";
         public static string CHECKIN_DETAILS_VIEW = "_CheckinDetails";
         public static string CHECKIN_TITLE = "Checkin Details";
         public static string CHECKIN_CONTROLLER = "Checkin";
@@ -40,7 +40,7 @@ namespace BusinessExcel.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult CheckinDetails(string sort, string sortdir, int page = 1, CheckinViewModel Filters = null)
+        public PartialViewResult _CheckinDetails(string sort, string sortdir, int page = 1, CheckinViewModel Filters = null)
         {
             ViewBag.ItemViewSort = sort;
             ViewBag.ItemViewDir = sortdir;

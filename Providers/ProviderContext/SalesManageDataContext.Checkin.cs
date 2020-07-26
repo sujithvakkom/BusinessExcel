@@ -18,13 +18,14 @@ namespace BusinessExcel.Providers.ProviderContext
         public IQueryable<CheckinViewModel> CheckinDetailsPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count,
            CheckinViewModel Filters)
         {
-            int skippingRows = (pageNumber - 1) * pageSize;
-
-
             var user_name = Filters.user_name != null ?
-           new SqlParameter("@user_name", Filters.user_name) :
-           new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
-
+                new SqlParameter("@user_name", Filters.user_name) :
+                new SqlParameter("@user_name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            
+            var shift_date = Filters.shift_date != DateTime.MinValue ?
+                new SqlParameter("@shift_date", Filters.shift_date) :
+                new SqlParameter("@shift_date", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+            
             var page_number = pageNumber > 0 ?
                new SqlParameter("@page_number", pageNumber) :
                new SqlParameter("@page_number", System.Data.SqlDbType.Int) { Value = DBNull.Value };
@@ -41,23 +42,25 @@ namespace BusinessExcel.Providers.ProviderContext
 
             System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
             parameterList.Add(user_name);
+            parameterList.Add(shift_date);
             parameterList.Add(page_number);
             parameterList.Add(page_size);
             parameterList.Add(viewer_id);
 
             var res = this.Database.SqlQuery<CheckinViewModel>(@"EXECUTE [sc_salesmanage_merchant].[get_user_checkin_details] 
    @user_name
+  , @shift_date
   , @page_number
   , @page_size
   , @viewer_id", parameterList.ToArray()).ToList().AsQueryable();
+            try
+            {
+                count = (res.FirstOrDefault().row_count) ?? 0;
+            }catch(Exception) { count = 0; }
 
-            count = (res.FirstOrDefault().row_count)??0;
-
-            // count = res.Count();
-            // return res.Skip(skippingRows).Take(pageSize);
             if (sort == null || sort == "")
             {
-                return res.OrderByDescending(x => x.user_name);
+                return res;
             }
             else
             {

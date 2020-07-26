@@ -16,11 +16,18 @@ namespace BusinessExcel.Providers.ProviderContext
 
     public partial class SalesManageDataContext : DbContext
     {
-
-        public IQueryable<DailyUpateView> DailyUpateViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count,
-            ActionViewFilters Filters)
+        /// <summary>
+        /// Retrive the paged Merchad action
+        /// </summary>
+        /// <param name="pageNumber">Page number</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="sort"></param>
+        /// <param name="sortdir"></param>
+        /// <param name="count"></param>
+        /// <param name="Filters">Filter</param>
+        /// <returns></returns>
+        public IQueryable<DailyUpateView> DailyUpateViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count,ActionViewFilters Filters)
         {
-            int skippingRows = (pageNumber - 1) * pageSize;
             int VId = getViewer_Id();
 
             var viewer_id = VId > 0 ?
@@ -91,59 +98,11 @@ namespace BusinessExcel.Providers.ProviderContext
  @page_number ,
  @page_size ,
  @row_count OUTPUT ,
- @viewer_id", 
+ @viewer_id",
                 parameterList.ToArray()).ToList().AsQueryable();
 
             int.TryParse(row_count.Value.ToString(), out count);
             return res;
-            /*
-            if (String.IsNullOrEmpty(sort))
-            {
-                return res.OrderByDescending(x => x.Item);
-            }
-            else
-            {
-                switch (sortdir)
-                {
-                    case "DESC":
-                        return res.OrderByDescending(sort);
-                    default:
-                        return res.OrderBy(sort);
-                }
-            }
-            */
-        }
-
-
-        //public IQueryable<DailyUpateView> DailyUpateViewPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count)
-        //{
-        //    int skippingRows = (pageNumber - 1) * pageSize;
-
-        //    switch (sort)
-        //    {
-        //        case "CreateTime":
-        //            count = this.DailyUpateView.Count();
-        //            if (sortdir == "ASC")
-        //                return this.DailyUpateView.OrderBy(x => x.CreateTime)
-        //                    .Skip(skippingRows).Take(pageSize);
-        //            return this.DailyUpateView.OrderByDescending(x => x.CreateTime)
-        //                .Skip(skippingRows).Take(pageSize);
-        //        default:
-        //            count = this.DailyUpateView.Count();
-        //            return this.DailyUpateView.OrderBy(x => x.UserId)
-        //                .Skip(skippingRows).Take(pageSize);
-        //    }
-        //}
-
-        internal object GetDailyUpateViewPagingExport(ActionViewFilters Filters)
-        {
-
-            if (Filters == null)
-                Filters = new Models.ActionViewFilters() { ItemCode = "" };
-            var res = from x in this.DailyUpateView
-                      where (String.IsNullOrEmpty(Filters.ItemCode) || x.Item == Filters.ItemCode)
-                      select x;
-            return res.ToList();
         }
     }
 }

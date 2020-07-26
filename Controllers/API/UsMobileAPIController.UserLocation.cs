@@ -32,6 +32,14 @@ namespace BusinessExcel.Controllers
                 var userId = db.getUserID(UserName);
                 result = db.GetUserLoction(userId);
             }
+            if (result == null) {
+                result = new UserLocation() {
+                    Type = 0,
+                    Address = "",
+                    Latitude = 0,
+                    Longitude = 0
+                };
+            }
             return result;
         }
 

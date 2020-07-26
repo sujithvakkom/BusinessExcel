@@ -13,7 +13,6 @@ namespace BusinessExcel.Providers.ProviderContext
 
     public partial class SalesManageDataContext : DbContext
     {
-
         public int UpdateItemModel(ItemDetailsView itemDet)
         {
             int isInsertUpdate = 0;
@@ -48,6 +47,48 @@ where inventory_item_id=@inventory_item_id";
 
             }
             catch(Exception ex)
+            {
+                isInsertUpdate = 0;
+            }
+
+            return isInsertUpdate;
+        }
+
+
+
+        public int UpdateItemCat(ItemDetailsView itemDet)
+        {
+            int isInsertUpdate = 0;
+            try
+            {
+                const string UPDATE_MODEL = @"UPDATE sc_salesmanage_vansale.inventory_item_m
+  SET 
+      category_id = @category_id
+WHERE inventory_item_id = @inventory_item_id";
+
+
+
+                var category_id = itemDet.category_id != null ?
+              new SqlParameter("@category_id", itemDet.category_id) :
+              new SqlParameter("@category_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+
+
+                var inventory_item_id = itemDet.inventory_item_id != 0 ?
+      new SqlParameter("@inventory_item_id", itemDet.inventory_item_id) :
+      new SqlParameter("@inventory_item_id", System.Data.SqlDbType.NVarChar) { Value = 0 };
+
+
+
+
+
+                System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(category_id);
+                parameterList.Add(inventory_item_id);
+
+                isInsertUpdate = this.Database.ExecuteSqlCommand(UPDATE_MODEL, parameterList.ToArray());
+
+            }
+            catch (Exception ex)
             {
                 isInsertUpdate = 0;
             }

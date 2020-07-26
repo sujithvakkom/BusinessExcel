@@ -3,125 +3,128 @@
 @using BootstrapHtmlHelper
 @using BusinessExcel.Providers.ProviderContext
 @using BusinessExcel.Controllers.JSON
-
-
 @using BusinessExcel.Providers.ProviderContext.Entities
 
 
 @model CheckinViewModel
 
+@{
+    int count = 0;
+    IQueryable<CheckinViewModel> data;
+    using (var db = new SalesManageDataContext())
+    {
+        data = db.CheckinDetailsPaging(pageNumber: Model.PageNumber,
+                    pageSize: Model.PageSize,
+                    sort: ViewBag.ItemViewSort,
+                    sortdir: ViewBag.ItemViewDir,
+                    count: out count, Filters: Model
+                    );
+        Model.RowCount = count;
+        Model.UseAjax = true;
+        Model.UpdateTargetId = "checkin_details_display";
+        Model.LoadingElementId = "checkin_details_loading";
+    }
+    Model.ControllerName = CheckinController.CHECKIN_CONTROLLER;
+    Model.ActionName = CheckinController.CHECKIN_DETAILS;
+}
 
-<div class="box box-primary">
-
+<div id="checkin_details" class="box box-primary">
     <div class="box-body">
+        @foreach (var line in data)
+        {
+            <div class="row no-gutter">
+                <div class="col-xs-12 col-md-4">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr class="text-primary">
+                                <th width="30%">Shift</th>
+                                <td width="70%"><i class="fa fa-calendar"></i>&nbsp; @string.Format("{0:dd-MMM-yyy}", line.shift_date)</td>
+                            </tr>
+                            <tr class="text-primary"><td class="text-bold">@line.user_name</td><td>@line.fullname</td></tr>
+                            <tr><th>No. of breaks</th><td>@line.breaks</td></tr>
+                            <tr><th>Break in Min.(s)</th><td>@string.Format("{0:0 Min}", line.break_span)</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-8 no-gutter">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="table-responsive">
+                            @if (line.checkin_time == null)
+                            {
+                                <div class="box-body">
+                                    <div class="alert alert-warning">
+                                        <h4><i class="icon fa fa-warning"></i>&nbsp;No data!</h4>
+                                        No shift start info.
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <table class="table">
+                                    <tr><th width="50%">Start</th></tr>
+                                    <tr>
+                                        <td>
+                                            @string.Format("{0:dd-MMM-yyy hh:mm tt}", line.checkin_time)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @line.checkin_address
+                                            <a class="showMap glyphicon glyphicon-map-marker" id="checkin_@line.user_id" style="font-size: 20px;cursor:pointer" title="View last  location" data-toggle="modal" data-target="#mapModal" data-lat=@line.checkin_latitude data-lng=@line.checkin_longitude data-name="@string.Format("{0} {1}", line.user_name, line.fullname)" data-address="@string.Format("{0}", line.checkin_address)"></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="table-responsive">
+                            @if (line.checkout_time == null)
+                            {
+                                <div class="box-body">
+                                    <div class="alert alert-warning">
+                                        <h4><i class="icon fa fa-warning"></i>&nbsp;No data!</h4>
+                                        No shift end info.
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <table class="table">
+                                    <tr><th width="50%">Stop</th></tr>
+                                    <tr>
+                                        <td>
+                                            @string.Format("{0:dd-MMM-yyy hh:mm tt}", line.checkout_time)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @line.checkout_address
+                                            <a class="showMap glyphicon glyphicon-map-marker" id="checkout_@line.user_id" style="font-size: 20px;cursor:pointer" title="View last  location" data-toggle="modal" data-target="#mapModal" data-lat=@line.checkout_latitude data-lng=@line.checkout_longitude data-name="@string.Format("{0} {1}",line.user_name,line.fullname)" data-address="@string.Format("{0}",line.checkout_address)"></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
 
-        <div class="row">
+        @*<div class="row">
             <div class="col-md-12">
                 <h3 id="user-details"></h3>
                 <address id="user-address"></address>
                 <div class="map"></div>
             </div>
-            <div class="col-md-12">
-                <div id="table-item-view" class="table-responsive">
-                    @{
-
-                        using (var db = new SalesManageDataContext())
-                        {
-                            WebGridColumn col = new WebGridColumn()
-                            {
-
-                            };
-
-                            int count = 0;
-                            IQueryable<CheckinViewModel> data = db.CheckinDetailsPaging(pageNumber: ViewBag.ItemViewPage,
-                                        pageSize: 15,
-                                        sort: ViewBag.ItemViewSort,
-                                        sortdir: ViewBag.ItemViewDir,
-                                        count: out count, Filters: Model
-                                        );
-                            var grid = new WebGrid(ajaxUpdateContainerId: "table-item-view",
-                                                ajaxUpdateCallback: "callBack", rowsPerPage: 15
-                                                            );
-                            grid.Bind(source: data);
-
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Shift Date</th>
-                                        <th>Staff Code</th>
-                                        <th>Staff Name</th>
-                                        <th>Shift Start</th>
-                                        <th>Start Address</th>
-                                        <th>No. of breaks</th>
-                                        <th>Break in Min.(s)</th>
-                                        <th>Shift End</th>
-                                        <th>End Address</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var line in data)
-                                    {
-                                        <tr>
-                                            <td>@string.Format("{0:dd-MMM-yyy}", line.shift_date)</td>
-                                            <td>@line.user_name</td>
-                                            <td>@line.fullname</td>
-                                            <td>
-                                                @string.Format("{0:dd-MMM-yyy hh:mm tt}", line.checkin_time)
-                                            </td>
-                                            <td>
-                                                @line.checkin_address
-                                                <a class="showMap glyphicon glyphicon-map-marker" id="checkin_@line.user_id" style="font-size: 20px;cursor:pointer" title="View last  location" data-toggle="modal" data-target="#mapModal" data-lat=@line.checkin_latitude data-lng=@line.checkin_longitude data-name="@string.Format("{0} {1}",line.user_name,line.fullname)" data-address="@string.Format("{0}",line.checkin_address)"></a>
-                                            </td>
-                                            <td>@line.breaks</td>
-                                            <td>@string.Format("{0:0 Min}", line.break_span)</td>
-                                            <td>@string.Format("{0:dd-MMM-yyy hh:mm tt}", line.checkout_time)</td>
-                                            <td>
-                                                @line.checkout_address
-                                                <a class="showMap glyphicon glyphicon-map-marker" id="checkout_@line.user_id" style="font-size: 20px;cursor:pointer" title="View last  location" data-toggle="modal" data-target="#mapModal" data-lat=@line.checkout_latitude data-lng=@line.checkout_longitude data-name="@string.Format("{0} {1}",line.user_name,line.fullname)" data-address="@string.Format("{0}",line.checkout_address)"></a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-
-                            @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
-                        nextText: "NEXT",
-                        firstText: "FIRST",
-                        previousText: "PREV.",
-                        lastText: "LAST")
-
-                        }
-                    }
-                </div>
+        </div>*@
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.Partial("_Pagination", Model)
             </div>
         </div>
     </div>
+    <div id="checkin_details_loading" class="overlay" style="display:none">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
 </div>
-
-<style>
-</style>
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $('.showMap').click(function () {
-            var lat = $(this).data('lat');
-            var lng = $(this).data('lng');
-            var name = $(this).data('name');
-            var address = $(this).data('address');
-            mapInit(lat, lng,name,address);
-        });
-    });
-
-    function mapInit(lat, lng, name, address) {
-
-        var iframe = "<iframe src='http://maps.google.com/maps?q=" + lat + ", " + lng + "&z=15&output=embed' width='100%' height='100%' frameborder='0' style='border:0' allowfullscreen></iframe>"
-
-
-        $('.map').css("height", "300px").html(iframe);
-        $('#user-details').html(name);
-        $('#user-address').html(address);
-
-    };
-
-</script>

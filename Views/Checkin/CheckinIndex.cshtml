@@ -31,14 +31,8 @@
                                                     HttpMethod = "Get",
                                                     InsertionMode = InsertionMode.Replace,
                                                     UpdateTargetId = "checkin_details_display",
-                                            //OnBegin = "begin",
-                                            //OnBegin = "move('#page-load')",
-                                            //OnComplete = "ajax_call_load_complete('#page-load')",
-                                            //OnSuccess = "success",
-                                            OnFailure = "loadin_failed",
+                                                    OnFailure = "loadin_failed",
                                                     LoadingElementId = "checkin-load-progress"
-
-
                                                 }))
     {
         <!-- Your Page Content Here -->
@@ -74,7 +68,7 @@ htmlDropDownAttributes: new Dictionary<string, object>() {
                            },
                            DescriptionField = "full_name",
                            IDField = "user_name",
-                           Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
+                           Formate = "'<div class=\"row\"><div class=\"col-xs-3\">' + state.id + '</div><div class=\"col-xs-9\">' + state.text + '</div></div>'",
                            SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
                            IsAutoComplete = true,
                            SelectItems = null
@@ -82,7 +76,19 @@ htmlDropDownAttributes: new Dictionary<string, object>() {
                        showLabel: true)
 
                     </div>
-
+                    <div class="col-xs-12 col-md-3">
+                        @Html.AdminLTEDatePickerFor(
+                       m => m.shift_date,
+                                htmlLabelAttributes: null,
+                                htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
+                                htmlGroupAttributes: null,
+                                htmlGlyphiconsAttributes: null,
+                                glyphiconsName: "fa fa-calendar",
+                                showLabel: true,
+                                hasValidation: true,
+                                showGlyphicons: true
+                       )
+                    </div>
 
                     <div class="col-md-2" style="padding-top: 1.5em">
 
@@ -103,14 +109,64 @@ htmlDropDownAttributes: new Dictionary<string, object>() {
 
             </div>            <!-- /.box-body -->
 
-        </div><!-- /.box -->
-
+        </div>
+        <!-- /.box -->
     }
 
     <div id="checkin_details_display">
-
         @Html.Partial(BusinessExcel.Controllers.CheckinController.CHECKIN_DETAILS_VIEW, Model)
-
     </div>
+</section>
+<!-- /.content -->
 
-</section><!-- /.content -->
+<div class="modal fade" id="modal-staff_location" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 id="user-details" class="modal-title">Default Modal</h4>
+            </div>
+            <div class="modal-body">
+                <address id="user-address"></address>
+                <div id="user-details-map" class="map"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<style>
+</style>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.showMap').click(function () {
+            var lat = $(this).data('lat');
+            var lng = $(this).data('lng');
+            var name = $(this).data('name');
+            var address = $(this).data('address');
+            mapInit(lat, lng, name, address);
+        });
+    });
+
+    function mapInit(lat, lng, name, address) {
+        var source = "http://maps.google.com/maps?q=" + lat + ", " + lng + "&z=15&output=embed&;key=AIzaSyBlNX0IH813QXzuYaG8uTKkizXiSVihXNI"
+        var iframe = "<iframe src='" + source + "' width='100%' height='100%' frameborder='0' style='border:0' allowfullscreen></iframe>"
+
+        /*
+        iframe = "<iframe src='https://maps.google.com/maps?q=35.856737, 10.606619&z=15&output=embed' width='360' height='270' frameborder='0' style='border:0'></iframe>";*/
+
+        $('#user-details-map').css("height", "500px").html(iframe);
+        $('#user-details').html(name);
+        $('#user-address').html(address);
+        $('#modal-staff_location').modal('show');
+    };
+
+</script>

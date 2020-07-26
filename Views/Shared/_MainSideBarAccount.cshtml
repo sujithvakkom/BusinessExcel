@@ -71,54 +71,54 @@
                             <a href="#"><i class="fa fa-user-secret"></i><span>Security</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
                                 @Ajax.AjaxAdminLTEActionLink(
-                   linkText: AdminController.USERMANAGEMENT_TITLE,
-                   actionName: AdminController.USERMANAGEMENT,
-                   controllerName: AdminController.ADMIN,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(AdminController.USERMANAGEMENT, AdminController.ADMIN, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-user-md")
+                                linkText: AdminController.USERMANAGEMENT_TITLE,
+                                actionName: AdminController.USERMANAGEMENT,
+                                controllerName: AdminController.ADMIN,
+                                ajaxOptions: new AjaxOptions()
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "main-body",
+                                    OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                        + this.Url.Action(AdminController.USERMANAGEMENT, AdminController.ADMIN, null, this.Request.Url.Scheme) + "');{0}",
+                                    OnComplete = "ajax_call_load_complete(xhr, status)",
+                                    OnFailure = "loadin_failed"
+                                },
+                                isNavSideBar: true,
+                                carrot: "fa fa-user-md")
 
                                 @Ajax.AjaxAdminLTEActionLink(
-                   linkText: AdminController.USERSTREE_TITLE,
-                   actionName: AdminController.USERSTREE,
-                   controllerName: AdminController.ADMIN,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(AdminController.USERSTREE, AdminController.ADMIN, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-sitemap")
+                                linkText: AdminController.USERSTREE_TITLE,
+                                actionName: AdminController.USERSTREE,
+                                controllerName: AdminController.ADMIN,
+                                ajaxOptions: new AjaxOptions()
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "main-body",
+                                    OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                        + this.Url.Action(AdminController.USERSTREE, AdminController.ADMIN, null, this.Request.Url.Scheme) + "');{0}",
+                                    OnComplete = "ajax_call_load_complete(xhr, status)",
+                                    OnFailure = "loadin_failed"
+                                },
+                                isNavSideBar: true,
+                                carrot: "fa fa-sitemap")
 
 
 
                                 @Ajax.AjaxAdminLTEActionLink(
-                   linkText: AdminController.VIEWMANAGER_TITLE,
-                   actionName: AdminController.VIEWMANAGEMENT,
-                   controllerName: AdminController.ADMIN,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(AdminController.VIEWMANAGEMENT, AdminController.ADMIN, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-puzzle-piece")
+                                linkText: AdminController.VIEWMANAGER_TITLE,
+                                actionName: AdminController.VIEWMANAGEMENT,
+                                controllerName: AdminController.ADMIN,
+                                ajaxOptions: new AjaxOptions()
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "main-body",
+                                    OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                        + this.Url.Action(AdminController.VIEWMANAGEMENT, AdminController.ADMIN, null, this.Request.Url.Scheme) + "');{0}",
+                                    OnComplete = "ajax_call_load_complete(xhr, status)",
+                                    OnFailure = "loadin_failed"
+                                },
+                                isNavSideBar: true,
+                                carrot: "fa fa-puzzle-piece")
                             </ul>
 
                         <li class="treeview @Html.IsSelected(controllers:RosterController.ROSTERCONTROLLER,actions: RosterController.ROSTER_ACTION, cssClass:"active")">
@@ -126,111 +126,111 @@
                             <a href="#"><i class="fa fa-yelp"></i><span>Activities</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
                                 @Ajax.AjaxAdminLTEActionLink(
-linkText: TargetController.SETTING_TARGET,
-actionName: TargetController.SETTINGTARGET,
-controllerName: TargetController.TARGET,
-ajaxOptions: new AjaxOptions()
-{
-InsertionMode = InsertionMode.Replace,
-UpdateTargetId = "main-body",
-OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-+ this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-OnBegin = "move('#page-load')",
-OnComplete = "ajax_call_load_complete(xhr, status)",
-//OnComplete = "ajax_call_load_complete('#page-load')",
-OnFailure = "loadin_failed"
-},
-carrot: "fa fa-cogs")
+                                linkText: TargetController.SETTING_TARGET,
+                                actionName: TargetController.SETTINGTARGET,
+                                controllerName: TargetController.TARGET,
+                                ajaxOptions: new AjaxOptions()
+                                {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnBegin = "move('#page-load')",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                //OnComplete = "ajax_call_load_complete('#page-load')",
+                                OnFailure = "loadin_failed"
+                                },
+                                carrot: "fa fa-cogs")
 
 
                                 @Ajax.AjaxAdminLTEActionLink(
-linkText: RosterController.ROSTER_TITLE,
-actionName: RosterController.ROSTER_ACTION,
-controllerName: RosterController.ROSTERCONTROLLER,
-ajaxOptions: new AjaxOptions()
-{
-InsertionMode = InsertionMode.Replace,
-UpdateTargetId = "main-body",
-OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-+ this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-OnBegin = "move('#page-load')",
-OnComplete = "ajax_call_load_complete(xhr, status)",
-//OnComplete = "ajax_call_load_complete('#page-load')",
-OnFailure = "loadin_failed"
-},
-carrot: "fa fa-user-md")
+                                linkText: RosterController.ROSTER_TITLE,
+                                actionName: RosterController.ROSTER_ACTION,
+                                controllerName: RosterController.ROSTERCONTROLLER,
+                                ajaxOptions: new AjaxOptions()
+                                {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnBegin = "move('#page-load')",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                //OnComplete = "ajax_call_load_complete('#page-load')",
+                                OnFailure = "loadin_failed"
+                                },
+                                carrot: "fa fa-user-md")
 
 
 
                                 @Ajax.AjaxAdminLTEActionLink(
-linkText: TargetController.LOCATIONTARGET_TITLE,
-actionName: TargetController.LOCATIONTARGET,
-controllerName: TargetController.TARGETCONTROLLER,
-ajaxOptions: new AjaxOptions()
-{
-InsertionMode = InsertionMode.Replace,
-UpdateTargetId = "main-body",
-OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-+ this.Url.Action(TargetController.LOCATIONTARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-OnBegin = "move('#page-load')",
-OnComplete = "ajax_call_load_complete(xhr, status)",
-//OnComplete = "ajax_call_load_complete('#page-load')",
-OnFailure = "loadin_failed"
-},
-carrot: "fa fa-bullseye")
+                                linkText: TargetController.LOCATIONTARGET_TITLE,
+                                actionName: TargetController.LOCATIONTARGET,
+                                controllerName: TargetController.TARGETCONTROLLER,
+                                ajaxOptions: new AjaxOptions()
+                                {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                + this.Url.Action(TargetController.LOCATIONTARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnBegin = "move('#page-load')",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                //OnComplete = "ajax_call_load_complete('#page-load')",
+                                OnFailure = "loadin_failed"
+                                },
+                                carrot: "fa fa-bullseye")
 
 
                                 @Ajax.AjaxAdminLTEActionLink(
-linkText: TargetController.TARGETDISTRIBUTION_TITLE,
-actionName: TargetController.TARGETDISTRIBUTION,
-controllerName: TargetController.TARGETCONTROLLER,
-ajaxOptions: new AjaxOptions()
-{
-InsertionMode = InsertionMode.Replace,
-UpdateTargetId = "main-body",
-OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-+ this.Url.Action(TargetController.TARGETDISTRIBUTION, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-OnBegin = "move('#page-load')",
-OnComplete = "ajax_call_load_complete(xhr, status)",
-//OnComplete = "ajax_call_load_complete('#page-load')",
-OnFailure = "loadin_failed"
-},
-carrot: "fa fa-random")
+                                linkText: TargetController.TARGETDISTRIBUTION_TITLE,
+                                actionName: TargetController.TARGETDISTRIBUTION,
+                                controllerName: TargetController.TARGETCONTROLLER,
+                                ajaxOptions: new AjaxOptions()
+                                {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                + this.Url.Action(TargetController.TARGETDISTRIBUTION, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnBegin = "move('#page-load')",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                //OnComplete = "ajax_call_load_complete('#page-load')",
+                                OnFailure = "loadin_failed"
+                                },
+                                carrot: "fa fa-random")
 
 
                                 @Ajax.AjaxAdminLTEActionLink(
-linkText: TargetController.SALES_EXECUTIVE_TARGET,
-actionName: TargetController.SALESEXECUTIVETARGET,
-controllerName: TargetController.TARGETCONTROLLER,
-ajaxOptions: new AjaxOptions()
-{
-InsertionMode = InsertionMode.Replace,
-UpdateTargetId = "main-body",
-OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-+ this.Url.Action(TargetController.SALESEXECUTIVETARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-OnBegin = "move('#page-load')",
-OnComplete = "ajax_call_load_complete(xhr, status)",
-//OnComplete = "ajax_call_load_complete('#page-load')",
-OnFailure = "loadin_failed"
-},
-carrot: "fa fa-shield")
+                                linkText: TargetController.SALES_EXECUTIVE_TARGET,
+                                actionName: TargetController.SALESEXECUTIVETARGET,
+                                controllerName: TargetController.TARGETCONTROLLER,
+                                ajaxOptions: new AjaxOptions()
+                                {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                + this.Url.Action(TargetController.SALESEXECUTIVETARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnBegin = "move('#page-load')",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                //OnComplete = "ajax_call_load_complete('#page-load')",
+                                OnFailure = "loadin_failed"
+                                },
+                                carrot: "fa fa-shield")
                                 <!--Bonus Settings-->
                                 @Ajax.AjaxAdminLTEActionLink(
-linkText: TargetController.BONUS_MANAGEMENT,
-actionName: TargetController.BONUSMANAGEMENT,
-controllerName: TargetController.TARGETCONTROLLER,
-ajaxOptions: new AjaxOptions()
-{
-InsertionMode = InsertionMode.Replace,
-UpdateTargetId = "main-body",
-OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-+ this.Url.Action(TargetController.BONUSMANAGEMENT, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-OnBegin = "move('#page-load')",
-OnComplete = "ajax_call_load_complete(xhr, status)",
-//OnComplete = "ajax_call_load_complete('#page-load')",
-OnFailure = "loadin_failed"
-},
-carrot: "fa fa-lightbulb-o")
+                                linkText: TargetController.BONUS_MANAGEMENT,
+                                actionName: TargetController.BONUSMANAGEMENT,
+                                controllerName: TargetController.TARGETCONTROLLER,
+                                ajaxOptions: new AjaxOptions()
+                                {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                + this.Url.Action(TargetController.BONUSMANAGEMENT, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnBegin = "move('#page-load')",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                //OnComplete = "ajax_call_load_complete('#page-load')",
+                                OnFailure = "loadin_failed"
+                                },
+                                carrot: "fa fa-lightbulb-o")
                                 <!--Bonus Settings/-->
                             </ul>
                         </li>
@@ -246,126 +246,102 @@ carrot: "fa fa-lightbulb-o")
                         <a href="#"><i class="fa fa-eye"></i><span>Action</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: ReportController.ACTIONS_TITLE,
-                   actionName: ReportController.ACTIONS,
-                   controllerName: ReportController.REPORTCONTROLLER,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(ReportController.ACTIONS, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-tasks")
+                            linkText: ReportController.ACTIONS_TITLE,
+                            actionName: ReportController.ACTIONS,
+                            controllerName: ReportController.REPORTCONTROLLER,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                    + this.Url.Action(ReportController.ACTIONS, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                OnFailure = "loadin_failed"
+                            },
+                            isNavSideBar: true,
+                            carrot: "fa fa-tasks")
 
 
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: ItemsController.ITEM_TITLE,
-                   actionName: ItemsController.ITEM_INDEX,
-                   controllerName: ItemsController.ITEM_CONTROLLER,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(ItemsController.ITEM_INDEX, ItemsController.ITEM_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-tasks")
+                            linkText: ItemsController.ITEM_TITLE,
+                            actionName: ItemsController.ITEM_INDEX,
+                            controllerName: ItemsController.ITEM_CONTROLLER,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                    + this.Url.Action(ItemsController.ITEM_INDEX, ItemsController.ITEM_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                OnFailure = "loadin_failed"
+                            },
+                            isNavSideBar: true,
+                            carrot: "fa fa-tasks")
 
+                            @Ajax.AjaxAdminLTEActionLink(
+                            linkText: CheckinController.CHECKIN_TITLE,
+                            actionName: CheckinController.CHECKIN_INDEX,
+                            controllerName: CheckinController.CHECKIN_CONTROLLER,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                    + this.Url.Action(CheckinController.CHECKIN_INDEX, CheckinController.CHECKIN_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                OnFailure = "loadin_failed"
+                            },
+                            isNavSideBar: true,
+                            carrot: "fa fa-tasks")
 
+                            @Ajax.AjaxAdminLTEActionLink(
+                            linkText: CompetitorController.COMPETITOR_TITLE,
+                            actionName: CompetitorController.COMPETITOR_INDEX,
+                            controllerName: CompetitorController.COMPETITOR_CONTROLLER,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                    + this.Url.Action(CompetitorController.COMPETITOR_INDEX, CompetitorController.COMPETITOR_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                OnFailure = "loadin_failed"
+                            },
+                            isNavSideBar: true,
+                            carrot: "fa fa-tasks")
 
 
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: CheckinController.CHECKIN_TITLE,
-                   actionName: CheckinController.CHECKIN_INDEX,
-                   controllerName: CheckinController.CHECKIN_CONTROLLER,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(CheckinController.CHECKIN_INDEX, CheckinController.CHECKIN_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-tasks")
+                            linkText: ReportController.TARGET_SUMMARY_ME_TITLE,
+                            actionName: ReportController.TARGET_SUMMARY_INDEX,
+                            controllerName: ReportController.TARGET_SUMMARY_CONTROLLER,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                    + this.Url.Action(ReportController.TARGET_SUMMARY_INDEX, ReportController.TARGET_SUMMARY_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                OnFailure = "loadin_failed"
+                            },
+                            isNavSideBar: true,
+                            carrot: "fa fa-tasks")
 
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: CompetitorController.COMPETITOR_TITLE,
-                   actionName: CompetitorController.COMPETITOR_INDEX,
-                   controllerName: CompetitorController.COMPETITOR_CONTROLLER,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(CompetitorController.COMPETITOR_INDEX, CompetitorController.COMPETITOR_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-tasks")
-
-
-                            @Ajax.AjaxAdminLTEActionLink(
-                   linkText: ReportController.TARGET_SUMMARY_ME_TITLE,
-                   actionName: ReportController.TARGET_SUMMARY_INDEX,
-                   controllerName: ReportController.TARGET_SUMMARY_CONTROLLER,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(ReportController.TARGET_SUMMARY_INDEX, ReportController.TARGET_SUMMARY_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-tasks")
-
-
-
-                            @*@Ajax.AjaxAdminLTEActionLink(
-                        linkText: ReportController.TARGET_SUMMARY_SE_TITLE,
-                        actionName: ReportController.TARGET_SUMMARY_SE_INDEX,
-                        controllerName: ReportController.TARGET_SUMMARY_SE_CONTROLLER,
-                        ajaxOptions: new AjaxOptions()
-                        {
-                            InsertionMode = InsertionMode.Replace,
-                            UpdateTargetId = "main-body",
-                            OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                                 + this.Url.Action(ReportController.TARGET_SUMMARY_SE_INDEX, ReportController.TARGET_SUMMARY_SE_CONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                            OnComplete = "ajax_call_load_complete(xhr, status)",
-                            OnFailure = "loadin_failed"
-                        },
-                        isNavSideBar: true,
-                        carrot: "fa fa-tasks")*@
-
-
-
-
-                            @Ajax.AjaxAdminLTEActionLink(
-                   linkText: "Loading Error.",
-                   actionName: "Test",
-                   controllerName: ReportController.REPORTCONTROLLER,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(ReportController.ACTIONS, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-tasks")
+                            linkText: "Loading Error.",
+                            actionName: "Test",
+                            controllerName: ReportController.REPORTCONTROLLER,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                    + this.Url.Action(ReportController.ACTIONS, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                OnFailure = "loadin_failed"
+                            },
+                            isNavSideBar: true,
+                            carrot: "fa fa-tasks")
                         </ul>
                     </li>
 
@@ -375,73 +351,73 @@ carrot: "fa fa-lightbulb-o")
                         <ul class="treeview-menu">
 
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: ReportController.TARGETACHIEVEMENT_ACTIONS_TITLE,
-                   actionName: ReportController.TARGETACHIEVEMENTACTIONS,
-                   controllerName: ReportController.REPORTCONTROLLER,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-tasks")
+                            linkText: ReportController.TARGETACHIEVEMENT_ACTIONS_TITLE,
+                            actionName: ReportController.TARGETACHIEVEMENTACTIONS,
+                            controllerName: ReportController.REPORTCONTROLLER,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                    + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                OnFailure = "loadin_failed"
+                            },
+                            isNavSideBar: true,
+                            carrot: "fa fa-tasks")
 
 
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: ReportController.CATEGORYACHIEVEMENT_TITLE,
-                   actionName: ReportController.CATEGORYACHIEVEMENT,
-                   controllerName: ReportController.REPORTCONTROLLER,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-tasks")
+                            linkText: ReportController.CATEGORYACHIEVEMENT_TITLE,
+                            actionName: ReportController.CATEGORYACHIEVEMENT,
+                            controllerName: ReportController.REPORTCONTROLLER,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                    + this.Url.Action(TargetController.TARGET, TargetController.TARGETCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                OnFailure = "loadin_failed"
+                            },
+                            isNavSideBar: true,
+                            carrot: "fa fa-tasks")
 
 
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: ReportController.USER_TARGET_ACHIEVEMENT_TITLE,
-                   actionName: ReportController.USER_TARGET_DETAILS,
-                   controllerName: ReportController.REPORTCONTROLLER,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(ReportController.USER_TARGET_DETAILS, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-tasks")
+                            linkText: ReportController.USER_TARGET_ACHIEVEMENT_TITLE,
+                            actionName: ReportController.USER_TARGET_DETAILS,
+                            controllerName: ReportController.REPORTCONTROLLER,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                    + this.Url.Action(ReportController.USER_TARGET_DETAILS, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                OnFailure = "loadin_failed"
+                            },
+                            isNavSideBar: true,
+                            carrot: "fa fa-tasks")
 
 
 
 
                             @Ajax.AjaxAdminLTEActionLink(
-                   linkText: ReportController.USER_TARGET_ACHIEVEMENT_TITLE_SE,
-                   actionName: ReportController.USER_TARGET_DETAILS_SE,
-                   controllerName: ReportController.REPORTCONTROLLER,
-                   ajaxOptions: new AjaxOptions()
-                   {
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "main-body",
-                       OnSuccess = "ajax_call_load_success(data, status, xhr,'"
-                            + this.Url.Action(ReportController.USER_TARGET_DETAILS_SE, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
-                       OnComplete = "ajax_call_load_complete(xhr, status)",
-                       OnFailure = "loadin_failed"
-                   },
-                   isNavSideBar: true,
-                   carrot: "fa fa-tasks")
+                            linkText: ReportController.USER_TARGET_ACHIEVEMENT_TITLE_SE,
+                            actionName: ReportController.USER_TARGET_DETAILS_SE,
+                            controllerName: ReportController.REPORTCONTROLLER,
+                            ajaxOptions: new AjaxOptions()
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "main-body",
+                                OnSuccess = "ajax_call_load_success(data, status, xhr,'"
+                                    + this.Url.Action(ReportController.USER_TARGET_DETAILS_SE, ReportController.REPORTCONTROLLER, null, this.Request.Url.Scheme) + "');{0}",
+                                OnComplete = "ajax_call_load_complete(xhr, status)",
+                                OnFailure = "loadin_failed"
+                            },
+                            isNavSideBar: true,
+                            carrot: "fa fa-tasks")
 
                         </ul>
                     </li>

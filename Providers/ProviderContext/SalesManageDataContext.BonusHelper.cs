@@ -31,13 +31,16 @@ AND DATEFROM > @date_from
         }
         public virtual List<BonusSettings> getBonusWeeksSettings(BonusWeek week,int? categeryID = null)
         {
-            const string SELECT_BONUS_WEEEKS_SETTINGS = @"SELECT week_b.id,inv.item_code, 
+            const string SELECT_BONUS_WEEEKS_SETTINGS = @"SELECT week_b.id, 
+       inv.item_code, 
        inv.description, 
-       week_b.[incentive]
+       week_b.[incentive],cat.category_id,
+	   cat.description category
 FROM WEEKCALENDER week_c
      INNER JOIN [WEEKBONUS] week_b ON week_c.ID = week_b.[WEEKCALENDERID]
      INNER JOIN sc_salesmanage_vansale.inventory_item_m AS inv ON inv.item_code = week_b.item_code
-	 WHERE week_c.ID = @id
+	 INNER JOIN [sc_salesmanage_merchant].[category] as cat on inv.category_id = cat.category_id
+WHERE week_c.ID = @id
 ";
             var idPar =
                   new SqlParameter("@id", week.Id);

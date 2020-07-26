@@ -3,7 +3,7 @@
   <PropertyGroup>
     <NameOfLastUsedPublishProfile>Znet_businessexcel.gsmobileapps.com</NameOfLastUsedPublishProfile>
     <UseIISExpress>false</UseIISExpress>
-    <ProjectView>ShowAllFiles</ProjectView>
+    <ProjectView>ProjectFiles</ProjectView>
     <ToolsVersionPromptShown>3.2</ToolsVersionPromptShown>
     <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
     <Use64BitIISExpress />

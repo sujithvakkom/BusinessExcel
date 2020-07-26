@@ -25,6 +25,12 @@ namespace BusinessExcel.Models
         [Column("incentive")]
         public decimal incentive { get; set; }
 
+        [Column("category_id")]
+        public Int32? category_id { get; set; }
+
+        [Column("category")]
+        public string category { get; set; }
+
     }
 
     public class BonusItemConfigModel

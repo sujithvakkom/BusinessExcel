@@ -1,0 +1,290 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+
+
+@using BusinessExcel.Providers.ProviderContext.Entities
+
+
+@model TargetSummaryView
+@{
+    int count = 0;
+    var data = new List<TargetSummaryView>();
+    var rewards = new List<AcivementReward>();
+    decimal TotalTarget = 0;
+    decimal TotalAcheeviment = 0;
+    decimal TolalPercentage = 0;
+    decimal TolalIncentive = 0;
+    decimal TolalEntered = 0;
+
+    var grid = new WebGrid(ajaxUpdateContainerId: "summary",
+                        ajaxUpdateCallback: "callBack", rowsPerPage: 200
+                                    );
+    using (var db = new SalesManageDataContext())
+    {
+        var dataTemp = db.TargetSummaryReportPaging(pageNumber: ViewBag.TargertSummaryViewPage,
+                   pageSize: 200,
+                   sort: ViewBag.TargertSummaryViewSort,
+                   sortdir: ViewBag.TargertSummaryViewDir,
+                   count: out count, Filters: Model
+                   );
+        grid.Bind(source: dataTemp, autoSortAndPage: false, rowCount: count);
+
+        data = new List<TargetSummaryView>(dataTemp);
+    }
+}
+
+@functions
+{
+    bool getRewards(int targetId, int userId, out List<AcivementReward> reward)
+    {
+
+        using (var db = new SalesManageDataContext())
+        {
+            reward = db.Target_Summary_Report_Reward(targetId, userId).ToList();
+        }
+        return reward.Count > 0;
+    }
+}
+
+
+<div class="box box-primary">
+
+    <div class="box-body">
+        <div id="table-item-view" class="table-responsive">
+            <table id="summary" class="table table-bordered">
+                @foreach (var qtr in data.Select(m => new { Year = m.target_year, Qtr = m.qtr_name }).Distinct().ToList())
+                {
+                    <tr>
+                        <th colspan="2" class="panel-title">Quarter:&nbsp;@qtr.Qtr&nbsp;of Year:&nbsp;@qtr.Year</th>
+                    </tr>
+                    foreach (var targetNames in data.Select(m => new
+                    {
+                        StaffName = m.user_name,
+                        Target = m.roster_name,
+                        Location = m.location_name,
+                        Status = m.target_status,
+                        qtr_name = m.qtr_name,
+                        target_id = m.target_id,
+                        user_id = m.user_id,
+                        Year = m.target_year
+                    })
+                        .Where(m => m.qtr_name == qtr.Qtr).Distinct())
+                    {
+                        TotalTarget = 0;
+                        TotalAcheeviment = 0;
+                        TolalPercentage = 0;
+                        TolalIncentive = 0;
+                        TolalEntered = 0;
+                        <tr>
+                            <!--Staff Details-->
+                            <td class="no-padding" rowspan="2">
+                                <table class="table table-striped table-condensed">
+                                    <thead class="bg-primary">
+                                        <tr>
+                                            <th width="30%">
+                                                Staff Name
+                                            </th>
+                                            <td width="70%">@targetNames.StaffName</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Target for
+                                            </th>
+                                            <td>@targetNames.Target</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Location
+                                            </th>
+                                            <td>@targetNames.Location</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Target Status
+                                            </th>
+                                            <td>@targetNames.Status</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <!--Target and Achievement-->
+                            <td class="no-padding">
+                                <table class="table table-condensed table-bordered table-hover no-padding">
+                                    <thead>
+                                        <tr>
+
+                                            <th width="12.5%">
+                                                Catogery
+                                            </th>
+                                            <th width="12.5%" class="text-right">
+                                                Base Incentive
+                                            </th>
+                                            <th width="12.5%" class="text-right">
+                                                Entered Base Incentive
+                                            </th>
+                                            <th width="12.5%" class="text-right">
+                                                Target
+                                            </th>
+                                            <th width="12.5%" class="text-right">
+                                                Achivement
+                                            </th>
+                                            <th width="12.5%" class="text-right">
+                                                %
+                                            </th>
+                                            <th width="12.5%" class="text-right">
+                                                Incent Amt
+                                            </th>
+                                            <th width="12.5%" class="text-right">
+                                                Entered Incent Amt
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var lines in data.Select(m => m).Where(m => m.target_id == targetNames.target_id))
+                                        {
+                                            TotalTarget += lines.TotalTarget ?? 0;
+                                            TotalAcheeviment += lines.TotalAchieved ?? 0;
+                                            @*TolalPercentage = 0;*@
+                                            TolalIncentive += lines.TotalIncAmt ?? 0;
+                                            TolalEntered += lines.TotalEnteredIncAmt ?? 0;
+                                            <tr>
+
+                                                <td>
+                                                    @lines.category
+                                                </td>
+                                                <td class="text-right">
+                                                    @string.Format("{0:#,##0.00}", lines.BaseIncentive)
+                                                </td>
+                                                <td class="text-right">
+                                                    @string.Format("{0:#,##0.00}", lines.TotalEnteredBaseIncentive)
+                                                </td>
+                                                <td class="text-right">
+                                                    @string.Format("{0:#,##0.00}", lines.TotalTarget)
+                                                </td>
+                                                <td class="text-right">
+                                                    @string.Format("{0:#,##0.00}", lines.TotalAchieved)
+                                                </td>
+                                                <td class="text-right">
+                                                    @string.Format("{0:#,##0.00}", lines.TotalTargetPerc)
+                                                </td>
+                                                <td class="text-right">
+                                                    @string.Format("{0:#,##0.00}", lines.TotalIncAmt)
+                                                </td>
+                                                <td class="text-right">
+                                                    @string.Format("{0:#,##0.00}", lines.TotalEnteredIncAmt)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--Rewards-->
+                            <td class="no-padding">
+                                @if (getRewards(targetNames.target_id ?? 0, targetNames.user_id ?? 0, out rewards))
+                                {
+                                    <table class="table table-condensed table-bordered table-hover no-padding">
+                                        <thead>
+                                            <tr>
+                                                <th width="25%">
+                                                    Week
+                                                </th>
+                                                <th width="12.5%" class="text-right">
+                                                    Item Code
+                                                </th>
+                                                <th width="12.5%" class="text-right">
+                                                    Description
+                                                </th>
+                                                <th width="12.5%" class="text-right">
+                                                    Qty.
+                                                </th>
+                                                <th width="12.5%" class="text-right">
+                                                    Unit Incentive
+                                                </th>
+                                                <th width="12.5%" class="text-right">
+                                                    Reward Amt
+                                                </th>
+                                                <th width="12.5%" class="text-right">
+                                                    Entered Reward Amt
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var reward in rewards)
+                                            {
+                                                TolalIncentive += reward.Reward ?? 0;
+                                                TolalEntered += reward.EnteredReward ?? 0;
+                                                <tr>
+                                                    <td width="25%">
+                                                        @reward.Week
+                                                    </td>
+                                                    <td width="12.5%" class="text-right">
+                                                        @reward.ItemCode
+                                                    </td>
+                                                    <td width="12.5%" class="text-right" style="text-overflow:ellipsis">
+                                                        @reward.Description
+                                                    </td>
+                                                    <td width="12.5%" class="text-right">
+                                                        @reward.Quantity
+                                                    </td>
+                                                    <td width="12.5%" class="text-right">
+                                                        @reward.UnitIncentive
+                                                    </td>
+                                                    <td width="12.5%" class="text-right">
+                                                        @reward.Reward
+                                                    </td>
+                                                    <td width="12.5%" class="text-right">
+                                                        @reward.EnteredReward
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                            </td>
+                        </tr>
+                        <tr style="border-bottom:2px solid #0094ff">
+                            <td class="no-padding"></td>
+                            <!--Total-->
+                            <td class="no-padding">
+                                <table class="table table-condensed table-striped table-hover no-padding text-primary no-margin">
+                                    <tbody>
+                                        <tr>
+                                            <th width="37.5%" colspan="4">Total</th>
+                                            <th width="12.5%" class="text-right">@string.Format("{0:#,##0.00}", TotalTarget)</th>
+                                            <th width="12.5%" class="text-right">@string.Format("{0:#,##0.00}", TotalAcheeviment)</th>
+                                            <th width="12.5%"></th>
+                                            <th width="12.5%" class="text-right">@string.Format("{0:#,##0.00}", TolalIncentive)</th>
+                                            <th width="12.5%" class="text-right">@string.Format("{0:#,##0.00}", TolalEntered)</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+
+            @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
+                nextText: "NEXT",
+                firstText: "FIRST",
+                previousText: "PREV.",
+                lastText: "LAST")
+        </div>
+    </div>
+</div>
+<style>
+</style>
+<script type="text/javascript">
+    function callBack(data) {
+        $('#summary').html(data);
+    }
+</script>

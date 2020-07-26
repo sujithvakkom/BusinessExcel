@@ -31,6 +31,7 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = ACTIONS_TITLE;
+            if (Filters == null) Filters = new ActionViewFilters();
             if (!string.IsNullOrEmpty(Filters.ItemCode))
                 using (var db = new SalesManageDataContext())
                 {
@@ -56,7 +57,7 @@ namespace BusinessExcel.Controllers
                 //return PartialView(TABLEDAILYUPATEVIEW, Filters);
                 return (PartialViewResult)TableDailyUpateView(sort, sortdir, page, Filters);
             }
-            return View();
+            return View(Filters);
         }
 
         //
@@ -69,6 +70,7 @@ namespace BusinessExcel.Controllers
             ViewBag.DailyUpateViewSort = sort;
             ViewBag.DailyUpateViewDir = sortdir;
             ViewBag.DailyUpateViewPage = page;
+            if (Filters == null) Filters = new ActionViewFilters();
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + ACTIONS_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = ACTIONS_TITLE;
@@ -79,11 +81,26 @@ namespace BusinessExcel.Controllers
         public static string EXPORTEXCEL_TITLE = "Export Excel";
         public ActionResult ExportExcel(ActionViewFilters Filters = null)
         {
-
+            if (Filters == null) Filters = new ActionViewFilters();
             using (var db = new SalesManageDataContext())
             {
                 var gv = new System.Web.UI.WebControls.GridView();
-                gv.DataSource = db.GetDailyUpateViewPagingExport(Filters);
+                int count = 0;
+                var result = db.DailyUpateViewPaging(1, int.MaxValue, "", "", out count, Filters).ToList();
+                gv.DataSource =
+                    result.Where(m => m.CreateTime != null).Select(m => new
+                    {
+                        Name = m.Name,
+                        Code = m.UserName,
+                        Location = m.Location,
+                        Brand = m.Brand,
+                        Category = m.Category,
+                        Date = m.CreateTime.Value.Date,
+                        Item = m.Item,
+                        Description = m.Description,
+                        Quantity = m.Quantity,
+                        Value = m.TotalValue
+                    });
                 gv.DataBind();
                 Response.ClearContent();
                 Response.Buffer = true;

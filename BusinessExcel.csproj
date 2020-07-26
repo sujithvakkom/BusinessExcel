@@ -282,6 +282,7 @@
     <Compile Include="Controllers\ReportController.TargetAchievement.cs" />
     <Compile Include="Controllers\ReportController.Actions.cs" />
     <Compile Include="Controllers\RosterController.cs" />
+    <Compile Include="Controllers\SalesReportController.cs" />
     <Compile Include="Controllers\TargetController.BonusSetup.cs" />
     <Compile Include="Controllers\TargetController.ExecutiveTargets.cs" />
     <Compile Include="Controllers\TargetController.Settings.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Controllers\TargetController.TargetTemplet.cs" />
     <Compile Include="Controllers\TargetController.cs" />
     <Compile Include="Extentions\LinqExtensions.cs" />
+    <Compile Include="Models\AcivementReward.cs" />
     <Compile Include="Models\AlertModal.cs" />
     <Compile Include="Models\BonusItemConfigModel.cs" />
     <Compile Include="Models\BonusItemModel.cs" />
@@ -305,6 +307,9 @@
     <Compile Include="Models\ItemDetailsView.cs" />
     <Compile Include="Models\jsTree3Node.cs" />
     <Compile Include="Models\MerchantTargetFilter.cs" />
+    <Compile Include="Models\Pagination\IFilter.cs" />
+    <Compile Include="Models\Pagination\Page.cs" />
+    <Compile Include="Models\Pagination\PaginationModel.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
     <Compile Include="Models\TargetStatus.cs" />
     <Compile Include="Models\TargetSummaryViewSE.cs" />
@@ -826,6 +831,10 @@
     <Content Include="Views\Target\BonusStaffView.cshtml" />
     <Content Include="Views\Target\Dashboard.cshtml" />
     <Content Include="Views\Checkin\_ViewStart.cshtml" />
+    <Content Include="Views\Report\_TargertSummaryFilter - Copy.cshtml" />
+    <Content Include="Views\Items\_ViewStart.cshtml" />
+    <Content Include="Views\Items\ItemLine.cshtml" />
+    <Content Include="Views\Shared\_Pagination.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

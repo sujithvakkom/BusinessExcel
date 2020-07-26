@@ -22,15 +22,15 @@ namespace BusinessExcel.Providers.ProviderContext
             TargetAchievementView Filters)
         {
             int skippingRows = (pageNumber - 1) * pageSize;
-          
-             //var res = this.TargetAchievementView.Select(x=>x);
+
+            //var res = this.TargetAchievementView.Select(x=>x);
 
             var res = this.Database.SqlQuery<TargetAchievementView>("[db_salesmanage_user].[User_Target_Achieved_Data]").ToList().AsQueryable();
 
-            if (Filters.user_id !=null)
+            if (Filters.user_id != null)
             {
                 res = res.Where(x => x.user_id == Filters.user_id);
-             
+
             }
 
             if (Filters.target_id != null)
@@ -57,7 +57,8 @@ namespace BusinessExcel.Providers.ProviderContext
                 return res.OrderByDescending(x => x.Target_amt)
                     .Skip(skippingRows).Take(pageSize);
             }
-            else {
+            else
+            {
                 switch (sortdir)
                 {
                     case "DESC":
@@ -171,7 +172,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails] @start_date, @user_id,@viewer_id", parameterList.ToArray()).ToList().AsQueryable(); ;
 
                 List<UserTargets> targets = new List<UserTargets>();
-                 targets = res.Select(g => new UserTargets()
+                targets = res.Select(g => new UserTargets()
                 {
                     target_id = g.target_id,
                     start_date = g.start_date,
@@ -205,9 +206,9 @@ namespace BusinessExcel.Providers.ProviderContext
 
 
                 return users;
-              
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return users;
             }
@@ -220,7 +221,7 @@ namespace BusinessExcel.Providers.ProviderContext
         /// <returns></returns>
         public virtual UserTargetDetailsView getUserTargets(int user_id)
         {
-         
+
             try
             {
 
@@ -233,11 +234,11 @@ namespace BusinessExcel.Providers.ProviderContext
 
                 System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
                 parameterList.Add(UID);
-           
+
 
                 var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[get_user_target_prvs_nxt_three_months]  @user_id", parameterList.ToArray()).ToList().AsQueryable(); ;
 
-                
+
 
                 //Any targets available  within period
                 if (res.Any())
@@ -260,7 +261,7 @@ namespace BusinessExcel.Providers.ProviderContext
                         ut.TargetDetailsView = getUsertargetAchievementDetailsView(user_id, det.target_id);
                         ut.TargetTotalView = getUsertargetTotalDetails(det.target_id);
                         utList.Add(ut);
-                     
+
                     }
                     userDet.UserTargets = utList;
                     return userDet;
@@ -272,12 +273,12 @@ namespace BusinessExcel.Providers.ProviderContext
             }
             catch (Exception ex)
             {
-                return  null;
+                return null;
             }
         }
 
 
-        public virtual IEnumerable< UserTargetDetailsView> getAllUserTargetDetails(UserTargetDetailsView users)
+        public virtual IEnumerable<UserTargetDetailsView> getAllUserTargetDetails(UserTargetDetailsView users)
         {
 
 
@@ -302,21 +303,41 @@ namespace BusinessExcel.Providers.ProviderContext
         }
 
 
-        public List<TargetMaster> TargetMasterViewPage(int user_Id,int roster_id)
+        public List<TargetMaster> TargetMasterViewPage(int user_Id, int roster_id)
         {
-    
+
 
             var res = this.TargetMaster.Select(x => x);
 
 
-            if (user_Id >0)
+            if (user_Id > 0)
             {
-                res = res.Where(x => x.UserID == user_Id && x.RosterID ==roster_id);
+                res = res.Where(x => x.UserID == user_Id && x.RosterID == roster_id);
             }
 
 
             return res.ToList();
-      
+
+        }
+
+        public IQueryable<AcivementReward> Target_Summary_Report_Reward(int targetId,int userId)
+        {
+            var target_id = new SqlParameter("@target_id", targetId);
+
+            var user_id_p = new SqlParameter("@user_id_p", userId);
+
+            System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+
+            parameterList.Add(target_id);
+            parameterList.Add(user_id_p);
+
+            var res = this.Database.SqlQuery<AcivementReward>(@"[db_salesmanage_user].[Target_Summary_Report_Reward] 
+   @target_id
+  , @user_id_p",
+               parameterList.ToArray()
+                ).ToList().AsQueryable();
+            return res;
+
         }
 
         public IQueryable<TargetSummaryView> TargetSummaryReportPaging(int pageNumber, int pageSize, string sort, String sortdir, out int count,
@@ -331,29 +352,29 @@ namespace BusinessExcel.Providers.ProviderContext
             int VId = getViewer_Id();
 
             var viewer_id = VId > 0 ?
-              new SqlParameter("@viewer_id", VId) :
-              new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
+                new SqlParameter("@viewer_id", VId) :
+                new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
 
             var user_id_p = Filters.user_id != null ?
-           new SqlParameter("@user_id_p", Filters.user_id) :
-           new SqlParameter("@user_id_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+               new SqlParameter("@user_id_p", Filters.user_id) :
+               new SqlParameter("@user_id_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
             var location_id_p = Filters.location_id != null ?
-        new SqlParameter("@location_id_p", Filters.location_id) :
-        new SqlParameter("@location_id_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+                new SqlParameter("@location_id_p", Filters.location_id) :
+                new SqlParameter("@location_id_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
             var roster_id_p = Filters.roster_id != null ?
-    new SqlParameter("@roster_id_p", Filters.roster_id) :
-    new SqlParameter("@roster_id_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+                new SqlParameter("@roster_id_p", Filters.roster_id) :
+                new SqlParameter("@roster_id_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
             var target_id = Filters.target_id != null ?
-new SqlParameter("@target_id", Filters.target_id) :
-new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
-
-            var target_status_p = Filters.target_status_id>0 ?
-    new SqlParameter("@target_status_p", Filters.target_status_id) :
-    new SqlParameter("@target_status_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+                new SqlParameter("@target_id", Filters.target_id) :
+                new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+    
+            var target_status_p = Filters.target_status_id > 0 ?
+                new SqlParameter("@target_status_p", Filters.target_status_id) :
+                new SqlParameter("@target_status_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
             var page_number = pageNumber > 0 ?
                new SqlParameter("@page_number", pageNumber) :
@@ -387,14 +408,12 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
             parameterList.Add(page_size);
             parameterList.Add(row_count);
 
-         
+
 
             var res = this.Database.SqlQuery<TargetSummaryView>("[db_salesmanage_user].[Target_Summary_Report] @target_id,@target_status_p,@user_id_p,@location_id_p,@roster_id_p,@viewer_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
             int.TryParse(row_count.Value.ToString(), out count);
 
             return res;
-           
-
         }
 
 
@@ -496,8 +515,8 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
 
 
 
-            var qtr_start_date = (Filters.qtr_start_date) !=default(DateTime)?
-                new SqlParameter("@start_date", Filters.qtr_start_date):
+            var qtr_start_date = (Filters.qtr_start_date) != default(DateTime) ?
+                new SqlParameter("@start_date", Filters.qtr_start_date) :
                 new SqlParameter("@start_date", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
@@ -511,18 +530,18 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
             try
             {
                 res = this.Database.SqlQuery<TargetAchievementDetailQTR>("[db_salesmanage_user].[User_QTR_Achieved_Data]  @start_date ,@user_id", qtr_start_date, user_id).AsQueryable();
-               
+
             }
             catch (Exception ex)
             {
-             
+
                 res = null;
             }
 
 
             return res;
-          
-           
+
+
         }
         public IQueryable<TargetAchievementQTRView> TargetAchievementQTRViewPaging(TargetAchievementQTRView Filters)
         {
@@ -534,7 +553,7 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
             new SqlParameter("@start_date", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
-       
+
 
             var user_id = Filters.user_id > 0 ?
                new SqlParameter("@user_id", Filters.user_id) :
@@ -553,20 +572,20 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
             parameterList.Add(user_id);
             parameterList.Add(viewer_id);
 
-         
+
             try
             {
-                 res = this.Database.SqlQuery<TargetAchievementQTRView>("[db_salesmanage_user].[User_Target_Achieved_QTR_Data] @user_id,@start_date,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
+                res = this.Database.SqlQuery<TargetAchievementQTRView>("[db_salesmanage_user].[User_Target_Achieved_QTR_Data] @user_id,@start_date,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
             }
             catch
             {
                 res = null;
             }
-         
+
             return res;
-           
+
         }
-      
+
         public IEnumerable<TargetSummaryView> GetTargetSummaryExport(TargetSummaryView Filters)
         {
 
@@ -604,7 +623,7 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
     new SqlParameter("@target_status_p", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
-            
+
 
             System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
 
@@ -617,16 +636,16 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
             parameterList.Add(viewer_id);
 
 
-            
+
             var res = this.Database.SqlQuery<TargetSummaryView>("[db_salesmanage_user].[Target_Summary_Report_Excel] @target_id,@target_status_p,@user_id_p,@location_id_p,@roster_id_p,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
 
 
             //var res = this.Database.SqlQuery<TargetSummaryView>("[db_salesmanage_user].[Target_Summary_Report_Excel] @target_id,@target_status_p,@user_id_p,@location_id_p,@roster_id_p,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
-    
+
             return res;
 
 
-            
+
         }
     }
 }
