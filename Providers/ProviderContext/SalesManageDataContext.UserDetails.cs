@@ -46,7 +46,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 new SqlParameter("@password", password) :
                 new SqlParameter("@password", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-            var users = this.Database.SqlQuery<UserDetail>(SELECT_USER, _user_name,_password).ToList();
+            var users = this.Database.SqlQuery<UserDetail>(SELECT_USER, _user_name, _password).ToList();
             UserDetail detail = users.Count > 0 ? users[0] : null;
             return detail;
         }
@@ -88,7 +88,7 @@ namespace BusinessExcel.Providers.ProviderContext
             int vId = 0;
             try
             {
-                  vId = this.Database.SqlQuery<int>(SELECT_USER, user_id).ToList()[0];
+                vId = this.Database.SqlQuery<int>(SELECT_USER, user_id).ToList()[0];
             }
             catch (Exception)
             {
@@ -109,10 +109,10 @@ namespace BusinessExcel.Providers.ProviderContext
 
 
             vw = this.Database.SqlQuery<int>(
-                                            "select user_id from  db_salesmanage_user.f_getLeastChildrens_byParentUser_Id(@viewer_id)",  viewer_id)
+                                            "select user_id from  db_salesmanage_user.f_getLeastChildrens_byParentUser_Id(@viewer_id)", viewer_id)
                                             .ToList();
 
-         
+
             return vw;
         }
         public virtual List<UserDetail> getUserDetails(string search, int Page, out int RowCount)
@@ -152,7 +152,8 @@ namespace BusinessExcel.Providers.ProviderContext
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 RowCount = 0;
             }
             return items;
@@ -161,7 +162,7 @@ namespace BusinessExcel.Providers.ProviderContext
         {
             List<UserDetail> items = new List<UserDetail>();
 
-          
+
 
             var user_name = search != null ?
                     new SqlParameter("@user_name", search) :
@@ -207,7 +208,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER).ToList();
-                
+
             }
             catch (Exception ex)
             {
@@ -326,7 +327,7 @@ namespace BusinessExcel.Providers.ProviderContext
         /// <param name="P_id"></param>
         /// <param name="E_Id"></param>
         /// <returns></returns>
-        public int InsertUserTree(string parent_user_name,string new_user_name)
+        public int InsertUserTree(string parent_user_name, string new_user_name, int Parent_id)
         {
             var isInsertUpdate = 0;
             try
@@ -336,61 +337,69 @@ namespace BusinessExcel.Providers.ProviderContext
 
                 int Parent_userId = getUserID(parent_user_name);
 
-                int Parent_id = getParenId(Parent_userId);
-                int Enity_id = getEntity(Parent_userId);
+                //  int Parent_id = getParenId(Parent_userId);
+                int Enity_id = getEntity(Parent_id);
 
 
-                if (new_userId != Parent_userId)
+                if (!validateExist(new_userId, Parent_id))
                 {
 
-                    var user_id = new_userId != 0 ?
-          new SqlParameter("@user_id", new_userId) :
-          new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = 0 };
+                    if (new_userId != Parent_userId)
+                    {
 
-                    var parent_id = Parent_id != 0 ?
-                  new SqlParameter("@ParentId", Parent_id) :
-                  new SqlParameter("@ParentId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+                        var user_id = new_userId != 0 ?
+              new SqlParameter("@user_id", new_userId) :
+              new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = 0 };
 
-
-                    var enity_id = Enity_id != 0 ?
-                  new SqlParameter("@EntityId", Enity_id) :
-                  new SqlParameter("@EntityId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
+                        var parent_id = Parent_id != 0 ?
+                      new SqlParameter("@ParentId", Parent_id) :
+                      new SqlParameter("@ParentId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
-                    System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
-                    parameterList.Add(user_id);
-                    parameterList.Add(parent_id);
-                    parameterList.Add(enity_id);
+                        var enity_id = Enity_id != 0 ?
+                      new SqlParameter("@EntityId", Enity_id) :
+                      new SqlParameter("@EntityId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
-                    isInsertUpdate = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[Insert_UserTree] @user_id,@ParentId,@EntityId", parameterList.ToArray());
+
+                        System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
+                        parameterList.Add(user_id);
+                        parameterList.Add(parent_id);
+                        parameterList.Add(enity_id);
+
+                        isInsertUpdate = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[Insert_UserTree] @user_id,@ParentId,@EntityId", parameterList.ToArray());
+                    }
+                }
+                else
+                {
+                    isInsertUpdate = 1;//already avialble
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 isInsertUpdate = 0;
             }
-      
+
             return isInsertUpdate;
         }
 
-        public int DeleteUserTree(string u_name)
+        public int DeleteUserTree(string u_name, int Parent_id)
         {
             var isDelete = 0;
             try
             {
                 int userId = getUserID(u_name);
-                int Parent_id = getParenId(userId);
+                // int Parent_id = getParenId(userId);
 
                 var parent_id = Parent_id != 0 ?
               new SqlParameter("@ParentId", Parent_id) :
               new SqlParameter("@ParentId", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
 
 
-       
+
 
                 System.Collections.Generic.List<SqlParameter> parameterList = new List<SqlParameter>();
-                
+
                 parameterList.Add(parent_id);
 
 

@@ -20,7 +20,7 @@ namespace BusinessExcel.Providers.ProviderContext
                                                 from [sc_salesmanage_user].[user_m] 
                                             where 
                                                 first_name+' '+second_name = @name";
-            
+
             var user_name = Name != null ?
                   new SqlParameter("@name", Name) :
                   new SqlParameter("@name", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
@@ -86,7 +86,7 @@ namespace BusinessExcel.Providers.ProviderContext
                     fullName = this.Database.SqlQuery<UserDetail>(SELECT_USER, user_id).ToList()[0].full_name;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -111,9 +111,9 @@ namespace BusinessExcel.Providers.ProviderContext
                     }
 
                     Parent_id = userList.Where(c => c.user_id == userId).Select(a => a.parent_id).First();
-                    
-                
-                    
+
+
+
                 }
             }
             catch (Exception ex)
@@ -153,19 +153,52 @@ namespace BusinessExcel.Providers.ProviderContext
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //throw ex;
                 user_id = 0;
             }
             return user_id;
         }
-        public int getEntity(int userId)
+        public bool validateExist(int newuserId, int parentId)
+        {
+            bool isexis = false;
+            try
+            {
+
+                List<UserTree> userList = new List<UserTree>();
+
+                using (var db = new SalesManageDataContext())
+                {
+
+                    userList = db.getUserTree();
+                }
+
+                int p_left_v = userList.Where(c => c.parent_id == parentId).Select(a => a.left_v).Single();
+                int p_right_v = userList.Where(c => c.parent_id == parentId).Select(a => a.right_v).Single();
+                int p_level = userList.Where(c => c.parent_id == parentId).Select(a => a.level_v).Single();
+
+                var parents = userList.Where(c => c.left_v > p_left_v && c.right_v < p_right_v && c.user_id == newuserId && c.level_v == p_level + 1).ToList();
+
+                if (parents.Count > 0)
+                {
+                    isexis = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                isexis = false;
+            }
+            return isexis;
+        }
+        public int getEntity(int parentid)
         {
             int Enitity_Id = 0;
             try
             {
-                if (userId > 0)
+                if (parentid > 0)
                 {
                     List<UserTree> userList = new List<UserTree>();
 
@@ -177,20 +210,20 @@ namespace BusinessExcel.Providers.ProviderContext
 
                     }
 
-                    int pid = userList.Where(c => c.user_id == userId).Select(a => a.parent_id).Single();
-                    int left_v = userList.Where(c => c.user_id == userId).Select(a => a.left_v).Single();
-                    int right_v = userList.Where(c => c.user_id == userId).Select(a => a.right_v).Single();
+                    Enitity_Id = userList.Where(c => c.parent_id == parentid).Select(a => a.entity).Single();
+                    //int left_v = userList.Where(c => c.user_id == userId).Select(a => a.left_v).Single();
+                    //int right_v = userList.Where(c => c.user_id == userId).Select(a => a.right_v).Single();
 
-                    var parents = userList.Where(c => c.left_v < left_v && c.right_v > right_v).OrderBy(x => x.left_v).LastOrDefault();
+                    // var parents = userList.Where(c => c.left_v < left_v && c.right_v > right_v).OrderBy(x => x.left_v).LastOrDefault();
 
-                    if (parents != null)
-                    {
-                        Enitity_Id = parents.entity;
-                    }
-                    else
-                    {
-                        Enitity_Id = 1;
-                    }
+                    //if (parents != null)
+                    //{
+                    //    Enitity_Id = parents.entity;
+                    // }
+                    // else
+                    //{
+                    //     Enitity_Id = 1;
+                    // }
                 }
             }
             catch (Exception ex)
