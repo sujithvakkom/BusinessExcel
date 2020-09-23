@@ -8,7 +8,6 @@
 @model CheckinViewModel
 
 
-
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -24,8 +23,6 @@
 
 <!-- Main content -->
 <section class="content">
-
-
     <!-- Your Page Content Here -->
     @using (Ajax.BeginForm(CheckinController.CHECKIN_DETAILS,
                                                 CheckinController.CHECKIN_CONTROLLER,
@@ -34,19 +31,10 @@
                                                     HttpMethod = "Get",
                                                     InsertionMode = InsertionMode.Replace,
                                                     UpdateTargetId = "checkin_details_display",
-                                                    //OnBegin = "begin",
-                                                    //OnBegin = "move('#page-load')",
-                                                    //OnComplete = "ajax_call_load_complete('#page-load')",
-                                                    //OnSuccess = "success",
                                                     OnFailure = "loadin_failed",
                                                     LoadingElementId = "checkin-load-progress"
-
-
                                                 }))
-
     {
-
-
         <!-- Your Page Content Here -->
         <div class="box box-default collapsed-box">
             <div class="box-header with-border">
@@ -55,12 +43,7 @@
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
                 </div><!-- /.box-tools -->
             </div><!-- /.box-header -->
-
-
             <div class="box-body">
-
-
-
                 @*<div class="row">
                     <div class="col-md-3" style="font-weight:bold">
                         Code
@@ -69,31 +52,43 @@
                 <div class="row">
 
                     <div class="col-md-3">
-                          @Html.AdminLTEDropDownListFor(
+                        @Html.AdminLTEDropDownListFor(
 m => m.user_name,
 htmlLabelAttributes: null,
 htmlDropDownAttributes: new Dictionary<string, object>() {
-                         { "class", "form-control select2" }
-      },
-                        htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
-                         autoCompleteOptions: new AutoCompleteOptions()
-                         {
-                             AjaxOptions = new AjaxOptions()
-                             {
-                                 HttpMethod = "GET",
-                                 Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                             },
-                             DescriptionField = "full_name",
-                             IDField = "user_name",
-                             Formate = "'<tr><td>' + state.id + '</td><td><span>' + state.text + '</span></td></tr>'",
-                             SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
-                             IsAutoComplete = true,
-                             SelectItems = null
-                         },
-                         showLabel: true)
+                       { "class", "form-control select2" }
+    },
+                      htmlGroupAttributes: null,// new Dictionary<string, object>() { { "class", "col-md-4" } },
+                       autoCompleteOptions: new AutoCompleteOptions()
+                       {
+                           AjaxOptions = new AjaxOptions()
+                           {
+                               HttpMethod = "GET",
+                               Url = Url.Action(actionName: JSONController.USERAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                           },
+                           DescriptionField = "full_name",
+                           IDField = "user_name",
+                           Formate = "'<div class=\"row\"><div class=\"col-xs-3\">' + state.id + '</div><div class=\"col-xs-9\">' + state.text + '</div></div>'",
+                           SelectedItem = ViewData[ReportController.SELECTED_FILTED_USER],
+                           IsAutoComplete = true,
+                           SelectItems = null
+                       },
+                       showLabel: true)
 
                     </div>
-
+                    <div class="col-xs-12 col-md-3">
+                        @Html.AdminLTEDatePickerFor(
+                       m => m.shift_date,
+                                htmlLabelAttributes: null,
+                                htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
+                                htmlGroupAttributes: null,
+                                htmlGlyphiconsAttributes: null,
+                                glyphiconsName: "fa fa-calendar",
+                                showLabel: true,
+                                hasValidation: true,
+                                showGlyphicons: true
+                       )
+                    </div>
 
                     <div class="col-md-2" style="padding-top: 1.5em">
 
@@ -114,18 +109,37 @@ htmlDropDownAttributes: new Dictionary<string, object>() {
 
             </div>            <!-- /.box-body -->
 
-        </div><!-- /.box -->
-
+        </div>
+        <!-- /.box -->
     }
 
     <div id="checkin_details_display">
-
-        @Html.Action(BusinessExcel.Controllers.CheckinController.CHECKIN_DETAILS, Model)
-
+        @Html.Partial(BusinessExcel.Controllers.CheckinController.CHECKIN_DETAILS_VIEW, Model)
     </div>
+</section>
+<!-- /.content -->
 
-</section><!-- /.content -->
+<div class="modal fade" id="modal-staff_location" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 id="user-details" class="modal-title">Default Modal</h4>
+            </div>
+            <div class="modal-body">
+                <address id="user-address"></address>
+                <div id="user-details-map" class="map"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 
-
-
-
+<style>
+</style>

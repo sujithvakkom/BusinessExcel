@@ -7,7 +7,6 @@ using System.Web;
 
 namespace BusinessExcel.Providers.ProviderContext.Entities
 {
-
     [ComplexType()]
     public partial class ItemDetails
     {
@@ -18,10 +17,12 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Column("description", Order = 3)]
         public string description { get; set; }
         [Column("price", Order = 4)]
-        public Nullable<decimal> price { get; set; }
+        public Decimal price { get; set; }
         [Column("model", Order = 5)]
         public string model { get; set; }
         [Column("model_description", Order = 6)]
         public string model_description { get; set; }
+        [Column("category_id", Order = 7)]
+        public Int32 category_id { get; set; }
     }
 }

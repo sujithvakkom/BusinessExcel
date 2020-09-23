@@ -51,7 +51,7 @@ namespace BusinessExcel.Controllers
         // [Authorize(Roles = "manager")]
         [HttpPost]
         [Authorize(Roles = "System Administrator")]
-        public ActionResult NewUser(CreateUser newUser )
+        public ActionResult NewUser(CreateUser newUser)
         {
 
             if (Request.IsAjaxRequest())
@@ -62,12 +62,12 @@ namespace BusinessExcel.Controllers
                     using (var db = new SalesManageDataContext())
                     {
 
-                            ViewData[USERCREATIONMESSAGE]=db.CreateUser(newUser);
-                            ModelState.Clear();
-                      
+                        ViewData[USERCREATIONMESSAGE] = db.CreateUser(newUser);
+                        ModelState.Clear();
+
                     }
 
-                    return PartialView(NEWUSER_FRM,new CreateUser());
+                    return PartialView(NEWUSER_FRM, new CreateUser());
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace BusinessExcel.Controllers
             {
                 return PartialView(NEWUSER_FRM, new CreateUser());
             }
-               
+
         }
 
         [Authorize(Roles = "System Administrator")]
@@ -98,9 +98,9 @@ namespace BusinessExcel.Controllers
                 using (var db = new SalesManageDataContext())
                 {
                     ViewData[SELECTED_FILTED_USER] = db.getUserListView(
-                        search:Filters.first_name,
-                        UserType:null,
-                        Page:page,
+                        search: Filters.first_name,
+                        UserType: null,
+                        Page: page,
                         RowCount: out count
                         );
                 }
@@ -186,10 +186,10 @@ namespace BusinessExcel.Controllers
             //    data = new[] { rootCategory };
 
 
-          //  IEnumerable<UserTree> data = getUserTreeList();
+            //  IEnumerable<UserTree> data = getUserTreeList();
             if (Request.IsAjaxRequest())
             {
-               // return PartialView(USERSTREE, data);
+                // return PartialView(USERSTREE, data);
                 return PartialView(USERSTREE);
             }
             else
@@ -238,6 +238,12 @@ namespace BusinessExcel.Controllers
         public IEnumerable<UserTree> getUserTreeList()
         {
             IEnumerable<UserTree> data = null;
+
+
+
+
+
+
             try
             {
                 List<UserTree> categoryList = new List<UserTree>();
@@ -287,7 +293,6 @@ namespace BusinessExcel.Controllers
             model.right_v = catList.Where(c => c.parent_id == model.parent_id).Select(a => a.right_v).Single();
             model.level_v = catList.Where(c => c.parent_id == model.parent_id).Select(a => a.level_v).Single();
             model.entity = catList.Where(c => c.parent_id == model.parent_id).Select(a => a.entity).Single();
-
 
 
             var childs = catList.Where(c => c.left_v > model.left_v && c.right_v < model.right_v).OrderBy(x => x.level_v).ToList();
@@ -376,14 +381,14 @@ namespace BusinessExcel.Controllers
 
         //    return Json(insertId, JsonRequestBehavior.AllowGet);
         //}
-        public PartialViewResult AddChild(string paret_user_name, string new_user_name)
+        public PartialViewResult AddChild(string paret_user_name, string new_user_name, string ParentId)
         {
 
             int insertId = 0;// SaveMaster(master);
 
             using (var db = new SalesManageDataContext())
             {
-                insertId = db.InsertUserTree(paret_user_name, new_user_name);
+                insertId = db.InsertUserTree(paret_user_name, new_user_name, Convert.ToInt32(ParentId));
             }
             if (insertId > 0)
             {
@@ -407,14 +412,14 @@ namespace BusinessExcel.Controllers
         //    return Json(deleteId, JsonRequestBehavior.AllowGet);
         //}
 
-        public PartialViewResult DeleteChild(string user_name)
+        public PartialViewResult DeleteChild(string user_name, string parent)
         {
 
             int deleteId = 0;// SaveMaster(master);
 
             using (var db = new SalesManageDataContext())
             {
-                deleteId = db.DeleteUserTree(user_name);
+                deleteId = db.DeleteUserTree(user_name, Convert.ToInt32(parent));
             }
             if (deleteId > 0)
             {

@@ -20,171 +20,52 @@
     <!-- Your Page Content Here -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.2/dist/Chart.bundle.min.js"></script>
     <div class="row">
-    <div class="col-lg-6">
-        <!-- Custom Tabs -->
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs pull-right">
-                <li class="active"><a href="#tab_qty_graph" data-toggle="tab">Graph</a></li>
-                <li>
-                    <a href="#tab_qty_data" data-toggle="tab">Data</a>
-                </li>
-                <li class="pull-left header"><i class="fa fa-bar-chart"></i>Quantity summary (current month)</li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="tab_qty_graph">
-                    <canvas id="myQtyHomeChart"></canvas>
-                </div>
-                <!-- /.tab-pane -->
-                <div class="tab-pane" id="tab_qty_data">
-                    @Html.Partial(AccountsController.TABLE_FOR_CURRENT_MONTH_QUANTITY, new DateTimeSpan() { StartDate=ViewBag.StartDate, EndDate = ViewBag.EndDate })
-                </div>
-                <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
-        </div>
-    </div>
-
-    <div class="col-lg-6">
-        <!-- Custom Tabs -->
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs pull-right">
-                <li class="active"><a href="#tab_value_graph" data-toggle="tab">Graph</a></li>
-                <li><a href="#tab_valu_data" data-toggle="tab">Data</a></li>                        </li>
-                <li class="pull-left header"><i class="fa fa-pie-chart"></i>Value summary (current month)</li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="tab_value_graph">
-                    <canvas id="myValueHomeChart"></canvas>
-                </div>
-                <!-- /.tab-pane -->
-                <div class="tab-pane" id="tab_valu_data">
-                    @Html.Partial(AccountsController.TABLE_FOR_CURRENT_MONTH_VALUE, new DateTimeSpan() { StartDate = ViewBag.StartDate, EndDate = ViewBag.EndDate })
-                </div>
-                <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
-        </div>  
-    </div>
-    </div>
-
-    @*<div class="row">
         <div class="col-lg-6">
-
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">User Target</h3>
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs pull-right">
+                    <li class="active"><a href="#tab_qty_graph" data-toggle="tab">Graph</a></li>
+                    <li>
+                        <a href="#tab_qty_data" data-toggle="tab">Data</a>
+                    </li>
+                    <li class="pull-left header"><i class="fa fa-bar-chart"></i>Quantity summary (current month)</li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_qty_graph">
+                        <canvas id="myQtyHomeChart"></canvas>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_qty_data">
+                        @Html.Partial(AccountsController.TABLE_FOR_CURRENT_MONTH_QUANTITY, new DateTimeSpan() { StartDate = ViewBag.StartDate, EndDate = ViewBag.EndDate })
+                    </div>
+                    <!-- /.tab-pane -->
                 </div>
-
-                <div class="box-body">
-                    <table class="table table-responsive table-hover">
-                        <thead>
-                            <tr><th>User</th><th>User Name</th><th>Target Desc.</th><th>Date</th><th>Category</th><th>Target</th><th>Has Bonus</th></tr>
-                        </thead>
-                        <tbody>
-
-                            <tr class="clickable collapse-header" data-toggle="collapse" id="03464_C4-MERDIF_Total" data-target=".03464_C4-MERDIF">
-                                <td><i class="glyphicon glyphicon-plus"></i>03464</td>
-                                <td>Imran  Mohammed</td>
-                                <td>C4-MERDIF</td>
-                                <td>Jun 2017</td>
-                                <td>Total</td>
-                                <td>100000.00</td>
-                                <td><input type="checkbox" /></td>
-                            </tr>
-                            <tr class="collapse 03464_C4-MERDIF">
-                                <td>03464</td>
-                                <td>Imran  Mohammed</td>
-                                <td>C4-MERDIF</td>
-                                <td>Jun 2017</td>
-                                <td>Digital</td>
-                                <td>5000.00</td>
-                                <td><input type="checkbox" /></td>
-                            </tr>
-                            <tr class="collapse 03464_C4-MERDIF">
-                                <td>03464</td>
-                                <td>Imran  Mohammed</td>
-                                <td>C4-MERDIF</td>
-                                <td>Jun 2017</td>
-                                <td>DSLR</td>
-                                <td>9000.00</td>
-                                <td><input type="checkbox" checked  readonly/></td>
-                            </tr>
-
-                            <tr class="clickable collapse-header" data-toggle="collapse" id="03415_C4-MERDIF_Total" data-target=".03415_C4-MERDIF">
-                                <td><i class="glyphicon glyphicon-plus"></i><span>03415</span></td>
-                                <td>Noufel Parambath</td>
-                                <td>C4-MERDIF</td>
-                                <td>Jun 2017</td>
-                                <td>Total</td>
-                                <td>100000.00</td>
-                                <td><input type="checkbox" readonly /></td>
-                            </tr>
-                            <tr class="collapse 03415_C4-MERDIF">
-                                <td>03415</td>
-                                <td>Noufel Parambath</td>
-                                <td>C4-MERDIF</td>
-                                <td>Jun 2017</td>
-                                <td>Digital</td>
-                                <td>5000.00</td>
-                                <td><input type="checkbox" readonly /></td>
-                            </tr>
-                            <tr class="collapse 03415_C4-MERDIF">
-                                <td>03415</td>
-                                <td>Noufel Parambath</td>
-                                <td>C4-MERDIF</td>
-                                <td>Jun 2017</td>
-                                <td>DSLR</td>
-                                <td>9000.00</td>
-                                <td><input type="checkbox" checked readonly /></td>
-                            </tr>
-
-                            <tr class="clickable collapse-header" data-toggle="collapse" id="03463_C4-MERDIF_Total" data-target=".03463_C4-MERDIF">
-                                <td><i class="glyphicon glyphicon-plus"></i>03463</td>
-                                <td>Rajesh Kumar Pal</td>
-                                <td>C4-MERDIF</td>
-                                <td>Jun 2017</td>
-                                <td>Total</td>
-                                <td>100000.00</td>
-                                <td><input type="checkbox"  readonly/></td>
-                            </tr>
-                            <tr class="collapse 03463_C4-MERDIF">
-                                <td>03463</td>
-                                <td>Rajesh Kumar Pal</td>
-                                <td>C4-MERDIF</td>
-                                <td>Jun 2017</td>
-                                <td>Digital</td>
-                                <td>5000.00</td>
-                                <td><input type="checkbox" readonly /></td>
-                            </tr>
-                            <tr class="collapse 03463_C4-MERDIF">
-                                <td>03463</td>
-                                <td>Rajesh Kumar Pal</td>
-                                <td>C4-MERDIF</td>
-                                <td>Jun 2017</td>
-                                <td>DSLR</td>
-                                <td>9000.00</td>
-                                <td><input type="checkbox" checked readonly/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <style>
-                        .collapsing{
-                            -webkit-transition: height .01s ease;
-                            transition: height .01s ease;
-                        }
-                        .collapse-header{
-                            background-color:rgb(135, 109, 67);
-                            font-weight:bold;
-                            color:white;
-                        }
-                        .collapse-header:hover{
-                            background-color:rgba(135, 109, 67,0.8) !important;
-                        }
-                    </style>
-                </div>
+                <!-- /.tab-content -->
             </div>
         </div>
-    </div>*@
+
+        <div class="col-lg-6">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs pull-right">
+                    <li class="active"><a href="#tab_value_graph" data-toggle="tab">Graph</a></li>
+                    <li><a href="#tab_valu_data" data-toggle="tab">Data</a></li>                        </li>
+                    <li class="pull-left header"><i class="fa fa-pie-chart"></i>Value summary (current month)</li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_value_graph">
+                        <canvas id="myValueHomeChart"></canvas>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="tab_valu_data">
+                        @Html.Partial(AccountsController.TABLE_FOR_CURRENT_MONTH_VALUE, new DateTimeSpan() { StartDate = ViewBag.StartDate, EndDate = ViewBag.EndDate })
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+        </div>
+    </div>
     <script>
         var ctx = document.getElementById("myQtyHomeChart").getContext('2d');
         var graph =@Html.Raw(Json.Encode(ViewBag.QtyGraph));

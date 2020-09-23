@@ -1,0 +1,51 @@
+﻿@model List<BonusSettings>
+
+@using BusinessExcel.Models
+
+<div class="col-md-12 table-responsive">
+    <table class="table table-bordered" id="bonusLines">
+        <thead>
+            <tr>
+                <th>Item Code</th>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Incentive</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td class="">@item.item_code</td>
+                <td class="">@item.description</td>
+                <td class="">@item.category</td>
+                <td class="text-right">
+                    @String.Format("{0:0.00}", item.incentive)
+                </td>
+                <td>
+                    @Ajax.ActionLink(
+               "Delete",
+               BusinessExcel.Controllers.TargetController._BONUSDELETE,
+               new { @bonusId = item.ID },
+               new AjaxOptions()
+               {
+                   HttpMethod = "DELETE",
+                   UpdateTargetId = "weekly_incentive"
+               }
+               )
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#bonusLinesSearch").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#bonusLines tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

@@ -7,12 +7,42 @@ using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace BusinessExcel.Providers.ProviderContext
 {
 
     public partial class SalesManageDataContext : DbContext
-    {      
+    {
+
+        public virtual CategoryDetail AddCategoryDetails(string Description)
+        {
+            CategoryDetail result = null;
+            var category_id =
+                new SqlParameter("@category_id", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+
+            var description = string.IsNullOrEmpty(Description) ?
+                new SqlParameter("@description", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value } :
+                new SqlParameter("@description", Description);
+
+            int? row = null;
+            var category_id_out = row != null ?
+                new SqlParameter("@category_id_out", row) :
+                new SqlParameter("@category_id_out", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
+            category_id_out.Direction = System.Data.ParameterDirection.Output;
+
+            var items = this.Database.SqlQuery<CategoryDetail>(
+                                            @"EXECUTE [sc_salesmanage_vansale].[update_category] 
+   @category_id
+  , @description
+  , @category_id_out OUTPUT", category_id, description, category_id_out)
+                                            .ToList();
+            int catogeryId;
+            int.TryParse(category_id_out.Value.ToString(), out catogeryId);
+            result = getCategoryDetails(catogeryId);
+            return result;
+        }
+
         public virtual CategoryDetail getCategoryDetails(string serarch)
         {
             CategoryDetail result = null;

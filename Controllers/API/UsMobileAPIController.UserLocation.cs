@@ -13,8 +13,10 @@ namespace BusinessExcel.Controllers
         public UserLocation PostUserLocation(UserLocation UserLocation)
         {
             string result = "Failed";
+
             using (SalesManageDataContext db = new SalesManageDataContext())
             {
+                UserLocation.UserID = db.getUserID(UserLocation.UserName);
                 result = db.PutUserLoction(UserLocation);
             }
             return UserLocation;
@@ -22,12 +24,21 @@ namespace BusinessExcel.Controllers
 
         //Post
         [HttpGet]
-        public UserLocation GetUserLocation(int UserId)
+        public UserLocation GetUserLocation(string UserName)
         {
             UserLocation result = null;
             using (SalesManageDataContext db = new SalesManageDataContext())
             {
-                result = db.GetUserLoction(UserId);
+                var userId = db.getUserID(UserName);
+                result = db.GetUserLoction(userId);
+            }
+            if (result == null) {
+                result = new UserLocation() {
+                    Type = 0,
+                    Address = "",
+                    Latitude = 0,
+                    Longitude = 0
+                };
             }
             return result;
         }

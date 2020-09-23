@@ -16,7 +16,8 @@ namespace BusinessExcel.Providers.ProviderContext
    @user_id
   ,@latitude
   ,@longitude
-  ,@type";
+  ,@type
+  ,@address";
         public string PutUserLoction(UserLocation UserLocation)
         {
             string result = "Failed";
@@ -41,13 +42,19 @@ namespace BusinessExcel.Providers.ProviderContext
                 new SqlParameter("@type", SqlDbType.Int) { Value = DBNull.Value } :
                 new SqlParameter("@type", UserLocation.Type);
 
+            var address =
+                UserLocation.Address == null ?
+                new SqlParameter("@address", SqlDbType.Int) { Value = DBNull.Value } :
+                new SqlParameter("@address", UserLocation.Address);
+
             try
             {
                 int r = this.Database.ExecuteSqlCommand(cmdPutUserLoction,
                     userID,
                     latitude,
                     longitude,
-                    type);
+                    type,
+                    address);
                 if (r > 1) result = "Success";
             }
             catch (Exception ex)
@@ -61,7 +68,8 @@ namespace BusinessExcel.Providers.ProviderContext
        checkin_time ,
        latitude,
        longitude,
-       type
+       type,
+       address
        from [sc_salesmanage_merchant].[merchant_checkin_m] 
        where user_id = @user_id";
         public UserLocation GetUserLoction(int? UserId, DateTime? When = null) {

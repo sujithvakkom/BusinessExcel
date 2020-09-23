@@ -1,0 +1,102 @@
+﻿@model BonusItemConfigModel
+@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+
+@{ 
+    var item = new List<BonusSettings>();
+    using (var db = new SalesManageDataContext())
+    {
+        item = db.getBonusWeeksSettings(Model.Week);
+    }
+}
+
+
+<div class="row" id="weekly_incentive">
+    @Html.Partial(TargetController._BONUSSAVE,item)
+</div>
+<div class="row">
+    <div class="col-md-6">
+        @Html.AdminLTEDropDownListFor(
+m => Model.Item.item_code,
+htmlLabelAttributes: null,
+htmlDropDownAttributes: new Dictionary<string, object>() {
+{ "class", "form-control select2" }
+},
+htmlGroupAttributes: new Dictionary<string, object>() { },
+autoCompleteOptions: new AutoCompleteOptions()
+{
+    AjaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        Url = Url.Action(actionName: JSONController.ITEMAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+    },
+    DescriptionField = "description",
+    IDField = "item_code",
+    Formate = @"'<div><b>' + state.id +'</b>&nbsp;&nbsp;'+ state.text.substring(0,30) + '</div>'",
+    IsAutoComplete = true,
+    SelectedItem = Model.Item,
+    SelectItems = null
+},
+showLabel: true)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3" id="item_catogery">
+
+    </div>
+    <div class="col-md-3">
+
+        @Html.AdminLTETextBoxFor(m => m.IncentiveAmount,
+    null,
+    new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" }, { "maxlength", 10 }, { "onkeypress", "return isNumberKey(event)" } },
+    null,
+    null,
+    "",
+    true,
+    true,
+    true)
+    </div>
+    <div class="col-md-3">
+        @Html.AdminLTEFromSubmitter("Add",
+       "location-target-view-search",
+       new Dictionary<string, object>() {
+           { "type", "submit" } ,
+           { "class","btn btn-default"}
+       },
+       Url.Content("~/Images/progress.gif")
+       )
+    </div>
+</div>
+
+<script>
+    @*function item_selection_changed() {
+        var x = document.getElementById("Item_item_code").value;
+        $.ajax({
+            url:'@(Url.Action("_CatogerySelectorForItem"))',
+            data: { "ItemCode": x },
+            success: (data) => {
+                $("#item_catogery").html(data);
+            }
+        });
+    }
+
+    $(document).ready(() => {
+        $('#Item_item_code').on('select2:select', function (e) {
+            var data = e.params.data;
+            console.log(data);
+        $.ajax({
+            url:'@(Url.Action("_CatogerySelectorForItem"))',
+            data: { "ItemCode": data.id ,"ItemName" : data.text },
+            success: (data) => {
+                $("#item_catogery").html(data);
+            }
+        });
+        });
+    });*@
+</script>
+

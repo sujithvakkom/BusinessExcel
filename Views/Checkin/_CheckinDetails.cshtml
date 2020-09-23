@@ -3,147 +3,158 @@
 @using BootstrapHtmlHelper
 @using BusinessExcel.Providers.ProviderContext
 @using BusinessExcel.Controllers.JSON
-
-
 @using BusinessExcel.Providers.ProviderContext.Entities
 
 
 @model CheckinViewModel
 
+@{
+    int count = 0;
+    IQueryable<CheckinViewModel> data;
+    using (var db = new SalesManageDataContext())
+    {
+        data = db.CheckinDetailsPaging(pageNumber: Model.PageNumber,
+                    pageSize: Model.PageSize,
+                    sort: ViewBag.ItemViewSort,
+                    sortdir: ViewBag.ItemViewDir,
+                    count: out count, Filters: Model
+                    );
+        Model.RowCount = count;
+        Model.UseAjax = true;
+        Model.UpdateTargetId = "checkin_details_display";
+        Model.LoadingElementId = "checkin_details_loading";
+    }
+    Model.ControllerName = CheckinController.CHECKIN_CONTROLLER;
+    Model.ActionName = CheckinController.CHECKIN_DETAILS;
+}
 
-<div class="box box-primary">
-
+<div id="checkin_details" class="box box-primary">
     <div class="box-body">
+        @foreach (var line in data)
+        {
 
-        <div class="row">
-            <div class="col-md-7">
-                <div id="table-item-view" class="table-responsive">
-                    @{
-
-                        using (var db = new SalesManageDataContext())
-                        {
-                            WebGridColumn col = new WebGridColumn()
-                            {
-
-                            };
-
-                            int count = 0;
-                            IQueryable<CheckinViewModel> data = db.CheckinDetailsPaging(pageNumber: ViewBag.ItemViewPage,
-                                        pageSize: 15,
-                                        sort: ViewBag.ItemViewSort,
-                                        sortdir: ViewBag.ItemViewDir,
-                                        count: out count, Filters: Model
-                                        );
-                            var grid = new WebGrid(ajaxUpdateContainerId: "table-item-view",
-                                                ajaxUpdateCallback: "callBack", rowsPerPage: 15
-                                                            );
-                            grid.Bind(source: data, autoSortAndPage: false, rowCount: count);
-                            @grid.GetHtml(
-                             selectedRowStyle: "select",
-                            tableStyle: "table table-striped table-bordered be-pagination-spl",
-                            htmlAttributes: new { @id = "items" },
-
-                            columns: new[] {
-                            grid.Column(columnName:"user_name",header:"User Name",format:null,style:"user_name",canSort:false),
-                            grid.Column(columnName:"fullname",header:"Name",format:null,style:"fullname",canSort:false),
-                            grid.Column(columnName:"checktype",header:"Check Type",format:null,style:"checktype",canSort:false),
-                            grid.Column(columnName:"checkin_time",header:"Date Time",format:null,style:"checkin_time",canSort:false),
-                            @*grid.Column("", format: @<text>
-                            <button class="show-map  btn btn-primary btn-sm">Last Checkin Location </button>
-                            </text>,  style: "colbtn" , canSort: false),*@
-
-
-                grid.Column("Location", style: "colbtn", format: @<text><div style="padding-left:10px;">
-
-                            <a class="showMap glyphicon glyphicon-map-marker" id="@item.user_id" style="font-size: 20px;cursor:pointer" title="View last  location"
-                               data-toggle="modal" data-target="#mapModal" data-lat=@item.latitude data-lng=@item.longitude
-                               
-                               ></a>
+            <div class="box box-default border-left border-right">
+                <div class="row no-gutter">
+                    <div class="col-xs-12 col-md-4">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr class="text-primary">
+                                    <th width="30%">Shift</th>
+                                    <td width="70%"><i class="fa fa-calendar"></i>&nbsp; @string.Format("{0:dd-MMM-yyy}", line.shift_date)</td>
+                                </tr>
+                                <tr class="text-primary"><td class="text-bold">@line.user_name</td><td>@line.fullname</td></tr>
+                                <tr><th>No. of breaks</th><td>@line.breaks</td></tr>
+                                <tr><th>Break in Min.(s)</th><td>@string.Format("{0:0 Min}", line.break_span)</td></tr>
+                            </table>
                         </div>
-                </text>),
-
-                            grid.Column(null, null, format: @<input type="hidden" name="user_id" class="hiduser_id" value="@item.user_id" />)
-
-
-                        },
-                        footerStyle: "extra-table-pager"
-                        )
-
-                            @grid.PagerList(mode: WebGridPagerModes.FirstLast | WebGridPagerModes.NextPrevious | WebGridPagerModes.Numeric,
-                        nextText: "NEXT",
-                        firstText: "FIRST",
-                        previousText: "PREV.",
-                        lastText: "LAST")
-
-                        }
-                    }
+                    </div>
+                    <div class="col-xs-12 col-md-8">
+                        <div class="col-xs-12 col-md-6 no-padding">
+                            <div class="table-responsive">
+                                @if (line.checkin_time == null)
+                                {
+                                    <div class="box-body">
+                                        <div class="alert alert-warning">
+                                            <h4><i class="icon fa fa-warning"></i>&nbsp;No data!</h4>
+                                            No shift start info.
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <table class="table">
+                                        <tr><th width="50%">Start</th></tr>
+                                        <tr>
+                                            <td>
+                                                @string.Format("{0:dd-MMM-yyy hh:mm tt}", ((DateTime)line.checkin_time).AddMinutes(-90))
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @line.checkin_address
+                                                <a class="showMap glyphicon glyphicon-map-marker" id="checkin_@line.user_id" style="font-size: 20px;cursor:pointer" title="View last  location" data-toggle="modal" data-target="#mapModal" data-lat=@line.checkin_latitude data-lng=@line.checkin_longitude data-name="@string.Format("{0} {1}", line.user_name, line.fullname)" data-address="@string.Format("{0}", line.checkin_address)"></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 no-padding">
+                            <div class="table-responsive">
+                                @if (line.checkout_time == null)
+                                {
+                                    <div class="box-body">
+                                        <div class="alert alert-warning">
+                                            <h4><i class="icon fa fa-warning"></i>&nbsp;No data!</h4>
+                                            No shift end info.
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <table class="table">
+                                        <tr><th width="50%">Stop</th></tr>
+                                        <tr>
+                                            <td>
+                                                @string.Format("{0:dd-MMM-yyy hh:mm tt}", ((DateTime)line.checkout_time).AddMinutes(-90))
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @line.checkout_address
+                                                <a class="showMap glyphicon glyphicon-map-marker" id="checkout_@line.user_id" style="font-size: 20px;cursor:pointer" title="View last  location" data-toggle="modal" data-target="#mapModal" data-lat=@line.checkout_latitude data-lng=@line.checkout_longitude data-name="@string.Format("{0} {1}",line.user_name,line.fullname)" data-address="@string.Format("{0}",line.checkout_address)"></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-5">
+        }
 
-                <div class="map"></div>
-
-
+        @*<div class="row">
+                <div class="col-md-12">
+                    <h3 id="user-details"></h3>
+                    <address id="user-address"></address>
+                    <div class="map"></div>
+                </div>
+            </div>*@
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.Partial("_Pagination", Model)
             </div>
         </div>
     </div>
+    <div id="checkin_details_loading" class="overlay" style="display:none">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
 </div>
-
-  
-
-<style>
-     td:nth-child(n+6), th:nth-child(n+6) {
-        display: none;
-    }
-
-    
- 
-</style>
 
 <script type="text/javascript">
 
     $(document).ready(function () {
         $('.showMap').click(function () {
-
-     
-
             var lat = $(this).data('lat');
             var lng = $(this).data('lng');
-     
-            //var url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=true&language=" + language;
-            //$.ajax({
-            //    type: 'GET',
-            //    url: url,
-            //    success: function (data) {
-            
-                   // alert(data.results[1].address_components[2].long_name);
-         
-                  
-                    //$('#map1').html(JSON.stringify(data));
-                  // alert(JSON.stringify(data));
-            //    }
-            //});
-
-            mapInit(lat, lng);
+            var name = $(this).data('name');
+            var address = $(this).data('address');
+            mapInit(lat, lng, name, address);
         });
     });
 
-    function mapInit(lat, lng) {
+    function mapInit(lat, lng, name, address) {
+        var source = "http://maps.google.com/maps?q=" + lat + ", " + lng + "&z=15&output=embed&;key=AIzaSyBlNX0IH813QXzuYaG8uTKkizXiSVihXNI"
+        var iframe = "<iframe src='" + source + "' width='100%' height='100%' frameborder='0' style='border:0' allowfullscreen></iframe>"
 
-        var iframe = "<iframe src='http://maps.google.com/maps?q=" + lat + ", " + lng + "&z=15&output=embed' width='100%' height='100%' frameborder='0' style='border:0' allowfullscreen></iframe>"
-      
+        /*
+        iframe = "<iframe src='https://maps.google.com/maps?q=35.856737, 10.606619&z=15&output=embed' width='360' height='270' frameborder='0' style='border:0'></iframe>";*/
 
-        $('.map').css("height", "300px").html(iframe);
-      
-       
+        $('#user-details-map').css("height", "500px").html(iframe);
+        $('#user-details').html(name);
+        $('#user-address').html(address);
+        $('#modal-staff_location').modal('show');
     };
-    
+
 </script>
-
-
-
-
-
-
-
-

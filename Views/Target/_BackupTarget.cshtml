@@ -1,0 +1,143 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Providers.ProviderContext.Entities
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Models
+
+@model BackupTargetFilter
+
+@{
+    List<TargetImportExportDetails> data = new List<TargetImportExportDetails>();
+    using (var db = new SalesManageDataContext())
+    {
+        if (!string.IsNullOrEmpty(Model.Month))
+        {
+            data = db.GetTargetExport(Model);
+        }
+    }
+}
+
+<div id="target-export-block">
+    <div class="box with-border">
+        <div class="">
+            <div class="box-body">
+                @using (Ajax.BeginForm(
+                                                    controllerName: TargetController.TARGET,
+                                                    //actionName: TargetController._GETLOCATIONALOCATION,
+                                                    actionName: TargetController._BACKUPTARGET,
+                                                    htmlAttributes: new { id = "target-export-search-form" },
+                                                    routeValues: null,
+                                                    ajaxOptions: new AjaxOptions()
+                                                    {
+                                                        InsertionMode = InsertionMode.Replace,
+                                                        HttpMethod = "Get",
+                                                        UpdateTargetId = "target-export-block",
+                                                        OnComplete = "ajax_call_load_complete('#page-load')",
+                                                        OnFailure = "loadin_failed",
+                                                        LoadingElementId = "target-load-progress"
+                                                    }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-xs-12 col-md-3">
+                            @Html.AdminLTEDatePickerFor(m => m.Month,
+                                                        htmlLabelAttributes: null,
+                                                        htmlTextBoxAttributes: new Dictionary<string, object>() { { "class", "form-control" }, { "autocomplete", "off" } },
+                                                        htmlGroupAttributes: null,
+                                                        htmlGlyphiconsAttributes: null,
+                                                        glyphiconsName: "fa fa-calendar",
+                                                        format: "M yyyy",
+                                                        maxViewMode: MyExtentions.Periods.years,
+                                                        minViewMode: MyExtentions.Periods.months,
+                                                        showLabel: true,
+                                                        hasValidation: true,
+                                                        showGlyphicons: true)
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-3">
+                            @*<button type="submit" class="btn btn-primary">Load Details
+        @{
+            Html.RenderPartial("_ProgressButton", "target-load-progress");
+        }</button>*@
+                            @Html.AdminLTEFromSubmitter("View",
+                            "target-load-progress",
+                            new Dictionary<string, object>() {
+                            { "type", "submit" } ,
+                            { "class","btn btn-primary pull-right"}
+                            },
+                            Url.Content("~/Images/progress.gif")
+                            )
+
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="box-body no-pad-top">
+                @if (string.IsNullOrEmpty(Model.Month))
+                {
+                    <span>Please select the month.</span>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.AdminLTEActionLink(
+                       linkText: "Export",
+                       actionName: TargetController.BACKUP,
+                       controllerName: TargetController.TARGETCONTROLLER,
+                       cssClass: "btn btn-link", routeValues: Model,
+                       carrot: "fa fa-download")
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Target Description</th>
+                                    <th>Emp. #</th>
+                                    <th>Emp. Name</th>
+                                    <th>Cat. #</th>
+                                    <th>Cat. Desc.</th>
+                                    <th>Loc. #</th>
+                                    <th>Loc. Desc.</th>
+                                    <th>Target</th>
+                                    <th>Line Ach. Acc</th>
+                                    <th>Bonus Ach. Acc</th>
+                                    <th>Min. Total Ach.</th>
+                                    <th>Min. Line Ach.</th>
+                                    <th>Min. Bonus Ach.</th>
+                                    <th>Incent Cap.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var x in data)
+                                {
+                                    <tr>
+                                        <td>@x.TargetDescription</td>
+                                        <td>@x.EmployCode</td>
+                                        <td>@x.EmployName</td>
+                                        <td>@x.CategoryID</td>
+                                        <td>@x.CategoryDescription</td>
+                                        <td>@x.LocationID</td>
+                                        <td>@x.LocationDescription</td>
+                                        <td>@x.TargetValue</td>
+                                        <td>@x.LineAchivementAcc</td>
+                                        <td>@x.BonusAchievementAcc</td>
+                                        <td>@x.MinTotalAchievement</td>
+                                        <td>@x.MinLineAchievement</td>
+                                        <td>@x.MinBonusAchievement</td>
+                                        <td>@x.IncentiveCap</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

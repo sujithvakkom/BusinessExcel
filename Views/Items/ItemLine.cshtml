@@ -1,0 +1,75 @@
+﻿@using BusinessExcel.Models
+@using BusinessExcel.Controllers
+@using BootstrapHtmlHelper
+@using BusinessExcel.Providers.ProviderContext
+@using BusinessExcel.Controllers.JSON
+
+@model BusinessExcel.Models.ItemDetailsView
+
+@{
+    var fieldPrefix = string.Format("_{0}.{1}", Model.inventory_item_id, "ItemDetailsView");
+    var updateTargetId = string.Format("_{0}", Model.inventory_item_id);
+    var updateTargetLoadingId = string.Format("_{0}_loading", Model.inventory_item_id);
+}
+
+<div id="@updateTargetId">
+    @using (Html.BeginHtmlFieldPrefixScope(fieldPrefix))
+    {
+
+
+        using (Ajax.BeginForm(
+            ItemsController.UPDATE_CATOGERY,
+            ItemsController.ITEM_CONTROLLER,
+            new AjaxOptions()
+            {
+                HttpMethod = "POST",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = updateTargetId,
+                OnFailure = "loadin_failed",
+                LoadingElementId = updateTargetLoadingId
+            }))
+        {
+            <input id="filedPrefix" name="fieldPrefix" value="@fieldPrefix" type="hidden" />
+            @Html.HiddenFor(m => m.inventory_item_id)
+            @Html.HiddenFor(m => m.item_code)
+            <div class="row">
+                <div class="col-xs-12 col-md-2 "><label class="hidden visible-xs">Item code</label>
+                    @Model.item_code
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <label class="hidden visible-xs">Description</label>
+                    @Model.description
+                    <span class="pull-right" id="@updateTargetLoadingId" style="padding-left: 10px; display: none;"><img src="/Images/progress.gif" width="20"></span>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <label class="hidden visible-xs">Category</label>@Html.AdminLTEDropDownListFor(
+            m => m.category_id,
+            htmlLabelAttributes: null,
+            htmlDropDownAttributes: new Dictionary<string, object>() {
+                { "class", "form-control select2" },
+                { "onchange",string.Format("enableSave({0})","_"+Model.inventory_item_id)}
+            },
+            htmlGroupAttributes: null,
+            autoCompleteOptions: new AutoCompleteOptions()
+            {
+                AjaxOptions = new AjaxOptions()
+                {
+                    HttpMethod = "GET",
+                    Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                },
+                DescriptionField = "description",
+                IDField = "category_id",
+                Formate = "'<div class=\"row\"><div class=\"col-xs-2 text-right\">' + state.id + '</div><div class=\"col-xs-9\">' + state.text + '</div></div>'",
+                SelectedItem = new { category_id = Model.category_id, description = Model.category_description },
+                IsAutoComplete = true,
+                SelectItems = null
+            },
+            showLabel: false)
+                </div>
+                <div class="col-xs-12 col-md-1">
+                    <button type="submit" class="btn btn-block btn-primary" disabled>Save</button>
+                </div>
+            </div>
+        }
+    }
+</div>

@@ -14,7 +14,7 @@ namespace BusinessExcel.Controllers
         //
         // GET: /Checkin/
         public static string CHECKIN_INDEX = "CheckinIndex";
-        public static string CHECKIN_DETAILS = "CheckinDetails";
+        public static string CHECKIN_DETAILS = "_CheckinDetails";
         public static string CHECKIN_DETAILS_VIEW = "_CheckinDetails";
         public static string CHECKIN_TITLE = "Checkin Details";
         public static string CHECKIN_CONTROLLER = "Checkin";
@@ -23,17 +23,24 @@ namespace BusinessExcel.Controllers
 
         public ActionResult CheckinIndex()
         {
+            ViewBag.ItemViewSort = "";
+            ViewBag.ItemViewDir = "";
+            ViewBag.ItemViewPage = 1;
 
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + CHECKIN_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = CHECKIN_TITLE;
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(CHECKIN_INDEX, new CheckinViewModel());
+            }
 
             return View(new CheckinViewModel());
             
         }
 
         [HttpGet]
-        public PartialViewResult CheckinDetails(string sort, string sortdir, int page = 1, CheckinViewModel Filters = null)
+        public PartialViewResult _CheckinDetails(string sort, string sortdir, int page = 1, CheckinViewModel Filters = null)
         {
             ViewBag.ItemViewSort = sort;
             ViewBag.ItemViewDir = sortdir;
@@ -47,9 +54,7 @@ namespace BusinessExcel.Controllers
                 {
                     ViewData[SELECTED_FILTED_USER] = db.getUserDetail(Filters.user_name);
                 }
-
             return PartialView(CHECKIN_DETAILS_VIEW, Filters);
-
         }
         
     }

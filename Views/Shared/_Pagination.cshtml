@@ -1,0 +1,101 @@
+﻿@using BusinessExcel.Models.Pagination
+@model PaginationModel
+
+@{
+    int from = (Model.PageNumber * Model.PageSize) - Model.PageSize;
+    int to = from + Model.PageSize;
+    var ajaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = Model.LoadingElementId,
+        UpdateTargetId = Model.UpdateTargetId
+    };
+}
+
+<div class="col-sm-5">
+    <div class="dataTables_info" role="status" aria-live="polite">
+        Showing <b>@from</b> to <b>@Math.Min(to, Model.RowCount)</b> of <b>@Model.RowCount</b> entries
+    </div>
+</div>
+<div class="col-sm-7">
+    <div class="dataTables_paginate paging_simple_numbers pull-right" id="example2_paginate">
+        <ul class="pagination no-margin">
+
+            <li class="paginate_button previous " id="example2_previous">
+                @if (Model.UseAjax)
+                {
+                    @Ajax.ActionLink("First", Model.ActionName, Model.ControllerName, ((IFilter)Model).GetFilterFor(1), ajaxOptions)
+                }
+                else
+                {
+                    @Html.ActionLink("First", Model.ActionName, Model.ControllerName, ((IFilter)Model).GetFilterFor(1), null)
+                }
+            </li>
+
+            @if (Model.PageNumber - 1 < 0)
+            {
+                <li class="paginate_button previous disabled" id="example2_previous">
+                    <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+                </li>
+            }
+            else
+            {
+                <li class="paginate_button previous " id="example2_previous">
+                    @if (Model.UseAjax)
+                    {
+                        @Ajax.ActionLink("Prev.", Model.ActionName, Model.ControllerName, ((IFilter)Model).GetFilterFor(Model.PageNumber - 1), ajaxOptions)
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Prev.", Model.ActionName, Model.ControllerName, ((IFilter)Model).GetFilterFor(Model.PageNumber - 1), null)
+                    }
+                </li>
+            }
+
+            @foreach (var page in Model.Pages)
+            {
+
+                <li class="paginate_button hidden-xs hidden-sm @page.ActiveClass">
+                    @if (Model.UseAjax)
+                    {
+                        @Ajax.ActionLink(page.PageNumber.ToString(), Model.ActionName, Model.ControllerName, ((IFilter)Model).GetFilterFor(page), ajaxOptions)
+                    }
+                    else
+                    {
+                        @Html.ActionLink(page.PageNumber.ToString(), Model.ActionName, Model.ControllerName, ((IFilter)Model).GetFilterFor(page), null)
+                    }
+                </li>
+            }
+            @if (Model.PageNumber + 1 > Model.TotalPages)
+            {
+                <li class="paginate_button previous disabled" id="example2_previous">
+                    <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Next</a>
+                </li>
+            }
+            else
+            {
+                <li class="paginate_button previous " id="example2_previous">
+                    @if (Model.UseAjax)
+                    {
+                        @Ajax.ActionLink("Next", Model.ActionName, Model.ControllerName, ((IFilter)Model).GetFilterFor(Model.PageNumber + 1), ajaxOptions)
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Next", Model.ActionName, Model.ControllerName, ((IFilter)Model).GetFilterFor(Model.PageNumber + 1), null)
+                    }
+                </li>
+            }
+            <li class="paginate_button previous " id="example2_previous">
+                @if (Model.UseAjax)
+                {
+                    @Ajax.ActionLink("Last", Model.ActionName, Model.ControllerName, ((IFilter)Model).GetFilterFor(Model.TotalPages), ajaxOptions)
+                }
+                else
+                {
+                    @Html.ActionLink("Last", Model.ActionName, Model.ControllerName, ((IFilter)Model).GetFilterFor(Model.TotalPages), null)
+                }
+            </li>
+        </ul>
+    </div>
+</div>

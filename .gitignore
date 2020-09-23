@@ -52,10 +52,11 @@ Temporary Items
 *.pdb
 .cache
 .exe
-*.suo
+.suo
 
 
 bin/
 obj/
 Debug/
 Release/
+.vs/

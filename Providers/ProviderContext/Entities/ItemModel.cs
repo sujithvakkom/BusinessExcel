@@ -19,15 +19,18 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
     [ComplexType()]
     public partial class ItemModel
     {
+        [Display(Name = "Item", Prompt = "Item", Description = "Item", ShortName = "Item")]
         [Column("inventory_item_id", Order = 1)]
         public int inventory_item_id { get; set; }
 
         [Column("model_id", Order = 2)]
         public int model_id { get; set; }
 
+        [Display(Name = "Item Code", Prompt = "Item Code", Description = "Item Code", ShortName = "Item Code")]
         [Column("item_code", Order = 3)]
         public string item_code { get; set; }
 
+        [Display(Name = "description", Prompt = "description", Description = "description", ShortName = "description")]
         [Column("description", Order = 4)]
         public string description { get; set; }
 
