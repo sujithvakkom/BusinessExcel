@@ -167,6 +167,7 @@
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Scripts\custom-file-input.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -175,6 +176,7 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Compile Include="Providers\ProviderContext\SalesManageDataContext.TargetImportExport.cs" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -285,6 +287,7 @@
     <Compile Include="Controllers\SalesReportController.cs" />
     <Compile Include="Controllers\TargetController.BonusSetup.cs" />
     <Compile Include="Controllers\TargetController.ExecutiveTargets.cs" />
+    <Compile Include="Controllers\TargetController.ExportImport.cs" />
     <Compile Include="Controllers\TargetController.Settings.cs" />
     <Compile Include="Controllers\TargetController.TargetDistribution.cs" />
     <Compile Include="Controllers\TargetController.LocationTarget.cs" />
@@ -298,6 +301,7 @@
     <Compile Include="Extentions\LinqExtensions.cs" />
     <Compile Include="Models\AcivementReward.cs" />
     <Compile Include="Models\AlertModal.cs" />
+    <Compile Include="Models\BackupTargetFilter.cs" />
     <Compile Include="Models\BonusItemConfigModel.cs" />
     <Compile Include="Models\BonusItemModel.cs" />
     <Compile Include="Models\Category.cs" />
@@ -311,6 +315,7 @@
     <Compile Include="Models\Pagination\Page.cs" />
     <Compile Include="Models\Pagination\PaginationModel.cs" />
     <Compile Include="Models\RosterViewModel.cs" />
+    <Compile Include="Models\TargetImportExportDetails.cs" />
     <Compile Include="Models\TargetStatus.cs" />
     <Compile Include="Models\TargetSummaryViewSE.cs" />
     <Compile Include="Models\TargetSummaryView.cs" />
@@ -835,6 +840,9 @@
     <Content Include="Views\Items\_ViewStart.cshtml" />
     <Content Include="Views\Items\ItemLine.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
+    <Content Include="Views\Target\LocationTargetImport.cshtml" />
+    <Content Include="Views\Target\_BackupTarget.cshtml" />
+    <Content Include="Views\Target\_ImportData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

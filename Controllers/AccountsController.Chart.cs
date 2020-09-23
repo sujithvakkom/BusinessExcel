@@ -27,30 +27,8 @@ namespace BusinessExcel.Controllers
                 var chartType = ChartType.bar;
                 int viwer = db.getViewer_Id();
                 var view = db.getViewersList();
-                /*
-                var source = (from dsl in db.DailyUpateView 
-                        join u in view
-                        on dsl.UserId equals u
-                        group dsl by dsl.Category into g    
-                        select new graph()
-                        {
-                            Value = g.Sum(_=>(decimal)_.Quantity),
-                            XValues = g.FirstOrDefault().Category,
-                            Label = g.FirstOrDefault().Category
-                        }).AsQueryable();
-                var source = db.DailyUpateView
-                    .Where(x => x.CreateTime > startDate && x.CreateTime < endDate)
-                    .GroupBy(x => new { x.Category })
-                    .Where(x => x.Sum(y => y.Quantity) > 0)
-                    .Select(x =>
-                        new graph()
-                        {
-                            Value = x.Sum(y => (decimal)y.Quantity),
-                            XValues = x.Key.Category,
-                            Label = x.Key.Category
-                        });
-                        */
-                var source = db.GetGraphForCurrentMonthQuantity(viwer,startDate,endDate);
+
+                var source = db.GetGraphForCurrentMonthQuantity(viwer,startDate,endDate).ToList();
                 var data = new data<graph>(
                     chartType,
                     source,
@@ -78,19 +56,7 @@ namespace BusinessExcel.Controllers
                 int viwer = db.getViewer_Id();
                 var chartType = ChartType.bar;
 
-                /*
-                var source = (from dsl in db.DailyUpateView
-                              join u in db.getViewersList()
-                              on dsl.UserId equals u
-                              group dsl by dsl.Category into g
-                              select new graph()
-                              {
-                                  Value = g.Sum(_ => (decimal)_.TotalValue),
-                                  XValues = g.FirstOrDefault().Category,
-                                  Label = g.FirstOrDefault().Category
-                              }).AsQueryable();
-                        */
-                var source = db.GetGraphForCurrentMonthValue(viwer,startDate,endDate);
+                var source = db.GetGraphForCurrentMonthValue(viwer,startDate,endDate).ToList();
                     var data = new data<graph>(
                     chartType,
                     source,

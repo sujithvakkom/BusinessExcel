@@ -22,7 +22,8 @@ namespace BusinessExcel
                         "~/admin-lte/js/adminlte.js",
                         "~/Scripts/BE/be-base.js",
                         "~/Scripts/AdminLTE/plugins/select2/select2.full.min.js",
-                        "~/Scripts/AdminLTE/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"));
+                        "~/Scripts/AdminLTE/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js",
+                        "~/Scripts/custom-file-input.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/jquery-{version}.js",

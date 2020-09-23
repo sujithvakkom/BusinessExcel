@@ -189,8 +189,8 @@
                                                         <td class="text-right">
                                                             @string.Format("{0:#,##0.00}", lines.TotalAchieved)
                                                         </td>
-                                                        <td class="text-right">
-                                                            @string.Format("{0:#,##0.00}", lines.TotalTargetPerc)
+                                                        <td class="text-right">  
+                                                            @string.Format("{0:#,##0.00}%", lines.TotalTargetPerc*100)
                                                         </td>
                                                         <td class="text-right">
                                                             @string.Format("{0:#,##0.00}", lines.TotalIncAmt)

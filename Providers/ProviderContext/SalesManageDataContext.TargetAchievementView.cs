@@ -350,7 +350,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 Filters.user_id = getUserID(Filters.user_name);
             }
             int VId = getViewer_Id();
-
+            #region PARAM_DEF
             var viewer_id = VId > 0 ?
                 new SqlParameter("@viewer_id", VId) :
                 new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = DBNull.Value };
@@ -390,7 +390,7 @@ namespace BusinessExcel.Providers.ProviderContext
             var row_count = row != null ?
                 new SqlParameter("@row_count", row) :
                 new SqlParameter("@row_count", System.Data.SqlDbType.BigInt) { Value = DBNull.Value };
-
+            #endregion
 
             row_count.Direction = System.Data.ParameterDirection.Output;
 
