@@ -43,34 +43,34 @@ FROM target_m AS t INNER JOIN sc_salesmanage_user.user_m AS u ON t.user_id = u.u
                                                     ut1.category_id = ut.category_id
 WHERE t1.target_id = target_templet_id
          */
-        private readonly string cmdGetLocationTargetAssignments = @"SELECT u.user_name AS                                           UserName ,
-                                               ISNULL(display_name , u.first_name+' '+u.second_name) AS FullName,
-                                               l.description AS                                         Location ,
-                                               t.description AS                                         Period ,
-                                               c.description AS                                         Catogery ,
-                                               ut.value AS                                              Target ,
-                                               ut.value* 100 / ut1.value AS                            AllocatedPercentage
-                                        FROM target_m AS t INNER JOIN sc_salesmanage_user.user_m AS u ON t.user_id = u.user_id
-
-                                                          INNER JOIN user_target AS ut ON t.target_id = ut.target_id
-                                                                                          AND
-                                                                                          t.user_id = ut.user_id
-                                                                                          AND
-                                                                                          t.roster_id = ut.roster_id
-                                                          INNER JOIN sc_salesmanage_merchant.category AS c ON ut.category_id = c.category_id
-                                                                                                              AND
-                                                                                                              ut.category_id = c.category_id
-                                                          INNER JOIN target_m AS t1 ON t1.user_id IS NULL
-                                                                                       AND
-                                                                                       t1.roster_id = t.roster_id
-                                                          INNER JOIN [db_salesmanage_user].[roster] AS r ON r.roster_id = t.roster_id
-                                                          INNER JOIN [sc_salesmanage_user].[location_m] AS l ON r.location_id = l.location_id
-                                                                                                                AND
-                                                                                                                l.deleted = 0
-                                                          INNER JOIN user_target AS ut1 ON t1.target_id = ut1.target_id
-                                                                                           AND
-                                                                                           ut1.category_id = ut.category_id
-                                        WHERE t1.target_id = @target_templet_id";
+        private readonly string cmdGetLocationTargetAssignments = @"
+SELECT u.user_name AS                                           UserName ,
+       ISNULL(display_name , u.first_name+' '+u.second_name) AS FullName ,
+       l.description AS                                         Location ,
+       t.description AS                                         Period ,
+       c.description AS                                         Catogery ,
+       ut.value AS                                              Target ,
+       ut.value * 100 / ut1.value AS                            AllocatedPercentage
+FROM [db_salesmanage_user].[target_m] AS t INNER JOIN sc_salesmanage_user.user_m AS u ON t.user_id = u.user_id
+                   INNER JOIN [db_salesmanage_user].[user_target] AS ut ON t.target_id = ut.target_id
+                                                   AND
+                                                   t.user_id = ut.user_id
+                                                   AND
+                                                   t.roster_id = ut.roster_id
+                   INNER JOIN sc_salesmanage_merchant.category AS c ON ut.category_id = c.category_id
+                                                                       AND
+                                                                       ut.category_id = c.category_id
+                   INNER JOIN [db_salesmanage_user].[target_m] AS t1 ON t1.user_id IS NULL
+                                                AND
+                                                t1.roster_id = t.roster_id
+                   INNER JOIN [db_salesmanage_user].[roster] AS r ON r.roster_id = t.roster_id
+                   INNER JOIN [sc_salesmanage_user].[location_m] AS l ON r.location_id = l.location_id
+                                                                         AND
+                                                                         l.deleted = 0
+                   INNER JOIN [db_salesmanage_user].[user_target] AS ut1 ON t1.target_id = ut1.target_id
+                                                    AND
+                                                    ut1.category_id = ut.category_id
+WHERE t1.target_id = @target_templet_id";
         public virtual DbRawSqlQuery<ViewLocationTargetDistribution> getLocationTargetAssignments(BaseTarget target)
         {
             DbRawSqlQuery<ViewLocationTargetDistribution> result;
@@ -93,7 +93,7 @@ WHERE t1.target_id = target_templet_id
         public virtual List<ViewLocationTargetDistribution> getLocationTargetAssignments(string target)
         {
             List<ViewLocationTargetDistribution> result;
-            var target_templet_id =
+                var target_templet_id =
                 string.IsNullOrEmpty(target) ?
                 new SqlParameter("@target_templet_id", SqlDbType.Int) { Value = DBNull.Value } :
                 new SqlParameter("@target_templet_id", target);

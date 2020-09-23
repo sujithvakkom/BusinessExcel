@@ -50,7 +50,7 @@ namespace BusinessExcel.Providers.ProviderContext
         }
 
 
-        public virtual List<ItemModel> getModelDetails(string search, int Page, out int RowCount)
+        public virtual List<ItemModel> getModelDetails(string search, int Page, out int RowCount, string UserName=null)
         {
             List<ItemModel> items = new List<ItemModel>();
 

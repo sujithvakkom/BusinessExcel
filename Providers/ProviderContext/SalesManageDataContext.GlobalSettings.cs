@@ -73,7 +73,7 @@ namespace BusinessExcel.Providers.ProviderContext
                                                base_incentive_pct,
                                                global_base_incentive_cap,
                                                global_acc_factor
-                                               FROM target_settings")
+                                               FROM [db_salesmanage_user].[target_settings]")
                                                 .ToList();
             if (items.Count > 0)
                 result = items[0];

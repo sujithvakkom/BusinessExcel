@@ -76,7 +76,7 @@ GO
 
             var data = target.getTargetLine();
             data.TableName = "target_line_in";
-            var target_line_in = new SqlParameter("@target_line_in", System.Data.SqlDbType.Structured) { Value = data, TypeName = "target_category_line" };
+            var target_line_in = new SqlParameter("@target_line_in", System.Data.SqlDbType.Structured) { Value = data, TypeName = "[db_salesmanage_user].[target_category_line]" };
 
             var message =
                 new SqlParameter("@message", SqlDbType.NVarChar, -1) { Value = DBNull.Value, Direction = ParameterDirection.Output };

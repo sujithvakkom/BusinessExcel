@@ -51,33 +51,33 @@
                 @Html.HiddenFor(m => Model.Location)
 
             </div>
-                        <div class="table-form" style="padding: 0px 30px 15px 30px">
+            <div class="table-form" style="padding: 0px 30px 15px 30px">
 
-                            <div class="row table-fields-header">
-                                <div class="col-md-1 table-fields" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                                    Has Bonus
-                                </div>
-                                <div class="col-md-1 table-fields">
-                                    Line
-                                </div>
-                                <div class="col-md-2 table-fields">
-                                    Total Target
-                                </div>
-                                <div class="col-md-2 table-fields">
-                                    Assigned Target
-                                </div>
-                                <div class="col-md-2 table-fields">
-                                    Available Target
-                                </div>
-                                <div class="col-md-2 table-fields">
-                                    Allocation
-                                </div>
-                                <div class="col-md-2 table-fields">
-                                    Target
-                                </div>
-                            </div>
-                            <div id="target-row">
-                                @for (int i = 0; i < Model.LineTargets.Count; i++)
+                <div class="row table-fields-header">
+                    <div class="col-md-1 table-fields" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                        Has Bonus
+                    </div>
+                    <div class="col-md-1 table-fields">
+                        Line
+                    </div>
+                    <div class="col-md-2 table-fields">
+                        Total Target
+                    </div>
+                    <div class="col-md-2 table-fields">
+                        Assigned Target
+                    </div>
+                    <div class="col-md-2 table-fields">
+                        Available Target
+                    </div>
+                    <div class="col-md-2 table-fields">
+                        Allocation
+                    </div>
+                    <div class="col-md-2 table-fields">
+                        Target
+                    </div>
+                </div>
+                <div id="target-row">
+                    @for (int i = 0; i < Model.LineTargets.Count; i++)
                                 {
                                     decimal? maxallocationPct = 0;
                                     CategoryDetail selection = new CategoryDetail();
@@ -95,62 +95,62 @@
                                             selection = db.getCategoryDetails(Model.LineTargets[i].Catogery);
                                         }
                                     }
-                                    <div class="row">
-                                        <div class="col-md-1 table-fields">
-                                            @Html.AdminLTECheckBoxFor(m => Model.LineTargets[i].IsBonusLine,
+                                <div class="row">
+                                    <div class="col-md-1 table-fields">
+                                        @Html.AdminLTECheckBoxFor(m => Model.LineTargets[i].IsBonusLine,
      null,
      new Dictionary<string, object>() { { "class", "form-control pull-right" }, { "autocomplete", "off" } },
      null,
      null,
      false,
      true)
+                                    </div>
+                                    <div class="col-md-1 table-fields">
+                                        @Html.HiddenFor(m => Model.LineTargets[i].Catogery)
+                                        <div class="form-control">
+                                            @selection.description
                                         </div>
-                                        <div class="col-md-1 table-fields">
-                                            @Html.HiddenFor(m => Model.LineTargets[i].Catogery)
-                                            <div class="form-control">
-                                                @selection.description
-                                            </div>
-                                            @*@Html.AdminLTEDropDownListFor(m => Model.LineTargets[i].Catogery,
-                                                htmlLabelAttributes: null,
-                                                htmlDropDownAttributes: new Dictionary<string, object>() { { "class", "form-control select2" }, { "style", "border-style:none !important" }, { "disabled", "true" } },
-                                                htmlGroupAttributes: new Dictionary<string, object>() { },
-                                                autoCompleteOptions: new AutoCompleteOptions()
+                                        @*@Html.AdminLTEDropDownListFor(m => Model.LineTargets[i].Catogery,
+                                            htmlLabelAttributes: null,
+                                            htmlDropDownAttributes: new Dictionary<string, object>() { { "class", "form-control select2" }, { "style", "border-style:none !important" }, { "disabled", "true" } },
+                                            htmlGroupAttributes: new Dictionary<string, object>() { },
+                                            autoCompleteOptions: new AutoCompleteOptions()
+                                            {
+                                                AjaxOptions = new AjaxOptions()
                                                 {
-                                                    AjaxOptions = new AjaxOptions()
-                                                    {
-                                                        HttpMethod = "GET",
-                                                        Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
-                                                    },
-                                                    DescriptionField = "description",
-                                                    IDField = "category_id",
-                                                    Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
-                                                    SelectedItem = selection,
-                                                    IsAutoComplete = true,
-                                                    SelectItems = null
-                                                }, showLabel: false)*@
+                                                    HttpMethod = "GET",
+                                                    Url = Url.Action(actionName: JSONController.CATEGORYAUTOCOMPLETER, controllerName: JSONController.JSONCONTROLLER)
+                                                },
+                                                DescriptionField = "description",
+                                                IDField = "category_id",
+                                                Formate = "'<tr><td><span>' + state.text + '</span></td></tr>'",
+                                                SelectedItem = selection,
+                                                IsAutoComplete = true,
+                                                SelectItems = null
+                                            }, showLabel: false)*@
+                                    </div>
+                                    <div class="col-md-2 table-fields">
+                                        @{var idTotalTarget = "LineTargets_" + i.ToString() + "__TotalTarget";}
+                                        <div id="@idTotalTarget" class="form-control text-info numaric">
+                                            @Html.AdminLTEParagraph(Model.LineTargets[i].TotalTarget, new Dictionary<string, object> { { "class", "numaric" } })
                                         </div>
-                                        <div class="col-md-2 table-fields">
-                                            @{var idTotalTarget = "LineTargets_" + i.ToString() + "__TotalTarget";}
-                                            <div id="@idTotalTarget" class="form-control text-info numaric">
-                                                @Html.AdminLTEParagraph(Model.LineTargets[i].TotalTarget, new Dictionary<string, object> { { "class", "numaric" } })
-                                            </div>
+                                    </div>
+                                    <div class="col-md-2 table-fields">
+                                        @{var idAssignedForCurrentUser = "LineTargets_" + i.ToString() + "__AssignedForCurrentUser";}
+                                        <div id="@idAssignedForCurrentUser" class="form-control text-info numaric">
+                                            @Html.AdminLTEParagraph(Model.LineTargets[i].AssignedForCurrentUser, new Dictionary<string, object> { { "class", "numaric" } })
                                         </div>
-                                        <div class="col-md-2 table-fields">
-                                            @{var idAssignedForCurrentUser = "LineTargets_" + i.ToString() + "__AssignedForCurrentUser";}
-                                            <div id="@idAssignedForCurrentUser" class="form-control text-info numaric">
-                                                @Html.AdminLTEParagraph(Model.LineTargets[i].AssignedForCurrentUser, new Dictionary<string, object> { { "class", "numaric" } })
-                                            </div>
+                                    </div>
+                                    <div class="col-md-2 table-fields">
+                                        @{var idAvilable = "LineTargets_" + i.ToString() + "__AvilableTarget";}
+                                        <div id="@idAvilable" class="form-control text-info numaric">
+                                            @Html.AdminLTEParagraph(Model.LineTargets[i].Target, new Dictionary<string, object> { { "class", "numaric" } })
                                         </div>
-                                        <div class="col-md-2 table-fields">
-                                            @{var idAvilable = "LineTargets_" + i.ToString() + "__AvilableTarget";}
-                                            <div id="@idAvilable" class="form-control text-info numaric">
-                                                @Html.AdminLTEParagraph(Model.LineTargets[i].Target, new Dictionary<string, object> { { "class", "numaric" } })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 table-fields">
-                                            @{maxallocationPct = (Model.LineTargets[i].Target / Model.LineTargets[i].TotalTarget) * 100;
-                                            }
-                                            @Html.AdminLTETextBox("LineTargets[" + i.ToString() + "].Allocation",
+                                    </div>
+                                    <div class="col-md-2 table-fields">
+                                        @{maxallocationPct = (Model.LineTargets[i].Target / Model.LineTargets[i].TotalTarget) * 100;
+                                        }
+                                        @Html.AdminLTETextBox("LineTargets[" + i.ToString() + "].Allocation",
 null,
 new Dictionary<string, object>() {
                               { "class", "form-control numaric" },
@@ -164,9 +164,9 @@ true,
 true,
 maxallocationPct
 )
-                                        </div>
-                                        <div class="col-md-2 table-fields">
-                                            @Html.AdminLTETextBoxFor(m => Model.LineTargets[i].Target,
+                                    </div>
+                                    <div class="col-md-2 table-fields">
+                                        @Html.AdminLTETextBoxFor(m => Model.LineTargets[i].Target,
 null,
 new Dictionary<string, object>() {
                               { "class", "form-control numaric" },
@@ -178,12 +178,12 @@ null,
 false,
 true,
 false)
-                                        </div>
                                     </div>
+                                </div>
                                                 }
-                                <div class="row">
-                                    <div class="col-lg-offset-10 col-md-2 table-fields">
-                                        @Html.AdminLTETextBox("TotalTarget",
+                    <div class="row">
+                        <div class="col-lg-offset-10 col-md-2 table-fields">
+                            @Html.AdminLTETextBox("TotalTarget",
 null,
 new Dictionary<string, object>() { { "class", "form-control numaric" }, { "autocomplete", "off" }, { "disabled", "true" } },
 null,
@@ -193,20 +193,20 @@ false,
 true,
 false,
 total)
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                                                var totalAvil = Model.LineTargets.Sum(x => x.Target);
-                                                totalAvil = totalAvil == null ? 0 : totalAvil;
-                                                if (totalAvil > 0)
-                                                {
-                                                    <div class="row table-form">
-                                                        <div class="col-md-4 padding-label">
-                                                            Employ
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            @Html.AdminLTEDropDownListFor(
+                    </div>
+                </div>
+            </div>
+                                            var totalAvil = Model.LineTargets.Sum(x => x.Target);
+                                            totalAvil = totalAvil == null ? 0 : totalAvil;
+                                            if (totalAvil > 0)
+                                            {
+                                                <div class="row table-form">
+                                                    <div class="col-md-4 padding-label">
+                                                        Employ
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        @Html.AdminLTEDropDownListFor(
   expression: m => Model.UserName,
   htmlLabelAttributes: null,
   htmlDropDownAttributes: new Dictionary<string, object>() {
@@ -230,11 +230,11 @@ total)
   showLabel: false,
   hasValidation: true
   )
-                                                        </div>
+                                                    </div>
 
-                                                        <div class="col-md-2">
+                                                    <div class="col-md-2">
 
-                                                            @Html.AdminLTEFromSubmitter("Assign Targets",
+                                                        @Html.AdminLTEFromSubmitter("Assign Targets",
                                                            "target-assing-traget-progress",
                                                            new Dictionary<string, object>() {
                                                                { "type", "submit" } ,
@@ -242,13 +242,13 @@ total)
                                                            },
                                                            Url.Content("~/Images/progress.gif")
                                                            )
-                                                            @*<input type="submit" class="btn btn-primary" value="Assign Targets" />
+                                                        @*<input type="submit" class="btn btn-primary" value="Assign Targets" />
 
-                                                                @{ Html.RenderPartial("_Progress", "target-assing-traget-progress");
-                                                                }*@
+                                                            @{ Html.RenderPartial("_Progress", "target-assing-traget-progress");
+                                                            }*@
 
-                                                        </div>
                                                     </div>
+                                                </div>
                                                     <div class="row" style="padding-top:10px">
 
                                                         @if (ViewBag.Result != null)
@@ -287,7 +287,7 @@ total)
                                                             </div>
                                                         }
                                                     </div>
-                                                        }
                                                     }
                                                 }
+                                            }
 </div>

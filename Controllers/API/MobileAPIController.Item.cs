@@ -20,7 +20,7 @@ namespace BusinessExcel.Controllers
             return result;
         }
         [HttpGet]
-        public IEnumerable<ItemModel> GetAllProducts(string Search,int Page)
+        public IEnumerable<ItemModel> GetAllProducts(string Search,int Page, string UserName = null)
         {
             int RowCount;
             List<ItemModel> result;

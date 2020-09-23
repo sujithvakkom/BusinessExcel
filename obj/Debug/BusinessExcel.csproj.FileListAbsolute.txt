@@ -89,7 +89,6 @@ C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\System.Web.Razor.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\System.Web.WebPages.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\System.Web.WebPages.Deployment.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\System.Web.WebPages.Razor.xml
-C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\Microsoft.Web.Infrastructure.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\WebMatrix.Data.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\WebMatrix.WebData.xml
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\HtmlAgilityPack.pdb
@@ -99,3 +98,6 @@ C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\obj\Debug\BusinessExcel.pdb
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\System.Web.Optimization.dll
 C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\System.Web.Optimization.xml
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\Newtonsoft.Json.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\Microsoft.Web.Administration.dll
+C:\Users\srkrishnan\Documents\GitHub\BusinessExcel\bin\Newtonsoft.Json.xml
