@@ -17,7 +17,7 @@ namespace BusinessExcel.Providers.ProviderContext
         {
             const string SELECT_USER = @"select user_name, 
                                                 isnull(display_name,first_name+' '+second_name) as full_name 
-                                                from [sc_salesmanage_user].[user_m] 
+                                                from [user_m] 
                                             where 
                                                 first_name+' '+second_name = @name";
 
@@ -54,7 +54,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<UserDetail>(
-                                                "[sc_salesmanage_user].[getUserDetails] @user_name ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                                                "[getUserDetails] @user_name ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
@@ -75,7 +75,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 {
                     const string SELECT_USER = @"select
                                                 isnull(display_name,first_name+' '+second_name) as full_name 
-                                                from [sc_salesmanage_user].[user_m] 
+                                                from [user_m] 
                                             where 
                                                 user_id = @user_id";
 

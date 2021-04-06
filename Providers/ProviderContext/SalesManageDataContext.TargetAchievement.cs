@@ -25,7 +25,7 @@ namespace BusinessExcel.Providers.ProviderContext
             {
 
 
-                const string UPDATE_TARGET = @" update db_salesmanage_user.user_target set 
+                const string UPDATE_TARGET = @" update user_target set 
 
 entered_amt=@entered_amt
 where target_id=@target_id and user_id=@user_id  and  category_id=@category_id ";
@@ -91,11 +91,11 @@ where target_id=@target_id and user_id=@user_id  and  category_id=@category_id "
             try
             {
           
-                items = this.Database.SqlQuery<TargetTotalView>("[db_salesmanage_user].[User_Target_Achieved_Total_Values] @target_id", parameterList.ToArray()).ToList();
+                items = this.Database.SqlQuery<TargetTotalView>("[User_Target_Achieved_Total_Values] @target_id", parameterList.ToArray()).ToList();
 
 
                 //this.Database.SqlQuery<UserDetail>(
-                //                                "[sc_salesmanage_user].[User_Target_Achieved_Total_Values] @user_id ,@target_id", user_id, target_id)
+                //                                "[User_Target_Achieved_Total_Values] @user_id ,@target_id", user_id, target_id)
                 //                                .ToList();
           
             }
@@ -126,11 +126,11 @@ where target_id=@target_id and user_id=@user_id  and  category_id=@category_id "
             try
             {
 
-                items = this.Database.SqlQuery<TargetTotalView>("[db_salesmanage_user].[User_Target_Achieved_Total_Values_QTR] @start_date", parameterList.ToArray()).ToList();
+                items = this.Database.SqlQuery<TargetTotalView>("[User_Target_Achieved_Total_Values_QTR] @start_date", parameterList.ToArray()).ToList();
 
 
                 //this.Database.SqlQuery<UserDetail>(
-                //                                "[sc_salesmanage_user].[User_Target_Achieved_Total_Values] @user_id ,@target_id", user_id, target_id)
+                //                                "[User_Target_Achieved_Total_Values] @user_id ,@target_id", user_id, target_id)
                 //                                .ToList();
 
             }
@@ -159,11 +159,11 @@ where target_id=@target_id and user_id=@user_id  and  category_id=@category_id "
             try
             {
 
-                items = this.Database.SqlQuery<TargetAchievementView>("[db_salesmanage_user].[User_Target_Achieved_Details_ById] @user_id,@target_id", parameterList.ToArray()).ToList();
+                items = this.Database.SqlQuery<TargetAchievementView>("[User_Target_Achieved_Details_ById] @user_id,@target_id", parameterList.ToArray()).ToList();
 
 
                 //this.Database.SqlQuery<UserDetail>(
-                //                                "[sc_salesmanage_user].[User_Target_Achieved_Total_Values] @user_id ,@target_id", user_id, target_id)
+                //                                "[User_Target_Achieved_Total_Values] @user_id ,@target_id", user_id, target_id)
                 //                                .ToList();
 
             }
@@ -180,7 +180,7 @@ where target_id=@target_id and user_id=@user_id  and  category_id=@category_id "
             try
             {
 
-                                const string UPDATE_TARGET = @" update db_salesmanage_user.target_m set 
+                                const string UPDATE_TARGET = @" update target_m set 
 
                 entered_base_incentive=@entered_base_incentive
                 where target_id=@target_id ";
@@ -217,7 +217,7 @@ where target_id=@target_id and user_id=@user_id  and  category_id=@category_id "
                         try
                         {
 
-                            const string UPDATE_TARGET = @" update db_salesmanage_user.target_m set 
+                            const string UPDATE_TARGET = @" update target_m set 
 
             entered_incentive_amt=@entered_incentive_amt
             where target_id=@target_id ";
@@ -252,7 +252,7 @@ where target_id=@target_id and user_id=@user_id  and  category_id=@category_id "
             try
             {
 
-                const string UPDATE_TARGET = @" update db_salesmanage_user.target_m set 
+                const string UPDATE_TARGET = @" update target_m set 
 
             target_status=@target_status
             where target_id=@target_id ";
@@ -313,7 +313,7 @@ new SqlParameter("@qtr_start_date", System.Data.SqlDbType.Int) { Value = default
                 parameterList.Add(entered_base_incentive);
                 parameterList.Add(entered_incentive_amt);
 
-                isUpdate = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[update_quarter_details] @qtr_start_date,@user_id,@entered_base_incentive,@entered_incentive_amt", parameterList.ToArray());
+                isUpdate = this.Database.ExecuteSqlCommand("[update_quarter_details] @qtr_start_date,@user_id,@entered_base_incentive,@entered_incentive_amt", parameterList.ToArray());
                 return isUpdate;
 
             }
@@ -330,7 +330,7 @@ new SqlParameter("@qtr_start_date", System.Data.SqlDbType.Int) { Value = default
             List<TargetStatus> statuses = new List<TargetStatus>();
             const string SELECT_STATUS = @"select target_status_id, 
                                                 target_status
-                                                from [db_salesmanage_user].[target_status] ";
+                                                from [target_status] ";
             try
             {
                 statuses = this.Database.SqlQuery<TargetStatus>(SELECT_STATUS).ToList();
@@ -347,7 +347,7 @@ new SqlParameter("@qtr_start_date", System.Data.SqlDbType.Int) { Value = default
 
             const string SELECT_STATUS = @"select target_status_id, 
                                                 target_status
-                                                from [db_salesmanage_user].[target_status]  where target_status_id=@target_status_id ";
+                                                from [target_status]  where target_status_id=@target_status_id ";
 
             var target_status = status_id > 0 ?
               new SqlParameter("@target_status_id", status_id) :

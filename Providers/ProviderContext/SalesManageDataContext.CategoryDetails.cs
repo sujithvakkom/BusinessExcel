@@ -32,7 +32,7 @@ namespace BusinessExcel.Providers.ProviderContext
             category_id_out.Direction = System.Data.ParameterDirection.Output;
 
             var items = this.Database.SqlQuery<CategoryDetail>(
-                                            @"EXECUTE [sc_salesmanage_vansale].[update_category] 
+                                            @"EXECUTE [update_category] 
    @category_id
   , @description
   , @category_id_out OUTPUT", category_id, description, category_id_out)
@@ -69,7 +69,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 row_count.Direction = System.Data.ParameterDirection.Output;
 
                 var items = this.Database.SqlQuery<CategoryDetail>(
-                                                "[sc_salesmanage_vansale].[getCategoryDetails]  @filter ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
+                                                "[getCategoryDetails]  @filter ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
                                                 .ToList();
                 if (items.Count > 0)
                     result = items[0];
@@ -106,7 +106,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 category = this.Database.SqlQuery<CategoryDetail>(
-                                                "[sc_salesmanage_vansale].[getCategoryDetails]  @filter ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
+                                                "[getCategoryDetails]  @filter ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
@@ -125,7 +125,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 new SqlParameter("@category_id", CategoryID);
 
             var items = this.Database.SqlQuery<CategoryDetail>(
-                                                "SELECT category_id ,description FROM [sc_salesmanage_merchant].[category] WHERE category_id = @category_id",
+                                                "SELECT category_id ,description FROM [category] WHERE category_id = @category_id",
                                                 category_id)
                                                 .ToList();
                 if (items.Count > 0)
@@ -163,7 +163,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 categoryList = this.Database.SqlQuery<CategoryDetail>(
-                                                "[sc_salesmanage_user].[getCatogerySettings] @category ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
+                                                "[getCatogerySettings] @category ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
@@ -186,7 +186,7 @@ namespace BusinessExcel.Providers.ProviderContext
             var category_sellin_factor = new SqlParameter("@category_sellin_factor", System.Data.SqlDbType.Decimal) { Value = CategorySellinFactor };
             try
             {
-                this.Database.ExecuteSqlCommand(@"[db_salesmanage_user].[insertCategorySettings] @category_id ,@description ,@base_incentive ,@total_sale_factor ,@category_sellin_factor",
+                this.Database.ExecuteSqlCommand(@"[insertCategorySettings] @category_id ,@description ,@base_incentive ,@total_sale_factor ,@category_sellin_factor",
                             category_id,
                             description,
                             base_incentive,

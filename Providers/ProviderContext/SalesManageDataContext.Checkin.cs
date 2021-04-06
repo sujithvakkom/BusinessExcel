@@ -47,7 +47,7 @@ namespace BusinessExcel.Providers.ProviderContext
             parameterList.Add(page_size);
             parameterList.Add(viewer_id);
 
-            var res = this.Database.SqlQuery<CheckinViewModel>(@"EXECUTE [sc_salesmanage_merchant].[get_user_checkin_details] 
+            var res = this.Database.SqlQuery<CheckinViewModel>(@"EXECUTE [get_user_checkin_details] 
    @user_name
   , @shift_date
   , @page_number

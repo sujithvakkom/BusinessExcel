@@ -56,7 +56,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             parameterList.Add(viewer_id);
 
-            var res = this.Database.SqlQuery<CompetitorViewModel>("[sc_salesmanage_test].[get_competotr_details] @user_name,@page_number,@page_size,@row_count OUTPUT,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
+            var res = this.Database.SqlQuery<CompetitorViewModel>("[get_competotr_details] @user_name,@page_number,@page_size,@row_count OUTPUT,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
             int.TryParse(row_count.Value.ToString(), out count);
 
            // count = res.Count();

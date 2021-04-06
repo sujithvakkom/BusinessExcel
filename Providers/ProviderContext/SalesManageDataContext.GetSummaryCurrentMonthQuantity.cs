@@ -18,10 +18,10 @@ namespace BusinessExcel.Providers.ProviderContext
             string cmd = @"SELECT cat.description Label, 
        cat.description XValues, 
        CAST(SUM(quantity) AS DECIMAL(18, 2)) Value
-FROM [sc_salesmanage_merchant].[merchant_daily_update] AS x
-     INNER JOIN db_salesmanage_user.f_getLeastChildrens_byParentUser_Id(@viewer_id) AS y ON x.user_id = y.user_id
-     INNER JOIN [sc_salesmanage_vansale].[inventory_item_m] itm ON x.[inventory_item_id] = itm.[inventory_item_id]
-     INNER JOIN [sc_salesmanage_merchant].[category] cat ON itm.[category_id] = cat.[category_id]
+FROM [merchant_daily_update] AS x
+     INNER JOIN f_getLeastChildrens_byParentUser_Id(@viewer_id) AS y ON x.user_id = y.user_id
+     INNER JOIN [inventory_item_m] itm ON x.[inventory_item_id] = itm.[inventory_item_id]
+     INNER JOIN [category] cat ON itm.[category_id] = cat.[category_id]
 WHERE x.create_time BETWEEN @date_from AND @date_to
 GROUP BY cat.description";
             var viewer_id = new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = viewer };
@@ -38,10 +38,10 @@ GROUP BY cat.description";
             string cmd = @"SELECT cat.description Label, 
        cat.description XValues, 
        CAST(SUM(value) AS DECIMAL(18, 2)) Value
-FROM [sc_salesmanage_merchant].[merchant_daily_update] AS x
-     INNER JOIN db_salesmanage_user.f_getLeastChildrens_byParentUser_Id(@viewer_id) AS y ON x.user_id = y.user_id
-     INNER JOIN [sc_salesmanage_vansale].[inventory_item_m] itm ON x.[inventory_item_id] = itm.[inventory_item_id]
-     INNER JOIN [sc_salesmanage_merchant].[category] cat ON itm.[category_id] = cat.[category_id]
+FROM [merchant_daily_update] AS x
+     INNER JOIN f_getLeastChildrens_byParentUser_Id(@viewer_id) AS y ON x.user_id = y.user_id
+     INNER JOIN [inventory_item_m] itm ON x.[inventory_item_id] = itm.[inventory_item_id]
+     INNER JOIN [category] cat ON itm.[category_id] = cat.[category_id]
 WHERE x.create_time BETWEEN @date_from AND @date_to
 GROUP BY cat.description";
             var viewer_id = new SqlParameter("@viewer_id", System.Data.SqlDbType.Int) { Value = viewer };
@@ -65,7 +65,7 @@ GROUP BY cat.description";
        x.item AS        Item ,
        x.description AS ItemDescription ,
        CAST(SUM(value) as decimal(18,2))  AS TotalValue
-FROM[sc_salesmanage_merchant].[daily_update_v] AS x INNER JOIN db_salesmanage_user.f_getLeastChildrens_byParentUser_Id( {0}
+FROM[daily_update_v] AS x INNER JOIN f_getLeastChildrens_byParentUser_Id( {0}
                                                                                                                         ) AS y ON x.user_id = y.user_id
 																														and create_time between '{1}' and '{2}'
 GROUP BY x.user_name ,
@@ -91,7 +91,7 @@ GROUP BY x.user_name ,
        x.item AS        Item ,
        x.description AS ItemDescription ,
        CAST(SUM(quantity) as decimal(18,2))  AS TotalValue
-FROM[sc_salesmanage_merchant].[daily_update_v] AS x INNER JOIN db_salesmanage_user.f_getLeastChildrens_byParentUser_Id( {0}
+FROM[daily_update_v] AS x INNER JOIN f_getLeastChildrens_byParentUser_Id( {0}
                                                                                                                         ) AS y ON x.user_id = y.user_id
 																														and create_time between '{1}' and '{2}'
 GROUP BY x.user_name ,

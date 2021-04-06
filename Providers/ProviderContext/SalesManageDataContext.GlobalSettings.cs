@@ -26,7 +26,7 @@ namespace BusinessExcel.Providers.ProviderContext
             var global_acc_factor = new SqlParameter("@global_acc_factor", System.Data.SqlDbType.Decimal) { Value = globalSettings.global_acc_factor };
             try
             {
-                this.Database.ExecuteSqlCommand(@"[db_salesmanage_user].[insertUpdateGlobalSettings] 
+                this.Database.ExecuteSqlCommand(@"[insertUpdateGlobalSettings] 
 	                                                @line_achieve_acc
                                                   ,@bonus_achieve_acc
                                                   ,@min_total_achievement
@@ -73,7 +73,7 @@ namespace BusinessExcel.Providers.ProviderContext
                                                base_incentive_pct,
                                                global_base_incentive_cap,
                                                global_acc_factor
-                                               FROM [db_salesmanage_user].[target_settings]")
+                                               FROM [target_settings]")
                                                 .ToList();
             if (items.Count > 0)
                 result = items[0];

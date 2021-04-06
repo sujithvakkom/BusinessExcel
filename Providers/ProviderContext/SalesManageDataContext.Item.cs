@@ -18,8 +18,8 @@ namespace BusinessExcel.Providers.ProviderContext
             int isInsertUpdate = 0;
             try
             {
-                const string UPDATE_MODEL = @" update model  set model.description=@model_description from sc_salesmanage_vansale.inventory_item_m item
-inner join sc_salesmanage_merchant.model_m model on item.model_id=model.model_id
+                const string UPDATE_MODEL = @" update model  set model.description=@model_description from inventory_item_m item
+inner join model_m model on item.model_id=model.model_id
 where inventory_item_id=@inventory_item_id";
 
 
@@ -61,7 +61,7 @@ where inventory_item_id=@inventory_item_id";
             int isInsertUpdate = 0;
             try
             {
-                const string UPDATE_MODEL = @"UPDATE sc_salesmanage_vansale.inventory_item_m
+                const string UPDATE_MODEL = @"UPDATE inventory_item_m
   SET 
       category_id = @category_id
 WHERE inventory_item_id = @inventory_item_id";

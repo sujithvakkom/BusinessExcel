@@ -37,7 +37,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             try
             {
-                users = this.Database.SqlQuery<UserTree>("[db_salesmanage_user].[getUserTree] @viewer_id", viewer_id).ToList();
+                users = this.Database.SqlQuery<UserTree>("[getUserTree] @viewer_id", viewer_id).ToList();
                
             }
             catch (Exception ex)

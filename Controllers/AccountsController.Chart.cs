@@ -1,19 +1,12 @@
-﻿using BusinessExcel.Filters;
-using BusinessExcel.Models;
+﻿using BusinessExcel.Models;
 using BusinessExcel.Providers.ProviderContext;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
-using WebMatrix.WebData;
 using BootstrapHtmlHelper.ChartJs;
-using Newtonsoft.Json;
 
 namespace BusinessExcel.Controllers
-{ 
+{
     //[Authorize]
     //[InitializeSimpleMembership]
     public partial class AccountsController : Controller
@@ -31,7 +24,7 @@ namespace BusinessExcel.Controllers
                 var source = db.GetGraphForCurrentMonthQuantity(viwer,startDate,endDate).ToList();
                 var data = new data<graph>(
                     chartType,
-                    source,
+                    source.AsQueryable(),
                     x => x.XValues.ToString(),
                     x => x.Label,
                     x => new PointPair { Key = x.XValues.ToString(), Value = (decimal)x.Value }
@@ -59,7 +52,7 @@ namespace BusinessExcel.Controllers
                 var source = db.GetGraphForCurrentMonthValue(viwer,startDate,endDate).ToList();
                     var data = new data<graph>(
                     chartType,
-                    source,
+                    source.AsQueryable(),
                     x => x.Label.ToString(),
                     x => x.XValues,
                     x => new PointPair {

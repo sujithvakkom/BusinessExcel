@@ -107,13 +107,13 @@ set [INT_STATUS] = @status_code , [DRIVER_NAME]=@driver
                                    [USER_NAME],
                                    [delivery_id]
                                  )
-VALUES ( [db_salesmanage_user].[GetReceiptID]( @receipt )  ,
+VALUES ( [GetReceiptID]( @receipt )  ,
          @status_desc ,
          GETDATE() ,
-         @status_desc1 +': '+[db_salesmanage_user].[GetReceiptVehicle] ( @receipt1 ) ,
+         @status_desc1 +': '+[GetReceiptVehicle] ( @receipt1 ) ,
          GETDATE() ,
          'Dispatcher',
-         [db_salesmanage_user].[GetReceiptLineID]( @receipt2 ) 
+         [GetReceiptLineID]( @receipt2 ) 
        )";
 
             var _receipt = !string.IsNullOrEmpty(receipt) ?
@@ -215,7 +215,7 @@ VALUES ( @ROWID ,
                                    [USER_NAME],
                                    [delivery_id]
                                  )
-VALUES ( [db_salesmanage_user].[GetReceiptID]( @receipt )  ,
+VALUES ( [GetReceiptID]( @receipt )  ,
          @status_desc ,
          GETDATE() ,
          GETDATE() ,

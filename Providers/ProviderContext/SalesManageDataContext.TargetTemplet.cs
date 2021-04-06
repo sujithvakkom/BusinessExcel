@@ -21,9 +21,9 @@ DECLARE @location_in nvarchar(1)
 DECLARE @user_in nvarchar(1)
 DECLARE @description_in nvarchar(1)
 DECLARE @base_incentive_in nvarchar(1)
-DECLARE @target_line_in [db_salesmanage_user].[target_category_line]
+DECLARE @target_line_in [target_category_line]
 
-EXECUTE @RC = [db_salesmanage_user].[create_update_target] 
+EXECUTE @RC = [create_update_target] 
    @start_date
   ,@end_date
   ,@location_in
@@ -33,10 +33,10 @@ EXECUTE @RC = [db_salesmanage_user].[create_update_target]
   ,@target_line_in
 GO
 
-         private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date,@end_date,@location_in,@user_in,@description_in,@base_incentive_in,@target_line_in";
+         private readonly string cmd = "[create_update_target] @start_date,@end_date,@location_in,@user_in,@description_in,@base_incentive_in,@target_line_in";
 
          */
-        private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @target_teplat_id, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
+        private readonly string cmd = "[create_update_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @target_teplat_id, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
         public virtual int createUpdateTarget(BaseTarget target, out string Message)
         {
             int result = -1;
@@ -76,7 +76,7 @@ GO
 
             var data = target.getTargetLine();
             data.TableName = "target_line_in";
-            var target_line_in = new SqlParameter("@target_line_in", System.Data.SqlDbType.Structured) { Value = data, TypeName = "[db_salesmanage_user].[target_category_line]" };
+            var target_line_in = new SqlParameter("@target_line_in", System.Data.SqlDbType.Structured) { Value = data, TypeName = "[target_category_line]" };
 
             var message =
                 new SqlParameter("@message", SqlDbType.NVarChar, -1) { Value = DBNull.Value, Direction = ParameterDirection.Output };
@@ -114,9 +114,9 @@ DECLARE @location_in nvarchar(1)
 DECLARE @user_in nvarchar(1)
 DECLARE @description_in nvarchar(1)
 DECLARE @base_incentive_in nvarchar(1)
-DECLARE @target_line_in [db_salesmanage_user].[target_category_line]
+DECLARE @target_line_in [target_category_line]
 
-EXECUTE @RC = [db_salesmanage_user].[create_update_target] 
+EXECUTE @RC = [create_update_target] 
    @start_date
   ,@end_date
   ,@location_in
@@ -126,10 +126,10 @@ EXECUTE @RC = [db_salesmanage_user].[create_update_target]
   ,@target_line_in
 GO
 
-         private readonly string cmd = "[db_salesmanage_user].[create_update_target] @start_date,@end_date,@location_in,@user_in,@description_in,@base_incentive_in,@target_line_in";
+         private readonly string cmd = "[create_update_target] @start_date,@end_date,@location_in,@user_in,@description_in,@base_incentive_in,@target_line_in";
 
          */
-        private readonly string cmd1 = "[db_salesmanage_user].[create_update_se_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @base_incentive_qtr_in, @target_teplat_id, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
+        private readonly string cmd1 = "[create_update_se_target] @start_date, @end_date, @location_in, @user_in, @description_in, @base_incentive_in, @base_incentive_qtr_in, @target_teplat_id, @target_line_in ,@message OUTPUT ,@curr_target_id OUTPUT";
         public virtual int createUpdateTargetSE(BaseTarget target, out string Message)
         {
             int result = -1;
@@ -236,7 +236,7 @@ GO
             try
             {
                 items = this.Database.SqlQuery<TargetTemplet>(
-                                                "[sc_salesmanage_vansale].[getTargetTempletDetails]  @filter ,@location_id ,@page_number ,@page_size ,@row_count OUTPUT",
+                                                "[getTargetTempletDetails]  @filter ,@location_id ,@page_number ,@page_size ,@row_count OUTPUT",
                                                 filter,
                                                 location_id,
                                                 page_number,
@@ -269,7 +269,7 @@ GO
             try
             {
                 items = this.Database.SqlQuery<LineTarget>(
-                                                " [sc_salesmanage_vansale].[getTargetTempletLineDetails]  @target_id, @balance, @user_id", 
+                                                " [getTargetTempletLineDetails]  @target_id, @balance, @user_id", 
                                                 target_id,
                                                 balance,
                                                 user_id)
@@ -301,7 +301,7 @@ GO
        r.end_date AS       EndDate ,
        NULL AS             TotalTarget ,
        t.base_incentive AS BaseIncentive
-FROM [db_salesmanage_user].[target_m] AS t INNER JOIN [db_salesmanage_user].[roster] AS r ON t.roster_id = r.roster_id
+FROM [target_m] AS t INNER JOIN [roster] AS r ON t.roster_id = r.roster_id
 WHERE t.target_id = @target_id",
                                                 target_id).FirstOrDefault());
             }
@@ -332,10 +332,10 @@ WHERE t.target_id = @target_id",
        ut.value ,
        ut.has_bonus,
 c.category_id
-FROM db_salesmanage_user.roster AS r INNER JOIN [db_salesmanage_user].[target_m] AS t ON r.roster_id = t.roster_id
-                                     INNER JOIN [db_salesmanage_user].[user_target] AS ut ON t.target_id = ut.target_id
-                                     INNER JOIN sc_salesmanage_user.user_m AS u ON t.user_id = u.user_id
-                                     INNER JOIN [sc_salesmanage_merchant].[category] AS c ON ut.category_id = c.category_id
+FROM roster AS r INNER JOIN [target_m] AS t ON r.roster_id = t.roster_id
+                                     INNER JOIN [user_target] AS ut ON t.target_id = ut.target_id
+                                     INNER JOIN user_m AS u ON t.user_id = u.user_id
+                                     INNER JOIN [category] AS c ON ut.category_id = c.category_id
 WHERE r.start_date >= @start_date
       AND
       r.end_date <= @end_date

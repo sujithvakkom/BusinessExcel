@@ -125,7 +125,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 category = this.Database.SqlQuery<UserListView>(
-                                                "[sc_salesmanage_user].[getUsersListView]  @first_name ,@user_type ,@page_number ,@page_size ,@row_count OUTPUT", first_name,user_type, page_number, page_size, row_count)
+                                                "[getUsersListView]  @first_name ,@user_type ,@page_number ,@page_size ,@row_count OUTPUT", first_name,user_type, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }

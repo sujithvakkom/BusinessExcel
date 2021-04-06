@@ -88,7 +88,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             var res = this.Database.SqlQuery<DailyUpateView>(
                 @"
-[db_salesmanage_user].[get_actions]
+[get_actions]
  @item_code ,
  @start_date ,
  @end_date ,

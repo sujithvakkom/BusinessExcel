@@ -25,7 +25,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             //var res = this.TargetAchievementView.Select(x=>x);
 
-            var res = this.Database.SqlQuery<TargetAchievementView>("[db_salesmanage_user].[User_Target_Achieved_Data]").ToList().AsQueryable();
+            var res = this.Database.SqlQuery<TargetAchievementView>("[User_Target_Achieved_Data]").ToList().AsQueryable();
 
             if (Filters.user_id != null)
             {
@@ -111,7 +111,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             //var res = this.TargetAchievementView.Select(x => x);
 
-            var res = this.Database.SqlQuery<TargetAchievementView>("[db_salesmanage_user].[User_Target_Achieved_Data]").ToList().AsQueryable();
+            var res = this.Database.SqlQuery<TargetAchievementView>("[User_Target_Achieved_Data]").ToList().AsQueryable();
 
             switch (sort)
             {
@@ -167,9 +167,9 @@ namespace BusinessExcel.Providers.ProviderContext
                 parameterList.Add(viewer_id);
 
 
-                //userlist = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails] @user_id,@start_date", parameterList.ToArray()).ToList();
+                //userlist = this.Database.SqlQuery<UserTargetDetailsView>("[getUserTargetDetails] @user_id,@start_date", parameterList.ToArray()).ToList();
 
-                var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails] @start_date, @user_id,@viewer_id", parameterList.ToArray()).ToList().AsQueryable(); ;
+                var res = this.Database.SqlQuery<UserTargetDetailsView>("[getUserTargetDetails] @start_date, @user_id,@viewer_id", parameterList.ToArray()).ToList().AsQueryable(); ;
 
                 List<UserTargets> targets = new List<UserTargets>();
                 targets = res.Select(g => new UserTargets()
@@ -195,7 +195,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 //List<UserTargets> target = res.Select(i => new { i.target_id, i.start_date.Value }).ToList();
 
 
-                //     var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails]").ToList().AsQueryable();
+                //     var res = this.Database.SqlQuery<UserTargetDetailsView>("[getUserTargetDetails]").ToList().AsQueryable();
 
                 //// //res = res.Where(x => x.UserID == users.UserID && users.start_date<= x.start_date && users.start_date >= users.start_date);
 
@@ -236,7 +236,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 parameterList.Add(UID);
 
 
-                var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[get_user_target_prvs_nxt_three_months]  @user_id", parameterList.ToArray()).ToList().AsQueryable(); ;
+                var res = this.Database.SqlQuery<UserTargetDetailsView>("[get_user_target_prvs_nxt_three_months]  @user_id", parameterList.ToArray()).ToList().AsQueryable(); ;
 
 
 
@@ -283,7 +283,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
 
 
-            var res = this.Database.SqlQuery<UserTargetDetailsView>("[db_salesmanage_user].[getUserTargetDetails]").ToList().AsQueryable();
+            var res = this.Database.SqlQuery<UserTargetDetailsView>("[getUserTargetDetails]").ToList().AsQueryable();
 
             //  var res = this.DailyUpateView.Select(x => x);
             if (users.UserID != 0)
@@ -331,7 +331,7 @@ namespace BusinessExcel.Providers.ProviderContext
             parameterList.Add(target_id);
             parameterList.Add(user_id_p);
 
-            var res = this.Database.SqlQuery<AcivementReward>(@"[db_salesmanage_user].[Target_Summary_Report_Reward] 
+            var res = this.Database.SqlQuery<AcivementReward>(@"[Target_Summary_Report_Reward] 
    @target_id
   , @user_id_p",
                parameterList.ToArray()
@@ -410,7 +410,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
 
 
-            var res = this.Database.SqlQuery<TargetSummaryView>("[db_salesmanage_user].[Target_Summary_Report] @target_id,@target_status_p,@user_id_p,@location_id_p,@roster_id_p,@viewer_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
+            var res = this.Database.SqlQuery<TargetSummaryView>("[Target_Summary_Report] @target_id,@target_status_p,@user_id_p,@location_id_p,@roster_id_p,@viewer_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
             int.TryParse(row_count.Value.ToString(), out count);
 
             return res;
@@ -482,7 +482,7 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
 
 
 
-            var res = this.Database.SqlQuery<TargetSummaryViewSE>("[db_salesmanage_user].[Target_Summary_Report] @target_id,@target_status_p,@user_id_p,@location_id_p,@viewer_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
+            var res = this.Database.SqlQuery<TargetSummaryViewSE>("[Target_Summary_Report] @target_id,@target_status_p,@user_id_p,@location_id_p,@viewer_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
             int.TryParse(row_count.Value.ToString(), out count);
 
             // count = res.Count();
@@ -529,7 +529,7 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
 
             try
             {
-                res = this.Database.SqlQuery<TargetAchievementDetailQTR>("[db_salesmanage_user].[User_QTR_Achieved_Data]  @start_date ,@user_id", qtr_start_date, user_id).AsQueryable();
+                res = this.Database.SqlQuery<TargetAchievementDetailQTR>("[User_QTR_Achieved_Data]  @start_date ,@user_id", qtr_start_date, user_id).AsQueryable();
 
             }
             catch (Exception ex)
@@ -575,7 +575,7 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
 
             try
             {
-                res = this.Database.SqlQuery<TargetAchievementQTRView>("[db_salesmanage_user].[User_Target_Achieved_QTR_Data] @user_id,@start_date,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
+                res = this.Database.SqlQuery<TargetAchievementQTRView>("[User_Target_Achieved_QTR_Data] @user_id,@start_date,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
             }
             catch
             {
@@ -637,10 +637,10 @@ new SqlParameter("@target_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.
 
 
 
-            var res = this.Database.SqlQuery<TargetSummaryView>("[db_salesmanage_user].[Target_Summary_Report_Excel] @target_id,@target_status_p,@user_id_p,@location_id_p,@roster_id_p,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
+            var res = this.Database.SqlQuery<TargetSummaryView>("[Target_Summary_Report_Excel] @target_id,@target_status_p,@user_id_p,@location_id_p,@roster_id_p,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
 
 
-            //var res = this.Database.SqlQuery<TargetSummaryView>("[db_salesmanage_user].[Target_Summary_Report_Excel] @target_id,@target_status_p,@user_id_p,@location_id_p,@roster_id_p,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
+            //var res = this.Database.SqlQuery<TargetSummaryView>("[Target_Summary_Report_Excel] @target_id,@target_status_p,@user_id_p,@location_id_p,@roster_id_p,@viewer_id", parameterList.ToArray()).ToList().AsQueryable();
 
             return res;
 

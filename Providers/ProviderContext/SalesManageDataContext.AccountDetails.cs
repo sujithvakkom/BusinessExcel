@@ -39,7 +39,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<AccountDetail>(
-                                                "[sc_salesmanage_user].[getAccounts] @filter ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                                                "[getAccounts] @filter ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }

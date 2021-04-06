@@ -41,7 +41,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<IncentiveFactor>(
-                                                "[sc_salesmanage_user].[getIncentiveFactor] @account, @category, @page_number, @page_size, @row_count OUTPUT", 
+                                                "[getIncentiveFactor] @account, @category, @page_number, @page_size, @row_count OUTPUT", 
                                                 Account,Catogery, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
@@ -57,7 +57,7 @@ namespace BusinessExcel.Providers.ProviderContext
             var category_id = new SqlParameter("@category_id", System.Data.SqlDbType.Int) { Value = Line };
             var factor = new SqlParameter("@factor", System.Data.SqlDbType.Decimal) { Value = Factor };
             var @threshold = new SqlParameter("@threshold", System.Data.SqlDbType.Decimal) { Value = Threshold };
-            this.Database.ExecuteSqlCommand(@"[db_salesmanage_user].[insertIncentiveFactor] @account_id, @category_id, @factor, @threshold",
+            this.Database.ExecuteSqlCommand(@"[insertIncentiveFactor] @account_id, @category_id, @factor, @threshold",
                         account_id,
                         category_id,
                         factor,

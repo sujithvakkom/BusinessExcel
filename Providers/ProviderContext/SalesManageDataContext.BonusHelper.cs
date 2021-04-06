@@ -38,8 +38,8 @@ AND DATEFROM > @date_from
 	   cat.description category
 FROM WEEKCALENDER week_c
      INNER JOIN [WEEKBONUS] week_b ON week_c.ID = week_b.[WEEKCALENDERID]
-     INNER JOIN sc_salesmanage_vansale.inventory_item_m AS inv ON inv.item_code = week_b.item_code
-	 INNER JOIN [sc_salesmanage_merchant].[category] as cat on inv.category_id = cat.category_id
+     INNER JOIN inventory_item_m AS inv ON inv.item_code = week_b.item_code
+	 INNER JOIN [category] as cat on inv.category_id = cat.category_id
 WHERE week_c.ID = @id
 ";
             var idPar =
@@ -64,7 +64,7 @@ WHERE week_c.ID = @id
 
         public virtual void SaveBonusConfiguration(BonusItemConfigModel bonusConfig)
         {
-            const string INSERT_BONUS_CONFIG = @"INSERT INTO [db_salesmanage_user].[WEEKBONUS]
+            const string INSERT_BONUS_CONFIG = @"INSERT INTO [WEEKBONUS]
            ([WEEKCALENDERID]
            ,[inventory_item_id]
            ,[item_code]
@@ -94,7 +94,7 @@ WHERE week_c.ID = @id
 
         public virtual void DeleteBonusConfiguration(int id)
         {
-            const string DELETE_BONUS_CONFIG = @"Delete [db_salesmanage_user].[WEEKBONUS]
+            const string DELETE_BONUS_CONFIG = @"Delete [WEEKBONUS]
             WHERE ID = @id
 ";
 
@@ -113,10 +113,10 @@ WHERE week_c.ID = @id
        SUM(quantity) quantity, 
        SUM(sale.value) sale, 
        SUM(total_bonus) bonus
-FROM [sc_salesmanage_merchant].[merchant_daily_update] sale
-     INNER JOIN [db_salesmanage_user].[WEEKBONUS] week_b ON sale.bonus_line_id = week_b.id
-     INNER JOIN [db_salesmanage_user].[WEEKCALENDER] week_c ON week_c.id = week_b.WEEKCALENDERID
-     INNER JOIN [sc_salesmanage_vansale].[inventory_item_m] inv ON week_b.inventory_item_id = inv.inventory_item_id
+FROM [merchant_daily_update] sale
+     INNER JOIN [WEEKBONUS] week_b ON sale.bonus_line_id = week_b.id
+     INNER JOIN [WEEKCALENDER] week_c ON week_c.id = week_b.WEEKCALENDERID
+     INNER JOIN [inventory_item_m] inv ON week_b.inventory_item_id = inv.inventory_item_id
 Where sale.user_id = @user_id
 GROUP BY inv.item_code, 
          inv.description

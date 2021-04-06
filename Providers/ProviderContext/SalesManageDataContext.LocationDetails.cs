@@ -17,7 +17,7 @@ namespace BusinessExcel.Providers.ProviderContext
         {
             const string SELECT_LOCATION = @"select location_id, 
                                                 description
-                                                from [sc_salesmanage_user].[location_m] 
+                                                from [location_m] 
                                             where 
                                                 location_id = @location_id";
 
@@ -54,7 +54,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<LocationDetail>(
-                                                "[sc_salesmanage_user].[getLocationDetails] @filter ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                                                "[getLocationDetails] @filter ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }

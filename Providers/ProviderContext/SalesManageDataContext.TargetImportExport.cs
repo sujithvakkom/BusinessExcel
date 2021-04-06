@@ -34,12 +34,12 @@ namespace BusinessExcel.Providers.ProviderContext
        tu.min_line_achievement MinLineAchievement, 
        tu.min_bonus_achievement MinBonusAchievement, 
        tu.cap_base_incentive IncentiveCap
-FROM [db_salesmanage_user].[target_m] t
-     INNER JOIN [db_salesmanage_user].[user_target] tu ON t.target_id = tu.target_id
-     INNER JOIN [sc_salesmanage_user].[user_m] u ON tu.user_id = u.user_id
-     INNER JOIN [sc_salesmanage_merchant].[category] c ON tu.category_id = c.category_id
-     INNER JOIN [db_salesmanage_user].[roster] r ON tu.roster_id = r.roster_id
-     INNER JOIN [sc_salesmanage_user].[location_m] l ON r.location_id = l.location_id
+FROM [target_m] t
+     INNER JOIN [user_target] tu ON t.target_id = tu.target_id
+     INNER JOIN [user_m] u ON tu.user_id = u.user_id
+     INNER JOIN [category] c ON tu.category_id = c.category_id
+     INNER JOIN [roster] r ON tu.roster_id = r.roster_id
+     INNER JOIN [location_m] l ON r.location_id = l.location_id
 	 WHERE t.description = @description";
             #endregion
             var description = !string.IsNullOrEmpty(Filters.Month)?

@@ -15,7 +15,7 @@ namespace BusinessExcel.Providers.ProviderContext
     {
         public virtual BrandDetail getBrandDetail(string BrandId)
         {
-            const string SELECT_BRAND = @"select brand_id,description from [sc_salesmanage_vansale].[brand_m] where brand_id = @brand_id";
+            const string SELECT_BRAND = @"select brand_id,description from [brand_m] where brand_id = @brand_id";
             
             var brand_id = BrandId != null ?
                   new SqlParameter("@brand_id", BrandId) :
@@ -51,7 +51,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<BrandDetail>(
-                                                "[sc_salesmanage_vansale].[getBrandDetails] @filter ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
+                                                "[getBrandDetails] @filter ,@page_number ,@page_size ,@row_count OUTPUT", filter, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }

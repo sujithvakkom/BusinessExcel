@@ -41,7 +41,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 row_count.Direction = System.Data.ParameterDirection.Output;
 
                 var items = this.Database.SqlQuery<ItemModel>(
-                                                "[sc_salesmanage_merchant].[getModelDetails]  @item_code ,@page_number ,@page_size ,@row_count OUTPUT", item_code, page_number, page_size, row_count)
+                                                "[getModelDetails]  @item_code ,@page_number ,@page_size ,@row_count OUTPUT", item_code, page_number, page_size, row_count)
                                                 .ToList();
 
                 return items[0];
@@ -77,7 +77,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<ItemModel>(
-                                                "[sc_salesmanage_merchant].[getModelDetails]  @filter ,@page_number ,@page_size ,@row_count OUTPUT", 
+                                                "[getModelDetails]  @filter ,@page_number ,@page_size ,@row_count OUTPUT", 
                                                 item_codePar, 
                                                 page_number, 
                                                 page_size, 

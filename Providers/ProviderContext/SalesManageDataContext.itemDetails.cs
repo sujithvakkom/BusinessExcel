@@ -45,7 +45,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 row_count.Direction = System.Data.ParameterDirection.Output;
 
                 var items = this.Database.SqlQuery<ItemDetails>(
-                                                "[sc_salesmanage_merchant].[getItemDetails]  @item_code ,@page_number ,@page_size ,@row_count OUTPUT", item_code, page_number, page_size, row_count)
+                                                "[getItemDetails]  @item_code ,@page_number ,@page_size ,@row_count OUTPUT", item_code, page_number, page_size, row_count)
                                                 .ToList();
 
                 return items.FirstOrDefault();
@@ -81,7 +81,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<ItemDetails>(
-                                                "[sc_salesmanage_merchant].[getItemDetails]  @item_code ,@page_number ,@page_size ,@row_count OUTPUT", 
+                                                "[getItemDetails]  @item_code ,@page_number ,@page_size ,@row_count OUTPUT", 
                                                 item_codePar, 
                                                 page_number, 
                                                 page_size, 
@@ -124,7 +124,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             try
             {
-                var res = this.Database.SqlQuery<ItemDetails>("[db_salesmanage_user].[getAllItemDetails]  @item_code,@category_id ,@page_number ,@page_size", parameterList.ToArray()).ToList();
+                var res = this.Database.SqlQuery<ItemDetails>("[getAllItemDetails]  @item_code,@category_id ,@page_number ,@page_size", parameterList.ToArray()).ToList();
 
                 return res;
             }
@@ -174,7 +174,7 @@ namespace BusinessExcel.Providers.ProviderContext
             parameterList.Add(page_size);
             parameterList.Add(row_count);
 
-            var res = this.Database.SqlQuery<ItemDetailsView>("[db_salesmanage_user].[getAllItemDetails] @item_code,@category_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
+            var res = this.Database.SqlQuery<ItemDetailsView>("[getAllItemDetails] @item_code,@category_id,@page_number,@page_size,@row_count OUTPUT", parameterList.ToArray()).ToList().AsQueryable();
             int.TryParse(row_count.Value.ToString(), out count);
 
            // count = res.Count();

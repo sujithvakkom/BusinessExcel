@@ -22,10 +22,10 @@ namespace BusinessExcel.Providers.ProviderContext
 
         public int InsertUpdateRoster(Roster roster, bool isInsert)
         {
-            const string INSERT_ROSTER = @"insert into db_salesmanage_user.roster (name,location_id,start_date,end_date) 
+            const string INSERT_ROSTER = @"insert into roster (name,location_id,start_date,end_date) 
                                                  values(@name,@location_id,@start_date,@end_date)";
 
-            const string UPDATE_ROSTER = @" update db_salesmanage_user.roster set 
+            const string UPDATE_ROSTER = @" update roster set 
 
 name=@name,location_id=@location_id,start_date=@start_date,end_date=@end_date
 
@@ -99,7 +99,7 @@ where roster_id=@roster_id";
         {
             const string SELECT_TARGET = @"select target_id, 
                                                 description
-                                                from [db_salesmanage_user].[target_m] 
+                                                from [target_m] 
                                             where 
                                                 target_id = @target_id";
 
@@ -141,7 +141,7 @@ where roster_id=@roster_id";
             try
             {
                 items = this.Database.SqlQuery<TargetMasterDetails>(
-                                                "[sc_salesmanage_user].[getTargetDetails] @filter ,@location_id ,@page_number ,@page_size ,@row_count OUTPUT",
+                                                "[getTargetDetails] @filter ,@location_id ,@page_number ,@page_size ,@row_count OUTPUT",
                                                 filter, 
                                                 location_id,
                                                 page_number, 
@@ -191,7 +191,7 @@ where roster_id=@roster_id";
             try
             {
                 items = this.Database.SqlQuery<RosterViewModel>(
-                                                "[sc_salesmanage_user].[getRosterDetails] @filter ,@location_id,@page_number ,@page_size ,@row_count OUTPUT", filter, location_id, page_number, page_size, row_count)
+                                                "[getRosterDetails] @filter ,@location_id,@page_number ,@page_size ,@row_count OUTPUT", filter, location_id, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }

@@ -114,7 +114,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             try
             {
-                isInsertUpdate = this.Database.ExecuteSqlCommand("[sc_salesmanage_vansale].[create_user] @user_name,@first_name,@second_name,@password,@display_name,@is_active,@role_id,@user_group_id ,@email,@contact_no , @emp_code_lookup , @result OUTPUT", parameterList.ToArray());
+                isInsertUpdate = this.Database.ExecuteSqlCommand("[create_user] @user_name,@first_name,@second_name,@password,@display_name,@is_active,@role_id,@user_group_id ,@email,@contact_no , @emp_code_lookup , @result OUTPUT", parameterList.ToArray());
 
               
                 insert_result = result.Value.ToString();

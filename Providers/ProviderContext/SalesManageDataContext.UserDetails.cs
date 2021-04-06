@@ -18,7 +18,7 @@ namespace BusinessExcel.Providers.ProviderContext
         {
             const string SELECT_USER = @"select user_name, 
                                                 isnull(display_name,first_name+' '+second_name) as full_name 
-                                                from [sc_salesmanage_user].[user_m] 
+                                                from [user_m] 
                                             where 
                                                 user_name = @user_name";
 
@@ -34,7 +34,7 @@ namespace BusinessExcel.Providers.ProviderContext
         {
             const string SELECT_USER = @"select user_name, 
                                                 isnull(display_name,first_name+' '+second_name) as full_name 
-                                                from [sc_salesmanage_user].[user_m] 
+                                                from [user_m] 
                                             where 
                                                 user_name = @user_name
                                             and password = @password";
@@ -53,7 +53,7 @@ namespace BusinessExcel.Providers.ProviderContext
         public virtual int getUserID(string userName)
         {
             const string SELECT_USER = @"select user_id
-                                                from [sc_salesmanage_user].[user_m] 
+                                                from [user_m] 
                                             where 
                                                 user_name = @user_name";
 
@@ -77,7 +77,7 @@ namespace BusinessExcel.Providers.ProviderContext
             int login_member_user_id = (int)Membership.GetUser().ProviderUserKey;
 
             const string SELECT_USER = @"select isnull(user_id,0)
-                                                from [sc_salesmanage_user].[user_m] 
+                                                from [user_m] 
                                             where 
                                                 user_membership_id = @user_membership_id";
 
@@ -109,7 +109,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
 
             vw = this.Database.SqlQuery<int>(
-                                            "select user_id from  db_salesmanage_user.f_getLeastChildrens_byParentUser_Id(@viewer_id)", viewer_id)
+                                            "select user_id from  f_getLeastChildrens_byParentUser_Id(@viewer_id)", viewer_id)
                                             .ToList();
 
 
@@ -148,7 +148,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<UserDetail>(
-                                                "[sc_salesmanage_user].[getUserDetails] @user_name ,@page_number ,@page_size ,@row_count OUTPUT,@viewer_id", user_name, page_number, page_size, row_count, viewer_id)
+                                                "[getUserDetails] @user_name ,@page_number ,@page_size ,@row_count OUTPUT,@viewer_id", user_name, page_number, page_size, row_count, viewer_id)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
@@ -186,7 +186,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<UserDetail>(
-                                                "[sc_salesmanage_user].[getUserDetailsAll] @user_name ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                                                "[getUserDetailsAll] @user_name ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
@@ -204,7 +204,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             const string SELECT_USER = @"select user_group_id as USERGROUPID, 
                                                 group_name as USERGROUPNAME
-                                                from [sc_salesmanage_user].[group_m] ";
+                                                from [group_m] ";
             try
             {
                 ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER).ToList();
@@ -223,7 +223,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             const string SELECT_USER = @"select user_group_id as USERGROUPID, 
                                                 group_name as USERGROUPNAME
-                                                from [sc_salesmanage_user].[group_m]  where user_group_id=1";
+                                                from [group_m]  where user_group_id=1";
             try
             {
                 ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER).ToList();
@@ -243,7 +243,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             const string SELECT_USER_ROLES = @"select role_id as RoleId, 
                                                 role_name as RoleName
-                                                from [db_salesmanage_user].[role_m] ";
+                                                from [role_m] ";
             try
             {
                 ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER_ROLES).ToList();
@@ -262,7 +262,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             const string SELECT_USER_ROLES = @"select role_id as RoleId, 
                                                 role_name as RoleName
-                                                from [db_salesmanage_user].[role_m]  where role_id=1 ";
+                                                from [role_m]  where role_id=1 ";
             try
             {
                 ugroups = this.Database.SqlQuery<CreateUser>(SELECT_USER_ROLES).ToList();
@@ -309,7 +309,7 @@ namespace BusinessExcel.Providers.ProviderContext
             try
             {
                 items = this.Database.SqlQuery<UserDetail>(
-                                                "[sc_salesmanage_user].[getNonAssignedUserDetails] @user_name ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
+                                                "[getNonAssignedUserDetails] @user_name ,@page_number ,@page_size ,@row_count OUTPUT", user_name, page_number, page_size, row_count)
                                                 .ToList();
                 int.TryParse(row_count.Value.ToString(), out RowCount);
             }
@@ -366,7 +366,7 @@ namespace BusinessExcel.Providers.ProviderContext
                         parameterList.Add(parent_id);
                         parameterList.Add(enity_id);
 
-                        isInsertUpdate = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[Insert_UserTree] @user_id,@ParentId,@EntityId", parameterList.ToArray());
+                        isInsertUpdate = this.Database.ExecuteSqlCommand("[Insert_UserTree] @user_id,@ParentId,@EntityId", parameterList.ToArray());
                     }
                 }
                 else
@@ -403,7 +403,7 @@ namespace BusinessExcel.Providers.ProviderContext
                 parameterList.Add(parent_id);
 
 
-                isDelete = this.Database.ExecuteSqlCommand("[db_salesmanage_user].[Delete_UserTree] @ParentId", parameterList.ToArray());
+                isDelete = this.Database.ExecuteSqlCommand("[Delete_UserTree] @ParentId", parameterList.ToArray());
 
             }
             catch (Exception ex)

@@ -12,7 +12,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
     public partial class SalesManageDataContext : DbContext
     {
-        private readonly string cmdPutUserLoction = @"[sc_salesmanage_merchant].[update_checkin] 
+        private readonly string cmdPutUserLoction = @"[update_checkin] 
    @user_id
   ,@latitude
   ,@longitude
@@ -70,7 +70,7 @@ namespace BusinessExcel.Providers.ProviderContext
        longitude,
        type,
        address
-       from [sc_salesmanage_merchant].[merchant_checkin_m] 
+       from [merchant_checkin_m] 
        where user_id = @user_id";
         public UserLocation GetUserLoction(int? UserId, DateTime? When = null) {
             UserLocation result = null;

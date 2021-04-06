@@ -23,7 +23,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
             const string SELECT_ROSTERS = @"select [roster_id], 
                                                loc.[location_id],[start_date],[end_date],[name] ,description as location_name
-                                                from db_salesmanage_user.roster ros  inner join sc_salesmanage_user.location_m loc on ros.location_id=loc.location_id";
+                                                from roster ros  inner join location_m loc on ros.location_id=loc.location_id";
 
             //var user_name = userName != null ?
             //      new SqlParameter("@user_name", userName) :
