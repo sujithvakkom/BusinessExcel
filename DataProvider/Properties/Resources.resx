@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ADD_DELIVERY" xml:space="preserve">
+    <value>[dbo].[AddDeliveryJob] 
+   @CustomerName
+  ,@SaleDate
+  ,@PreferedDate
+  ,@Phone
+  ,@DeliveryAddress
+  ,@attachmentName
+  ,@input_type
+  ,@Remarks
+  ,@username
+  ,@retailer
+  ,@lines
+  ,@RECEIPTID_OUT OUTPUT
+  ,@HEADER_ID OUTPUT</value>
+  </data>
+  <data name="CMD_UPDATE_LOG" xml:space="preserve">
+    <value>INSERT INTO [delivery_log_1] ( HEADER_ID ,
+                               DETAILS_ID ,
+                               LOG_DATE ,
+                               STATUS ,
+                               REMARKS ,
+                               STATUS_DATE ,
+                               USER_NAME
+                             )
+VALUES ( @header_id ,
+         @details_id ,
+         GETDATE() ,
+         @status ,
+         @remark ,
+         GETDATE() ,
+         @user_name
+       )</value>
+  </data>
+  <data name="DELIVERY_HEADER" xml:space="preserve">
+    <value>SELECT HEADER_ID AS                          "HeaderId" ,
+       ISNULL(RECEIPTID , LPO_NUMBER) AS     "Receipt" ,
+       ORA_ORDER_NO AS                       "OrderNumber" ,
+       NAME AS                               "CustomerName" ,
+       TRANSDATE AS                          "SaleDate" ,
+       PHONE AS                              "Phone" ,
+       ISNULL(DELIVERY_ADDRESS , ADDRESS) AS "DeliveryAddress" ,
+       INT_STATUS AS                         "Status" ,
+       DT_SCHEDULED AS                       "ScheduledDate" ,
+       TIME_SLOT AS                          "TimeSlot" ,
+       DRIVER_NAME AS                        "DriverName" ,
+       VEHICLE_CODE AS                       "VehicleCode" ,
+       GPS AS                                "GPS" ,
+       MAP_URL AS                            "MapURL" ,
+       REMARKS AS                            "Remarks"
+FROM delivery_header AS h
+WHERE ORA_ORDER_NO = ISNULL(@ORDER_NUMBER , ORA_ORDER_NO)
+      AND
+      EXISTS ( SELECT TOP (HEADER_ID) LINENUM
+               FROM delivery_scheduled AS l
+               WHERE HEADER_ID = h.HEADER_ID
+                     AND
+                     l.VEHICLE_CODE = @VEHICLE_CODE
+                     AND
+                     l.INT_STATUS = @INT_STATUS
+                     AND
+                     L.NOTIFIED_DRIVER = ISNULL(@NOTIFIED_DRIVER , L.NOTIFIED_DRIVER)
+             )</value>
+  </data>
+  <data name="DELIVERY_LINES" xml:space="preserve">
+    <value>SELECT id AS           "LineId" ,
+       TRANSDATE AS    "SaleDate" ,
+       LINENUM AS      "LineNumber" ,
+       ITEMID AS       "ItemCode" ,
+       DESCRIPTION AS  "Description" ,
+       QUANTITY AS     "OrderQuantity" ,
+       ISNULL(SEIINGPRICE ,0) AS  "SelleingPrice" ,
+       INT_STATUS AS   "Status" ,
+       DT_SCHEDULED AS "ScheduledDate" ,
+       TIME_SLOT AS    "TimeSlot" ,
+       DRIVER_NAME AS  "DriverName" ,
+       VEHICLE_CODE AS "VehicleCode" ,
+       GPS AS          "GPS" ,
+       MAP_URL AS      "MapURL" ,
+       REMARKS AS      "Remarks"
+FROM delivery_scheduled
+WHERE HEADER_ID = @HEADER_ID
+      AND
+      VEHICLE_CODE = @VEHICLE_CODE
+      AND
+      INT_STATUS = @INT_STATUS</value>
+  </data>
+  <data name="GET_DELIVERY_STATUS_VIEW" xml:space="preserve">
+    <value>SELECT ISNULL(h.ORA_ORDER_NO , h.RECEIPTID) AS "OrderNumber" ,
+       l.TRANSDATE AS                          "TransDate" ,
+       DT_DELIVERED AS                         "DeliveredDate" ,
+       STATUS_DESC AS                          "StatusDesc" ,
+       lo.REMARKS AS                           "Remark"
+FROM delivery_header AS h INNER JOIN delivery_details AS l ON h.HEADER_ID = l.HEADER_ID
+                          INNER JOIN delivery_status_1 AS s ON l.INT_STATUS = s.STATUS_CODE
+                          INNER JOIN ( SELECT RANK() OVER(PARTITION BY HEADER_ID ,
+                                                                       DETAILS_ID ORDER BY id DESC) AS rnk ,
+                                              id ,
+                                              HEADER_ID ,
+                                              DETAILS_ID ,
+                                              RECEIPTID ,
+                                              STATUS ,
+                                              STATUS_DATE ,
+                                              REMARKS ,
+                                              LOG_DATE ,
+                                              USER_NAME ,
+                                              delivery_id
+                                       FROM delivery_log_1
+                                     ) AS lo ON h.HEADER_ID = lo.HEADER_ID
+                                                AND
+                                                l.id = lo.DETAILS_ID
+WHERE lo.rnk = 1
+      AND
+      l.VEHICLE_CODE = @VEHICLE_CODE
+      AND
+      l.INT_STATUS = @INT_STATUS</value>
+  </data>
+  <data name="INSERT_ERROR" xml:space="preserve">
+    <value>INSERT INTO ERROR_LOGGER ( [SOURCE] ,
+                           [MESSAGE]
+                         )
+VALUES ( @Source ,
+         @Message
+       )</value>
+  </data>
+  <data name="INSERT_MESSAGE_LOG" xml:space="preserve">
+    <value>INSERT INTO [dbo].[delivery_messages]
+           ([HEADER_ID]
+           ,[PHONE_NUMBER]
+           ,[MESSAGE]
+           ,[ERROR_MESSAGE]
+           ,[DELIVERY_STATUS]
+           ,[USER_NAME])
+     VALUES
+           (@HEADER_ID
+           ,@PHONE_NUMBER
+           ,@MESSAGE
+           ,@ERROR_MESSAGE
+           ,@DELIVERY_STATUS
+           ,@USER_NAME)</value>
+  </data>
+  <data name="MOBILE_ORDER" xml:space="preserve">
+    <value>SELECT h.HEADER_ID AS                      "HeaderId" ,
+       ISNULL(h.RECEIPTID , h.LPO_NUMBER) AS "Receipt" ,
+       h.NAME AS                           "CustomerName" ,
+       h.INT_STATUS AS                   "Status" ,
+       SUM(d.SEIINGPRICE) AS             "Price"
+FROM delivery_header AS h LEFT JOIN delivery_status_1 AS stat ON h.INT_STATUS = stat.STATUS_CODE
+                          INNER JOIN delivery_details AS d ON h.HEADER_ID = d.HEADER_ID
+                          INNER JOIN delivery_users AS u ON u.[EMP_ID] = h.EMP_ID
+WHERE u.[USER_NAME] = @USER_NAME
+      AND
+      h.TRANS_TYPE = @TRANSTYPE
+GROUP BY h.HEADER_ID ,
+         ISNULL(h.RECEIPTID , h.LPO_NUMBER)  ,
+         h.NAME ,
+         h.INT_STATUS
+ORDER BY h.HEADER_ID DESC</value>
+  </data>
+  <data name="MOBILE_ORDER_DETAIL" xml:space="preserve">
+    <value>SELECT id AS           "LineId" ,
+       TRANSDATE AS    "SaleDate" ,
+       LINENUM AS      "LineNumber" ,
+       ITEMID AS       "ItemCode" ,
+       DESCRIPTION AS  "Description" ,
+       QUANTITY AS     "OrderQuantity" ,
+       ISNULL(SEIINGPRICE ,0) AS  "SelleingPrice" ,
+       INT_STATUS AS   "Status" ,
+       DT_SCHEDULED AS "ScheduledDate" ,
+       TIME_SLOT AS    "TimeSlot" ,
+       DRIVER_NAME AS  "DriverName" ,
+       VEHICLE_CODE AS "VehicleCode" ,
+       GPS AS          "GPS" ,
+       MAP_URL AS      "MapURL" ,
+       REMARKS AS      "Remarks"
+FROM delivery_details
+WHERE RECEIPTID = @RECEIPTID</value>
+  </data>
+  <data name="SELECT_MESSAGE_LOG" xml:space="preserve">
+    <value>SELECT mes.id as "Id",
+       mes.HEADER_ID as "HeaderId",
+       hdr.ORA_ORDER_NO as"OrderNumber",
+       mes.PHONE_NUMBER as "PhoneNumber",
+       mes.MESSAGE as "Message",
+       mes.ERROR_MESSAGE as "ErrorMessage" ,
+       mes.CREATED_ON as "CreatedOn",
+       mes.DELIVERY_STATUS as "Status" ,
+       mes.USER_NAME "UserName"
+FROM delivery_messages AS mes INNER JOIN delivery_header AS hdr ON mes.HEADER_ID = hdr.HEADER_ID
+where hdr.ORA_ORDER_NO = @OrderNumber</value>
+  </data>
+  <data name="UPDATE_DELIVER_LINE" xml:space="preserve">
+    <value>UPDATE delivery_scheduled
+       SET
+           INT_STATUS = @INT_STATUS ,
+           REMARKS = @REMARKS ,
+           DT_ESTIMATED = @DT_ESTIMATED ,
+           DT_STATUS = GETDATE() ,
+           DT_DELIVERED = CASE @INT_STATUS
+                              WHEN 11
+                              THEN GETDATE()
+                              ELSE DT_DELIVERED
+                          END
+WHERE id = @id</value>
+  </data>
+  <data name="UPDATE_NOTIFIED_DRIVER" xml:space="preserve">
+    <value>update delivery_scheduled set NOTIFIED_DRIVER = @NOTIFIED_DRIVER where id = @id</value>
+  </data>
+</root>

@@ -66,9 +66,12 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Column("global_base_incentive_cap", Order = 10)]
         public decimal global_base_incentive_cap { get; set; }
 
-        [Display(Name = "Global Acc. Factor")]
+        [Display(Name = "De-Acc. Factor")]
         [Required]
         [Column("global_acc_factor", Order = 11)]
         public decimal global_acc_factor { get; set; }
+
+        public decimal DeAccelerationFactor  { get { return global_acc_factor; } }
+        public decimal AccelerationFactor { get { return line_achieve_acc; } }
     }
 }

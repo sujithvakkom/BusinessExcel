@@ -11,8 +11,8 @@
         var lineTargets =
         db.Database.SqlQuery<LocationTarget>(
              @"SELECT t.target_id, r.name, r.start_date, r.end_date, r.location_id, l.description
-                   FROM[db_salesmanage_user].[target_m] AS t INNER JOIN[db_salesmanage_user].[roster] AS r ON t.roster_id = r.roster_id
-                                                              INNER JOIN[sc_salesmanage_user].[location_m] AS l ON r.location_id = l.location_id
+                   FROM [dbo].[target_m] AS t INNER JOIN [dbo].[roster] AS r ON t.roster_id = r.roster_id
+                                                              INNER JOIN [dbo].[location_m] AS l ON r.location_id = l.location_id
                    WHERE l.deleted = @deleted
                          AND r.location_id = ISNULL(@location_id, r.location_id)
                          AND
@@ -66,10 +66,10 @@ FROM ( SELECT ROW_NUMBER() OVER(ORDER BY ut.category_id DESC) AS row_num ,
               ut.has_bonus ,
               c.description AS                                                             category ,
               ut.value AS                                                                  value
-       FROM [db_salesmanage_user].[target_m] AS t INNER JOIN [db_salesmanage_user].[roster] AS r ON t.roster_id = r.roster_id
-                                                  INNER JOIN [sc_salesmanage_user].[location_m] AS l ON r.location_id = l.location_id
-                                                  INNER JOIN [db_salesmanage_user].[user_target] AS ut ON t.target_id = ut.target_id
-                                                  LEFT JOIN [sc_salesmanage_merchant].category AS c ON ut.category_id = c.category_id
+       FROM [dbo].[target_m] AS t INNER JOIN [dbo].[roster] AS r ON t.roster_id = r.roster_id
+                                                  INNER JOIN [dbo].[location_m] AS l ON r.location_id = l.location_id
+                                                  INNER JOIN [dbo].[user_target] AS ut ON t.target_id = ut.target_id
+                                                  LEFT JOIN [dbo].category AS c ON ut.category_id = c.category_id
        WHERE l.deleted = @deleted
              AND
              t.target_id = @target_id

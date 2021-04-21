@@ -12,6 +12,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.SessionState;
+using WebMatrix.WebData;
 
 namespace BusinessExcel.Providers
 {
@@ -255,7 +256,7 @@ for the session state store provider):
                         throw new ProviderException(exceptionMessage);
                     }
                     else
-                        throw e;
+                        WebSecurity.Logout();
                 }
             }
         }

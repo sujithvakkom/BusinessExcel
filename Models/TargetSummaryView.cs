@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessExcel.Providers.ProviderContext;
+using BusinessExcel.Providers.ProviderContext.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -37,7 +39,7 @@ namespace BusinessExcel.Models
         public decimal? TotalTargetPerc { get; set; }
 
         public decimal? TotalIncAmt { get; set; }
-
+        public decimal? TotalAmountAcc { get; private set; }
         public decimal? TotalEnteredIncAmt { get; set; }
 
         public int? LineAch { get; set; }
@@ -71,5 +73,35 @@ namespace BusinessExcel.Models
 
         public string category { get; set; }
 
+
+        public void ProcessIncentive()
+        {
+            try
+            {
+                GlobalSettings globalSettings;
+                CategoryDetail categoryDetails;
+                int count;
+
+                using (var db = new SalesManageDataContext())
+                {
+                    globalSettings = db.getGlobalSettings();
+                    var temp = db.getCategorySettingsDetails(category_id, 1, out count);
+                    categoryDetails = count>0?temp[0]:null;
+                }
+
+                if (category_id != null && categoryDetails != null && categoryDetails.base_incentive != null && globalSettings.min_line_achievement < this.TotalTargetPerc)
+                {
+                    TotalIncAmt = categoryDetails.base_incentive * this.TotalTargetPerc;
+                    TotalAmountAcc = globalSettings.AccelerationFactor*100;
+                }
+                else if (categoryDetails != null && globalSettings.min_line_achievement > this.TotalTargetPerc)
+                {
+                    TotalAmountAcc = globalSettings.DeAccelerationFactor*100*-1;
+                }
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }

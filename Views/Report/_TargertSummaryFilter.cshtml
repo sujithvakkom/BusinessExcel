@@ -19,7 +19,7 @@
     decimal TolalIncentive = 0;
     decimal TolalEntered = 0;
 
-    var grid = new WebGrid(ajaxUpdateContainerId: "summary",
+    var grid = new WebGrid(ajaxUpdateContainerId: "target_summary_display",
                         ajaxUpdateCallback: "callBack", rowsPerPage: 200
                                     );
     int iLoop = 0;
@@ -85,8 +85,9 @@
                         user_id = m.user_id,
                         Year = m.target_year
                     })
-                        .Where(m => m.qtr_name == qtr.Qtr).Distinct())
+                            .Where(m => m.qtr_name == qtr.Qtr).Distinct())
                     {
+                        if (string.IsNullOrEmpty(targetNames.Target)) { continue; }
                         TotalTarget = 0;
                         TotalAcheeviment = 0;
                         TolalPercentage = 0;
@@ -167,11 +168,13 @@
                                             <tbody>
                                                 @foreach (var lines in data.Select(m => m).Where(m => m.target_id == targetNames.target_id))
                                                 {
+                                                    lines.ProcessIncentive();
                                                     TotalTarget += lines.TotalTarget ?? 0;
                                                     TotalAcheeviment += lines.TotalAchieved ?? 0;
                                                     @*TolalPercentage = 0;*@
-                                                    TolalIncentive += lines.TotalIncAmt ?? 0;
-                                                    TolalEntered += lines.TotalEnteredIncAmt ?? 0;
+                                                TolalIncentive += lines.TotalIncAmt ?? 0;
+                                                TolalIncentive += lines.TotalAmountAcc ?? 0;
+                                                TolalEntered += lines.TotalEnteredIncAmt ?? 0;
                                                     <tr>
 
                                                         <td>
@@ -190,10 +193,17 @@
                                                             @string.Format("{0:#,##0.00}", lines.TotalAchieved)
                                                         </td>
                                                         <td class="text-right">  
-                                                            @string.Format("{0:#,##0.00}%", lines.TotalTargetPerc*100)
+                                                            @string.Format("{0:#,##0.00}%", lines.TotalTargetPerc * 100)
                                                         </td>
                                                         <td class="text-right">
                                                             @string.Format("{0:#,##0.00}", lines.TotalIncAmt)
+                                                           @{ if ((lines.TotalAmountAcc ?? 0) != 0)
+                                                               {
+                                                            <span class="pull-left text-sm text-bold @(lines.TotalAmountAcc < 0 ? "text-red" : "text-green")">
+                                                                @string.Format("{0:#,##0.00} (Acc.)", lines.TotalAmountAcc)
+                                                            </span>
+                                                                   }
+                                                               }
                                                         </td>
                                                         <td class="text-right">
                                                             @string.Format("{0:#,##0.00}", lines.TotalEnteredIncAmt)
@@ -271,7 +281,7 @@
                                                     <th width="12.5%" class="text-right">@string.Format("{0:#,##0.00}", TotalTarget)</th>
                                                     <th width="12.5%" class="text-right">@string.Format("{0:#,##0.00}", TotalAcheeviment)</th>
                                                     <th width="12.5%"></th>
-                                                    <th width="12.5%" class="text-right">@string.Format("{0:#,##0.00}", TolalIncentive)</th>
+                                                    <th width="12.5%" class="text-right">@string.Format("{0:#,##0.00}", TolalIncentive<0?0: TolalIncentive)</th>
                                                     <th width="12.5%" class="text-right">@string.Format("{0:#,##0.00}", TolalEntered)</th>
                                                 </tr>
                                             </tbody>

@@ -135,8 +135,11 @@ namespace BusinessExcel.Controllers
         public static string _CATEGORYSETTINGS = "_CategorySettings";
         public static string _CATEGORY_SETTINGS = "Category Settings";
 
-        public PartialViewResult _CategorySettings()
+        public PartialViewResult _CategorySettings(string sort, string sortdir, int page = 1, ActionViewFilters Filters = null)
         {
+            ViewBag.ViewSort = sort;
+            ViewBag.ViewDir = sortdir;
+            ViewBag.Page = page;
             return PartialView(_CATEGORYSETTINGS);
         }
 

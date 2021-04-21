@@ -23,17 +23,17 @@
     <div class="box-body">
 
         @using (Ajax.BeginForm(
-                                                                                                                    actionName: TargetController._OTHERSETTINGS,
-                                                                                                                    controllerName: TargetController.TARGET,
-                                                                                                                    routeValues: null,
-                                                                                                                    ajaxOptions: new AjaxOptions()
-                                                                                                                    {
-                                                                                                                        HttpMethod = "Post",
-                                                                                                                        InsertionMode = InsertionMode.Replace,
-                                                                                                                        UpdateTargetId = "global-setting-details",
-                                                                                                                        LoadingElementId = "add-global-setting-progress"
-                                                                                                                    }
-                                                                                                                    ))
+                        actionName: TargetController._OTHERSETTINGS,
+                        controllerName: TargetController.TARGET,
+                        routeValues: null,
+                        ajaxOptions: new AjaxOptions()
+                        {
+                            HttpMethod = "Post",
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "global-setting-details",
+                            LoadingElementId = "add-global-setting-progress"
+                        }
+                        ))
         {
             <div id="other-settings-view">
                 <div class="row">

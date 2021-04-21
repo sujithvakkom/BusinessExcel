@@ -635,17 +635,9 @@ namespace BusinessExcel.Controllers
             
         }
 
-
         public static string TARGET_SUMMARY_INDEX = "TargertSummaryIndex";
-        public static string TARGET_SUMMARY_FILTER = "TargetSummaryFilter";
-        public static string TARGET_SUMMARY_FILTER_VIEW = "_TargertSummaryFilter";
         public static string TARGET_SUMMARY_ME_TITLE = "Target Summary Report(MER)";
-     
         public static string TARGET_SUMMARY_CONTROLLER = "Report";
-
-
-    
-
         public ActionResult TargertSummaryIndex()
         {
 
@@ -656,8 +648,11 @@ namespace BusinessExcel.Controllers
           
             return View(new TargetSummaryView());
         }
+
+        public static string TARGET_SUMMARY_FILTER_VIEW = "_TargertSummaryFilter";
+        public static string TARGET_SUMMARY_FILTER = "TargetSummaryFilter";
         [HttpGet]
-        public PartialViewResult TargetSummaryFilter(string sort, string sortdir, int page = 1, TargetSummaryView Filters = null)
+        public PartialViewResult _TargertSummaryFilter(string sort, string sortdir, int page = 1, TargetSummaryView Filters = null)
         {
             ViewBag.TargertSummaryViewSort = sort;
             ViewBag.TargertSummaryViewDir = sortdir;
@@ -665,8 +660,6 @@ namespace BusinessExcel.Controllers
             ViewBag.Title = ConfigurationManager.AppSettings["ApplicationName"] + " | " + TARGET_SUMMARY_ME_TITLE;
             ViewBag.UserProfile = (string)Session[Index.USER_PROFILE_INDEX];
             ViewBag.Title = TARGET_SUMMARY_ME_TITLE;
-            
-
             return PartialView(TARGET_SUMMARY_FILTER_VIEW, Filters);
 
         }

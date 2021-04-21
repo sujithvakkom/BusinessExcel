@@ -176,7 +176,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
         public virtual int insertUpdateCategorysettings(int? Line,string Description, decimal? BaseIncentive, decimal? TotalSaleFactor, decimal? CategorySellinFactor)
         {
-            BaseIncentive = BaseIncentive == null ? 0 : BaseIncentive / 100;
+            BaseIncentive = BaseIncentive == null ? 0 : BaseIncentive;
             TotalSaleFactor = TotalSaleFactor == null ? 0 : TotalSaleFactor / 100;
             CategorySellinFactor = CategorySellinFactor == null ? 0 : CategorySellinFactor / 100;
             var category_id = new SqlParameter("@category_id", System.Data.SqlDbType.Int) { Value = Line };

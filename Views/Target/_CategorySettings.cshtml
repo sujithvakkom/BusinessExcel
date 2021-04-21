@@ -19,8 +19,7 @@
                             Page: ViewBag.Page == null ? 1 : ViewBag.Page,
                             RowCount: out count
                             );
-                var grid = new WebGrid(ajaxUpdateContainerId: "table-settings-location-view",
-                    ajaxUpdateCallback: TargetController._SETTINGLOCATION,
+                var grid = new WebGrid(ajaxUpdateContainerId: "category-setting-details",
                     rowsPerPage: 20
                     );
                 grid.Bind(source: dataList,
@@ -36,15 +35,41 @@
                                style:"name",canSort:true),
 
                                grid.Column(columnName:"Default Base Inc.",header:"Default Base Inc.",
-                               format:(item)=>@Html.AdminLTEParagraph((decimal)(@item.base_incentive==null?0:@item.base_incentive)),
+                               format:(item)=>@Html.AdminLTEParagraph(
+                                   (decimal)(@item.base_incentive==null?0:@item.base_incentive),
+                                    new Dictionary<string, object>() {
+                                        { "class", "pull-right" }
+                                        },
+                                   Formate:"{0:#,###.##}"),
                                style:"location",canSort:false),
 
-                               grid.Column(columnName:"TSF",header:"Total Sale Factor",
-                               format:(item)=>@Html.AdminLTEParagraph((decimal)(@item.total_sale_factor==null?0:@item.total_sale_factor)),
+                               //grid.Column(columnName:"Default Base Inc.",header:"Default Base Inc.",
+                               //format:(item)=>
+                               // @Html.AdminLTETextBox("CategoryDescrption",
+                               //         null,
+                               //         new Dictionary<string, object>() {
+                               //             { "class", "form-control" }
+                               //             },
+                               //         null,
+                               //         null,
+                               //         null,
+                               //         false,
+                               //         true,
+                               //         true,(decimal)(@item.base_incentive==null?0:@item.base_incentive)),
+                               //style:"location no-padding",canSort:false),
+
+                               grid.Column(columnName:"Accelerator",header:"Accelerator",
+                               format:(item)=>@Html.AdminLTEParagraph((decimal)(@item.total_sale_factor==null?0:@item.total_sale_factor),
+                                    new Dictionary<string, object>() {
+                                        { "class", "pull-right" }
+                                        }, Formate:"{0:#,###.##}"),
                                style:"location",canSort:false),
 
-                               grid.Column(columnName:"Sell-in Factor",header:"Sell-in Factor",
-                               format:(item)=>@Html.AdminLTEParagraph((decimal)(@item.category_sellin_factor==null?0:@item.category_sellin_factor)),
+                               grid.Column(columnName:"",header:"",
+                               format:(item)=>@Html.AdminLTEParagraph((decimal)(@item.category_sellin_factor==null?0:@item.category_sellin_factor),
+                                    new Dictionary<string, object>() {
+                                        { "class", "pull-right" }
+                                        }, Formate:"{0:#,###.##}"),
                                style:"location",canSort:false)
                            },
                            footerStyle: "extra-table-pager"
@@ -80,7 +105,7 @@
 
         </div>
         <div id="add-category-settings">
-            @if(ViewBag.CategoryDetail!=null)
+            @if (ViewBag.CategoryDetail != null)
             {
                 var CategoryDetail = (CategoryDetail)ViewBag.CategoryDetail;
                 Html.RenderPartial(TargetController._ADDCATEGORYSETTINGS, CategoryDetail);
@@ -88,3 +113,8 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        viewInit()
+    });
+</script>

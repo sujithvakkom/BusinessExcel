@@ -80,6 +80,7 @@ namespace BusinessExcel.Providers.ProviderContext.Entities
         [Display(Name = "Base Incentive Cap")]
         [Column(name: "cap_base_incentive", Order = 10)]
         public decimal CapBaseIncentive { get; set; }
+        public decimal IncentivePct { get; set; }
         /*
         private List<TargetDetail> _TargetDetails;
         public virtual List<TargetDetail> TargetDetails
