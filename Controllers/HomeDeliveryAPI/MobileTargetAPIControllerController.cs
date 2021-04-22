@@ -7,7 +7,7 @@ namespace HomeDelivery.Controllers.API
 {
     public class MobileTargetAPIController : ApiController
     {
-        [HttpGet]
+        [HttpGet()]
         public List<UserTargetDetailsView> UserTarget(string UserId)
         {
             List<UserTargetDetailsView> result = null;
