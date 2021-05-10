@@ -262,7 +262,8 @@ VALUES ( @Source ,
     <value>SELECT h.HEADER_ID AS                      "HeaderId" ,
        ISNULL(h.RECEIPTID , h.LPO_NUMBER) AS "Receipt" ,
        h.NAME AS                           "CustomerName" ,
-       h.INT_STATUS AS                   "Status" ,
+	   MAX(h.TRANSDATE) as "SaleDate",
+	  (select STATUS_DESC from delivery_status_1 where STATUS_CODE = MIN(d.INT_STATUS)) AS                   "StatusDescription" ,
        SUM(d.SEIINGPRICE) AS             "Price"
 FROM delivery_header AS h LEFT JOIN delivery_status_1 AS stat ON h.INT_STATUS = stat.STATUS_CODE
                           INNER JOIN delivery_details AS d ON h.HEADER_ID = d.HEADER_ID
@@ -272,8 +273,7 @@ WHERE u.[USER_NAME] = @USER_NAME
       h.TRANS_TYPE = @TRANSTYPE
 GROUP BY h.HEADER_ID ,
          ISNULL(h.RECEIPTID , h.LPO_NUMBER)  ,
-         h.NAME ,
-         h.INT_STATUS
+         h.NAME 
 ORDER BY h.HEADER_ID DESC</value>
   </data>
   <data name="MOBILE_ORDER_DETAIL" xml:space="preserve">

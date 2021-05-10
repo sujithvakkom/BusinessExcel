@@ -3,9 +3,9 @@ using DataProvider.Entities;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.Http;
-namespace HomeDelivery.Controllers.API
+namespace BusinessExcel.Controllers
 {
-    public class MobileAPIController : ApiController
+    public partial class MobileAPIController : ApiController
     {
         [HttpGet]
         public IEnumerable<ItemModel> AllProducts(string Search, int Page, bool ExtededFilter=true, string UserName =null)

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace BusinessExcel.Controllers
 {
+    /*
     public partial class MobileTargetAPIController : System.Web.Http.ApiController
     {
         [HttpGet]
@@ -24,5 +25,5 @@ namespace BusinessExcel.Controllers
             return result.UserTargets;
         }
 
-    }
+    }*/
 }

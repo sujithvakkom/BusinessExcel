@@ -47,6 +47,9 @@ namespace DataProvider.Entities.DeliveryJob
         [Display(Name = "Price")]
         public Decimal Price { get; set; }
 
+        [Display(Name = "StatusDescription")]
+        public string StatusDescription { get; set; }
+
         public string getPlainText()
         {
 

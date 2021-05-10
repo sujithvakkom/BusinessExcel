@@ -73,7 +73,6 @@ namespace BusinessExcel.Models
 
         public string category { get; set; }
 
-
         public void ProcessIncentive()
         {
             try
@@ -82,7 +81,7 @@ namespace BusinessExcel.Models
                 CategoryDetail categoryDetails;
                 int count;
 
-                using (var db = new SalesManageDataContext())
+                using (SalesManageDataContext db = new SalesManageDataContext())
                 {
                     globalSettings = db.getGlobalSettings();
                     var temp = db.getCategorySettingsDetails(category_id, 1, out count);

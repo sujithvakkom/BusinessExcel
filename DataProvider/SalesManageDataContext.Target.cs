@@ -28,9 +28,9 @@ FROM
            inv.category_id,
            t.roster_id,
            SUM(ISNULL(sal.value, 0)) AS value
-    FROM [sc_salesmanage_merchant].[merchant_daily_update] AS sal
-         INNER JOIN [sc_salesmanage_vansale].[inventory_item_m] AS inv ON sal.model_id = inv.model_id
-         INNER JOIN [db_salesmanage_user].[target_m] AS t ON sal.target_id = t.target_id
+    FROM [dbo].[merchant_daily_update] AS sal
+         INNER JOIN [dbo].[inventory_item_m] AS inv ON sal.model_id = inv.model_id
+         INNER JOIN [dbo].[target_m] AS t ON sal.target_id = t.target_id
     WHERE sal.target_id IS NOT NULL
           AND sal.user_id = @user_id
     GROUP BY sal.user_id,
@@ -38,16 +38,16 @@ FROM
              t.roster_id,
              inv.category_id
 ) d_u
-FULL JOIN [db_salesmanage_user].[user_target] AS ut ON d_u.target_id = ut.target_id
+FULL JOIN [dbo].[user_target] AS ut ON d_u.target_id = ut.target_id
                                                        AND d_u.user_id = ut.user_id
                                                        AND ut.roster_id = d_u.roster_id
                                                        AND d_u.category_id = ut.category_id
-INNER JOIN sc_salesmanage_merchant.category AS c ON ISNULL(d_u.category_id, ut.category_id) = c.category_id
-INNER JOIN sc_salesmanage_user.user_m AS u ON ISNULL(ut.user_id, d_u.user_id) = u.user_id
+INNER JOIN dbo.category AS c ON ISNULL(d_u.category_id, ut.category_id) = c.category_id
+INNER JOIN dbo.user_m AS u ON ISNULL(ut.user_id, d_u.user_id) = u.user_id
                                               AND u.user_id = @user_id
-INNER JOIN [db_salesmanage_user].[target_m] AS t ON ISNULL(d_u.target_id, ut.target_id) = t.target_id
-INNER JOIN [db_salesmanage_user].[roster] AS r ON r.roster_id = t.roster_id
-INNER JOIN [sc_salesmanage_user].[location_m] AS l ON r.location_id = l.location_id
+INNER JOIN [dbo].[target_m] AS t ON ISNULL(d_u.target_id, ut.target_id) = t.target_id
+INNER JOIN [dbo].[roster] AS r ON r.roster_id = t.roster_id
+INNER JOIN [dbo].[location_m] AS l ON r.location_id = l.location_id
                                                       AND l.deleted = 0
 ORDER BY 
 r.start_date DESC";
@@ -63,11 +63,12 @@ r.start_date DESC";
                   new SqlParameter("@user_id", System.Data.SqlDbType.NVarChar) { Value = DBNull.Value };
             var result =
                 this.Database.SqlQuery<UserTargetDetailsView>(cmdGetTarget, user_id).ToList();
-            var summary = result.GroupBy(g => new {
+            var summary = result.GroupBy(g => new
+            {
                 g.Period,
                 g.Location,
                 g.FullName
-            }).Select(s =>new UserTargetDetailsView()
+            }).Select(s => new UserTargetDetailsView()
             {
                 Period = s.First().Period,
                 Location = s.First().Location,
@@ -76,7 +77,8 @@ r.start_date DESC";
                 Target = s.Sum(x => x.Target),
                 Achievement = s.Sum(x => x.Achievement)
             }).ToList();
-            foreach (var x in summary) {
+            foreach (var x in summary)
+            {
                 x.Lines = (from lin in result where lin.Period == x.Period select lin).ToList();
             }
             return summary.ToList();
@@ -89,7 +91,7 @@ r.start_date DESC";
         public virtual int getUserID(string userName)
         {
             const string SELECT_USER = @"select user_id
-                                                from [sc_salesmanage_user].[user_m] 
+                                                from [dbo].[user_m] 
                                             where 
                                                 user_name = @user_name";
 

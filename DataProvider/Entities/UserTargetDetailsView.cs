@@ -36,5 +36,7 @@ namespace DataProvider.Entities
 
         [Display(Name = "Lines")]
         public List<UserTargetDetailsView> Lines { get; internal set; }
+        public decimal? TotalIncAmt { get; set; }
+        public decimal? TotalAmountAcc { get; set; }
     }
 }

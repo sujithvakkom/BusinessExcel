@@ -7,6 +7,7 @@ namespace BusinessExcel.Controllers
 {
     public partial class MobileAPIController : System.Web.Http.ApiController
     {
+        /*
         [HttpGet]
         public IEnumerable<ItemModel> GetAllProducts()
         {
@@ -30,6 +31,6 @@ namespace BusinessExcel.Controllers
             }
             return result;
         }
-
+        */
     }
 }

@@ -19,7 +19,7 @@ namespace DataProvider.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -201,11 +201,11 @@ namespace DataProvider.Properties {
         ///   Looks up a localized string similar to SELECT h.HEADER_ID AS                      &quot;HeaderId&quot; ,
         ///       ISNULL(h.RECEIPTID , h.LPO_NUMBER) AS &quot;Receipt&quot; ,
         ///       h.NAME AS                           &quot;CustomerName&quot; ,
-        ///       h.INT_STATUS AS                   &quot;Status&quot; ,
+        ///	   MAX(h.TRANSDATE) as &quot;SaleDate&quot;,
+        ///	  (select STATUS_DESC from delivery_status_1 where STATUS_CODE = MIN(d.INT_STATUS)) AS                   &quot;StatusDescription&quot; ,
         ///       SUM(d.SEIINGPRICE) AS             &quot;Price&quot;
         ///FROM delivery_header AS h LEFT JOIN delivery_status_1 AS stat ON h.INT_STATUS = stat.STATUS_CODE
-        ///                          INNER JOIN delivery_details AS d ON h.HEADER_ID = d.HEADER_ID
-        ///                          INNER JOIN delivery_ [rest of string was truncated]&quot;;.
+        ///                       [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MOBILE_ORDER {
             get {

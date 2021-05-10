@@ -58,7 +58,7 @@ namespace BusinessExcel.Providers.ProviderContext
 
 
 
-        public virtual GlobalSettings getGlobalSettings()
+        public GlobalSettings getGlobalSettings()
         {
             GlobalSettings result = null;
             var items = this.Database.SqlQuery<GlobalSettings>(
